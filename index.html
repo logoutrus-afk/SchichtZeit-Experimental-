@@ -13,7 +13,7 @@
 <meta name="theme-color" content="#0056b3">
 <link rel="apple-touch-icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 180 180'%3E%3Crect width='180' height='180' rx='40' fill='%230056b3'/%3E%3Ctext x='90' y='120' font-size='90' text-anchor='middle' fill='white' font-family='Arial' font-weight='bold'%3ESZ%3C/text%3E%3C/svg%3E">
 <style>
-body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial,sans-serif;background:#f4f4f9;color:#333;text-align:center;padding:10px;padding-top:env(safe-area-inset-top,10px);padding-bottom:env(safe-area-inset-bottom,10px);margin:0;-webkit-tap-highlight-color:transparent}
+body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial,sans-serif;background:#f4f4f9;color:#333;text-align:center;padding:10px;margin:0;-webkit-tap-highlight-color:transparent}
 .container{max-width:600px;margin:0 auto;background:#fff;padding:15px;border-radius:12px;box-shadow:0 4px 15px rgba(0,0,0,0.1)}
 h2{margin-top:0;color:#0056b3;font-size:20px}
 .online-status{font-size:11px;padding:4px 10px;border-radius:12px;display:inline-block;margin-bottom:10px;font-weight:bold}
@@ -26,7 +26,7 @@ select,button{padding:8px 12px;font-size:14px;border-radius:6px;border:1px solid
 button{background:#007bff;color:#fff;border:none;font-weight:bold}
 button:active{background:#0056b3}
 .mode-controls{display:flex;justify-content:center;gap:6px;margin-bottom:15px;background:#e9ecef;padding:8px;border-radius:8px;flex-wrap:wrap}
-.mode-btn{background:#fff;color:#333;border:1px solid #ccc;flex:1;min-width:70px;font-size:13px;padding:8px 6px;font-weight:normal}
+.mode-btn{background:#fff;color:#333;border:1px solid #ccc;flex:1;min-width:70px;font-size:13px;padding:8px 6px}
 .mode-btn.active{background:#0056b3;color:#fff;border-color:#0056b3;font-weight:bold}
 .color-picker-row{display:none;justify-content:center;align-items:center;gap:10px;margin-bottom:15px;padding:8px;background:#f1f3f5;border-radius:8px;border:1px dashed #999;flex-wrap:wrap}
 .color-picker-row.active{display:flex}
@@ -58,7 +58,7 @@ button:active{background:#0056b3}
 .ferien-marker{position:absolute;bottom:1px;right:2px;font-size:8px;color:#17a2b8;font-weight:bold;background:#fff;border-radius:2px;padding:0 2px}
 .day .date-num{font-size:11.5px;position:absolute;top:2px;left:4px;color:#555;font-weight:normal}
 .day.sonstige .date-num{color:#fff;text-shadow:0 0 3px rgba(0,0,0,0.8)}
-.sonstige-marker{position:absolute;bottom:0;right:1px;font-size:12px;line-height:1;padding:0;pointer-events:none;filter:drop-shadow(0 0 1px rgba(0,0,0,0.5))}
+.sonstige-marker{position:absolute;bottom:0;right:1px;font-size:12px;line-height:1;pointer-events:none;filter:drop-shadow(0 0 1px rgba(0,0,0,0.5))}
 .sonstige-preview{position:absolute;bottom:1px;left:1px;right:1px;font-size:7px;line-height:1.05;text-align:center;overflow:hidden;white-space:nowrap;text-overflow:ellipsis;opacity:0.9;pointer-events:none;font-weight:normal}
 .legend{margin-top:15px;font-size:11px;display:flex;justify-content:center;gap:8px;flex-wrap:wrap}
 .legend-item{display:flex;align-items:center;gap:4px}
@@ -249,27 +249,27 @@ button:active{background:#0056b3}
 
 <script>
 // ============================================================
-// SCHICHTMUSTER (35 Tage, pro Gruppe)
-// Basis: 19.10.2026 = Index 0
-// Korrekturen an den Positionen 10 (29.10 / 03.12 / 07.01...)
+// BASIS: 1. OKTOBER 2026
 // ============================================================
-var BASE_DATE_UTC = Date.UTC(2026, 9, 19);
+var BASE_DATE_UTC = Date.UTC(2026, 9, 1);
 
-var PATTERNS = {
-  '1': ['F','F','N','N','_','_','_','S','S','S','_','F','F','F','N','N','_','_','N','N','N','_','_','F','F','N','N','N','_','_','_','S','S','S','_'],
-  '2': ['S','S','S','_','F','F','F','N','N','_','F','_','_','_','_','_','F','F','S','S','_','F','F','_','S','S','S','_','F','F','N','N','_','_','_'],
-  '3': ['N','N','_','_','_','_','_','_','_','F','S','N','N','N','_','_','_','S','_','_','_','S','S','N','N','_','_','_','S','S','S','_','F','F','F'],
-  '4': ['_','_','_','F','N','N','N','_','_','_','N','S','S','_','F','F','N','N','_','_','_','N','N','S','_','_','_','_','N','N','_','_','_','_','_'],
-  '5': ['_','_','F','S','S','S','_','F','F','N','_','_','_','_','S','S','S','_','F','F','F','_','_','_','_','F','F','F','_','_','F','F','N','N','N']
-};
+// 35-Tage-Zyklus (identisch mit dem funktionierenden Code)
+var CYCLE_35 = [
+'F','F','N','N','N','_','_','_',
+'S','S','S','_',
+'F','F','N','N','_','_','_',
+'S','S','S','_',
+'F','F','F','N','N',
+'_','_','_','_','_','_','_'
+];
 
-// Sondertage, die nicht ins 35-Tage-Muster passen (aus dem gedruckten Kalender)
-var OVERRIDES = {
-  '2026-10-01': ['F','S','N','_','_'],
-  '2026-10-02': ['_','N','S','_','F'],
-  '2026-10-03': ['_','N','S','_','F'],
-  '2026-10-04': ['_','N','_','_','F'],
-  '2026-10-21': ['_','N','S','_','F']
+// Start-Indizes für 1. Oktober 2026
+var START_INDEX_BY_GROUP = {
+'1': 29,
+'2': 1,
+'3': 8,
+'4': 15,
+'5': 22
 };
 
 // ============================================================
@@ -289,6 +289,7 @@ var vacationDays = safeParse(localStorage.getItem('schichtzeitVacationDays'), []
 var sonstigeDays = safeParse(localStorage.getItem('schichtzeitSonstigeDays'), {});
 if (typeof sonstigeDays !== 'object' || Array.isArray(sonstigeDays)) sonstigeDays = {};
 
+// Migration alter Einträge (String -> Objekt)
 (function migrateSonstige() {
   var changed = false;
   Object.keys(sonstigeDays).forEach(function(k){
@@ -377,24 +378,20 @@ function getFerienSet(year) {
 }
 
 // ============================================================
-// SCHICHTBERECHNUNG
+// SCHICHTBERECHNUNG (identisch mit dem funktionierenden Code)
 // ============================================================
 function formatDateKey(date) {
     return date.getFullYear()+'-'+String(date.getMonth()+1).padStart(2,'0')+'-'+String(date.getDate()).padStart(2,'0');
 }
 function getShift(date, group) {
-    var key = formatDateKey(date);
-    if (OVERRIDES[key]) {
-        var idx = parseInt(group, 10) - 1;
-        return OVERRIDES[key][idx];
-    }
-    var pattern = PATTERNS[String(group)];
-    if (!pattern) return '_';
+    var g = String(group);
+    var startIndex = START_INDEX_BY_GROUP[g];
+    if (startIndex === undefined) return '_';
     var dateUTC = Date.UTC(date.getFullYear(), date.getMonth(), date.getDate());
     var diffDays = Math.round((dateUTC - BASE_DATE_UTC) / 86400000);
-    var index = diffDays % pattern.length;
-    if (index < 0) index += pattern.length;
-    return pattern[index];
+    var index = (startIndex + diffDays) % CYCLE_35.length;
+    if (index < 0) index += CYCLE_35.length;
+    return CYCLE_35[index];
 }
 
 // ============================================================
