@@ -78,16 +78,12 @@ button:active{background:#0056b3}
 @keyframes note-pulse{0%{box-shadow:0 0 0 0 rgba(205,127,50,0.7)}50%{box-shadow:0 0 6px 2px rgba(205,127,50,0.3)}100%{box-shadow:0 0 0 0 rgba(205,127,50,0.7)}}
 .ferien-note{display:none;margin-top:10px;font-size:11px;color:#666;text-align:left;background:#e7f6f8;padding:8px;border-radius:6px;border-left:3px solid #17a2b8;line-height:1.6}
 .ferien-note strong{color:#17a2b8}
-
-/* Reminders box */
 .reminders-box{display:none;margin-top:15px;text-align:left;background:#eef6ff;padding:10px 12px;border-radius:8px;border-left:4px solid #0056b3}
 .reminders-box strong{display:block;color:#0056b3;font-size:13px;margin-bottom:6px}
 .reminders-box ul{margin:0;padding-left:0;list-style:none;font-size:13px;color:#333}
 .reminders-box li{padding:5px 0;border-bottom:1px solid #d6e7ff}
 .reminders-box li:last-child{border-bottom:none}
 .reminders-box .when{color:#666;font-size:11.5px}
-
-/* Modal */
 .modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,0.55);display:none;align-items:center;justify-content:center;z-index:1000;padding:15px;overflow-y:auto}
 .modal-overlay.active{display:flex}
 .modal{background:#fff;border-radius:12px;padding:18px;max-width:420px;width:100%;text-align:left;box-shadow:0 10px 40px rgba(0,0,0,0.3);max-height:95vh;overflow-y:auto}
@@ -111,7 +107,7 @@ button:active{background:#0056b3}
 <body>
 <div class="container">
 <h2>Schichtzeit</h2>
-<div id="onlineStatus" class="online-status online">📱 Uhr wird geladen...</div>
+<div id="onlineStatus" class="online-status online">Uhr wird geladen...</div>
 
 <div class="top-row">
 <label>Schicht: 
@@ -126,9 +122,9 @@ button:active{background:#0056b3}
 </div>
 
 <div class="nav-row">
-<button id="prevBtn">← Zurück</button>
+<button id="prevBtn">&larr; Zur&uuml;ck</button>
 <span id="monthDisplay"></span>
-<button id="nextBtn">Weiter →</button>
+<button id="nextBtn">Weiter &rarr;</button>
 </div>
 
 <div class="mode-controls">
@@ -142,23 +138,23 @@ button:active{background:#0056b3}
 <label for="sonstigeColor">Farbe:</label>
 <input type="color" id="sonstigeColor" value="#FFD700">
 <div class="color-presets" id="colorPresets">
-<button class="color-preset" data-color="#FFD700" style="background:#FFD700;" title="Früh"><span class="preset-letter">F</span></button>
-<button class="color-preset" data-color="#FF4500" style="background:#FF4500;" title="Spät"><span class="preset-letter">S</span></button>
+<button class="color-preset" data-color="#FFD700" style="background:#FFD700;" title="Fr&uuml;h"><span class="preset-letter">F</span></button>
+<button class="color-preset" data-color="#FF4500" style="background:#FF4500;" title="Sp&auml;t"><span class="preset-letter">S</span></button>
 <button class="color-preset" data-color="#1E90FF" style="background:#1E90FF;" title="Nacht"><span class="preset-letter">N</span></button>
-<button class="color-preset" data-color="#FFFFFF" style="background:#FFFFFF;" title="Frei"><span class="preset-letter" style="color:#999;">–</span></button>
+<button class="color-preset" data-color="#FFFFFF" style="background:#FFFFFF;" title="Frei"><span class="preset-letter" style="color:#999;">&ndash;</span></button>
 </div>
 </div>
 
 <div class="calendar" id="calendar"></div>
 
 <div class="reminders-box" id="remindersBox">
-<strong>🔔 Kommende Erinnerungen</strong>
+<strong>Kommende Erinnerungen</strong>
 <ul id="remindersList"></ul>
 </div>
 
 <div class="legend">
-<div class="legend-item"><div class="legend-box" style="background:#FFD700;"></div> F (Früh)</div>
-<div class="legend-item"><div class="legend-box" style="background:#FF4500;"></div> S (Spät)</div>
+<div class="legend-item"><div class="legend-box" style="background:#FFD700;"></div> F (Fr&uuml;h)</div>
+<div class="legend-item"><div class="legend-box" style="background:#FF4500;"></div> S (Sp&auml;t)</div>
 <div class="legend-item"><div class="legend-box" style="background:#1E90FF;"></div> N (Nacht)</div>
 <div class="legend-item"><div class="legend-box" style="background:#f9f9f9;"></div> Frei</div>
 <div class="legend-item"><div class="legend-box" style="background:#DDA0DD;"></div> Krank</div>
@@ -169,10 +165,10 @@ button:active{background:#0056b3}
 </div>
 
 <div class="footer">
-<button onclick="resetData()" style="background:#dc3545;">Alle Markierungen löschen</button>
-<button onclick="toggleYearOverview()" style="background:#28a745;">Jahresübersicht</button>
+<button onclick="resetData()" style="background:#dc3545;">Alle Markierungen l&ouml;schen</button>
+<button onclick="toggleYearOverview()" style="background:#28a745;">Jahres&uuml;bersicht</button>
 <button onclick="toggleFerien()" id="ferienBtn" style="background:#17a2b8;">Ferien</button>
-<button id="notifBtn" style="background:#6f42c1;">🔔 Erinnerungen aktivieren</button>
+<button id="notifBtn" style="background:#6f42c1;">Erinnerungen aktivieren</button>
 </div>
 
 <div class="holiday-note">
@@ -186,7 +182,7 @@ button:active{background:#0056b3}
 </div>
 
 <div id="yearOverview" class="overview-container">
-<h3>Jahresübersicht <span id="overviewYear"></span></h3>
+<h3>Jahres&uuml;bersicht <span id="overviewYear"></span></h3>
 <div class="overview-stats">
 <span style="color:#8A2BE2;">Krank: <span id="countKrank">0</span> Tage</span>
 <span style="color:#228B22;">Urlaub: <span id="countUrlaub">0</span> Tage</span>
@@ -195,11 +191,10 @@ button:active{background:#0056b3}
 <div class="overview-list"><strong>Krankheitstage:</strong><ul id="listKrank"></ul></div>
 <div class="overview-list"><strong>Urlaubstage:</strong><ul id="listUrlaub"></ul></div>
 <div class="overview-list"><strong>Sonstige Tage:</strong><ul id="listSonstige"></ul></div>
-<button class="close-btn" onclick="toggleYearOverview()">Schließen</button>
+<button class="close-btn" onclick="toggleYearOverview()">Schlie&szlig;en</button>
 </div>
 </div>
 
-<!-- MODAL -->
 <div class="modal-overlay" id="entryModal">
   <div class="modal">
     <h3 id="modalTitle">Eintrag</h3>
@@ -223,13 +218,13 @@ button:active{background:#0056b3}
 
     <label class="checkbox-row">
       <input type="checkbox" id="entryNotify">
-      <span>Erinnerung senden — <b>1 Tag vorher</b>, <b>2 Stunden vorher</b> und <b>zur Uhrzeit</b></span>
+      <span>Erinnerung senden &mdash; 1 Tag vorher, 2 Stunden vorher und zur Uhrzeit</span>
     </label>
 
-    <div class="notif-hint" id="notifHint">⚠️ Benachrichtigungen werden von diesem Browser nicht unterstützt.</div>
+    <div class="notif-hint" id="notifHint">Benachrichtigungen werden von diesem Browser nicht unterst&uuml;tzt.</div>
 
     <div class="modal-buttons">
-      <button id="modalDeleteBtn" style="background:#dc3545;">Löschen</button>
+      <button id="modalDeleteBtn" style="background:#dc3545;">L&ouml;schen</button>
       <button id="modalCancelBtn" style="background:#6c757d;">Abbrechen</button>
       <button id="modalSaveBtn" style="background:#007bff;">Speichern</button>
     </div>
@@ -238,339 +233,268 @@ button:active{background:#0056b3}
 
 <script>
 // ============================================================
-// ДАННЫЕ СМЕН
+// SCHICHTDATEN
 // ============================================================
-const BASE_DATE_UTC = Date.UTC(2026, 9, 19);
+var BASE_DATE_UTC = Date.UTC(2026, 9, 19); // 19.10.2026 = Index 0
 
-const PATTERNS = {
-  '1': ['F','F','N','N','_','_','_','S','S','S','_',
-        'F','F','F','N','N','_','_','N','N','N','_','_',
-        'F','F','N','N','N','_','_','_','S','S','S','_'],
-  '2': ['S','S','S','_','F','F','F','N','N','_','_','_','_','_','_','_',
-        'F','F','S','S','_','F','F','_','S','S','S','_',
-        'F','F','N','N','_','_','_'],
-  '3': ['N','N','_','_','_','_','_','_','_','F','F','N','N','N','_','_','_',
-        'S','_','_','_','S','S','N','N','_','_','_','S','S','S','_','F','F','F'],
-  '4': ['_','_','_','F','N','N','N','_','_','_','S','S','S','_',
-        'F','F','N','N','_','_','_','N','N','S','_','_','_','_',
-        'N','N','_','_','_','_','_'],
-  '5': ['_','_','F','S','S','S','_','F','F','N','N','_','_','_',
-        'S','S','S','_','F','F','F','_','_','_','_',
-        'F','F','F','_','_','F','F','N','N','N']
+var PATTERNS = {
+  '1': ['F','F','N','N','_','_','_','S','S','S','_','F','F','F','N','N','_','_','N','N','N','_','_','F','F','N','N','N','_','_','_','S','S','S','_'],
+  '2': ['S','S','S','_','F','F','F','N','N','_','_','_','_','_','_','_','F','F','S','S','_','F','F','_','S','S','S','_','F','F','N','N','_','_','_'],
+  '3': ['N','N','_','_','_','_','_','_','_','F','F','N','N','N','_','_','_','S','_','_','_','S','S','N','N','_','_','_','S','S','S','_','F','F','F'],
+  '4': ['_','_','_','F','N','N','N','_','_','_','S','S','S','_','F','F','N','N','_','_','_','N','N','S','_','_','_','_','N','N','_','_','_','_','_'],
+  '5': ['_','_','F','S','S','S','_','F','F','N','N','_','_','_','S','S','S','_','F','F','F','_','_','_','_','F','F','F','_','_','F','F','N','N','N']
 };
 
-// ============================================================
-// СОСТОЯНИЕ
-// ============================================================
-let currentDate = new Date(2026, 9, 1);
-let currentMode = 'normal';
-let showFerien = false;
-let actualToday = new Date();
-actualToday.setHours(0,0,0,0);
-let selectedColor = localStorage.getItem('schichtzeitColor') || '#FFD700';
-let selectedSymbol = localStorage.getItem('schichtzeitSymbol') || '🔔';
+var currentDate = new Date(2026, 9, 1);
+var currentMode = 'normal';
+var showFerien = false;
+var actualToday = new Date(); actualToday.setHours(0,0,0,0);
+var selectedColor = localStorage.getItem('schichtzeitColor') || '#FFD700';
+var selectedSymbol = localStorage.getItem('schichtzeitSymbol') || '\uD83D\uDD14';
 
-let sickDays = JSON.parse(localStorage.getItem('schichtzeitSickDays') || '[]');
-let vacationDays = JSON.parse(localStorage.getItem('schichtzeitVacationDays') || '[]');
-let sonstigeDays = JSON.parse(localStorage.getItem('schichtzeitSonstigeDays') || '{}');
+function safeParse(s, fallback) { try { var v = JSON.parse(s); return v == null ? fallback : v; } catch(e){ return fallback; } }
 
-// Миграция старых записей
+var sickDays = safeParse(localStorage.getItem('schichtzeitSickDays'), []);
+var vacationDays = safeParse(localStorage.getItem('schichtzeitVacationDays'), []);
+var sonstigeDays = safeParse(localStorage.getItem('schichtzeitSonstigeDays'), {});
+if (typeof sonstigeDays !== 'object' || Array.isArray(sonstigeDays)) sonstigeDays = {};
+
+// Migration alter Eintraege (Text -> Objekt)
 (function migrateSonstige() {
-  let changed = false;
-  Object.keys(sonstigeDays).forEach(k => {
-    const v = sonstigeDays[k];
-    if (typeof v === 'string') {
-      sonstigeDays[k] = { color: v, text: '', time: '', notify: false, icon: '🔔' };
-      changed = true;
-    } else if (v && typeof v === 'object') {
-      if (!v.icon) { v.icon = '🔔'; changed = true; }
-    }
+  var changed = false;
+  Object.keys(sonstigeDays).forEach(function(k){
+    var v = sonstigeDays[k];
+    if (typeof v === 'string') { sonstigeDays[k] = { color:v, text:'', time:'', notify:false, icon:'\uD83D\uDD14' }; changed = true; }
+    else if (v && typeof v === 'object' && !v.icon) { v.icon = '\uD83D\uDD14'; changed = true; }
   });
   if (changed) localStorage.setItem('schichtzeitSonstigeDays', JSON.stringify(sonstigeDays));
 })();
 
-let notifiedFlags = JSON.parse(localStorage.getItem('schichtzeitNotified') || '{}');
+var notifiedFlags = safeParse(localStorage.getItem('schichtzeitNotified'), {});
+if (typeof notifiedFlags !== 'object' || Array.isArray(notifiedFlags)) notifiedFlags = {};
 
-const savedGroup = localStorage.getItem('schichtzeitGroup') || '1';
-document.getElementById('groupSelect').value = savedGroup;
-document.getElementById('sonstigeColor').value = selectedColor;
+var savedGroup = localStorage.getItem('schichtzeitGroup') || '1';
 
-const monthNames = ["Januar","Februar","März","April","Mai","Juni","Juli","August","September","Oktober","November","Dezember"];
-const dayNames = ["Mo","Di","Mi","Do","Fr","Sa","So"];
+var monthNames = ["Januar","Februar","M\u00E4rz","April","Mai","Juni","Juli","August","September","Oktober","November","Dezember"];
+var dayNames = ["Mo","Di","Mi","Do","Fr","Sa","So"];
 
-const SYMBOLS = ['🔔','⏰','📌','⭐','❤️','⚠️','📞','💊','🏥','📅','✈️','🎂','🎉','🚗','💼','📝'];
+var SYMBOLS = ['\uD83D\uDD14','\u23F0','\uD83D\uDCCC','\u2B50','\u2764\uFE0F','\u26A0\uFE0F','\uD83D\uDCDE','\uD83D\uDC8A','\uD83C\uDFE5','\uD83D\uDCC5','\u2708\uFE0F','\uD83C\uDF82','\uD83C\uDF89','\uD83D\uDE97','\uD83D\uDCBC','\uD83D\uDCDD'];
 
 // ============================================================
-// ЧАСЫ УСТРОЙСТВА
+// UHR DES GERAETS
 // ============================================================
 function updateOnlineStatus(text, status) {
-    const el = document.getElementById('onlineStatus');
+    var el = document.getElementById('onlineStatus');
+    if (!el) return;
     el.textContent = text;
     el.className = 'online-status ' + status;
 }
-
 function updateClockStatus() {
-    const d = new Date();
+    var d = new Date();
     actualToday = new Date(d.getFullYear(), d.getMonth(), d.getDate());
-    const hh = String(d.getHours()).padStart(2,'0');
-    const mm = String(d.getMinutes()).padStart(2,'0');
-    const wd = dayNames[actualToday.getDay() === 0 ? 6 : actualToday.getDay() - 1];
-    const dd = String(d.getDate()).padStart(2,'0');
-    const mo = String(d.getMonth()+1).padStart(2,'0');
-    updateOnlineStatus('📱 ' + hh + ':' + mm + ' Uhr · ' + wd + ' ' + dd + '.' + mo + '.' + d.getFullYear(), 'online');
+    var hh = String(d.getHours()).padStart(2,'0');
+    var mm = String(d.getMinutes()).padStart(2,'0');
+    var wd = dayNames[actualToday.getDay() === 0 ? 6 : actualToday.getDay() - 1];
+    var dd = String(d.getDate()).padStart(2,'0');
+    var mo = String(d.getMonth()+1).padStart(2,'0');
+    updateOnlineStatus(hh + ':' + mm + ' Uhr \u00B7 ' + wd + ' ' + dd + '.' + mo + '.' + d.getFullYear(), 'online');
 }
-
 function syncClock() {
     updateClockStatus();
     renderCalendar();
 }
-
-// Обновляем часы каждую минуту
 setInterval(syncClock, 60 * 1000);
-// И при возврате на вкладку (если приложение было в фоне)
-document.addEventListener('visibilitychange', () => {
-    if (!document.hidden) syncClock();
-});
+document.addEventListener('visibilitychange', function(){ if (!document.hidden) syncClock(); });
 
 // ============================================================
-// ПРАЗДНИКИ
+// FEIERTAGE
 // ============================================================
 function calculateEaster(year) {
-    const a = year % 19, b = Math.floor(year / 100), c = year % 100;
-    const d = Math.floor(b / 4), e = b % 4, f = Math.floor((b + 8) / 25);
-    const g = Math.floor((b - f + 1) / 3);
-    const h = (19 * a + b - d - g + 15) % 30;
-    const i = Math.floor(c / 4), k = c % 4;
-    const l = (32 + 2 * e + 2 * i - h - k) % 7;
-    const m = Math.floor((a + 11 * h + 22 * l) / 451);
-    const month = Math.floor((h + l - 7 * m + 114) / 31);
-    const day = ((h + l - 7 * m + 114) % 31) + 1;
-    return new Date(year, month - 1, day);
+    var a=year%19,b=Math.floor(year/100),c=year%100,d=Math.floor(b/4),e=b%4,f=Math.floor((b+8)/25),g=Math.floor((b-f+1)/3),h=(19*a+b-d-g+15)%30,i=Math.floor(c/4),k=c%4,l=(32+2*e+2*i-h-k)%7,m=Math.floor((a+11*h+22*l)/451),month=Math.floor((h+l-7*m+114)/31),day=((h+l-7*m+114)%31)+1;
+    return new Date(year, month-1, day);
 }
 function getHolidayList(year) {
-    const list = [];
-    const add = (m, d, name) => {
-        const date = new Date(year, m - 1, d);
-        list.push({name, date, key: `${year}-${String(m).padStart(2,'0')}-${String(d).padStart(2,'0')}`});
-    };
-    add(1,1,"Neujahr"); add(1,6,"Heilige Drei Könige");
-    add(5,1,"Tag der Arbeit"); add(8,15,"Mariä Himmelfahrt");
-    add(10,3,"Tag der Deutschen Einheit"); add(11,1,"Allerheiligen");
-    add(12,25,"1. Weihnachtstag"); add(12,26,"2. Weihnachtstag");
-    const easter = calculateEaster(year);
-    const addE = (days, name) => {
-        const d = new Date(easter); d.setDate(d.getDate() + days);
-        add(d.getMonth()+1, d.getDate(), name);
-    };
-    addE(-2,"Karfreitag"); addE(1,"Ostermontag");
-    addE(39,"Christi Himmelfahrt"); addE(50,"Pfingstmontag"); addE(60,"Fronleichnam");
-    list.sort((a,b) => a.date - b.date);
+    var list = [];
+    function add(m,d,name){ var dt=new Date(year,m-1,d); list.push({name:name,date:dt,key:year+'-'+String(m).padStart(2,'0')+'-'+String(d).padStart(2,'0')}); }
+    add(1,1,"Neujahr"); add(1,6,"Heilige Drei K\u00F6nige"); add(5,1,"Tag der Arbeit"); add(8,15,"Mari\u00E4 Himmelfahrt"); add(10,3,"Tag der Deutschen Einheit"); add(11,1,"Allerheiligen"); add(12,25,"1. Weihnachtstag"); add(12,26,"2. Weihnachtstag");
+    var easter = calculateEaster(year);
+    function addE(days,name){ var d=new Date(easter); d.setDate(d.getDate()+days); add(d.getMonth()+1,d.getDate(),name); }
+    addE(-2,"Karfreitag"); addE(1,"Ostermontag"); addE(39,"Christi Himmelfahrt"); addE(50,"Pfingstmontag"); addE(60,"Fronleichnam");
+    list.sort(function(a,b){return a.date-b.date;});
     return list;
 }
 function getHolidaySet(year) {
-    const s = new Set();
-    getHolidayList(year).forEach(h => s.add(h.key));
+    var s = new Set();
+    getHolidayList(year).forEach(function(h){ s.add(h.key); });
     return s;
 }
 
 // ============================================================
-// КАНИКУЛЫ
+// SCHULFERIEN
 // ============================================================
-const FERIEN = {
-2026: [
-{name:"Winterferien",start:"2026-02-16",end:"2026-02-20"},
-{name:"Osterferien",start:"2026-03-30",end:"2026-04-10"},
-{name:"Pfingstferien",start:"2026-05-26",end:"2026-06-05"},
-{name:"Sommerferien",start:"2026-08-01",end:"2026-09-14"},
-{name:"Herbstferien",start:"2026-11-02",end:"2026-11-06"},
-{name:"Weihnachtsferien",start:"2026-12-21",end:"2026-12-31"}
-],
-2027: [
-{name:"Winterferien",start:"2027-02-15",end:"2027-02-19"},
-{name:"Osterferien",start:"2027-03-22",end:"2027-04-02"},
-{name:"Pfingstferien",start:"2027-05-18",end:"2027-05-28"},
-{name:"Sommerferien",start:"2027-08-02",end:"2027-09-13"},
-{name:"Herbstferien",start:"2027-11-02",end:"2027-11-05"},
-{name:"Weihnachtsferien",start:"2027-12-23",end:"2027-12-31"}
-],
-2028: [
-{name:"Winterferien",start:"2028-02-14",end:"2028-02-18"},
-{name:"Osterferien",start:"2028-04-10",end:"2028-04-21"},
-{name:"Pfingstferien",start:"2028-06-06",end:"2028-06-16"},
-{name:"Sommerferien",start:"2028-07-31",end:"2028-09-11"},
-{name:"Herbstferien",start:"2028-10-30",end:"2028-11-03"},
-{name:"Weihnachtsferien",start:"2028-12-23",end:"2028-12-31"}
-]
+var FERIEN = {
+2026:[{name:"Winterferien",start:"2026-02-16",end:"2026-02-20"},{name:"Osterferien",start:"2026-03-30",end:"2026-04-10"},{name:"Pfingstferien",start:"2026-05-26",end:"2026-06-05"},{name:"Sommerferien",start:"2026-08-01",end:"2026-09-14"},{name:"Herbstferien",start:"2026-11-02",end:"2026-11-06"},{name:"Weihnachtsferien",start:"2026-12-21",end:"2026-12-31"}],
+2027:[{name:"Winterferien",start:"2027-02-15",end:"2027-02-19"},{name:"Osterferien",start:"2027-03-22",end:"2027-04-02"},{name:"Pfingstferien",start:"2027-05-18",end:"2027-05-28"},{name:"Sommerferien",start:"2027-08-02",end:"2027-09-13"},{name:"Herbstferien",start:"2027-11-02",end:"2027-11-05"},{name:"Weihnachtsferien",start:"2027-12-23",end:"2027-12-31"}],
+2028:[{name:"Winterferien",start:"2028-02-14",end:"2028-02-18"},{name:"Osterferien",start:"2028-04-10",end:"2028-04-21"},{name:"Pfingstferien",start:"2028-06-06",end:"2028-06-16"},{name:"Sommerferien",start:"2028-07-31",end:"2028-09-11"},{name:"Herbstferien",start:"2028-10-30",end:"2028-11-03"},{name:"Weihnachtsferien",start:"2028-12-23",end:"2028-12-31"}]
 };
 function getFerienSet(year) {
-    const set = new Set();
-    (FERIEN[year] || []).forEach(period => {
-        let current = new Date(period.start);
-        const end = new Date(period.end);
-        while (current <= end) {
-            set.add(`${current.getFullYear()}-${String(current.getMonth()+1).padStart(2,'0')}-${String(current.getDate()).padStart(2,'0')}`);
-            current.setDate(current.getDate() + 1);
+    var set = new Set();
+    (FERIEN[year]||[]).forEach(function(period){
+        var cur = new Date(period.start);
+        var end = new Date(period.end);
+        while (cur <= end) {
+            set.add(cur.getFullYear()+'-'+String(cur.getMonth()+1).padStart(2,'0')+'-'+String(cur.getDate()).padStart(2,'0'));
+            cur.setDate(cur.getDate()+1);
         }
     });
     return set;
 }
 
 // ============================================================
-// СМЕНЫ
+// SCHICHTEN
 // ============================================================
 function formatDateKey(date) {
-    return `${date.getFullYear()}-${String(date.getMonth()+1).padStart(2,'0')}-${String(date.getDate()).padStart(2,'0')}`;
+    return date.getFullYear()+'-'+String(date.getMonth()+1).padStart(2,'0')+'-'+String(date.getDate()).padStart(2,'0');
 }
 function getShift(date, group) {
-    const pattern = PATTERNS[String(group)];
+    var pattern = PATTERNS[String(group)];
     if (!pattern) return '_';
-    const dateUTC = Date.UTC(date.getFullYear(), date.getMonth(), date.getDate());
-    const diffDays = Math.round((dateUTC - BASE_DATE_UTC) / 86400000);
-    let index = diffDays % pattern.length;
+    var dateUTC = Date.UTC(date.getFullYear(), date.getMonth(), date.getDate());
+    var diffDays = Math.round((dateUTC - BASE_DATE_UTC) / 86400000);
+    var index = diffDays % pattern.length;
     if (index < 0) index += pattern.length;
     return pattern[index];
 }
 
 // ============================================================
-// ВСПОМОГАТЕЛЬНЫЕ
+// HILFSFUNKTIONEN
 // ============================================================
 function isColorDark(hex) {
-    const c = hex.replace('#','');
-    const r = parseInt(c.substr(0,2), 16);
-    const g = parseInt(c.substr(2,2), 16);
-    const b = parseInt(c.substr(4,2), 16);
-    return ((0.299 * r + 0.587 * g + 0.114 * b) / 255) < 0.6;
+    var c = hex.replace('#','');
+    var r = parseInt(c.substr(0,2),16), g = parseInt(c.substr(2,2),16), b = parseInt(c.substr(4,2),16);
+    return ((0.299*r+0.587*g+0.114*b)/255) < 0.6;
 }
 function getEntry(dateKey) {
-    const e = sonstigeDays[dateKey];
+    var e = sonstigeDays[dateKey];
     if (!e) return null;
-    if (typeof e === 'string') return { color: e, text: '', time: '', notify: false, icon: '🔔' };
-    if (!e.icon) e.icon = '🔔';
+    if (typeof e === 'string') return { color:e, text:'', time:'', notify:false, icon:'\uD83D\uDD14' };
+    if (!e.icon) e.icon = '\uD83D\uDD14';
     return e;
 }
 function escapeHtml(s) {
-    return String(s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+    return String(s).replace(/[&<>"']/g, function(c){ return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]; });
 }
 
 // ============================================================
-// ОТРИСОВКА
+// DARSTELLUNG
 // ============================================================
 function renderHolidayNote(year, month) {
-    const listEl = document.getElementById('holidayList');
-    const currentList = getHolidayList(year).filter(h => h.date.getMonth() === month);
-    if (currentList.length === 0) {
-        listEl.innerHTML = '<span style="color:#999;font-style:italic;">Keine Feiertage in diesem Monat.</span>';
-        return;
-    }
-    listEl.innerHTML = currentList.map(h => {
-        const dd = String(h.date.getDate()).padStart(2,'0');
-        const mm = String(h.date.getMonth()+1).padStart(2,'0');
-        return `<span class="holiday-item current">${h.name} (${dd}.${mm})</span>`;
+    var listEl = document.getElementById('holidayList');
+    var currentList = getHolidayList(year).filter(function(h){ return h.date.getMonth() === month; });
+    if (currentList.length === 0) { listEl.innerHTML = '<span style="color:#999;font-style:italic;">Keine Feiertage in diesem Monat.</span>'; return; }
+    listEl.innerHTML = currentList.map(function(h){
+        var dd = String(h.date.getDate()).padStart(2,'0');
+        var mm = String(h.date.getMonth()+1).padStart(2,'0');
+        return '<span class="holiday-item current">' + h.name + ' (' + dd + '.' + mm + ')</span>';
     }).join('');
 }
 function updateColorPresetsActive() {
-    document.querySelectorAll('.color-preset').forEach(btn => {
-        const c = btn.getAttribute('data-color').toLowerCase();
+    document.querySelectorAll('.color-preset').forEach(function(btn){
+        var c = btn.getAttribute('data-color').toLowerCase();
         btn.classList.toggle('active', c === selectedColor.toLowerCase());
     });
 }
 
 function renderCalendar() {
-    const year = currentDate.getFullYear();
-    const month = currentDate.getMonth();
-    const group = document.getElementById('groupSelect').value;
-    const holidays = getHolidaySet(year);
-    const ferienSet = showFerien ? getFerienSet(year) : new Set();
+    var year = currentDate.getFullYear();
+    var month = currentDate.getMonth();
+    var group = document.getElementById('groupSelect').value;
+    var holidays = getHolidaySet(year);
+    var ferienSet = showFerien ? getFerienSet(year) : new Set();
 
     document.getElementById('monthDisplay').textContent = monthNames[month] + ' ' + year;
 
-    const firstDayOfMonth = new Date(year, month, 1);
-    const lastDayOfMonth = new Date(year, month + 1, 0);
-    let startDay = firstDayOfMonth.getDay();
+    var firstDayOfMonth = new Date(year, month, 1);
+    var lastDayOfMonth = new Date(year, month + 1, 0);
+    var startDay = firstDayOfMonth.getDay();
     startDay = startDay === 0 ? 6 : startDay - 1;
 
-    const calendarEl = document.getElementById('calendar');
+    var calendarEl = document.getElementById('calendar');
     calendarEl.innerHTML = '';
 
-    dayNames.forEach(day => {
-        const h = document.createElement('div');
+    dayNames.forEach(function(day){
+        var h = document.createElement('div');
         h.className = 'day-header';
         h.textContent = day;
         calendarEl.appendChild(h);
     });
-
-    for (let i = 0; i < startDay; i++) {
-        const e = document.createElement('div');
+    for (var i = 0; i < startDay; i++) {
+        var e = document.createElement('div');
         e.className = 'day empty';
         calendarEl.appendChild(e);
     }
 
-    for (let day = 1; day <= lastDayOfMonth.getDate(); day++) {
-        const date = new Date(year, month, day);
-        const dateKey = formatDateKey(date);
-        const shift = getShift(date, group);
+    for (var day = 1; day <= lastDayOfMonth.getDate(); day++) {
+        (function(day){
+            var date = new Date(year, month, day);
+            var dateKey = formatDateKey(date);
+            var shift = getShift(date, group);
+            var dayEl = document.createElement('div');
+            dayEl.className = 'day ' + shift;
 
-        const dayEl = document.createElement('div');
-        dayEl.className = `day ${shift}`;
+            if (sickDays.indexOf(dateKey) > -1) dayEl.classList.add('krank');
+            else if (vacationDays.indexOf(dateKey) > -1) dayEl.classList.add('urlaub');
 
-        if (sickDays.includes(dateKey)) dayEl.classList.add('krank');
-        else if (vacationDays.includes(dateKey)) dayEl.classList.add('urlaub');
-
-        if (date.getTime() === actualToday.getTime()) dayEl.classList.add('today');
-        if (holidays.has(dateKey)) { dayEl.classList.add('feiertag'); dayEl.title = 'Feiertag'; }
-        if (showFerien && ferienSet.has(dateKey)) {
-            dayEl.classList.add('ferien');
-            const fm = document.createElement('span');
-            fm.className = 'ferien-marker';
-            fm.textContent = 'F';
-            dayEl.appendChild(fm);
-        }
-
-        const dateNumEl = document.createElement('span');
-        dateNumEl.className = 'date-num';
-        dateNumEl.textContent = day;
-
-        const shiftTextEl = document.createElement('span');
-        shiftTextEl.textContent = shift === '_' ? '' : shift;
-
-        dayEl.appendChild(dateNumEl);
-        dayEl.appendChild(shiftTextEl);
-
-        const entry = getEntry(dateKey);
-        if (entry && !sickDays.includes(dateKey) && !vacationDays.includes(dateKey)) {
-            dayEl.classList.add('sonstige');
-            dayEl.style.backgroundColor = entry.color;
-            const isDark = isColorDark(entry.color);
-            dayEl.style.color = isDark ? '#fff' : '#000';
-            dateNumEl.style.color = dayEl.style.color;
-            if (entry.color.toUpperCase() === '#FFFFFF') dayEl.style.border = '2px solid #999';
-
-            const parts = [];
-            if (entry.text) parts.push(entry.text);
-            if (entry.time) parts.push('⏰ ' + entry.time);
-            if (entry.notify && entry.time) parts.push('🔔 Erinnerung');
-            if (parts.length) dayEl.title = parts.join(' · ');
-
-            if (entry.text || entry.time || entry.notify) {
-                const m = document.createElement('span');
-                m.className = 'sonstige-marker';
-                m.textContent = entry.icon || '🔔';
-                dayEl.appendChild(m);
+            if (date.getTime() === actualToday.getTime()) dayEl.classList.add('today');
+            if (holidays.has(dateKey)) { dayEl.classList.add('feiertag'); dayEl.title = 'Feiertag'; }
+            if (showFerien && ferienSet.has(dateKey)) {
+                dayEl.classList.add('ferien');
+                var fm = document.createElement('span');
+                fm.className = 'ferien-marker';
+                fm.textContent = 'F';
+                dayEl.appendChild(fm);
             }
-        }
 
-        dayEl.addEventListener('click', () => {
-            if (currentMode === 'krank') toggleDay(dateKey, 'krank');
-            else if (currentMode === 'urlaub') toggleDay(dateKey, 'urlaub');
-            else if (currentMode === 'sonstige') openEntryEditor(dateKey);
-            else {
-                toggleDay(dateKey, 'krank', true);
-                toggleDay(dateKey, 'urlaub', true);
-                toggleSonstigeRemove(dateKey);
+            var dateNumEl = document.createElement('span');
+            dateNumEl.className = 'date-num';
+            dateNumEl.textContent = day;
+            var shiftTextEl = document.createElement('span');
+            shiftTextEl.textContent = shift === '_' ? '' : shift;
+            dayEl.appendChild(dateNumEl);
+            dayEl.appendChild(shiftTextEl);
+
+            var entry = getEntry(dateKey);
+            if (entry && sickDays.indexOf(dateKey) < 0 && vacationDays.indexOf(dateKey) < 0) {
+                dayEl.classList.add('sonstige');
+                dayEl.style.backgroundColor = entry.color;
+                var isDark = isColorDark(entry.color);
+                dayEl.style.color = isDark ? '#fff' : '#000';
+                dateNumEl.style.color = dayEl.style.color;
+                if (entry.color.toUpperCase() === '#FFFFFF') dayEl.style.border = '2px solid #999';
+
+                var parts = [];
+                if (entry.text) parts.push(entry.text);
+                if (entry.time) parts.push('Uhrzeit: ' + entry.time);
+                if (entry.notify && entry.time) parts.push('Erinnerung aktiv');
+                if (parts.length) dayEl.title = parts.join(' \u00B7 ');
+
+                if (entry.text || entry.time || entry.notify) {
+                    var m = document.createElement('span');
+                    m.className = 'sonstige-marker';
+                    m.textContent = entry.icon || '\uD83D\uDD14';
+                    dayEl.appendChild(m);
+                }
             }
-        });
 
-        calendarEl.appendChild(dayEl);
+            dayEl.addEventListener('click', function(){
+                if (currentMode === 'krank') toggleDay(dateKey, 'krank');
+                else if (currentMode === 'urlaub') toggleDay(dateKey, 'urlaub');
+                else if (currentMode === 'sonstige') openEntryEditor(dateKey);
+                else { toggleDay(dateKey, 'krank', true); toggleDay(dateKey, 'urlaub', true); toggleSonstigeRemove(dateKey); }
+            });
+
+            calendarEl.appendChild(dayEl);
+        })(day);
     }
 
     renderHolidayNote(year, month);
@@ -580,55 +504,46 @@ function renderCalendar() {
 }
 
 function updateFerienList(year) {
-    const listEl = document.getElementById('ferienList');
-    const periods = FERIEN[year] || [];
-    if (periods.length === 0) { listEl.innerHTML = 'Keine Daten für dieses Jahr verfügbar.'; return; }
-    const f = s => { const [y,m,d] = s.split('-'); return `${d}.${m}.${y}`; };
-    listEl.innerHTML = periods.map(p => `${p.name}: ${f(p.start)} – ${f(p.end)}`).join('<br>');
+    var listEl = document.getElementById('ferienList');
+    var periods = FERIEN[year] || [];
+    if (periods.length === 0) { listEl.innerHTML = 'Keine Daten f\u00FCr dieses Jahr verf\u00FCgbar.'; return; }
+    function f(s){ var p = s.split('-'); return p[2]+'.'+p[1]+'.'+p[0]; }
+    listEl.innerHTML = periods.map(function(p){ return p.name + ': ' + f(p.start) + ' \u2013 ' + f(p.end); }).join('<br>');
 }
 
-function toggleDay(dateKey, type, forceRemove = false) {
-    let array = type === 'krank' ? sickDays : vacationDays;
-    const index = array.indexOf(dateKey);
+function toggleDay(dateKey, type, forceRemove) {
+    if (forceRemove === undefined) forceRemove = false;
+    var array = type === 'krank' ? sickDays : vacationDays;
+    var index = array.indexOf(dateKey);
     if (index > -1 || forceRemove) {
         if (index > -1) array.splice(index, 1);
     } else {
         array.push(dateKey);
-        if (type === 'krank') {
-            const vi = vacationDays.indexOf(dateKey); if (vi > -1) vacationDays.splice(vi, 1);
-        } else if (type === 'urlaub') {
-            const si = sickDays.indexOf(dateKey); if (si > -1) sickDays.splice(si, 1);
-        }
-        if (sonstigeDays[dateKey]) {
-            delete sonstigeDays[dateKey];
-            localStorage.setItem('schichtzeitSonstigeDays', JSON.stringify(sonstigeDays));
-        }
+        if (type === 'krank') { var vi = vacationDays.indexOf(dateKey); if (vi > -1) vacationDays.splice(vi, 1); }
+        else if (type === 'urlaub') { var si = sickDays.indexOf(dateKey); if (si > -1) sickDays.splice(si, 1); }
+        if (sonstigeDays[dateKey]) { delete sonstigeDays[dateKey]; localStorage.setItem('schichtzeitSonstigeDays', JSON.stringify(sonstigeDays)); }
     }
     if (type === 'krank' || forceRemove) localStorage.setItem('schichtzeitSickDays', JSON.stringify(sickDays));
     if (type === 'urlaub' || forceRemove) localStorage.setItem('schichtzeitVacationDays', JSON.stringify(vacationDays));
     renderCalendar();
 }
-
 function toggleSonstigeRemove(dateKey) {
-    if (sonstigeDays[dateKey]) {
-        delete sonstigeDays[dateKey];
-        localStorage.setItem('schichtzeitSonstigeDays', JSON.stringify(sonstigeDays));
-    }
+    if (sonstigeDays[dateKey]) { delete sonstigeDays[dateKey]; localStorage.setItem('schichtzeitSonstigeDays', JSON.stringify(sonstigeDays)); }
 }
 
 // ============================================================
-// МОДАЛЬНОЕ ОКНО
+// MODALFENSTER
 // ============================================================
-let editingDateKey = null;
-let editingSymbol = '🔔';
+var editingDateKey = null;
+var editingSymbol = '\uD83D\uDD14';
 
 function renderSymbolGrid() {
-    const grid = document.getElementById('symbolGrid');
-    grid.innerHTML = SYMBOLS.map(s =>
-        `<button type="button" class="symbol-btn${s===editingSymbol?' active':''}" data-symbol="${s}">${s}</button>`
-    ).join('');
-    grid.querySelectorAll('.symbol-btn').forEach(b => {
-        b.addEventListener('click', () => {
+    var grid = document.getElementById('symbolGrid');
+    grid.innerHTML = SYMBOLS.map(function(s){
+        return '<button type="button" class="symbol-btn' + (s===editingSymbol?' active':'') + '" data-symbol="' + s + '">' + s + '</button>';
+    }).join('');
+    grid.querySelectorAll('.symbol-btn').forEach(function(b){
+        b.addEventListener('click', function(){
             editingSymbol = b.getAttribute('data-symbol');
             renderSymbolGrid();
         });
@@ -637,50 +552,42 @@ function renderSymbolGrid() {
 
 function openEntryEditor(dateKey) {
     editingDateKey = dateKey;
-    const [y,m,d] = dateKey.split('-');
-    const entry = getEntry(dateKey);
-
+    var parts = dateKey.split('-');
+    var entry = getEntry(dateKey);
     document.getElementById('modalTitle').textContent = entry ? 'Eintrag bearbeiten' : 'Neuer Eintrag';
-    document.getElementById('modalDate').textContent = `${d}.${m}.${y}`;
+    document.getElementById('modalDate').textContent = parts[2] + '.' + parts[1] + '.' + parts[0];
     document.getElementById('entryText').value = entry ? (entry.text || '') : '';
     document.getElementById('entryTime').value = entry ? (entry.time || '') : '';
     document.getElementById('entryColor').value = entry ? entry.color : selectedColor;
     document.getElementById('entryNotify').checked = entry ? !!entry.notify : false;
     editingSymbol = (entry && entry.icon) ? entry.icon : selectedSymbol;
     renderSymbolGrid();
-
     document.getElementById('modalDeleteBtn').style.display = entry ? 'block' : 'none';
-
-    const hint = document.getElementById('notifHint');
-    if (!('Notification' in window)) hint.classList.add('active');
-    else hint.classList.remove('active');
-
+    var hint = document.getElementById('notifHint');
+    if (!('Notification' in window)) hint.classList.add('active'); else hint.classList.remove('active');
     document.getElementById('entryModal').classList.add('active');
 }
-
 function closeEntryEditor() {
     document.getElementById('entryModal').classList.remove('active');
     editingDateKey = null;
 }
 
-async function saveEntry() {
+function saveEntry() {
     if (!editingDateKey) return;
-    const text = document.getElementById('entryText').value.trim();
-    const time = document.getElementById('entryTime').value;
-    const color = document.getElementById('entryColor').value;
-    const notify = document.getElementById('entryNotify').checked;
+    var text = document.getElementById('entryText').value.trim();
+    var time = document.getElementById('entryTime').value;
+    var color = document.getElementById('entryColor').value;
+    var notify = document.getElementById('entryNotify').checked;
 
     if (notify && time && 'Notification' in window && Notification.permission === 'default') {
-        try { await Notification.requestPermission(); updateNotifButton(); } catch(e){}
+        try { Notification.requestPermission(); } catch(e){}
     }
-
-    sonstigeDays[editingDateKey] = { color, text, time, notify: notify && !!time, icon: editingSymbol };
-
+    sonstigeDays[editingDateKey] = { color: color, text: text, time: time, notify: notify && !!time, icon: editingSymbol };
     selectedSymbol = editingSymbol;
     localStorage.setItem('schichtzeitSymbol', selectedSymbol);
 
-    const si = sickDays.indexOf(editingDateKey); if (si > -1) sickDays.splice(si, 1);
-    const vi = vacationDays.indexOf(editingDateKey); if (vi > -1) vacationDays.splice(vi, 1);
+    var si = sickDays.indexOf(editingDateKey); if (si > -1) sickDays.splice(si, 1);
+    var vi = vacationDays.indexOf(editingDateKey); if (vi > -1) vacationDays.splice(vi, 1);
     localStorage.setItem('schichtzeitSickDays', JSON.stringify(sickDays));
     localStorage.setItem('schichtzeitVacationDays', JSON.stringify(vacationDays));
 
@@ -688,15 +595,13 @@ async function saveEntry() {
     delete notifiedFlags[editingDateKey + '_2h'];
     delete notifiedFlags[editingDateKey + '_now'];
     localStorage.setItem('schichtzeitNotified', JSON.stringify(notifiedFlags));
-
     localStorage.setItem('schichtzeitSonstigeDays', JSON.stringify(sonstigeDays));
     closeEntryEditor();
     renderCalendar();
 }
-
 function deleteEntry() {
     if (!editingDateKey) return;
-    if (!confirm('Diesen Eintrag wirklich löschen?')) return;
+    if (!confirm('Diesen Eintrag wirklich l\u00F6schen?')) return;
     delete sonstigeDays[editingDateKey];
     delete notifiedFlags[editingDateKey + '_1d'];
     delete notifiedFlags[editingDateKey + '_2h'];
@@ -710,272 +615,168 @@ function deleteEntry() {
 document.getElementById('modalSaveBtn').addEventListener('click', saveEntry);
 document.getElementById('modalDeleteBtn').addEventListener('click', deleteEntry);
 document.getElementById('modalCancelBtn').addEventListener('click', closeEntryEditor);
-document.getElementById('entryModal').addEventListener('click', (e) => {
-    if (e.target.id === 'entryModal') closeEntryEditor();
-});
+document.getElementById('entryModal').addEventListener('click', function(e){ if (e.target.id === 'entryModal') closeEntryEditor(); });
 
 // ============================================================
-// УВЕДОМЛЕНИЯ
+// BENACHRICHTIGUNGEN
 // ============================================================
 function fireNotification(title, body) {
     if (!('Notification' in window)) return;
     if (Notification.permission !== 'granted') return;
-    try {
-        new Notification(title, {
-            body: body,
-            icon: 'data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 180 180"%3E%3Crect width="180" height="180" rx="40" fill="%230056b3"/%3E%3Ctext x="90" y="120" font-size="90" text-anchor="middle" fill="white" font-family="Arial" font-weight="bold"%3ESZ%3C/text%3E%3C/svg%3E',
-            tag: title + '|' + body
-        });
-    } catch(e) { console.warn('Notification error', e); }
+    try { new Notification(title, { body: body, tag: title + '|' + body }); } catch(e){ console.warn(e); }
 }
-
 function updateNotifButton() {
-    const btn = document.getElementById('notifBtn');
-    if (!('Notification' in window)) {
-        btn.textContent = '🔕 Nicht unterstützt';
-        btn.disabled = true;
-        btn.style.background = '#999';
-        return;
-    }
+    var btn = document.getElementById('notifBtn');
+    if (!('Notification' in window)) { btn.textContent = 'Nicht unterst\u00FCtzt'; btn.disabled = true; btn.style.background = '#999'; return; }
     btn.disabled = false;
-    if (Notification.permission === 'granted') {
-        btn.textContent = '🔔 Erinnerungen aktiv';
-        btn.style.background = '#28a745';
-    } else if (Notification.permission === 'denied') {
-        btn.textContent = '🔕 Blockiert';
-        btn.style.background = '#dc3545';
-    } else {
-        btn.textContent = '🔔 Erinnerungen aktivieren';
-        btn.style.background = '#6f42c1';
-    }
+    if (Notification.permission === 'granted') { btn.textContent = 'Erinnerungen aktiv'; btn.style.background = '#28a745'; }
+    else if (Notification.permission === 'denied') { btn.textContent = 'Blockiert'; btn.style.background = '#dc3545'; }
+    else { btn.textContent = 'Erinnerungen aktivieren'; btn.style.background = '#6f42c1'; }
 }
-
-document.getElementById('notifBtn').addEventListener('click', async () => {
+document.getElementById('notifBtn').addEventListener('click', function(){
     if (!('Notification' in window)) return;
-    if (Notification.permission === 'denied') {
-        alert('Benachrichtigungen sind blockiert. Bitte in den Browsereinstellungen für diese Seite freigeben.');
-        return;
-    }
-    if (Notification.permission === 'granted') {
-        fireNotification('🔔 Test-Erinnerung', 'Benachrichtigungen funktionieren.');
-        return;
-    }
+    if (Notification.permission === 'denied') { alert('Benachrichtigungen sind blockiert. Bitte in den Browsereinstellungen f\u00FCr diese Seite freigeben.'); return; }
+    if (Notification.permission === 'granted') { fireNotification('Test-Erinnerung', 'Benachrichtigungen funktionieren.'); return; }
     try {
-        const perm = await Notification.requestPermission();
-        updateNotifButton();
-        if (perm === 'granted') {
-            fireNotification('🔔 Erinnerungen aktiviert', 'Du erhältst jetzt Benachrichtigungen für Termine.');
-            checkReminders();
-        }
-    } catch(e) { console.warn(e); }
+        Notification.requestPermission().then(function(perm){
+            updateNotifButton();
+            if (perm === 'granted') { fireNotification('Erinnerungen aktiviert', 'Du erh\u00E4ltst jetzt Benachrichtigungen f\u00FCr Termine.'); checkReminders(); }
+        });
+    } catch(e){ console.warn(e); }
 });
+
+function saveNotified() { localStorage.setItem('schichtzeitNotified', JSON.stringify(notifiedFlags)); }
 
 function checkReminders() {
     if (!('Notification' in window) || Notification.permission !== 'granted') return;
-
-    const now = new Date();
-    const nowMs = now.getTime();
-
-    Object.keys(sonstigeDays).forEach(dateKey => {
-        const entry = getEntry(dateKey);
+    var now = new Date();
+    var nowMs = now.getTime();
+    Object.keys(sonstigeDays).forEach(function(dateKey){
+        var entry = getEntry(dateKey);
         if (!entry || !entry.notify || !entry.time) return;
-
-        const [y,m,d] = dateKey.split('-').map(Number);
-        const [hh,mm] = entry.time.split(':').map(Number);
-        if (isNaN(hh) || isNaN(mm)) return;
-        const eventMs = new Date(y, m-1, d, hh, mm, 0, 0).getTime();
-        const diffMin = (eventMs - nowMs) / 60000;
-
-        const label = entry.text ? entry.text : 'Sonstiger Termin';
-        const icon = entry.icon || '🔔';
-
-        // за день — 23–25 часов до
-        if (diffMin >= 1380 && diffMin <= 1500) {
-            const key = dateKey + '_1d';
-            if (!notifiedFlags[key]) {
-                fireNotification(icon + ' Morgen ' + entry.time + ' Uhr', label);
-                notifiedFlags[key] = true;
-                saveNotified();
-            }
-        }
-
-        // за 2 часа — 90–150 мин до
-        if (diffMin >= 90 && diffMin <= 150) {
-            const key = dateKey + '_2h';
-            if (!notifiedFlags[key]) {
-                fireNotification('⏰ In 2 Stunden: ' + entry.time + ' Uhr', label);
-                notifiedFlags[key] = true;
-                saveNotified();
-            }
-        }
-
-        // точно сейчас — 0..60 мин после
-        if (diffMin >= -60 && diffMin <= 0) {
-            const key = dateKey + '_now';
-            if (!notifiedFlags[key]) {
-                fireNotification(icon + ' Jetzt: ' + entry.time + ' Uhr', label);
-                notifiedFlags[key] = true;
-                saveNotified();
-            }
-        }
+        var p = dateKey.split('-').map(Number);
+        var t = entry.time.split(':').map(Number);
+        if (isNaN(t[0]) || isNaN(t[1])) return;
+        var eventMs = new Date(p[0], p[1]-1, p[2], t[0], t[1], 0, 0).getTime();
+        var diffMin = (eventMs - nowMs) / 60000;
+        var label = entry.text ? entry.text : 'Sonstiger Termin';
+        var icon = entry.icon || '\uD83D\uDD14';
+        if (diffMin >= 1380 && diffMin <= 1500) { var k1 = dateKey + '_1d'; if (!notifiedFlags[k1]) { fireNotification(icon + ' Morgen ' + entry.time + ' Uhr', label); notifiedFlags[k1] = true; saveNotified(); } }
+        if (diffMin >= 90 && diffMin <= 150) { var k2 = dateKey + '_2h'; if (!notifiedFlags[k2]) { fireNotification('In 2 Stunden: ' + entry.time + ' Uhr', label); notifiedFlags[k2] = true; saveNotified(); } }
+        if (diffMin >= -60 && diffMin <= 0) { var k3 = dateKey + '_now'; if (!notifiedFlags[k3]) { fireNotification(icon + ' Jetzt: ' + entry.time + ' Uhr', label); notifiedFlags[k3] = true; saveNotified(); } }
     });
-
-    const cutoff = new Date(); cutoff.setDate(cutoff.getDate() - 7);
-    const cutoffKey = formatDateKey(cutoff);
-    let cleaned = false;
-    Object.keys(notifiedFlags).forEach(k => {
-        const datePart = k.split('_')[0];
-        if (datePart < cutoffKey) { delete notifiedFlags[k]; cleaned = true; }
-    });
+    var cutoff = new Date(); cutoff.setDate(cutoff.getDate() - 7);
+    var cutoffKey = formatDateKey(cutoff);
+    var cleaned = false;
+    Object.keys(notifiedFlags).forEach(function(k){ if (k.split('_')[0] < cutoffKey) { delete notifiedFlags[k]; cleaned = true; } });
     if (cleaned) saveNotified();
 }
-
-function saveNotified() {
-    localStorage.setItem('schichtzeitNotified', JSON.stringify(notifiedFlags));
-}
-
 setInterval(checkReminders, 30 * 1000);
 
 // ============================================================
-// СПИСОК БУДУЩИХ НАПОМИНАНИЙ
+// LISTE DER KOMMENDEN ERINNERUNGEN
 // ============================================================
-function getUpcomingReminders(limit = 10) {
-    const now = new Date();
-    const items = [];
-    Object.keys(sonstigeDays).forEach(k => {
-        const e = getEntry(k);
+function getUpcomingReminders(limit) {
+    var now = new Date();
+    var items = [];
+    Object.keys(sonstigeDays).forEach(function(k){
+        var e = getEntry(k);
         if (!e || !e.notify || !e.time) return;
-        const [y,m,d] = k.split('-').map(Number);
-        const [hh,mm] = e.time.split(':').map(Number);
-        if (isNaN(hh) || isNaN(mm)) return;
-        const dt = new Date(y, m-1, d, hh, mm, 0, 0);
-        if (dt.getTime() >= now.getTime() - 30 * 60000) {
-            items.push({key: k, entry: e, dt});
-        }
+        var p = k.split('-').map(Number);
+        var t = e.time.split(':').map(Number);
+        if (isNaN(t[0]) || isNaN(t[1])) return;
+        var dt = new Date(p[0], p[1]-1, p[2], t[0], t[1], 0, 0);
+        if (dt.getTime() >= now.getTime() - 30*60000) items.push({key:k, entry:e, dt:dt});
     });
-    items.sort((a,b) => a.dt - b.dt);
-    return items.slice(0, limit);
+    items.sort(function(a,b){ return a.dt - b.dt; });
+    return items.slice(0, limit || 10);
 }
-
 function updateRemindersList() {
-    const box = document.getElementById('remindersBox');
-    const list = document.getElementById('remindersList');
-    const items = getUpcomingReminders(10);
-
-    if (items.length === 0) {
-        box.style.display = 'none';
-        return;
-    }
+    var box = document.getElementById('remindersBox');
+    var list = document.getElementById('remindersList');
+    var items = getUpcomingReminders(10);
+    if (items.length === 0) { box.style.display = 'none'; return; }
     box.style.display = 'block';
-
-    const now = new Date();
-    list.innerHTML = items.map(it => {
-        const diffMin = Math.round((it.dt - now) / 60000);
-        let when;
+    var now = new Date();
+    list.innerHTML = items.map(function(it){
+        var diffMin = Math.round((it.dt - now) / 60000);
+        var when;
         if (diffMin < 0) when = 'jetzt';
         else if (diffMin < 60) when = 'in ' + diffMin + ' Min';
-        else if (diffMin < 1440) when = 'in ' + Math.round(diffMin / 60) + ' Std';
-        else when = 'in ' + Math.round(diffMin / 1440) + ' Tagen';
-
-        const dt = it.dt;
-        const dd = String(dt.getDate()).padStart(2,'0');
-        const mm = String(dt.getMonth()+1).padStart(2,'0');
-        const yyyy = dt.getFullYear();
-        const hh = String(dt.getHours()).padStart(2,'0');
-        const mn = String(dt.getMinutes()).padStart(2,'0');
-        const icon = it.entry.icon || '🔔';
-        const text = it.entry.text || 'Termin';
-
-        return `<li>${icon} <b>${dd}.${mm}.${yyyy}</b> · ${hh}:${mn} — ${escapeHtml(text)} <span class="when">(${when})</span></li>`;
+        else if (diffMin < 1440) when = 'in ' + Math.round(diffMin/60) + ' Std';
+        else when = 'in ' + Math.round(diffMin/1440) + ' Tagen';
+        var dt = it.dt;
+        var dd = String(dt.getDate()).padStart(2,'0'), mm = String(dt.getMonth()+1).padStart(2,'0'), yyyy = dt.getFullYear();
+        var hh = String(dt.getHours()).padStart(2,'0'), mn = String(dt.getMinutes()).padStart(2,'0');
+        var icon = it.entry.icon || '\uD83D\uDD14';
+        var text = it.entry.text || 'Termin';
+        return '<li>' + icon + ' <b>' + dd + '.' + mm + '.' + yyyy + '</b> \u00B7 ' + hh + ':' + mn + ' \u2013 ' + escapeHtml(text) + ' <span class="when">(' + when + ')</span></li>';
     }).join('');
 }
 setInterval(updateRemindersList, 60 * 1000);
 
 // ============================================================
-// ОБЗОР ГОДА
+// JAHRESUEBERSICHT
 // ============================================================
 function updateYearOverview() {
-    const year = currentDate.getFullYear();
+    var year = currentDate.getFullYear();
     document.getElementById('overviewYear').textContent = year;
-
-    const yearSick = sickDays.filter(d => d.startsWith(year + '-')).sort();
-    const yearVacation = vacationDays.filter(d => d.startsWith(year + '-')).sort();
-    const yearSonstige = Object.keys(sonstigeDays).filter(d => d.startsWith(year + '-')).sort();
-
+    var yearSick = sickDays.filter(function(d){ return d.indexOf(year+'-') === 0; }).sort();
+    var yearVacation = vacationDays.filter(function(d){ return d.indexOf(year+'-') === 0; }).sort();
+    var yearSonstige = Object.keys(sonstigeDays).filter(function(d){ return d.indexOf(year+'-') === 0; }).sort();
     document.getElementById('countKrank').textContent = yearSick.length;
     document.getElementById('countUrlaub').textContent = yearVacation.length;
     document.getElementById('countSonstige').textContent = yearSonstige.length;
-
-    const f = s => { const [y,m,d] = s.split('-'); return `${d}.${m}.${y}`; };
-
-    document.getElementById('listKrank').innerHTML = yearSick.length
-        ? yearSick.map(d => `<li>${f(d)}</li>`).join('')
-        : '<li>Keine Einträge</li>';
-    document.getElementById('listUrlaub').innerHTML = yearVacation.length
-        ? yearVacation.map(d => `<li>${f(d)}</li>`).join('')
-        : '<li>Keine Einträge</li>';
-    document.getElementById('listSonstige').innerHTML = yearSonstige.length
-        ? yearSonstige.map(d => {
-            const e = getEntry(d);
-            const extra = [];
-            if (e.icon) extra.push(e.icon);
-            if (e.time) extra.push('⏰ ' + e.time);
-            if (e.text) extra.push(escapeHtml(e.text));
-            const extraStr = extra.length ? ' — ' + extra.join(' · ') : '';
-            return `<li><span style="display:inline-block;width:12px;height:12px;background:${e.color};border:1px solid #999;border-radius:3px;vertical-align:middle;margin-right:6px;"></span>${f(d)}${extraStr}</li>`;
-        }).join('')
-        : '<li>Keine Einträge</li>';
+    function f(s){ var p = s.split('-'); return p[2]+'.'+p[1]+'.'+p[0]; }
+    document.getElementById('listKrank').innerHTML = yearSick.length ? yearSick.map(function(d){ return '<li>'+f(d)+'</li>'; }).join('') : '<li>Keine Eintr\u00E4ge</li>';
+    document.getElementById('listUrlaub').innerHTML = yearVacation.length ? yearVacation.map(function(d){ return '<li>'+f(d)+'</li>'; }).join('') : '<li>Keine Eintr\u00E4ge</li>';
+    document.getElementById('listSonstige').innerHTML = yearSonstige.length ? yearSonstige.map(function(d){
+        var e = getEntry(d);
+        var extra = [];
+        if (e.icon) extra.push(e.icon);
+        if (e.time) extra.push('Uhrzeit: ' + e.time);
+        if (e.text) extra.push(escapeHtml(e.text));
+        var extraStr = extra.length ? ' \u2013 ' + extra.join(' \u00B7 ') : '';
+        return '<li><span style="display:inline-block;width:12px;height:12px;background:'+e.color+';border:1px solid #999;border-radius:3px;vertical-align:middle;margin-right:6px;"></span>'+f(d)+extraStr+'</li>';
+    }).join('') : '<li>Keine Eintr\u00E4ge</li>';
 }
-
 function toggleYearOverview() {
-    const o = document.getElementById('yearOverview');
+    var o = document.getElementById('yearOverview');
     if (o.style.display === 'block') o.style.display = 'none';
     else { o.style.display = 'block'; updateYearOverview(); }
 }
-
 function resetData() {
-    if (confirm("Möchtest du wirklich alle Markierungen löschen?")) {
+    if (confirm('M\u00F6chtest du wirklich alle Markierungen l\u00F6schen?')) {
         sickDays = []; vacationDays = []; sonstigeDays = {}; notifiedFlags = {};
-        localStorage.removeItem('schichtzeitSickDays');
-        localStorage.removeItem('schichtzeitVacationDays');
-        localStorage.removeItem('schichtzeitSonstigeDays');
-        localStorage.removeItem('schichtzeitNotified');
+        localStorage.removeItem('schichtzeitSickDays'); localStorage.removeItem('schichtzeitVacationDays');
+        localStorage.removeItem('schichtzeitSonstigeDays'); localStorage.removeItem('schichtzeitNotified');
         renderCalendar();
     }
 }
 
 // ============================================================
-// СОБЫТИЯ
+// EREIGNISSE
 // ============================================================
-document.getElementById('prevBtn').addEventListener('click', () => {
-    currentDate.setMonth(currentDate.getMonth() - 1);
-    renderCalendar();
-});
-document.getElementById('nextBtn').addEventListener('click', () => {
-    currentDate.setMonth(currentDate.getMonth() + 1);
-    renderCalendar();
-});
-document.getElementById('groupSelect').addEventListener('change', (e) => {
-    localStorage.setItem('schichtzeitGroup', e.target.value);
-    renderCalendar();
-});
-document.querySelectorAll('.mode-btn').forEach(btn => {
-    btn.addEventListener('click', (e) => {
-        document.querySelectorAll('.mode-btn').forEach(b => b.classList.remove('active'));
+document.getElementById('prevBtn').addEventListener('click', function(){ currentDate.setMonth(currentDate.getMonth()-1); renderCalendar(); });
+document.getElementById('nextBtn').addEventListener('click', function(){ currentDate.setMonth(currentDate.getMonth()+1); renderCalendar(); });
+document.getElementById('groupSelect').addEventListener('change', function(e){ localStorage.setItem('schichtzeitGroup', e.target.value); renderCalendar(); });
+document.querySelectorAll('.mode-btn').forEach(function(btn){
+    btn.addEventListener('click', function(e){
+        document.querySelectorAll('.mode-btn').forEach(function(b){ b.classList.remove('active'); });
         e.target.classList.add('active');
         currentMode = e.target.getAttribute('data-mode');
-        const picker = document.getElementById('colorPickerRow');
+        var picker = document.getElementById('colorPickerRow');
         picker.classList.toggle('active', currentMode === 'sonstige');
     });
 });
-document.getElementById('sonstigeColor').addEventListener('input', (e) => {
+document.getElementById('sonstigeColor').addEventListener('input', function(e){
     selectedColor = e.target.value;
     localStorage.setItem('schichtzeitColor', selectedColor);
     document.getElementById('legendSonstige').style.background = selectedColor;
     updateColorPresetsActive();
 });
-document.querySelectorAll('.color-preset').forEach(btn => {
-    btn.addEventListener('click', () => {
+document.querySelectorAll('.color-preset').forEach(function(btn){
+    btn.addEventListener('click', function(){
         selectedColor = btn.getAttribute('data-color');
         document.getElementById('sonstigeColor').value = selectedColor;
         document.getElementById('legendSonstige').style.background = selectedColor;
@@ -984,20 +785,25 @@ document.querySelectorAll('.color-preset').forEach(btn => {
     });
 });
 document.getElementById('legendSonstige').style.background = selectedColor;
-updateColorPresetsActive();
 
 function toggleFerien() {
     showFerien = !showFerien;
-    const btn = document.getElementById('ferienBtn');
-    const note = document.getElementById('ferienNote');
+    var btn = document.getElementById('ferienBtn');
+    var note = document.getElementById('ferienNote');
     if (showFerien) { btn.style.background = '#0d8a99'; note.style.display = 'block'; }
     else { btn.style.background = '#17a2b8'; note.style.display = 'none'; }
     renderCalendar();
 }
 
 // ============================================================
-// СТАРТ
+// START
 // ============================================================
+document.getElementById('groupSelect').value = savedGroup;
+document.getElementById('sonstigeColor').value = selectedColor;
+updateColorPresetsActive();
 syncClock();
 updateNotifButton();
 setTimeout(checkReminders, 3000);
+</script>
+</body>
+</html>
