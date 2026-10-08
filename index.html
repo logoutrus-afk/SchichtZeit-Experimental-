@@ -13,7 +13,7 @@
 <meta name="theme-color" content="#0056b3">
 <link rel="apple-touch-icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 180 180'%3E%3Crect width='180' height='180' rx='40' fill='%230056b3'/%3E%3Ctext x='90' y='120' font-size='90' text-anchor='middle' fill='white' font-family='Arial' font-weight='bold'%3ESZ%3C/text%3E%3C/svg%3E">
 <style>
-body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial,sans-serif;background:#f4f4f9;color:#333;text-align:center;padding:4px;padding-top:env(safe-area-inset-top,4px);padding-bottom:env(safe-area-inset-bottom,4px);margin:0;-webkit-tap-highlight-color:transparent;font-size:16px}
+body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial,sans-serif;background:#f4f4f9;color:#333;text-align:center;padding:6px;padding-top:env(safe-area-inset-top,6px);padding-bottom:env(safe-area-inset-bottom,6px);margin:0;-webkit-tap-highlight-color:transparent;font-size:16px}
 .container{max-width:1000px;margin:0 auto;background:#fff;padding:10px;border-radius:12px;box-shadow:0 4px 15px rgba(0,0,0,0.1)}
 h2{margin-top:0;color:#0056b3;font-size:26px;letter-spacing:.3px}
 .online-status{font-size:13px;padding:5px 12px;border-radius:14px;display:inline-block;margin-bottom:12px;font-weight:bold}
@@ -22,7 +22,7 @@ h2{margin-top:0;color:#0056b3;font-size:26px;letter-spacing:.3px}
 .online-status.loading{background:#fff3cd;color:#856404}
 .top-row{display:flex;justify-content:center;align-items:center;margin-bottom:12px;font-size:17px}
 .nav-row{display:flex;justify-content:center;align-items:center;gap:12px;margin-bottom:12px;flex-wrap:nowrap}
-.nav-row button#prevBtn,.nav-row button#nextBtn{padding:2px 6px;font-size:11px;min-width:26px;height:26px;line-height:1;border-radius:6px;font-weight:bold}
+.nav-row button#prevBtn,.nav-row button#nextBtn{padding:6px 14px;font-size:16px;border-radius:8px;font-weight:bold}
 select,button{padding:11px 16px;font-size:16px;border-radius:8px;border:1px solid #ccc;background:#fff;cursor:pointer;font-family:inherit}
 button{background:#007bff;color:#fff;border:none;font-weight:bold}
 button:active{background:#0056b3}
@@ -39,13 +39,14 @@ button:active{background:#0056b3}
 .color-preset .preset-letter{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);font-size:14px;font-weight:bold;color:#000;pointer-events:none}
 .color-preset[data-color="#1E90FF"] .preset-letter,.color-preset[data-color="#FF4500"] .preset-letter{color:#fff}
 #monthDisplay{font-size:19px;font-weight:bold;min-width:160px;display:inline-block}
-.calendar{display:grid;grid-template-columns:repeat(7,1fr);gap:5px;touch-action:pan-y}
+.calendar{display:grid;grid-template-columns:repeat(7,1fr);gap:5px;touch-action:pan-y;max-width:760px;margin:0 auto}
 .calendar.anim-left{animation:cal-slide-left .28s ease}
 .calendar.anim-right{animation:cal-slide-right .28s ease}
 @keyframes cal-slide-left{from{opacity:.35;transform:translateX(24px)}to{opacity:1;transform:translateX(0)}}
 @keyframes cal-slide-right{from{opacity:.35;transform:translateX(-24px)}to{opacity:1;transform:translateX(0)}}
 .day-header{font-weight:bold;font-size:15px;padding:8px 0;color:#555}
-.day{aspect-ratio:1;display:flex;flex-direction:column;align-items:center;justify-content:center;border-radius:10px;font-size:clamp(14px,3.8vw,20px);font-weight:900;border:1px solid #eee;position:relative;cursor:pointer;transition:transform 0.1s;line-height:1;-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale;text-rendering:optimizeLegibility}
+.day{aspect-ratio:1;display:flex;flex-direction:column;align-items:center;justify-content:center;border-radius:10px;font-size:clamp(14px,2.2vw,26px);font-weight:900;border:1px solid #eee;position:relative;cursor:pointer;transition:transform 0.1s;line-height:1;-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale;text-rendering:optimizeLegibility}
+@media (min-width:900px){ .day{aspect-ratio:auto;height:78px} }
 .day:active{transform:scale(0.95)}
 .day.F{background-color:#FFD700;color:#000}
 .day.S{background-color:#FF4500;color:#fff}
@@ -63,10 +64,10 @@ button:active{background:#0056b3}
 @keyframes pulse-glow{0%,100%{box-shadow:0 0 0 0 rgba(205,127,50,0.9);border-color:#CD7F32}50%{box-shadow:0 0 15px 8px rgba(205,127,50,0.8);border-color:#FFA500}}
 .day.ferien{border:2px dashed #17a2b8;z-index:1}
 .ferien-marker{position:absolute;bottom:3px;left:5px;font-size:clamp(10px,2.5vw,14px);color:#17a2b8;font-weight:bold;background:#fff;border-radius:3px;padding:0 4px;line-height:1.1}
-.day .date-num{font-size:clamp(12px,3.2vw,17px);position:absolute;top:5px;left:7px;color:#555;font-weight:bold;line-height:1}
+.day .date-num{font-size:clamp(12px,1.8vw,17px);position:absolute;top:5px;left:7px;color:#555;font-weight:bold;line-height:1}
 .day.sonstige .date-num{color:inherit;font-weight:bold}
-.sonstige-marker{position:absolute;top:3px;right:4px;font-size:clamp(16px,4.4vw,26px);line-height:1;pointer-events:none;filter:drop-shadow(0 1px 2px rgba(0,0,0,0.6))}
-.sonstige-preview{position:absolute;bottom:4px;left:4px;right:4px;font-size:clamp(9px,2.4vw,13px);line-height:1.05;text-align:center;overflow:hidden;white-space:nowrap;text-overflow:ellipsis;opacity:0.95;pointer-events:none;font-weight:bold}
+.sonstige-marker{position:absolute;top:3px;right:4px;font-size:clamp(16px,2.6vw,26px);line-height:1;pointer-events:none}
+.sonstige-preview{position:absolute;bottom:4px;left:4px;right:4px;font-size:clamp(9px,1.4vw,13px);line-height:1.05;text-align:center;overflow:hidden;white-space:nowrap;text-overflow:ellipsis;opacity:0.95;pointer-events:none;font-weight:bold}
 .legend{margin-top:18px;font-size:13px;display:flex;justify-content:center;gap:10px;flex-wrap:wrap}
 .legend-item{display:flex;align-items:center;gap:5px}
 .legend-box{width:16px;height:16px;border-radius:4px;border:1px solid #ccc}
@@ -101,13 +102,13 @@ button:active{background:#0056b3}
 .modal h3{margin:0 0 6px;color:#0056b3;font-size:20px}
 .modal .modal-date{font-size:14px;color:#777;margin-bottom:14px}
 .modal label{display:block;font-size:15px;font-weight:bold;margin-bottom:12px;color:#333}
-.modal input[type="text"],.modal input[type="time"]{width:100%;padding:12px 12px;font-size:17px;border:1px solid #ccc;border-radius:8px;box-sizing:border-box;margin-top:5px;font-family:inherit}
+.modal input[type="text"],.modal input[type="time"]{width:100%;padding:12px;font-size:17px;border:1px solid #ccc;border-radius:8px;box-sizing:border-box;margin-top:5px;font-family:inherit}
 .modal input[type="color"]{width:56px;height:40px;border:2px solid #999;border-radius:8px;cursor:pointer;padding:0;background:#fff;margin-top:5px;vertical-align:middle}
 .symbol-grid{display:grid;grid-template-columns:repeat(8,1fr);gap:5px;margin-top:5px}
 .symbol-btn{font-size:22px;padding:8px 0;border:1px solid #ccc;border-radius:8px;background:#fff;cursor:pointer;line-height:1;font-weight:normal;color:#333}
 .symbol-btn.active{background:#0056b3;border-color:#0056b3;box-shadow:0 0 0 2px rgba(0,86,179,0.35)}
 .symbol-btn:active{transform:scale(0.92)}
-.modal .checkbox-row{display:flex;align-items:flex-start;gap:10px;font-weight:normal;font-size:14.5px;color:#444;background:#f1f3f5;padding:12px 12px;border-radius:8px;line-height:1.45}
+.modal .checkbox-row{display:flex;align-items:flex-start;gap:10px;font-weight:normal;font-size:14.5px;color:#444;background:#f1f3f5;padding:12px;border-radius:8px;line-height:1.45}
 .modal .checkbox-row input{margin-top:3px;transform:scale(1.3);flex-shrink:0}
 .modal-buttons{display:flex;gap:10px;margin-top:16px;flex-wrap:wrap}
 .modal-buttons button{flex:1;min-width:90px;padding:13px 10px;font-size:16px}
@@ -118,14 +119,14 @@ button:active{background:#0056b3}
 .notif-banner strong{display:block;font-size:17px;margin-bottom:4px}
 .notif-banner-close{position:absolute;top:8px;right:10px;background:transparent;color:#fff;border:none;font-size:24px;line-height:1;padding:2px 10px;cursor:pointer;font-weight:bold;font-family:inherit}
 .notif-info{font-size:12px;color:#666;background:#f1f3f5;padding:8px 10px;border-radius:6px;margin-top:12px;line-height:1.5;text-align:left}
-.err-box{display:none;background:#f8d7da;color:#721c24;padding:10px 12px;border-radius:8px;border:1px solid #dc3545;margin-bottom:10px;font-size:13px;text-align:left;word-break:break-word;font-family:monospace}
+.err-box{display:none;background:#f8d7da;color:#721c24;padding:10px;border-radius:8px;border:1px solid #dc3545;margin-bottom:10px;font-size:13px;text-align:left;word-break:break-word;font-family:monospace}
 </style>
 </head>
 <body>
 <div class="container">
 <h2>Schichtzeit</h2>
 <div class="err-box" id="errBox"></div>
-<div id="onlineStatus" class="online-status loading">Datum wird geladen...</div>
+<div id="onlineStatus" class="online-status loading">Uhr wird geladen...</div>
 
 <div class="top-row">
 <label>Schicht: 
@@ -140,9 +141,9 @@ button:active{background:#0056b3}
 </div>
 
 <div class="nav-row">
-<button id="prevBtn" title="Zur&uuml;ck">&larr;</button>
+<button id="prevBtn">&larr; Zur&uuml;ck</button>
 <span id="monthDisplay"></span>
-<button id="nextBtn" title="Weiter">&rarr;</button>
+<button id="nextBtn">Weiter &rarr;</button>
 </div>
 
 <div class="mode-controls">
@@ -192,7 +193,7 @@ button:active{background:#0056b3}
 <input type="file" id="restoreFileInput" accept=".json" style="display:none;">
 </div>
 
-<div class="notif-info" id="notifInfo">
+<div class="notif-info">
     Erinnerungen werden als Banner oben und per Ton angezeigt &mdash; auch in Browsern ohne System-Benachrichtigungen. Die Seite muss daf&uuml;r ge&ouml;ffnet sein.
 </div>
 
@@ -268,17 +269,7 @@ button:active{background:#0056b3}
 <script>
 window.addEventListener('error', function(e){
     var box = document.getElementById('errBox');
-    if (box) {
-        box.style.display = 'block';
-        box.textContent = 'JS-Fehler: ' + (e.message || e.error || 'unbekannt') + ' @ Zeile ' + (e.lineno || '?');
-    }
-});
-window.addEventListener('unhandledrejection', function(e){
-    var box = document.getElementById('errBox');
-    if (box) {
-        box.style.display = 'block';
-        box.textContent = 'Promise-Fehler: ' + (e.reason && e.reason.message ? e.reason.message : String(e.reason));
-    }
+    if (box) { box.style.display = 'block'; box.textContent = 'Fehler: ' + (e.message || e.error || '?') + ' @ ' + (e.lineno || '?'); }
 });
 
 var BASE_DATE_UTC = Date.UTC(2026, 9, 1);
@@ -302,18 +293,9 @@ var actualToday = new Date(); actualToday.setHours(0,0,0,0);
 var selectedColor = localStorage.getItem('schichtzeitColor') || '#FFD700';
 var selectedSymbol = localStorage.getItem('schichtzeitSymbol') || '\uD83D\uDD14';
 
-function safeParse(s, fallback) {
-    try { var v = JSON.parse(s); return (v === null || v === undefined) ? fallback : v; }
-    catch(e){ return fallback; }
-}
-function safeGetArray(key) {
-    var v = safeParse(localStorage.getItem(key), []);
-    return Array.isArray(v) ? v : [];
-}
-function safeGetObject(key) {
-    var v = safeParse(localStorage.getItem(key), {});
-    return (v && typeof v === 'object' && !Array.isArray(v)) ? v : {};
-}
+function safeParse(s, fallback) { try { var v = JSON.parse(s); return (v == null) ? fallback : v; } catch(e){ return fallback; } }
+function safeGetArray(k) { var v = safeParse(localStorage.getItem(k), []); return Array.isArray(v) ? v : []; }
+function safeGetObject(k) { var v = safeParse(localStorage.getItem(k), {}); return (v && typeof v === 'object' && !Array.isArray(v)) ? v : {}; }
 
 var sickDays = safeGetArray('schichtzeitSickDays');
 var vacationDays = safeGetArray('schichtzeitVacationDays');
@@ -323,12 +305,8 @@ var sonstigeDays = safeGetObject('schichtzeitSonstigeDays');
     var changed = false;
     Object.keys(sonstigeDays).forEach(function(k){
         var v = sonstigeDays[k];
-        if (typeof v === 'string') {
-            sonstigeDays[k] = { color:v, text:'', time:'', notify:false, icon:'\uD83D\uDD14' };
-            changed = true;
-        } else if (v && typeof v === 'object' && !v.icon) {
-            v.icon = '\uD83D\uDD14'; changed = true;
-        }
+        if (typeof v === 'string') { sonstigeDays[k] = { color:v, text:'', time:'', notify:false, icon:'\uD83D\uDD14' }; changed = true; }
+        else if (v && typeof v === 'object' && !v.icon) { v.icon = '\uD83D\uDD14'; changed = true; }
     });
     if (changed) { try { localStorage.setItem('schichtzeitSonstigeDays', JSON.stringify(sonstigeDays)); } catch(e){} }
 })();
@@ -336,6 +314,9 @@ var sonstigeDays = safeGetObject('schichtzeitSonstigeDays');
 var notifiedFlags = safeGetObject('schichtzeitNotified');
 var savedGroup = localStorage.getItem('schichtzeitGroup') || '1';
 
+// ============================================================
+// UHR — nur Gerätezeit, keine API
+// ============================================================
 function updateOnlineStatus(text, status) {
     var el = document.getElementById('onlineStatus');
     if (!el) return;
@@ -369,6 +350,9 @@ document.addEventListener('visibilitychange', function(){
 });
 window.addEventListener('focus', function(){ syncClock(); checkReminders(); });
 
+// ============================================================
+// FEIERTAGE
+// ============================================================
 function calculateEaster(year) {
     var a=year%19,b=Math.floor(year/100),c=year%100,d=Math.floor(b/4),e=b%4,f=Math.floor((b+8)/25),g=Math.floor((b-f+1)/3),h=(19*a+b-d-g+15)%30,i=Math.floor(c/4),k=c%4,l=(32+2*e+2*i-h-k)%7,m=Math.floor((a+11*h+22*l)/451),month=Math.floor((h+l-7*m+114)/31),day=((h+l-7*m+114)%31)+1;
     return new Date(year, month-1, day);
@@ -387,12 +371,11 @@ function getHolidayList(year) {
     list.sort(function(a,b){return a.date-b.date;});
     return list;
 }
-function getHolidaySet(year) {
-    var s = new Set();
-    getHolidayList(year).forEach(function(h){ s.add(h.key); });
-    return s;
-}
+function getHolidaySet(year) { var s = new Set(); getHolidayList(year).forEach(function(h){ s.add(h.key); }); return s; }
 
+// ============================================================
+// FERIEN
+// ============================================================
 var FERIEN = {
 2026:[
 {name:"Winterferien",start:"2026-02-16",end:"2026-02-20"},
@@ -432,6 +415,9 @@ function getFerienSet(year) {
     return set;
 }
 
+// ============================================================
+// SCHICHT
+// ============================================================
 function formatDateKey(date) {
     return date.getFullYear()+'-'+String(date.getMonth()+1).padStart(2,'0')+'-'+String(date.getDate()).padStart(2,'0');
 }
@@ -446,6 +432,9 @@ function getShift(date, group) {
     return CYCLE_35[index];
 }
 
+// ============================================================
+// HILFE
+// ============================================================
 function isColorDark(hex) {
     var c = String(hex).replace('#','');
     var r = parseInt(c.substr(0,2),16), g = parseInt(c.substr(2,2),16), b = parseInt(c.substr(4,2),16);
@@ -462,6 +451,9 @@ function escapeHtml(s) {
     return String(s).replace(/[&<>"']/g, function(c){ return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]; });
 }
 
+// ============================================================
+// TON
+// ============================================================
 var audioCtx = null;
 function ensureAudio() {
     if (audioCtx) return audioCtx;
@@ -495,6 +487,9 @@ function playNotifySound() {
     tone(1568.0, 0.42, 0.45, 0.14);
 }
 
+// ============================================================
+// MONATSWECHSEL + SWIPE
+// ============================================================
 var suppressClick = false;
 function changeMonth(delta) {
     currentDate.setMonth(currentDate.getMonth() + delta);
@@ -531,6 +526,9 @@ function animateCalendar(direction) {
     }, {passive:true});
 })();
 
+// ============================================================
+// DARSTELLUNG
+// ============================================================
 function renderHolidayNote(year, month) {
     var listEl = document.getElementById('holidayList');
     if (!listEl) return;
@@ -614,13 +612,8 @@ function renderCalendar() {
             dayEl.classList.add('sonstige');
             dayEl.style.backgroundColor = entry.color;
             var isDark = isColorDark(entry.color);
-            if (isDark) {
-                dayEl.style.color = '#fff';
-                dayEl.setAttribute('data-dark','1');
-            } else {
-                dayEl.style.color = '#000';
-                dayEl.setAttribute('data-dark','0');
-            }
+            if (isDark) { dayEl.style.color = '#fff'; dayEl.setAttribute('data-dark','1'); }
+            else { dayEl.style.color = '#000'; dayEl.setAttribute('data-dark','0'); }
             dn.style.color = dayEl.style.color;
             if (String(entry.color).toUpperCase() === '#FFFFFF') dayEl.style.border = '2px solid #999';
 
@@ -678,21 +671,18 @@ function toggleDay(dateKey, type, forceRemove) {
         if (index > -1) array.splice(index, 1);
     } else {
         array.push(dateKey);
-        if (type === 'krank') {
-            var vi = vacationDays.indexOf(dateKey); if (vi > -1) vacationDays.splice(vi, 1);
-        } else if (type === 'urlaub') {
-            var si = sickDays.indexOf(dateKey); if (si > -1) sickDays.splice(si, 1);
-        }
-        if (sonstigeDays[dateKey]) {
-            delete sonstigeDays[dateKey];
-            localStorage.setItem('schichtzeitSonstigeDays', JSON.stringify(sonstigeDays));
-        }
+        if (type === 'krank') { var vi = vacationDays.indexOf(dateKey); if (vi > -1) vacationDays.splice(vi, 1); }
+        else if (type === 'urlaub') { var si = sickDays.indexOf(dateKey); if (si > -1) sickDays.splice(si, 1); }
+        if (sonstigeDays[dateKey]) { delete sonstigeDays[dateKey]; localStorage.setItem('schichtzeitSonstigeDays', JSON.stringify(sonstigeDays)); }
     }
     if (type === 'krank' || forceRemove) localStorage.setItem('schichtzeitSickDays', JSON.stringify(sickDays));
     if (type === 'urlaub' || forceRemove) localStorage.setItem('schichtzeitVacationDays', JSON.stringify(vacationDays));
     renderCalendar();
 }
 
+// ============================================================
+// MODAL
+// ============================================================
 var editingDateKey = null;
 var editingSymbol = '\uD83D\uDD14';
 
@@ -786,6 +776,9 @@ document.getElementById('modalDeleteBtn').addEventListener('click', deleteEntry)
 document.getElementById('modalCancelBtn').addEventListener('click', closeEntryEditor);
 document.getElementById('entryModal').addEventListener('click', function(e){ if (e.target.id === 'entryModal') closeEntryEditor(); });
 
+// ============================================================
+// BENACHRICHTIGUNGEN
+// ============================================================
 function showBanner(title, body) {
     var old = document.getElementById('notifBanner');
     if (old) old.parentNode.removeChild(old);
@@ -814,13 +807,9 @@ function updateNotifButton() {
     if (!btn) return;
     btn.disabled = false;
     var hasSystem = ('Notification' in window);
-    if (hasSystem && Notification.permission === 'granted') {
-        btn.textContent = 'Erinnerungen aktiv'; btn.style.background = '#28a745';
-    } else if (hasSystem && Notification.permission === 'denied') {
-        btn.textContent = 'Erinnerungen aktiv (Banner)'; btn.style.background = '#00796b';
-    } else {
-        btn.textContent = 'Erinnerungen aktivieren'; btn.style.background = '#00796b';
-    }
+    if (hasSystem && Notification.permission === 'granted') { btn.textContent = 'Erinnerungen aktiv'; btn.style.background = '#28a745'; }
+    else if (hasSystem && Notification.permission === 'denied') { btn.textContent = 'Erinnerungen aktiv (Banner)'; btn.style.background = '#00796b'; }
+    else { btn.textContent = 'Erinnerungen aktivieren'; btn.style.background = '#00796b'; }
 }
 document.getElementById('notifBtn').addEventListener('click', function(){
     unlockAudio();
@@ -833,6 +822,9 @@ document.getElementById('notifBtn').addEventListener('click', function(){
 });
 function saveNotified() { localStorage.setItem('schichtzeitNotified', JSON.stringify(notifiedFlags)); }
 
+// ============================================================
+// PRUEFUNG DER ERINNERUNGEN
+// ============================================================
 function checkReminders() {
     var nowMs = Date.now();
     Object.keys(sonstigeDays).forEach(function(dateKey){
@@ -850,7 +842,7 @@ function checkReminders() {
 
         var triggers = [
             { key:'_1d',  lo: 1320, hi: 1560, msg: icon + ' Morgen um ' + entry.time + ' Uhr' },
-            { key:'_2h',  lo: 60,   hi: 180,  msg: '\u23F0 In 2 Stunden: ' + entry.time + ' Uhr' },
+            { key:'_2h',  lo: 60,   hi: 180,  msg: 'In 2 Stunden: ' + entry.time + ' Uhr' },
             { key:'_30m', lo: 5,    hi: 55,   msg: icon + ' In 30 Minuten: ' + entry.time + ' Uhr' }
         ];
 
@@ -878,6 +870,9 @@ function checkReminders() {
 }
 setInterval(checkReminders, 30 * 1000);
 
+// ============================================================
+// KOMMENDE ERINNERUNGEN
+// ============================================================
 function getUpcomingReminders(limit) {
     var now = new Date();
     var items = [];
@@ -918,6 +913,9 @@ function updateRemindersList() {
 }
 setInterval(updateRemindersList, 60 * 1000);
 
+// ============================================================
+// JAHRESUEBERSICHT
+// ============================================================
 function updateYearOverview() {
     var year = currentDate.getFullYear();
     document.getElementById('overviewYear').textContent = year;
@@ -965,6 +963,9 @@ function resetData() {
     }
 }
 
+// ============================================================
+// BACKUP / RESTORE
+// ============================================================
 function createBackup() {
     var backup = { version: 1, date: new Date().toISOString(),
         group: document.getElementById('groupSelect').value,
@@ -1017,6 +1018,9 @@ document.getElementById('restoreFileInput').addEventListener('change', function(
     reader.readAsText(file);
 });
 
+// ============================================================
+// EREIGNISSE
+// ============================================================
 document.getElementById('prevBtn').addEventListener('click', function(){ unlockAudio(); changeMonth(-1); });
 document.getElementById('nextBtn').addEventListener('click', function(){ unlockAudio(); changeMonth(1); });
 document.getElementById('groupSelect').addEventListener('change', function(e){ localStorage.setItem('schichtzeitGroup', e.target.value); renderCalendar(); });
@@ -1055,6 +1059,9 @@ function toggleFerien() {
     renderCalendar();
 }
 
+// ============================================================
+// START
+// ============================================================
 document.getElementById('groupSelect').value = savedGroup;
 document.getElementById('sonstigeColor').value = selectedColor;
 updateColorPresetsActive();
