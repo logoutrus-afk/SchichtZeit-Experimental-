@@ -38,7 +38,11 @@ button:active{background:#0056b3}
 .color-preset .preset-letter{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);font-size:11px;font-weight:bold;color:#000;pointer-events:none}
 .color-preset[data-color="#1E90FF"] .preset-letter,.color-preset[data-color="#FF4500"] .preset-letter{color:#fff}
 #monthDisplay{font-size:16px;font-weight:bold;min-width:130px;display:inline-block}
-.calendar{display:grid;grid-template-columns:repeat(7,1fr);gap:4px}
+.calendar{display:grid;grid-template-columns:repeat(7,1fr);gap:4px;touch-action:pan-y}
+.calendar.anim-left{animation:cal-slide-left .28s ease}
+.calendar.anim-right{animation:cal-slide-right .28s ease}
+@keyframes cal-slide-left{from{opacity:.35;transform:translateX(24px)}to{opacity:1;transform:translateX(0)}}
+@keyframes cal-slide-right{from{opacity:.35;transform:translateX(-24px)}to{opacity:1;transform:translateX(0)}}
 .day-header{font-weight:bold;font-size:12px;padding:5px 0;color:#666}
 .day{aspect-ratio:1;display:flex;flex-direction:column;align-items:center;justify-content:center;border-radius:6px;font-size:14px;font-weight:bold;border:1px solid #eee;position:relative;cursor:pointer;transition:transform 0.1s}
 .day:active{transform:scale(0.95)}
@@ -55,10 +59,11 @@ button:active{background:#0056b3}
 .day.feiertag{border:3px solid #CD7F32;animation:pulse-glow 3s infinite ease-in-out;z-index:2}
 @keyframes pulse-glow{0%,100%{box-shadow:0 0 0 0 rgba(205,127,50,0.9);border-color:#CD7F32}50%{box-shadow:0 0 15px 8px rgba(205,127,50,0.8);border-color:#FFA500}}
 .day.ferien{border:2px dashed #17a2b8;z-index:1}
-.ferien-marker{position:absolute;bottom:1px;right:2px;font-size:8px;color:#17a2b8;font-weight:bold;background:#fff;border-radius:2px;padding:0 2px}
+.ferien-marker{position:absolute;bottom:1px;left:2px;font-size:8px;color:#17a2b8;font-weight:bold;background:#fff;border-radius:2px;padding:0 2px}
 .day .date-num{font-size:11.5px;position:absolute;top:2px;left:4px;color:#555;font-weight:normal}
 .day.sonstige .date-num{color:#fff;text-shadow:0 0 3px rgba(0,0,0,0.8)}
-.sonstige-marker{position:absolute;bottom:0;right:1px;font-size:12px;line-height:1;pointer-events:none;filter:drop-shadow(0 0 1px rgba(0,0,0,0.5))}
+/* Symbol jetzt oben rechts */
+.sonstige-marker{position:absolute;top:0;right:1px;font-size:12px;line-height:1;pointer-events:none;filter:drop-shadow(0 0 1px rgba(0,0,0,0.6))}
 .sonstige-preview{position:absolute;bottom:1px;left:1px;right:1px;font-size:7px;line-height:1.05;text-align:center;overflow:hidden;white-space:nowrap;text-overflow:ellipsis;opacity:0.9;pointer-events:none;font-weight:normal}
 .legend{margin-top:15px;font-size:11px;display:flex;justify-content:center;gap:8px;flex-wrap:wrap}
 .legend-item{display:flex;align-items:center;gap:4px}
@@ -253,7 +258,6 @@ button:active{background:#0056b3}
 // ============================================================
 var BASE_DATE_UTC = Date.UTC(2026, 9, 1);
 
-// 35-Tage-Zyklus (identisch mit dem funktionierenden Code)
 var CYCLE_35 = [
 'F','F','N','N','N','_','_','_',
 'S','S','S','_',
@@ -263,7 +267,6 @@ var CYCLE_35 = [
 '_','_','_','_','_','_','_'
 ];
 
-// Start-Indizes für 1. Oktober 2026
 var START_INDEX_BY_GROUP = {
 '1': 29,
 '2': 1,
@@ -289,7 +292,6 @@ var vacationDays = safeParse(localStorage.getItem('schichtzeitVacationDays'), []
 var sonstigeDays = safeParse(localStorage.getItem('schichtzeitSonstigeDays'), {});
 if (typeof sonstigeDays !== 'object' || Array.isArray(sonstigeDays)) sonstigeDays = {};
 
-// Migration alter Einträge (String -> Objekt)
 (function migrateSonstige() {
   var changed = false;
   Object.keys(sonstigeDays).forEach(function(k){
@@ -378,7 +380,7 @@ function getFerienSet(year) {
 }
 
 // ============================================================
-// SCHICHTBERECHNUNG (identisch mit dem funktionierenden Code)
+// SCHICHTBERECHNUNG
 // ============================================================
 function formatDateKey(date) {
     return date.getFullYear()+'-'+String(date.getMonth()+1).padStart(2,'0')+'-'+String(date.getDate()).padStart(2,'0');
@@ -412,6 +414,56 @@ function getEntry(dateKey) {
 function escapeHtml(s) {
     return String(s).replace(/[&<>"']/g, function(c){ return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]; });
 }
+
+// ============================================================
+// MONATSWECHSEL + SWIPE
+// ============================================================
+var suppressClick = false;
+
+function changeMonth(delta) {
+    currentDate.setMonth(currentDate.getMonth() + delta);
+    renderCalendar();
+    animateCalendar(delta > 0 ? 'next' : 'prev');
+}
+
+function animateCalendar(direction) {
+    var cal = document.getElementById('calendar');
+    if (!cal) return;
+    cal.classList.remove('anim-left','anim-right');
+    void cal.offsetWidth;
+    cal.classList.add(direction === 'next' ? 'anim-left' : 'anim-right');
+    setTimeout(function(){ cal.classList.remove('anim-left','anim-right'); }, 320);
+}
+
+(function setupSwipe(){
+    var el = document.getElementById('calendar');
+    if (!el) return;
+    var startX = 0, startY = 0, startT = 0;
+
+    el.addEventListener('touchstart', function(e){
+        if (e.touches.length !== 1) return;
+        startX = e.touches[0].clientX;
+        startY = e.touches[0].clientY;
+        startT = Date.now();
+    }, {passive:true});
+
+    el.addEventListener('touchend', function(e){
+        if (e.changedTouches.length !== 1) return;
+        var dx = e.changedTouches[0].clientX - startX;
+        var dy = e.changedTouches[0].clientY - startY;
+        var dt = Date.now() - startT;
+
+        if (dt > 900) return;               // zu langsam -> kein Swipe
+        if (Math.abs(dx) < 60) return;      // zu kurz
+        if (Math.abs(dx) < Math.abs(dy) * 1.5) return; // eher vertikal -> kein Swipe
+
+        suppressClick = true;
+        setTimeout(function(){ suppressClick = false; }, 450);
+
+        if (dx < 0) changeMonth(1);         // nach links wischen -> naechster Monat
+        else changeMonth(-1);               // nach rechts wischen -> voriger Monat
+    }, {passive:true});
+})();
 
 // ============================================================
 // DARSTELLUNG
@@ -507,6 +559,7 @@ function renderCalendar() {
                 if (entry.notify && entry.time) tipParts.push('Erinnerung aktiv');
                 if (tipParts.length) dayEl.title = tipParts.join(' | ');
 
+                // Symbol jetzt oben rechts
                 if (entry.text || entry.time || entry.notify) {
                     var m = document.createElement('span');
                     m.className = 'sonstige-marker';
@@ -523,6 +576,7 @@ function renderCalendar() {
             }
 
             dayEl.addEventListener('click', function(){
+                if (suppressClick) return;      // Klick nach Swipe ignorieren
                 if (currentMode === 'krank') toggleDay(dateKey, 'krank');
                 else if (currentMode === 'urlaub') toggleDay(dateKey, 'urlaub');
                 else if (currentMode === 'sonstige') openEntryEditor(dateKey);
@@ -876,8 +930,8 @@ document.getElementById('restoreFileInput').addEventListener('change', function(
 // ============================================================
 // EREIGNISSE
 // ============================================================
-document.getElementById('prevBtn').addEventListener('click', function(){ currentDate.setMonth(currentDate.getMonth()-1); renderCalendar(); });
-document.getElementById('nextBtn').addEventListener('click', function(){ currentDate.setMonth(currentDate.getMonth()+1); renderCalendar(); });
+document.getElementById('prevBtn').addEventListener('click', function(){ changeMonth(-1); });
+document.getElementById('nextBtn').addEventListener('click', function(){ changeMonth(1); });
 document.getElementById('groupSelect').addEventListener('change', function(e){ localStorage.setItem('schichtzeitGroup', e.target.value); renderCalendar(); });
 document.querySelectorAll('.mode-btn').forEach(function(btn){
     btn.addEventListener('click', function(e){
