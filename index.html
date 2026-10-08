@@ -59,7 +59,7 @@ button:active{background:#0056b3}
 .day .date-num{font-size:11.5px;position:absolute;top:2px;left:4px;color:#555;font-weight:normal}
 .day.sonstige .date-num{color:#fff;text-shadow:0 0 3px rgba(0,0,0,0.8)}
 .sonstige-marker{position:absolute;bottom:0;right:1px;font-size:12px;line-height:1;padding:0;pointer-events:none;filter:drop-shadow(0 0 1px rgba(0,0,0,0.5))}
-.sonstige-preview{position:absolute;bottom:1px;left:1px;right:1px;font-size:7px;line-height:1.05;text-align:center;overflow:hidden;white-space:nowrap;text-overflow:ellipsis;color:inherit;opacity:0.9;pointer-events:none;font-weight:normal}
+.sonstige-preview{position:absolute;bottom:1px;left:1px;right:1px;font-size:7px;line-height:1.05;text-align:center;overflow:hidden;white-space:nowrap;text-overflow:ellipsis;opacity:0.9;pointer-events:none;font-weight:normal}
 .legend{margin-top:15px;font-size:11px;display:flex;justify-content:center;gap:8px;flex-wrap:wrap}
 .legend-item{display:flex;align-items:center;gap:4px}
 .legend-box{width:14px;height:14px;border-radius:3px;border:1px solid #ccc}
@@ -251,15 +251,25 @@ button:active{background:#0056b3}
 // ============================================================
 // SCHICHTMUSTER (35 Tage, pro Gruppe)
 // Basis: 19.10.2026 = Index 0
+// Korrekturen an den Positionen 10 (29.10 / 03.12 / 07.01...)
 // ============================================================
 var BASE_DATE_UTC = Date.UTC(2026, 9, 19);
 
 var PATTERNS = {
   '1': ['F','F','N','N','_','_','_','S','S','S','_','F','F','F','N','N','_','_','N','N','N','_','_','F','F','N','N','N','_','_','_','S','S','S','_'],
-  '2': ['S','S','S','_','F','F','F','N','N','_','_','_','_','_','_','_','F','F','S','S','_','F','F','_','S','S','S','_','F','F','N','N','_','_','_'],
-  '3': ['N','N','_','_','_','_','_','_','_','F','F','N','N','N','_','_','_','S','_','_','_','S','S','N','N','_','_','_','S','S','S','_','F','F','F'],
-  '4': ['_','_','_','F','N','N','N','_','_','_','S','S','S','_','F','F','N','N','_','_','_','N','N','S','_','_','_','_','N','N','_','_','_','_','_'],
-  '5': ['_','_','F','S','S','S','_','F','F','N','N','_','_','_','S','S','S','_','F','F','F','_','_','_','_','F','F','F','_','_','F','F','N','N','N']
+  '2': ['S','S','S','_','F','F','F','N','N','_','F','_','_','_','_','_','F','F','S','S','_','F','F','_','S','S','S','_','F','F','N','N','_','_','_'],
+  '3': ['N','N','_','_','_','_','_','_','_','F','S','N','N','N','_','_','_','S','_','_','_','S','S','N','N','_','_','_','S','S','S','_','F','F','F'],
+  '4': ['_','_','_','F','N','N','N','_','_','_','N','S','S','_','F','F','N','N','_','_','_','N','N','S','_','_','_','_','N','N','_','_','_','_','_'],
+  '5': ['_','_','F','S','S','S','_','F','F','N','_','_','_','_','S','S','S','_','F','F','F','_','_','_','_','F','F','F','_','_','F','F','N','N','N']
+};
+
+// Sondertage, die nicht ins 35-Tage-Muster passen (aus dem gedruckten Kalender)
+var OVERRIDES = {
+  '2026-10-01': ['F','S','N','_','_'],
+  '2026-10-02': ['_','N','S','_','F'],
+  '2026-10-03': ['_','N','S','_','F'],
+  '2026-10-04': ['_','N','_','_','F'],
+  '2026-10-21': ['_','N','S','_','F']
 };
 
 // ============================================================
@@ -279,7 +289,6 @@ var vacationDays = safeParse(localStorage.getItem('schichtzeitVacationDays'), []
 var sonstigeDays = safeParse(localStorage.getItem('schichtzeitSonstigeDays'), {});
 if (typeof sonstigeDays !== 'object' || Array.isArray(sonstigeDays)) sonstigeDays = {};
 
-// Migration alter Eintr\u00e4ge (String -> Objekt)
 (function migrateSonstige() {
   var changed = false;
   Object.keys(sonstigeDays).forEach(function(k){
@@ -374,6 +383,11 @@ function formatDateKey(date) {
     return date.getFullYear()+'-'+String(date.getMonth()+1).padStart(2,'0')+'-'+String(date.getDate()).padStart(2,'0');
 }
 function getShift(date, group) {
+    var key = formatDateKey(date);
+    if (OVERRIDES[key]) {
+        var idx = parseInt(group, 10) - 1;
+        return OVERRIDES[key][idx];
+    }
     var pattern = PATTERNS[String(group)];
     if (!pattern) return '_';
     var dateUTC = Date.UTC(date.getFullYear(), date.getMonth(), date.getDate());
@@ -490,14 +504,12 @@ function renderCalendar() {
                 dn.style.color = dayEl.style.color;
                 if (entry.color.toUpperCase() === '#FFFFFF') dayEl.style.border = '2px solid #999';
 
-                // Tooltip mit allen Details
                 var tipParts = [];
                 if (entry.text) tipParts.push(entry.text);
                 if (entry.time) tipParts.push('Uhrzeit: ' + entry.time);
                 if (entry.notify && entry.time) tipParts.push('Erinnerung aktiv');
                 if (tipParts.length) dayEl.title = tipParts.join(' | ');
 
-                // Symbol in der Ecke
                 if (entry.text || entry.time || entry.notify) {
                     var m = document.createElement('span');
                     m.className = 'sonstige-marker';
@@ -505,7 +517,6 @@ function renderCalendar() {
                     dayEl.appendChild(m);
                 }
 
-                // Kurze Vorschau unten (erste 8 Zeichen)
                 if (entry.text) {
                     var prev = document.createElement('span');
                     prev.className = 'sonstige-preview';
@@ -519,7 +530,6 @@ function renderCalendar() {
                 else if (currentMode === 'urlaub') toggleDay(dateKey, 'urlaub');
                 else if (currentMode === 'sonstige') openEntryEditor(dateKey);
                 else {
-                    // Normal-Modus: wenn Eintrag existiert -> anzeigen, sonst nichts
                     if (getEntry(dateKey)) openEntryEditor(dateKey);
                 }
             });
@@ -563,7 +573,7 @@ function toggleSonstigeRemove(dateKey) {
 }
 
 // ============================================================
-// MODAL (Eintrag ansehen / bearbeiten)
+// MODAL
 // ============================================================
 var editingDateKey = null;
 var editingSymbol = '\uD83D\uDD14';
