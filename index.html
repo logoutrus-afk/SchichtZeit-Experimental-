@@ -13,7 +13,7 @@
 <meta name="theme-color" content="#0056b3">
 <link rel="apple-touch-icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 180 180'%3E%3Crect width='180' height='180' rx='40' fill='%230056b3'/%3E%3Ctext x='90' y='120' font-size='90' text-anchor='middle' fill='white' font-family='Arial' font-weight='bold'%3ESZ%3C/text%3E%3C/svg%3E">
 <style>
-body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;background:#f4f4f9;color:#333;text-align:center;padding:10px;padding-top:env(safe-area-inset-top,10px);padding-bottom:env(safe-area-inset-bottom,10px);margin:0;-webkit-tap-highlight-color:transparent}
+body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial,sans-serif;background:#f4f4f9;color:#333;text-align:center;padding:10px;padding-top:env(safe-area-inset-top,10px);padding-bottom:env(safe-area-inset-bottom,10px);margin:0;-webkit-tap-highlight-color:transparent}
 .container{max-width:600px;margin:0 auto;background:#fff;padding:15px;border-radius:12px;box-shadow:0 4px 15px rgba(0,0,0,0.1)}
 h2{margin-top:0;color:#0056b3;font-size:20px}
 .online-status{font-size:11px;padding:4px 10px;border-radius:12px;display:inline-block;margin-bottom:10px;font-weight:bold}
@@ -26,7 +26,7 @@ select,button{padding:8px 12px;font-size:14px;border-radius:6px;border:1px solid
 button{background:#007bff;color:#fff;border:none;font-weight:bold}
 button:active{background:#0056b3}
 .mode-controls{display:flex;justify-content:center;gap:6px;margin-bottom:15px;background:#e9ecef;padding:8px;border-radius:8px;flex-wrap:wrap}
-.mode-btn{background:#fff;color:#333;border:1px solid #ccc;font-weight:normal;flex:1;min-width:70px;font-size:13px;padding:8px 6px}
+.mode-btn{background:#fff;color:#333;border:1px solid #ccc;flex:1;min-width:70px;font-size:13px;padding:8px 6px;font-weight:normal}
 .mode-btn.active{background:#0056b3;color:#fff;border-color:#0056b3;font-weight:bold}
 .color-picker-row{display:none;justify-content:center;align-items:center;gap:10px;margin-bottom:15px;padding:8px;background:#f1f3f5;border-radius:8px;border:1px dashed #999;flex-wrap:wrap}
 .color-picker-row.active{display:flex}
@@ -46,19 +46,20 @@ button:active{background:#0056b3}
 .day.S{background-color:#FF4500;color:#fff}
 .day.N{background-color:#1E90FF;color:#fff}
 .day._{background-color:#f9f9f9;color:#ccc}
-.day.krank{background-color:#DDA0DD !important;color:#000 !important;border:2px solid #8A2BE2}
-.day.urlaub{background-color:#90EE90 !important;color:#000 !important;border:2px solid #228B22}
+.day.krank{background-color:#DDA0DD!important;color:#000!important;border:2px solid #8A2BE2}
+.day.urlaub{background-color:#90EE90!important;color:#000!important;border:2px solid #228B22}
 .day.sonstige{border:2px solid rgba(0,0,0,0.3);color:#fff;text-shadow:0 0 3px rgba(0,0,0,0.8)}
 .day.empty{background:transparent;border:none;cursor:default}
 .day.today{border:3px solid #000;box-shadow:0 0 6px rgba(0,0,0,0.4);font-weight:900}
 .day.today .date-num{text-decoration:underline;text-decoration-thickness:2px;text-underline-offset:2px;font-weight:900}
 .day.feiertag{border:3px solid #CD7F32;animation:pulse-glow 3s infinite ease-in-out;z-index:2}
-@keyframes pulse-glow{0%{box-shadow:0 0 0 0 rgba(205,127,50,0.9);border-color:#CD7F32}50%{box-shadow:0 0 15px 8px rgba(205,127,50,0.8);border-color:#FFA500}100%{box-shadow:0 0 0 0 rgba(205,127,50,0.9);border-color:#CD7F32}}
+@keyframes pulse-glow{0%,100%{box-shadow:0 0 0 0 rgba(205,127,50,0.9);border-color:#CD7F32}50%{box-shadow:0 0 15px 8px rgba(205,127,50,0.8);border-color:#FFA500}}
 .day.ferien{border:2px dashed #17a2b8;z-index:1}
 .ferien-marker{position:absolute;bottom:1px;right:2px;font-size:8px;color:#17a2b8;font-weight:bold;background:#fff;border-radius:2px;padding:0 2px}
 .day .date-num{font-size:11.5px;position:absolute;top:2px;left:4px;color:#555;font-weight:normal}
 .day.sonstige .date-num{color:#fff;text-shadow:0 0 3px rgba(0,0,0,0.8)}
 .sonstige-marker{position:absolute;bottom:0;right:1px;font-size:12px;line-height:1;padding:0;pointer-events:none;filter:drop-shadow(0 0 1px rgba(0,0,0,0.5))}
+.sonstige-preview{position:absolute;bottom:1px;left:1px;right:1px;font-size:7px;line-height:1.05;text-align:center;overflow:hidden;white-space:nowrap;text-overflow:ellipsis;color:inherit;opacity:0.9;pointer-events:none;font-weight:normal}
 .legend{margin-top:15px;font-size:11px;display:flex;justify-content:center;gap:8px;flex-wrap:wrap}
 .legend-item{display:flex;align-items:center;gap:4px}
 .legend-box{width:14px;height:14px;border-radius:3px;border:1px solid #ccc}
@@ -74,8 +75,7 @@ button:active{background:#0056b3}
 .holiday-note{margin-top:10px;font-size:11px;color:#666;text-align:left;background:#f8f9fa;padding:8px;border-radius:6px;border-left:3px solid #CD7F32;line-height:1.8}
 .holiday-note strong.title{color:#CD7F32;display:block;margin-bottom:4px}
 .holiday-note .holiday-item{display:inline-block;padding:2px 6px;margin:2px 2px;border-radius:4px;background:#fff;border:1px solid #eee}
-.holiday-note .holiday-item.current{background:#FFE8C9;border:2px solid #CD7F32;color:#6b3a06;font-weight:bold;animation:note-pulse 3s infinite ease-in-out}
-@keyframes note-pulse{0%{box-shadow:0 0 0 0 rgba(205,127,50,0.7)}50%{box-shadow:0 0 6px 2px rgba(205,127,50,0.3)}100%{box-shadow:0 0 0 0 rgba(205,127,50,0.7)}}
+.holiday-note .holiday-item.current{background:#FFE8C9;border:2px solid #CD7F32;color:#6b3a06;font-weight:bold}
 .ferien-note{display:none;margin-top:10px;font-size:11px;color:#666;text-align:left;background:#e7f6f8;padding:8px;border-radius:6px;border-left:3px solid #17a2b8;line-height:1.6}
 .ferien-note strong{color:#17a2b8}
 .reminders-box{display:none;margin-top:15px;text-align:left;background:#eef6ff;padding:10px 12px;border-radius:8px;border-left:4px solid #0056b3}
@@ -84,6 +84,10 @@ button:active{background:#0056b3}
 .reminders-box li{padding:5px 0;border-bottom:1px solid #d6e7ff}
 .reminders-box li:last-child{border-bottom:none}
 .reminders-box .when{color:#666;font-size:11.5px}
+.paypal-note{margin-top:25px;padding:12px;background:linear-gradient(135deg,#f0f4ff 0%,#e6eeff 100%);border-radius:8px;border:1px solid #c3d4ff;text-align:center;font-size:12px;color:#333;line-height:1.5}
+.paypal-note p{margin:0 0 10px 0}
+.paypal-btn{display:inline-block;background:#0070ba;color:#fff;padding:10px 18px;border-radius:6px;text-decoration:none;font-size:14px;font-weight:bold}
+.paypal-btn:hover,.paypal-btn:active{background:#005ea6}
 .modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,0.55);display:none;align-items:center;justify-content:center;z-index:1000;padding:15px;overflow-y:auto}
 .modal-overlay.active{display:flex}
 .modal{background:#fff;border-radius:12px;padding:18px;max-width:420px;width:100%;text-align:left;box-shadow:0 10px 40px rgba(0,0,0,0.3);max-height:95vh;overflow-y:auto}
@@ -93,7 +97,7 @@ button:active{background:#0056b3}
 .modal input[type="text"],.modal input[type="time"]{width:100%;padding:9px 10px;font-size:15px;border:1px solid #ccc;border-radius:6px;box-sizing:border-box;margin-top:4px;font-family:inherit}
 .modal input[type="color"]{width:48px;height:34px;border:2px solid #999;border-radius:6px;cursor:pointer;padding:0;background:#fff;margin-top:4px;vertical-align:middle}
 .symbol-grid{display:grid;grid-template-columns:repeat(8,1fr);gap:4px;margin-top:4px}
-.symbol-btn{font-size:19px;padding:6px 0;border:1px solid #ccc;border-radius:6px;background:#fff;cursor:pointer;line-height:1;transition:transform .1s;font-weight:normal;color:#333}
+.symbol-btn{font-size:19px;padding:6px 0;border:1px solid #ccc;border-radius:6px;background:#fff;cursor:pointer;line-height:1;font-weight:normal;color:#333}
 .symbol-btn.active{background:#0056b3;border-color:#0056b3;box-shadow:0 0 0 2px rgba(0,86,179,0.35)}
 .symbol-btn:active{transform:scale(0.92)}
 .modal .checkbox-row{display:flex;align-items:flex-start;gap:8px;font-weight:normal;font-size:12.5px;color:#444;background:#f1f3f5;padding:9px 10px;border-radius:6px;line-height:1.4}
@@ -107,7 +111,7 @@ button:active{background:#0056b3}
 <body>
 <div class="container">
 <h2>Schichtzeit</h2>
-<div id="onlineStatus" class="online-status online">Uhr wird geladen...</div>
+<div id="onlineStatus" class="online-status loading">Datum wird geladen...</div>
 
 <div class="top-row">
 <label>Schicht: 
@@ -137,7 +141,7 @@ button:active{background:#0056b3}
 <div class="color-picker-row" id="colorPickerRow">
 <label for="sonstigeColor">Farbe:</label>
 <input type="color" id="sonstigeColor" value="#FFD700">
-<div class="color-presets" id="colorPresets">
+<div class="color-presets">
 <button class="color-preset" data-color="#FFD700" style="background:#FFD700;" title="Fr&uuml;h"><span class="preset-letter">F</span></button>
 <button class="color-preset" data-color="#FF4500" style="background:#FF4500;" title="Sp&auml;t"><span class="preset-letter">S</span></button>
 <button class="color-preset" data-color="#1E90FF" style="background:#1E90FF;" title="Nacht"><span class="preset-letter">N</span></button>
@@ -168,7 +172,10 @@ button:active{background:#0056b3}
 <button onclick="resetData()" style="background:#dc3545;">Alle Markierungen l&ouml;schen</button>
 <button onclick="toggleYearOverview()" style="background:#28a745;">Jahres&uuml;bersicht</button>
 <button onclick="toggleFerien()" id="ferienBtn" style="background:#17a2b8;">Ferien</button>
-<button id="notifBtn" style="background:#6f42c1;">Erinnerungen aktivieren</button>
+<button onclick="createBackup()" style="background:#6f42c1;">Backup</button>
+<button onclick="restoreBackup()" style="background:#fd7e14;">Restore</button>
+<button id="notifBtn" style="background:#00796b;">Erinnerungen aktivieren</button>
+<input type="file" id="restoreFileInput" accept=".json" style="display:none;">
 </div>
 
 <div class="holiday-note">
@@ -193,6 +200,15 @@ button:active{background:#0056b3}
 <div class="overview-list"><strong>Sonstige Tage:</strong><ul id="listSonstige"></ul></div>
 <button class="close-btn" onclick="toggleYearOverview()">Schlie&szlig;en</button>
 </div>
+
+<div class="paypal-note">
+    <p><strong>Gef&auml;llt dir Schichtzeit?</strong><br>
+    Du kannst mich mit einer kleinen Spende unterst&uuml;tzen:</p>
+    <a href="https://www.paypal.me/schichtzeit" target="_blank" rel="noopener" class="paypal-btn">
+        Mit PayPal unterst&uuml;tzen
+    </a>
+</div>
+
 </div>
 
 <div class="modal-overlay" id="entryModal">
@@ -225,7 +241,7 @@ button:active{background:#0056b3}
 
     <div class="modal-buttons">
       <button id="modalDeleteBtn" style="background:#dc3545;">L&ouml;schen</button>
-      <button id="modalCancelBtn" style="background:#6c757d;">Abbrechen</button>
+      <button id="modalCancelBtn" style="background:#6c757d;">Schlie&szlig;en</button>
       <button id="modalSaveBtn" style="background:#007bff;">Speichern</button>
     </div>
   </div>
@@ -233,9 +249,10 @@ button:active{background:#0056b3}
 
 <script>
 // ============================================================
-// SCHICHTDATEN
+// SCHICHTMUSTER (35 Tage, pro Gruppe)
+// Basis: 19.10.2026 = Index 0
 // ============================================================
-var BASE_DATE_UTC = Date.UTC(2026, 9, 19); // 19.10.2026 = Index 0
+var BASE_DATE_UTC = Date.UTC(2026, 9, 19);
 
 var PATTERNS = {
   '1': ['F','F','N','N','_','_','_','S','S','S','_','F','F','F','N','N','_','_','N','N','N','_','_','F','F','N','N','N','_','_','_','S','S','S','_'],
@@ -245,6 +262,9 @@ var PATTERNS = {
   '5': ['_','_','F','S','S','S','_','F','F','N','N','_','_','_','S','S','S','_','F','F','F','_','_','_','_','F','F','F','_','_','F','F','N','N','N']
 };
 
+// ============================================================
+// ZUSTAND
+// ============================================================
 var currentDate = new Date(2026, 9, 1);
 var currentMode = 'normal';
 var showFerien = false;
@@ -259,7 +279,7 @@ var vacationDays = safeParse(localStorage.getItem('schichtzeitVacationDays'), []
 var sonstigeDays = safeParse(localStorage.getItem('schichtzeitSonstigeDays'), {});
 if (typeof sonstigeDays !== 'object' || Array.isArray(sonstigeDays)) sonstigeDays = {};
 
-// Migration alter Eintraege (Text -> Objekt)
+// Migration alter Eintr\u00e4ge (String -> Objekt)
 (function migrateSonstige() {
   var changed = false;
   Object.keys(sonstigeDays).forEach(function(k){
@@ -281,7 +301,7 @@ var dayNames = ["Mo","Di","Mi","Do","Fr","Sa","So"];
 var SYMBOLS = ['\uD83D\uDD14','\u23F0','\uD83D\uDCCC','\u2B50','\u2764\uFE0F','\u26A0\uFE0F','\uD83D\uDCDE','\uD83D\uDC8A','\uD83C\uDFE5','\uD83D\uDCC5','\u2708\uFE0F','\uD83C\uDF82','\uD83C\uDF89','\uD83D\uDE97','\uD83D\uDCBC','\uD83D\uDCDD'];
 
 // ============================================================
-// UHR DES GERAETS
+// UHR
 // ============================================================
 function updateOnlineStatus(text, status) {
     var el = document.getElementById('onlineStatus');
@@ -299,10 +319,7 @@ function updateClockStatus() {
     var mo = String(d.getMonth()+1).padStart(2,'0');
     updateOnlineStatus(hh + ':' + mm + ' Uhr \u00B7 ' + wd + ' ' + dd + '.' + mo + '.' + d.getFullYear(), 'online');
 }
-function syncClock() {
-    updateClockStatus();
-    renderCalendar();
-}
+function syncClock() { updateClockStatus(); renderCalendar(); }
 setInterval(syncClock, 60 * 1000);
 document.addEventListener('visibilitychange', function(){ if (!document.hidden) syncClock(); });
 
@@ -330,7 +347,7 @@ function getHolidaySet(year) {
 }
 
 // ============================================================
-// SCHULFERIEN
+// FERIEN
 // ============================================================
 var FERIEN = {
 2026:[{name:"Winterferien",start:"2026-02-16",end:"2026-02-20"},{name:"Osterferien",start:"2026-03-30",end:"2026-04-10"},{name:"Pfingstferien",start:"2026-05-26",end:"2026-06-05"},{name:"Sommerferien",start:"2026-08-01",end:"2026-09-14"},{name:"Herbstferien",start:"2026-11-02",end:"2026-11-06"},{name:"Weihnachtsferien",start:"2026-12-21",end:"2026-12-31"}],
@@ -351,7 +368,7 @@ function getFerienSet(year) {
 }
 
 // ============================================================
-// SCHICHTEN
+// SCHICHTBERECHNUNG
 // ============================================================
 function formatDateKey(date) {
     return date.getFullYear()+'-'+String(date.getMonth()+1).padStart(2,'0')+'-'+String(date.getDate()).padStart(2,'0');
@@ -446,7 +463,7 @@ function renderCalendar() {
             else if (vacationDays.indexOf(dateKey) > -1) dayEl.classList.add('urlaub');
 
             if (date.getTime() === actualToday.getTime()) dayEl.classList.add('today');
-            if (holidays.has(dateKey)) { dayEl.classList.add('feiertag'); dayEl.title = 'Feiertag'; }
+            if (holidays.has(dateKey)) dayEl.classList.add('feiertag');
             if (showFerien && ferienSet.has(dateKey)) {
                 dayEl.classList.add('ferien');
                 var fm = document.createElement('span');
@@ -455,13 +472,14 @@ function renderCalendar() {
                 dayEl.appendChild(fm);
             }
 
-            var dateNumEl = document.createElement('span');
-            dateNumEl.className = 'date-num';
-            dateNumEl.textContent = day;
-            var shiftTextEl = document.createElement('span');
-            shiftTextEl.textContent = shift === '_' ? '' : shift;
-            dayEl.appendChild(dateNumEl);
-            dayEl.appendChild(shiftTextEl);
+            var dn = document.createElement('span');
+            dn.className = 'date-num';
+            dn.textContent = day;
+            dayEl.appendChild(dn);
+
+            var st = document.createElement('span');
+            st.textContent = shift === '_' ? '' : shift;
+            dayEl.appendChild(st);
 
             var entry = getEntry(dateKey);
             if (entry && sickDays.indexOf(dateKey) < 0 && vacationDays.indexOf(dateKey) < 0) {
@@ -469,20 +487,30 @@ function renderCalendar() {
                 dayEl.style.backgroundColor = entry.color;
                 var isDark = isColorDark(entry.color);
                 dayEl.style.color = isDark ? '#fff' : '#000';
-                dateNumEl.style.color = dayEl.style.color;
+                dn.style.color = dayEl.style.color;
                 if (entry.color.toUpperCase() === '#FFFFFF') dayEl.style.border = '2px solid #999';
 
-                var parts = [];
-                if (entry.text) parts.push(entry.text);
-                if (entry.time) parts.push('Uhrzeit: ' + entry.time);
-                if (entry.notify && entry.time) parts.push('Erinnerung aktiv');
-                if (parts.length) dayEl.title = parts.join(' \u00B7 ');
+                // Tooltip mit allen Details
+                var tipParts = [];
+                if (entry.text) tipParts.push(entry.text);
+                if (entry.time) tipParts.push('Uhrzeit: ' + entry.time);
+                if (entry.notify && entry.time) tipParts.push('Erinnerung aktiv');
+                if (tipParts.length) dayEl.title = tipParts.join(' | ');
 
+                // Symbol in der Ecke
                 if (entry.text || entry.time || entry.notify) {
                     var m = document.createElement('span');
                     m.className = 'sonstige-marker';
                     m.textContent = entry.icon || '\uD83D\uDD14';
                     dayEl.appendChild(m);
+                }
+
+                // Kurze Vorschau unten (erste 8 Zeichen)
+                if (entry.text) {
+                    var prev = document.createElement('span');
+                    prev.className = 'sonstige-preview';
+                    prev.textContent = entry.text.length > 10 ? entry.text.substr(0, 9) + '\u2026' : entry.text;
+                    dayEl.appendChild(prev);
                 }
             }
 
@@ -490,7 +518,10 @@ function renderCalendar() {
                 if (currentMode === 'krank') toggleDay(dateKey, 'krank');
                 else if (currentMode === 'urlaub') toggleDay(dateKey, 'urlaub');
                 else if (currentMode === 'sonstige') openEntryEditor(dateKey);
-                else { toggleDay(dateKey, 'krank', true); toggleDay(dateKey, 'urlaub', true); toggleSonstigeRemove(dateKey); }
+                else {
+                    // Normal-Modus: wenn Eintrag existiert -> anzeigen, sonst nichts
+                    if (getEntry(dateKey)) openEntryEditor(dateKey);
+                }
             });
 
             calendarEl.appendChild(dayEl);
@@ -532,7 +563,7 @@ function toggleSonstigeRemove(dateKey) {
 }
 
 // ============================================================
-// MODALFENSTER
+// MODAL (Eintrag ansehen / bearbeiten)
 // ============================================================
 var editingDateKey = null;
 var editingSymbol = '\uD83D\uDD14';
@@ -554,7 +585,7 @@ function openEntryEditor(dateKey) {
     editingDateKey = dateKey;
     var parts = dateKey.split('-');
     var entry = getEntry(dateKey);
-    document.getElementById('modalTitle').textContent = entry ? 'Eintrag bearbeiten' : 'Neuer Eintrag';
+    document.getElementById('modalTitle').textContent = entry ? 'Eintrag ansehen / bearbeiten' : 'Neuer Eintrag';
     document.getElementById('modalDate').textContent = parts[2] + '.' + parts[1] + '.' + parts[0];
     document.getElementById('entryText').value = entry ? (entry.text || '') : '';
     document.getElementById('entryTime').value = entry ? (entry.time || '') : '';
@@ -631,7 +662,7 @@ function updateNotifButton() {
     btn.disabled = false;
     if (Notification.permission === 'granted') { btn.textContent = 'Erinnerungen aktiv'; btn.style.background = '#28a745'; }
     else if (Notification.permission === 'denied') { btn.textContent = 'Blockiert'; btn.style.background = '#dc3545'; }
-    else { btn.textContent = 'Erinnerungen aktivieren'; btn.style.background = '#6f42c1'; }
+    else { btn.textContent = 'Erinnerungen aktivieren'; btn.style.background = '#00796b'; }
 }
 document.getElementById('notifBtn').addEventListener('click', function(){
     if (!('Notification' in window)) return;
@@ -674,7 +705,7 @@ function checkReminders() {
 setInterval(checkReminders, 30 * 1000);
 
 // ============================================================
-// LISTE DER KOMMENDEN ERINNERUNGEN
+// KOMMENDE ERINNERUNGEN
 // ============================================================
 function getUpcomingReminders(limit) {
     var now = new Date();
@@ -753,6 +784,87 @@ function resetData() {
         renderCalendar();
     }
 }
+
+// ============================================================
+// BACKUP / RESTORE
+// ============================================================
+function createBackup() {
+    var backup = {
+        version: 1,
+        date: new Date().toISOString(),
+        group: document.getElementById('groupSelect').value,
+        color: selectedColor,
+        sickDays: sickDays,
+        vacationDays: vacationDays,
+        sonstigeDays: sonstigeDays,
+        notifiedFlags: notifiedFlags
+    };
+    var json = JSON.stringify(backup, null, 2);
+    var blob = new Blob([json], {type: 'application/json'});
+    var url = URL.createObjectURL(blob);
+    var now = new Date();
+    var filename = 'Schichtzeit_Backup_' +
+        now.getFullYear() + '-' +
+        String(now.getMonth()+1).padStart(2,'0') + '-' +
+        String(now.getDate()).padStart(2,'0') + '_' +
+        String(now.getHours()).padStart(2,'0') + '-' +
+        String(now.getMinutes()).padStart(2,'0') + '.json';
+    var link = document.createElement('a');
+    link.href = url;
+    link.download = filename;
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+    URL.revokeObjectURL(url);
+}
+function restoreBackup() {
+    var input = document.getElementById('restoreFileInput');
+    input.value = '';
+    input.click();
+}
+document.getElementById('restoreFileInput').addEventListener('change', function(e){
+    var file = e.target.files[0];
+    if (!file) return;
+    var reader = new FileReader();
+    reader.onload = function(event){
+        try {
+            var data = JSON.parse(event.target.result);
+            if (!data.sickDays && !data.vacationDays && !data.sonstigeDays) {
+                alert('Ung\u00FCltige Backup-Datei.');
+                return;
+            }
+            if (!confirm('Backup wiederherstellen? Die aktuellen Daten werden \u00FCberschrieben.')) return;
+
+            sickDays = data.sickDays || [];
+            vacationDays = data.vacationDays || [];
+            sonstigeDays = data.sonstigeDays || {};
+            notifiedFlags = data.notifiedFlags || {};
+
+            if (data.group) {
+                document.getElementById('groupSelect').value = data.group;
+                localStorage.setItem('schichtzeitGroup', data.group);
+            }
+            if (data.color) {
+                selectedColor = data.color;
+                document.getElementById('sonstigeColor').value = selectedColor;
+                document.getElementById('legendSonstige').style.background = selectedColor;
+                localStorage.setItem('schichtzeitColor', selectedColor);
+                updateColorPresetsActive();
+            }
+
+            localStorage.setItem('schichtzeitSickDays', JSON.stringify(sickDays));
+            localStorage.setItem('schichtzeitVacationDays', JSON.stringify(vacationDays));
+            localStorage.setItem('schichtzeitSonstigeDays', JSON.stringify(sonstigeDays));
+            localStorage.setItem('schichtzeitNotified', JSON.stringify(notifiedFlags));
+
+            renderCalendar();
+            alert('Backup erfolgreich wiederhergestellt.');
+        } catch (err) {
+            alert('Fehler beim Lesen der Backup-Datei: ' + err.message);
+        }
+    };
+    reader.readAsText(file);
+});
 
 // ============================================================
 // EREIGNISSE
