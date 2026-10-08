@@ -1,1 +1,305 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+<meta http-equiv="Pragma" content="no-cache">
+<meta http-equiv="Expires" content="0">
+<title>Schichtzeit</title>
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Schichtzeit">
+<meta name="theme-color" content="#0056b3">
+<link rel="apple-touch-icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 180 180'%3E%3Crect width='180' height='180' rx='40' fill='%230056b3'/%3E%3Ctext x='90' y='120' font-size='90' text-anchor='middle' fill='white' font-family='Arial' font-weight='bold'%3ESZ%3C/text%3E%3C/svg%3E">
+<style>
+body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial,sans-serif;background:#f4f4f9;color:#333;text-align:center;padding:4px;padding-top:env(safe-area-inset-top,4px);padding-bottom:env(safe-area-inset-bottom,4px);margin:0;-webkit-tap-highlight-color:transparent;font-size:16px}
+.container{max-width:1000px;margin:0 auto;background:#fff;padding:10px;border-radius:12px;box-shadow:0 4px 15px rgba(0,0,0,0.1)}
+h2{margin-top:0;color:#0056b3;font-size:26px;letter-spacing:.3px}
+.online-status{font-size:13px;padding:5px 12px;border-radius:14px;display:inline-block;margin-bottom:12px;font-weight:bold}
+.online-status.online{background:#d4edda;color:#155724}
+.online-status.offline{background:#f8d7da;color:#721c24}
+.online-status.loading{background:#fff3cd;color:#856404}
+.top-row{display:flex;justify-content:center;align-items:center;margin-bottom:12px;font-size:17px}
+.nav-row{display:flex;justify-content:center;align-items:center;gap:12px;margin-bottom:12px;flex-wrap:nowrap}
+.nav-row button#prevBtn,.nav-row button#nextBtn{padding:2px 6px;font-size:11px;min-width:26px;height:26px;line-height:1;border-radius:6px;font-weight:bold}
+select,button{padding:11px 16px;font-size:16px;border-radius:8px;border:1px solid #ccc;background:#fff;cursor:pointer;font-family:inherit}
+button{background:#007bff;color:#fff;border:none;font-weight:bold}
+button:active{background:#0056b3}
+.mode-controls{display:grid;grid-template-columns:repeat(4,1fr);gap:6px;margin-bottom:14px;background:#e9ecef;padding:7px;border-radius:10px}
+.mode-btn{background:#fff;color:#333;border:1px solid #ccc;font-size:14px;padding:8px 4px;font-weight:600;border-radius:7px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.mode-btn.active{background:#0056b3;color:#fff;border-color:#0056b3;font-weight:bold}
+.color-picker-row{display:none;justify-content:center;align-items:center;gap:12px;margin-bottom:18px;padding:10px;background:#f1f3f5;border-radius:10px;border:1px dashed #999;flex-wrap:wrap}
+.color-picker-row.active{display:flex}
+.color-picker-row label{font-size:15px;font-weight:bold}
+.color-picker-row input[type="color"]{width:48px;height:38px;border:2px solid #999;border-radius:8px;cursor:pointer;padding:0;background:#fff}
+.color-presets{display:flex;gap:8px;flex-wrap:wrap;justify-content:center}
+.color-preset{width:36px;height:36px;border-radius:50%;border:2px solid #fff;box-shadow:0 0 0 1px #999;cursor:pointer;padding:0;position:relative}
+.color-preset.active{box-shadow:0 0 0 3px #0056b3}
+.color-preset .preset-letter{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);font-size:14px;font-weight:bold;color:#000;pointer-events:none}
+.color-preset[data-color="#1E90FF"] .preset-letter,.color-preset[data-color="#FF4500"] .preset-letter{color:#fff}
+#monthDisplay{font-size:19px;font-weight:bold;min-width:160px;display:inline-block}
+.calendar{display:grid;grid-template-columns:repeat(7,1fr);gap:5px;touch-action:pan-y}
+.calendar.anim-left{animation:cal-slide-left .28s ease}
+.calendar.anim-right{animation:cal-slide-right .28s ease}
+@keyframes cal-slide-left{from{opacity:.35;transform:translateX(24px)}to{opacity:1;transform:translateX(0)}}
+@keyframes cal-slide-right{from{opacity:.35;transform:translateX(-24px)}to{opacity:1;transform:translateX(0)}}
+.day-header{font-weight:bold;font-size:15px;padding:8px 0;color:#555}
+.day{aspect-ratio:1;display:flex;flex-direction:column;align-items:center;justify-content:center;border-radius:10px;font-size:clamp(14px,3.8vw,20px);font-weight:900;border:1px solid #eee;position:relative;cursor:pointer;transition:transform 0.1s;line-height:1}
+.day:active{transform:scale(0.95)}
+.day.F{background-color:#FFD700;color:#000;text-shadow:0 1px 0 rgba(255,255,255,0.5)}
+.day.S{background-color:#FF4500;color:#fff;text-shadow:0 1px 2px rgba(0,0,0,0.6)}
+.day.N{background-color:#1E90FF;color:#fff;text-shadow:0 1px 2px rgba(0,0,0,0.6)}
+.day._{background-color:#f9f9f9;color:#999}
+.day.krank{background-color:#DDA0DD!important;color:#000!important;border:2px solid #8A2BE2;text-shadow:0 1px 0 rgba(255,255,255,0.4)!important}
+.day.urlaub{background-color:#90EE90!important;color:#000!important;border:2px solid #228B22;text-shadow:0 1px 0 rgba(255,255,255,0.4)!important}
+.day.sonstige{border:2px solid rgba(0,0,0,0.3)}
+.day.empty{background:transparent;border:none;cursor:default}
+.day.today{border:3px solid #000;box-shadow:0 0 8px rgba(0,0,0,0.5);font-weight:900}
+.day.today .date-num{text-decoration:underline;text-decoration-thickness:2.5px;text-underline-offset:2px;font-weight:900}
+.day.feiertag{border:3px solid #CD7F32;animation:pulse-glow 3s infinite ease-in-out;z-index:2}
+@keyframes pulse-glow{0%,100%{box-shadow:0 0 0 0 rgba(205,127,50,0.9);border-color:#CD7F32}50%{box-shadow:0 0 15px 8px rgba(205,127,50,0.8);border-color:#FFA500}}
+.day.ferien{border:2px dashed #17a2b8;z-index:1}
+.ferien-marker{position:absolute;bottom:3px;left:5px;font-size:clamp(10px,2.5vw,14px);color:#17a2b8;font-weight:bold;background:#fff;border-radius:3px;padding:0 4px;line-height:1.1}
+.day .date-num{font-size:clamp(12px,3.2vw,17px);position:absolute;top:5px;left:7px;color:#555;font-weight:bold;line-height:1}
+.day.sonstige .date-num{color:inherit;font-weight:bold}
+.sonstige-marker{position:absolute;top:3px;right:4px;font-size:clamp(16px,4.4vw,26px);line-height:1;pointer-events:none;filter:drop-shadow(0 1px 2px rgba(0,0,0,0.6))}
+.sonstige-preview{position:absolute;bottom:4px;left:4px;right:4px;font-size:clamp(9px,2.4vw,13px);line-height:1.05;text-align:center;overflow:hidden;white-space:nowrap;text-overflow:ellipsis;opacity:0.95;pointer-events:none;font-weight:bold}
+.legend{margin-top:18px;font-size:13px;display:flex;justify-content:center;gap:10px;flex-wrap:wrap}
+.legend-item{display:flex;align-items:center;gap:5px}
+.legend-box{width:16px;height:16px;border-radius:4px;border:1px solid #ccc}
+.footer{margin-top:22px;display:flex;justify-content:center;gap:10px;flex-wrap:wrap}
+.overview-container{display:none;margin-top:22px;text-align:left;background:#f8f9fa;padding:16px;border-radius:10px;border:1px solid #dee2e6;font-size:15px;scroll-margin-top:20px}
+.overview-container h3{margin-top:0;color:#0056b3;border-bottom:1px solid #ccc;padding-bottom:6px;font-size:18px}
+.overview-stats{display:flex;justify-content:space-around;margin-bottom:16px;font-weight:bold;flex-wrap:wrap;gap:8px;font-size:15px}
+.overview-list{margin-bottom:12px}
+.overview-list strong{display:block;margin-bottom:6px;color:#333;font-size:15px}
+.overview-list ul{margin:0;padding-left:22px;font-size:14px;color:#555}
+.overview-list li{margin-bottom:4px}
+.close-btn{background:#6c757d;font-size:14px;padding:8px 14px;margin-top:10px}
+.holiday-note{margin-top:12px;font-size:13px;color:#666;text-align:left;background:#f8f9fa;padding:10px;border-radius:8px;border-left:4px solid #CD7F32;line-height:1.8}
+.holiday-note strong.title{color:#CD7F32;display:block;margin-bottom:6px;font-size:14px}
+.holiday-note .holiday-item{display:inline-block;padding:3px 8px;margin:3px 3px;border-radius:5px;background:#fff;border:1px solid #eee;font-size:13px}
+.holiday-note .holiday-item.current{background:#FFE8C9;border:2px solid #CD7F32;color:#6b3a06;font-weight:bold}
+.ferien-note{display:none;margin-top:12px;font-size:13px;color:#666;text-align:left;background:#e7f6f8;padding:10px;border-radius:8px;border-left:4px solid #17a2b8;line-height:1.7}
+.ferien-note strong{color:#17a2b8;font-size:14px}
+.reminders-box{display:none;margin-top:18px;text-align:left;background:#eef6ff;padding:12px 14px;border-radius:10px;border-left:5px solid #0056b3;font-size:14px}
+.reminders-box strong{display:block;color:#0056b3;font-size:15px;margin-bottom:8px}
+.reminders-box ul{margin:0;padding-left:0;list-style:none;font-size:14px;color:#333}
+.reminders-box li{padding:6px 0;border-bottom:1px solid #d6e7ff}
+.reminders-box li:last-child{border-bottom:none}
+.reminders-box .when{color:#666;font-size:13px}
+.paypal-note{margin-top:25px;padding:14px;background:linear-gradient(135deg,#f0f4ff 0%,#e6eeff 100%);border-radius:10px;border:1px solid #c3d4ff;text-align:center;font-size:14px;color:#333;line-height:1.6}
+.paypal-note p{margin:0 0 12px 0}
+.paypal-btn{display:inline-block;background:#0070ba;color:#fff;padding:12px 20px;border-radius:8px;text-decoration:none;font-size:16px;font-weight:bold}
+.paypal-btn:hover,.paypal-btn:active{background:#005ea6}
+.modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,0.55);display:none;align-items:center;justify-content:center;z-index:1000;padding:15px;overflow-y:auto}
+.modal-overlay.active{display:flex}
+.modal{background:#fff;border-radius:14px;padding:22px;max-width:460px;width:100%;text-align:left;box-shadow:0 10px 40px rgba(0,0,0,0.3);max-height:95vh;overflow-y:auto;font-size:16px}
+.modal h3{margin:0 0 6px;color:#0056b3;font-size:20px}
+.modal .modal-date{font-size:14px;color:#777;margin-bottom:14px}
+.modal label{display:block;font-size:15px;font-weight:bold;margin-bottom:12px;color:#333}
+.modal input[type="text"],.modal input[type="time"]{width:100%;padding:12px 12px;font-size:17px;border:1px solid #ccc;border-radius:8px;box-sizing:border-box;margin-top:5px;font-family:inherit}
+.modal input[type="color"]{width:56px;height:40px;border:2px solid #999;border-radius:8px;cursor:pointer;padding:0;background:#fff;margin-top:5px;vertical-align:middle}
+.symbol-grid{display:grid;grid-template-columns:repeat(8,1fr);gap:5px;margin-top:5px}
+.symbol-btn{font-size:22px;padding:8px 0;border:1px solid #ccc;border-radius:8px;background:#fff;cursor:pointer;line-height:1;font-weight:normal;color:#333}
+.symbol-btn.active{background:#0056b3;border-color:#0056b3;box-shadow:0 0 0 2px rgba(0,86,179,0.35)}
+.symbol-btn:active{transform:scale(0.92)}
+.modal .checkbox-row{display:flex;align-items:flex-start;gap:10px;font-weight:normal;font-size:14.5px;color:#444;background:#f1f3f5;padding:12px 12px;border-radius:8px;line-height:1.45}
+.modal .checkbox-row input{margin-top:3px;transform:scale(1.3);flex-shrink:0}
+.modal-buttons{display:flex;gap:10px;margin-top:16px;flex-wrap:wrap}
+.modal-buttons button{flex:1;min-width:90px;padding:13px 10px;font-size:16px}
+.notif-hint{font-size:13px;color:#856404;background:#fff3cd;padding:8px 10px;border-radius:6px;margin-top:10px;display:none}
+.notif-hint.active{display:block}
+.notif-banner{position:fixed;top:12px;left:50%;transform:translateX(-50%);max-width:520px;width:calc(100% - 24px);background:#0056b3;color:#fff;padding:16px 44px 16px 18px;border-radius:12px;box-shadow:0 8px 30px rgba(0,0,0,0.45);z-index:9999;font-size:16px;line-height:1.45;text-align:left;animation:banner-in .3s ease}
+@keyframes banner-in{from{opacity:0;transform:translate(-50%,-25px)}to{opacity:1;transform:translate(-50%,0)}}
+.notif-banner strong{display:block;font-size:17px;margin-bottom:4px}
+.notif-banner-close{position:absolute;top:8px;right:10px;background:transparent;color:#fff;border:none;font-size:24px;line-height:1;padding:2px 10px;cursor:pointer;font-weight:bold;font-family:inherit}
+.notif-info{font-size:12px;color:#666;background:#f1f3f5;padding:8px 10px;border-radius:6px;margin-top:12px;line-height:1.5;text-align:left}
+</style>
+</head>
+<body>
+<div class="container">
+<h2>Schichtzeit</h2>
+<div id="onlineStatus" class="online-status loading">Datum wird geladen...</div>
 
+<div class="top-row">
+<label>Schicht: 
+<select id="groupSelect">
+<option value="1">1</option>
+<option value="2">2</option>
+<option value="3">3</option>
+<option value="4">4</option>
+<option value="5">5</option>
+</select>
+</label>
+</div>
+
+<div class="nav-row">
+<button id="prevBtn" title="Zur&uuml;ck">&larr;</button>
+<span id="monthDisplay"></span>
+<button id="nextBtn" title="Weiter">&rarr;</button>
+</div>
+
+<div class="mode-controls">
+<button class="mode-btn active" data-mode="normal">Normal</button>
+<button class="mode-btn" data-mode="krank">Krank</button>
+<button class="mode-btn" data-mode="urlaub">Urlaub</button>
+<button class="mode-btn" data-mode="sonstige">Sonstige</button>
+</div>
+
+<div class="color-picker-row" id="colorPickerRow">
+<label for="sonstigeColor">Farbe:</label>
+<input type="color" id="sonstigeColor" value="#FFD700">
+<div class="color-presets">
+<button class="color-preset" data-color="#FFD700" style="background:#FFD700;" title="Fr&uuml;h"><span class="preset-letter">F</span></button>
+<button class="color-preset" data-color="#FF4500" style="background:#FF4500;" title="Sp&auml;t"><span class="preset-letter">S</span></button>
+<button class="color-preset" data-color="#1E90FF" style="background:#1E90FF;" title="Nacht"><span class="preset-letter">N</span></button>
+<button class="color-preset" data-color="#FFFFFF" style="background:#FFFFFF;" title="Frei"><span class="preset-letter" style="color:#999;">&ndash;</span></button>
+</div>
+</div>
+
+<div class="calendar" id="calendar"></div>
+
+<div class="reminders-box" id="remindersBox">
+<strong>Kommende Erinnerungen</strong>
+<ul id="remindersList"></ul>
+</div>
+
+<div class="legend">
+<div class="legend-item"><div class="legend-box" style="background:#FFD700;"></div> F (Fr&uuml;h)</div>
+<div class="legend-item"><div class="legend-box" style="background:#FF4500;"></div> S (Sp&auml;t)</div>
+<div class="legend-item"><div class="legend-box" style="background:#1E90FF;"></div> N (Nacht)</div>
+<div class="legend-item"><div class="legend-box" style="background:#f9f9f9;"></div> Frei</div>
+<div class="legend-item"><div class="legend-box" style="background:#DDA0DD;"></div> Krank</div>
+<div class="legend-item"><div class="legend-box" style="background:#90EE90;"></div> Urlaub</div>
+<div class="legend-item"><div class="legend-box" id="legendSonstige" style="background:#FFD700;"></div> Sonstige</div>
+<div class="legend-item"><div class="legend-box" style="background:#fff;border:3px solid #CD7F32;"></div> Feiertag</div>
+<div class="legend-item"><div class="legend-box" style="background:#fff;border:2px dashed #17a2b8;"></div> Ferien</div>
+</div>
+
+<div class="footer">
+<button onclick="resetData()" style="background:#dc3545;">Alle Markierungen l&ouml;schen</button>
+<button onclick="toggleYearOverview()" style="background:#28a745;">Jahres&uuml;bersicht</button>
+<button onclick="toggleFerien()" id="ferienBtn" style="background:#17a2b8;">Ferien</button>
+<button onclick="createBackup()" style="background:#6f42c1;">Backup</button>
+<button onclick="restoreBackup()" style="background:#fd7e14;">Restore</button>
+<button id="notifBtn" style="background:#00796b;">Erinnerungen aktivieren</button>
+<input type="file" id="restoreFileInput" accept=".json" style="display:none;">
+</div>
+
+<div class="notif-info" id="notifInfo">
+    Erinnerungen werden als Banner oben und per Ton angezeigt &mdash; auch in Browsern ohne System-Benachrichtigungen. Die Seite muss daf&uuml;r ge&ouml;ffnet sein.
+</div>
+
+<div class="holiday-note">
+<strong class="title">Feiertage in diesem Monat:</strong>
+<div id="holidayList"></div>
+</div>
+
+<div class="ferien-note" id="ferienNote">
+<strong>Ferien in Bayern:</strong><br>
+<span id="ferienList"></span>
+</div>
+
+<div id="yearOverview" class="overview-container">
+<h3>Jahres&uuml;bersicht <span id="overviewYear"></span></h3>
+<div class="overview-stats">
+<span style="color:#8A2BE2;">Krank: <span id="countKrank">0</span> Tage</span>
+<span style="color:#228B22;">Urlaub: <span id="countUrlaub">0</span> Tage</span>
+<span style="color:#666;">Sonstige: <span id="countSonstige">0</span> Tage</span>
+</div>
+<div class="overview-list"><strong>Krankheitstage:</strong><ul id="listKrank"></ul></div>
+<div class="overview-list"><strong>Urlaubstage:</strong><ul id="listUrlaub"></ul></div>
+<div class="overview-list"><strong>Sonstige Tage:</strong><ul id="listSonstige"></ul></div>
+<button class="close-btn" onclick="toggleYearOverview()">Schlie&szlig;en</button>
+</div>
+
+<div class="paypal-note">
+    <p><strong>Gef&auml;llt dir Schichtzeit?</strong><br>
+    Du kannst mich mit einer kleinen Spende unterst&uuml;tzen:</p>
+    <a href="https://www.paypal.me/schichtzeit" target="_blank" rel="noopener" class="paypal-btn">
+        Mit PayPal unterst&uuml;tzen
+    </a>
+</div>
+
+</div>
+
+<div class="modal-overlay" id="entryModal">
+  <div class="modal">
+    <h3 id="modalTitle">Eintrag</h3>
+    <div class="modal-date" id="modalDate"></div>
+
+    <label>Beschreibung
+      <input type="text" id="entryText" maxlength="80" placeholder="z.B. Arzttermin, Elternabend..." autocomplete="off">
+    </label>
+
+    <label>Uhrzeit
+      <input type="time" id="entryTime">
+    </label>
+
+    <label>Symbol
+      <div class="symbol-grid" id="symbolGrid"></div>
+    </label>
+
+    <label>Farbe
+      <input type="color" id="entryColor" value="#FFD700">
+    </label>
+
+    <label class="checkbox-row">
+      <input type="checkbox" id="entryNotify">
+      <span>Erinnerung senden &mdash; <b>1 Tag</b>, <b>2 Stunden</b> und <b>30 Minuten</b> vorher</span>
+    </label>
+
+    <div class="notif-hint" id="notifHint">System-Benachrichtigungen werden von diesem Browser nicht unterst&uuml;tzt. Banner und Ton funktionieren trotzdem.</div>
+
+    <div class="modal-buttons">
+      <button id="modalDeleteBtn" style="background:#dc3545;">L&ouml;schen</button>
+      <button id="modalCancelBtn" style="background:#6c757d;">Schlie&szlig;en</button>
+      <button id="modalSaveBtn" style="background:#007bff;">Speichern</button>
+    </div>
+  </div>
+</div>
+
+<script>
+var BASE_DATE_UTC = Date.UTC(2026, 9, 1);
+
+var CYCLE_35 = [
+'F','F','N','N','N','_','_','_',
+'S','S','S','_',
+'F','F','N','N','_','_','_',
+'S','S','S','_',
+'F','F','F','N','N',
+'_','_','_','_','_','_','_'
+];
+
+var START_INDEX_BY_GROUP = { '1': 29, '2': 1, '3': 8, '4': 15, '5': 22 };
+
+var currentDate = new Date(2026, 9, 1);
+var currentMode = 'normal';
+var showFerien = false;
+var actualToday = new Date(); actualToday.setHours(0,0,0,0);
+var selectedColor = localStorage.getItem('schichtzeitColor') || '#FFD700';
+var selectedSymbol = localStorage.getItem('schichtzeitSymbol') || '\uD83D\uDD14';
+
+function safeParse(s, fallback) { try { var v = JSON.parse(s); return v == null ? fallback : v; } catch(e){ return fallback; } }
+
+var sickDays = safeParse(localStorage.getItem('schichtzeitSickDays'), []);
+var vacationDays = safeParse(localStorage.getItem('schichtzeitVacationDays'), []);
+var sonstigeDays = safeParse(localStorage.getItem('schichtzeitSonstigeDays'), {});
+if (typeof sonstigeDays !== 'object' || Array.isArray(sonstigeDays)) sonstigeDays = {};
+
+(function migrateSonstige() {
+  var changed = false;
+  Object.keys(sonstigeDays).forEach(function(k){
+    var v = sonstigeDays[k];
+    if (typeof v === 'string') { sonstigeDays[k] = { color:v, text:'', time:'', notify:false, icon:'\uD83D\uDD14' }; changed = true; }
+    else if (v && typeof v === 'object' && !v.icon) { v.icon = '\uD83D\uDD14'; changed = true; }
+  });
+  if (changed) localStorage.setItem('schichtzeitSonstigeDays', JSON.stringify(sonstigeDays));
+})();
+
+var notifiedFlags = safeParse(localStorage.getItem('schichtzeitNotified'), {});
+if (typeof notifiedFlags !== 'object' || Array.isArray(notifiedFlags)) notifiedFlags = {};
+
+var savedGroup = localStorage.getItem('schicht
