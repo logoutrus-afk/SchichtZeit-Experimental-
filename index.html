@@ -287,6 +287,77 @@ body.dark .entry-item:hover,body.dark .entry-item:active{background:#3a3f44;bord
 body.dark .entry-item .e-text{color:#e4e6ea}
 body.dark .entry-item .e-meta{color:#a0a5ab}
 body.dark .entry-empty{color:#8a8f95}
+
+/* ============ МОБИЛЬНАЯ ВЕРСИЯ — крупнее ============ */
+@media (max-width:600px){
+  body{padding:3px;font-size:15px}
+  .container{padding:6px;border-radius:10px}
+  h2{font-size:22px;padding:0 66px;margin-bottom:4px;letter-spacing:0}
+  .top-btn{width:34px;height:34px;font-size:17px;top:8px;border-radius:8px}
+  .share-btn{left:8px}
+  .settings-btn{right:8px}
+  .share-btn svg{width:18px;height:18px}
+  .online-status{font-size:11px;padding:3px 9px;margin-bottom:6px}
+  .top-row{margin-bottom:6px;font-size:14px}
+  .top-row select{padding:7px 10px;font-size:14px}
+  .nav-row{gap:6px;margin-bottom:6px}
+  #monthDisplay{font-size:17px;min-width:130px}
+  .nav-row button#prevBtn,.nav-row button#nextBtn{font-size:15px;min-width:34px;height:30px;padding:2px 8px}
+  select,button{padding:8px 10px;font-size:14px}
+  .mode-controls{gap:3px;padding:4px;margin-bottom:8px;border-radius:8px}
+  .mode-btn{font-size:12px;padding:8px 2px;border-radius:6px}
+
+  /* КЛЮЧЕВОЕ: минимальные зазоры, ячейка получает максимум ширины */
+  .calendar{gap:3px}
+
+  .day-header{font-size:13px;padding:6px 0}
+  .day{border-radius:7px;font-size:clamp(22px,7vw,34px);border-width:1px}
+  .day .date-num{font-size:clamp(11px,3vw,14px);top:3px;left:4px}
+  .day .term-icon{font-size:clamp(16px,5vw,22px)}
+  .day .term-text{font-size:clamp(8px,2.2vw,10px)}
+  .day .term-text.t-top,.day .term-text.t-bottom{max-width:calc(100% - 4px);top:2px;bottom:2px}
+  .day .term-text.t-right,.day .term-text.t-left{max-height:calc(100% - 4px);right:2px;left:2px}
+  .day.feiertag{border-width:2.5px}
+  .day.ferien{border-width:2px}
+  .day.today{border-width:2.5px}
+  .sonstige-preview{font-size:clamp(9px,2.4vw,11px);bottom:2px;left:2px;right:2px}
+  .ferien-marker{font-size:10px;bottom:2px;left:3px;padding:0 3px}
+
+  .legend{font-size:11.5px;gap:6px 10px;margin-top:12px}
+  .legend-box{width:14px;height:14px;border-radius:3px}
+
+  .footer{gap:6px;margin-top:14px}
+  .footer button{font-size:13px;padding:10px 12px;flex:1 1 46%;min-width:0;border-radius:8px}
+
+  .notif-info{font-size:11px;padding:7px 8px;margin-top:10px;line-height:1.5}
+  .holiday-note{font-size:12px;padding:9px;margin-top:10px}
+  .holiday-note .holiday-item{font-size:11.5px;padding:3px 7px}
+  .ferien-note{font-size:12px;padding:9px}
+  .reminders-box{font-size:13px;padding:10px 12px;margin-top:14px}
+  .reminders-box strong{font-size:14px}
+  .reminders-box li{font-size:13px;padding:6px 0}
+
+  .paypal-note{font-size:13px;padding:12px;margin-top:18px}
+  .paypal-note p{margin:0 0 10px 0}
+  .paypal-btn{font-size:14px;padding:11px 18px}
+
+  .overview-container{font-size:14px;padding:12px;margin-top:14px}
+  .overview-container h3{font-size:17px}
+  .overview-stats{gap:8px}
+  .urlaub-stat{min-width:110px;padding:10px 12px}
+  .urlaub-stat .value{font-size:20px}
+
+  .modal{padding:18px;border-radius:12px;font-size:15px}
+  .modal h3{font-size:18px}
+  .modal input[type="text"],.modal input[type="time"],.modal input[type="number"],.modal select{padding:11px;font-size:16px}
+  .symbol-btn{font-size:22px;min-height:44px}
+  .modal-buttons button{font-size:15px;padding:12px 10px}
+  .modal-buttons a.donate-link{font-size:15px;padding:12px 10px}
+
+  .notif-banner{font-size:15px;padding:14px 40px 14px 16px}
+  .notif-banner strong{font-size:16px}
+  .notif-banner-close{font-size:24px}
+}
 </style>
 </head>
 <body>
