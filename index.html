@@ -67,7 +67,9 @@ button:active{background:#0056b3}
 .ferien-marker{position:absolute;bottom:3px;left:5px;font-size:clamp(10px,2.5vw,14px);color:#17a2b8;font-weight:bold;background:#fff;border-radius:3px;padding:0 4px;line-height:1.1}
 .day .date-num{font-size:clamp(12px,1.8vw,17px);position:absolute;top:5px;left:7px;color:#555;font-weight:bold;line-height:1}
 .day.sonstige .date-num{font-weight:bold}
-.sonstige-marker{position:absolute;top:3px;right:4px;font-size:clamp(16px,2.6vw,26px);line-height:1;pointer-events:none}
+.sonstige-badges{position:absolute;top:3px;right:4px;display:flex;align-items:center;gap:3px;pointer-events:none}
+.sonstige-marker{font-size:clamp(16px,2.6vw,26px);line-height:1;filter:drop-shadow(0 1px 2px rgba(0,0,0,0.6))}
+.sonstige-count{background:#fff;color:#333;font-size:10px;font-weight:bold;border-radius:8px;padding:1px 5px;border:1px solid rgba(0,0,0,0.35);line-height:1.3}
 .sonstige-preview{position:absolute;bottom:4px;left:4px;right:4px;font-size:clamp(9px,1.4vw,13px);line-height:1.05;text-align:center;overflow:hidden;white-space:nowrap;text-overflow:ellipsis;opacity:0.98;pointer-events:none;font-weight:bold;color:#fff}
 .legend{margin-top:18px;font-size:13px;display:flex;justify-content:center;gap:10px;flex-wrap:wrap}
 .legend-item{display:flex;align-items:center;gap:5px}
@@ -166,6 +168,18 @@ button:active{background:#0056b3}
 .section-title{font-size:14px;font-weight:bold;color:#555;text-transform:uppercase;letter-spacing:0.5px;margin:18px 0 8px 0}
 .section-title:first-of-type{margin-top:0}
 
+/* Eintrags-Liste */
+.entry-list{margin:10px 0}
+.entry-item{display:flex;align-items:center;gap:12px;padding:12px;background:#f1f3f5;border:1px solid #dee2e6;border-radius:10px;margin-bottom:8px;cursor:pointer;text-align:left}
+.entry-item:hover,.entry-item:active{background:#e9ecef;border-color:#0056b3}
+.entry-item .e-icon{font-size:26px;flex-shrink:0;width:34px;text-align:center}
+.entry-item .e-info{flex:1;min-width:0}
+.entry-item .e-text{font-weight:bold;font-size:15px;color:#333;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.entry-item .e-meta{font-size:12px;color:#666;margin-top:3px}
+.entry-item .e-del{background:#dc3545;color:#fff;border:none;padding:8px 10px;border-radius:8px;font-size:16px;cursor:pointer;font-weight:bold;flex-shrink:0;font-family:inherit}
+.entry-item .e-del:active{background:#a71d2a}
+.entry-empty{text-align:center;color:#999;font-style:italic;padding:20px;font-size:14px}
+
 .theme-row{display:flex;gap:8px;margin-bottom:14px}
 .theme-choice{flex:1;padding:14px 8px;font-size:15px;border-radius:8px;cursor:pointer;font-weight:bold;font-family:inherit;transition:box-shadow .15s}
 .theme-choice[data-theme="light"]{background:#ffffff;color:#333333;border:2px solid #cccccc}
@@ -247,6 +261,12 @@ body.dark .urlaub-stat.danger .label,body.dark .urlaub-stat.danger .value{color:
 body.dark .close-btn{background:#3a3f44}
 body.dark .err-box{background:#4a1a1f;color:#ff8a95;border-color:#dc3545}
 body.dark .share-toast{background:#e4e6ea;color:#1e2124}
+body.dark .entry-item{background:#2a2e33;border-color:#3a3f44}
+body.dark .entry-item:hover,body.dark .entry-item:active{background:#3a3f44;border-color:#0056b3}
+body.dark .entry-item .e-text{color:#e4e6ea}
+body.dark .entry-item .e-meta{color:#a0a5ab}
+body.dark .entry-empty{color:#8a8f95}
+body.dark .sonstige-count{background:#1e2124;color:#e4e6ea;border-color:#555}
 </style>
 </head>
 <body>
@@ -365,23 +385,37 @@ body.dark .share-toast{background:#e4e6ea;color:#1e2124}
 
 </div>
 
+<!-- ENTRY MODAL (List + Edit) -->
 <div class="modal-overlay" id="entryModal"><div class="modal">
-<h3 id="modalTitle">Eintrag</h3>
-<div class="modal-date" id="modalDate"></div>
-<label>Beschreibung<input type="text" id="entryText" maxlength="80" placeholder="z.B. Arzttermin..." autocomplete="off"></label>
-<label>Uhrzeit<input type="time" id="entryTime"></label>
-<div class="field-label">Symbol</div>
-<div class="symbol-grid" id="symbolGrid"></div>
-<label>Farbe<input type="color" id="entryColor" value="#FFD700"></label>
-<label class="checkbox-row" for="entryNotify">
-<input type="checkbox" id="entryNotify">
-<span>Erinnerung senden &mdash; <b>1 Tag</b>, <b>2 Stunden</b> und <b>30 Minuten</b> vorher</span>
-</label>
-<div class="modal-buttons">
-<button id="modalDeleteBtn" style="background:#dc3545;">L&ouml;schen</button>
-<button id="modalCancelBtn" style="background:#6c757d;">Schlie&szlig;en</button>
-<button id="modalSaveBtn" style="background:#007bff;">Speichern</button>
-</div>
+    <!-- LIST SCREEN -->
+    <div id="entryListScreen" style="display:none;">
+        <h3>Eintr&auml;ge am <span id="listDate"></span></h3>
+        <div class="entry-list" id="entryListBody"></div>
+        <div class="modal-buttons">
+            <button id="listAddBtn" style="background:#28a745;">+ Neuer Eintrag</button>
+            <button id="listCloseBtn" style="background:#6c757d;">Schlie&szlig;en</button>
+        </div>
+    </div>
+    <!-- EDIT SCREEN -->
+    <div id="entryEditScreen">
+        <h3 id="modalTitle">Eintrag</h3>
+        <div class="modal-date" id="modalDate"></div>
+        <label>Beschreibung<input type="text" id="entryText" maxlength="80" placeholder="z.B. Arzttermin..." autocomplete="off"></label>
+        <label>Uhrzeit<input type="time" id="entryTime"></label>
+        <div class="field-label">Symbol</div>
+        <div class="symbol-grid" id="symbolGrid"></div>
+        <label>Farbe<input type="color" id="entryColor" value="#FFD700"></label>
+        <label class="checkbox-row" for="entryNotify">
+        <input type="checkbox" id="entryNotify">
+        <span>Erinnerung senden &mdash; <b>1 Tag</b>, <b>2 Stunden</b> und <b>30 Minuten</b> vorher</span>
+        </label>
+        <div class="notif-hint" id="notifHint">System-Benachrichtigungen werden von diesem Browser nicht unterst&uuml;tzt. Banner und Ton funktionieren trotzdem.</div>
+        <div class="modal-buttons">
+            <button id="modalDeleteBtn" style="background:#dc3545;display:none;">L&ouml;schen</button>
+            <button id="modalBackBtn" style="background:#6c757d;">Zur&uuml;ck</button>
+            <button id="modalSaveBtn" style="background:#007bff;">Speichern</button>
+        </div>
+    </div>
 </div></div>
 
 <div class="modal-overlay" id="settingsModal"><div class="modal">
@@ -428,21 +462,23 @@ body.dark .share-toast{background:#e4e6ea;color:#1e2124}
 <ul>
 <li><b>Normal</b> &ndash; nur anschauen. Ein Klick auf einen Tag mit Eintrag &ouml;ffnet ihn.</li>
 <li><b>Krank</b> &ndash; Klick auf einen Tag markiert ihn als <b>Krank</b> (lila).</li>
-<li><b>Urlaub</b> &ndash; Klick auf einen Tag markiert ihn als <b>Urlaub</b> (gr&uuml;n). Wird aufs Urlaubskonto angerechnet.</li>
-<li><b>Sonstige</b> &ndash; Klick auf einen Tag &ouml;ffnet ein Fenster f&uuml;r eigene Termine.</li>
+<li><b>Urlaub</b> &ndash; Klick auf einen Tag markiert ihn als <b>Urlaub</b> (gr&uuml;n).</li>
+<li><b>Sonstige</b> &ndash; Klick auf einen Tag &ouml;ffnet das Fenster f&uuml;r eigene Termine.</li>
 </ul>
-<div class="box">Ein zweiter Klick auf einen markierten Tag entfernt die Markierung wieder.</div>
+<div class="box">Ein zweiter Klick auf einen Krank-/Urlaub-Tag entfernt die Markierung.</div>
 
-<h4>3. Eigenen Termin eintragen</h4>
+<h4>3. Eigene Termine eintragen &ndash; auch mehrere pro Tag</h4>
+<p>So geht's:</p>
 <ul>
 <li>Modus <b>Sonstige</b> w&auml;hlen.</li>
-<li>Auf den Tag tippen.</li>
+<li>Auf den gew&uuml;nschten Tag tippen.</li>
 <li>Beschreibung, Uhrzeit, Symbol und Farbe w&auml;hlen.</li>
 <li>F&uuml;r eine Erinnerung H&auml;kchen bei <b>&bdquo;Erinnerung senden&ldquo;</b> setzen.</li>
 <li>Speichern.</li>
 </ul>
-<p>Der Termin erscheint als <b>diagonal geteilte Zelle</b>: die obere linke H&auml;lfte beh&auml;lt die Schichtfarbe, die untere rechte H&auml;lfte bekommt die Terminfarbe. So bleibt die Schicht immer sichtbar.</p>
-<p>Erinnerungen kommen <b>1 Tag, 2 Stunden und 30 Minuten</b> vorher (Banner + Ton).</p>
+<p><b>Mehrere Termine am selben Tag:</b> Einfach erneut auf den Tag tippen und <b>&bdquo;+ Neuer Eintrag&ldquo;</b> w&auml;hlen. Alle Eintr&auml;ge werden in einer <b>Liste</b> angezeigt. Jeder Eintrag kann einzeln bearbeitet oder gel&ouml;scht werden (M&uuml;lleimer-Symbol).</p>
+<p>Im Kalender erscheint eine <b>diagonal geteilte Zelle</b>: die obere linke H&auml;lfte beh&auml;lt die Schichtfarbe, die untere rechte H&auml;lfte bekommt die Terminfarbe. Bei mehr als einem Termin zeigt ein kleiner Z&auml;hler (+1, +2&hellip;) an, wie viele weitere Eintr&auml;ge es gibt.</p>
+<p>Erinnerungen kommen <b>1 Tag, 2 Stunden und 30 Minuten</b> vorher (Banner + Ton) &ndash; f&uuml;r jeden Eintrag einzeln.</p>
 <p>Verf&uuml;gbare Symbole:</p>
 <p class="emoji-list">&#x1F514; &#x23F0; &#x1F4CC; &#x2B50; &#x2764;&#xFE0F; &#x26A0;&#xFE0F; &#x1F4DE; &#x1F48A; &#x1F3E5; &#x1F4C5; &#x2708;&#xFE0F; &#x1F382; &#x1F389; &#x1F697; &#x1F4BC; &#x1F4DD;</p>
 
@@ -453,12 +489,12 @@ body.dark .share-toast{background:#e4e6ea;color:#1e2124}
 <p>Der Knopf <b>Ferien</b> blendet die bayerischen Schulferien ein.</p>
 
 <h4>6. Einstellungen &ouml;ffnen</h4>
-<p>&Uuml;ber das <b>Drei-Punkte-Men&uuml;</b> oben rechts: Urlaubstage pro Jahr, Schichtsystem, <b>Design / Modus</b> (Hell / Dunkel &ndash; unabh&auml;ngig von der System-Einstellung) und diese Anleitung.</p>
+<p>&Uuml;ber das <b>Drei-Punkte-Men&uuml;</b> oben rechts: Urlaubstage pro Jahr, Schichtsystem, <b>Design / Modus</b> (Hell / Dunkel) und diese Anleitung.</p>
 
 <h4>7. Backup &ndash; Sichern und Wiederherstellen</h4>
 <ul>
 <li><b>Sichern &rarr; Auf Ger&auml;t speichern</b> &ndash; Datei landet im Download-Ordner.</li>
-<li><b>Sichern &rarr; Teilen / E-Mail / Cloud</b> &ndash; System-Teilen-Fenster &ouml;ffnet sich. Dort kann man die Datei per E-Mail, Cloud (Drive/iCloud) oder Messenger verschicken.</li>
+<li><b>Sichern &rarr; Teilen / E-Mail / Cloud</b> &ndash; System-Teilen-Fenster &ouml;ffnet sich.</li>
 <li><b>Wiederherstellen</b> &ndash; eine zuvor gesicherte Datei ausw&auml;hlen.</li>
 </ul>
 <div class="box warn">Beim Handywechsel <b>unbedingt vorher sichern</b>, sonst sind alle Eintr&auml;ge verloren.</div>
@@ -471,7 +507,7 @@ body.dark .share-toast{background:#e4e6ea;color:#1e2124}
 <p>&Ouml;ffnet das Teilen-Men&uuml; des Handys.</p>
 
 <h4>10. Feiertage und Ferien (Bayern)</h4>
-<p>Alle bayerischen Feiertage sind hinterlegt. Feiertage bekommen einen <b>goldenen Rahmen</b>, Ferientage einen <b>gestrichelten blauen Rahmen</b>.</p>
+<p>Feiertage bekommen einen <b>goldenen Rahmen</b>, Ferientage einen <b>gestrichelten blauen Rahmen</b>.</p>
 
 <h4>11. Hinweis zu Google Kalender</h4>
 <div class="box warn">Wenn ihr Erinnerungen auch bei <b>geschlossener App</b> erhalten wollt &ndash; tragt wichtige Termine zus&auml;tzlich in euren <b>Google Kalender</b> ein.</div>
@@ -576,15 +612,51 @@ if (Object.keys(vacationQuota).length === 0) {
 function getVacationQuota(year) { return vacationQuota[String(year)] != null ? vacationQuota[String(year)] : 30; }
 function setVacationQuota(year, value) { vacationQuota[String(year)] = value; try { localStorage.setItem('schichtzeitVacationQuota', JSON.stringify(vacationQuota)); } catch(e){} }
 
+// MIGRATION: Einzeleintrag -> Array von Eintraegen
+function genEntryId() {
+    return 'e' + Date.now().toString(36) + Math.random().toString(36).slice(2, 7);
+}
 (function migrateSonstige(){
     var changed = false;
     Object.keys(sonstigeDays).forEach(function(k){
         var v = sonstigeDays[k];
-        if (typeof v === 'string') { sonstigeDays[k] = { color:v, text:'', time:'', notify:false, icon:'\uD83D\uDD14' }; changed = true; }
-        else if (v && typeof v === 'object' && !v.icon) { v.icon = '\uD83D\uDD14'; changed = true; }
+        if (typeof v === 'string') {
+            sonstigeDays[k] = [{ id: genEntryId(), color: v, text: '', time: '', notify: false, icon: '\uD83D\uDD14' }];
+            changed = true;
+        } else if (v && typeof v === 'object' && !Array.isArray(v)) {
+            if (!v.id) v.id = genEntryId();
+            if (!v.icon) v.icon = '\uD83D\uDD14';
+            sonstigeDays[k] = [v];
+            changed = true;
+        } else if (Array.isArray(v)) {
+            for (var i = 0; i < v.length; i++) {
+                if (v[i] && typeof v[i] === 'object') {
+                    if (!v[i].id) { v[i].id = genEntryId(); changed = true; }
+                    if (!v[i].icon) { v[i].icon = '\uD83D\uDD14'; changed = true; }
+                }
+            }
+        }
     });
     if (changed) { try { localStorage.setItem('schichtzeitSonstigeDays', JSON.stringify(sonstigeDays)); } catch(e){} }
 })();
+
+function getEntries(dateKey) {
+    var arr = sonstigeDays[dateKey];
+    if (!arr) return [];
+    if (!Array.isArray(arr)) return [arr];
+    return arr;
+}
+function setEntries(dateKey, entries) {
+    if (!entries || entries.length === 0) {
+        delete sonstigeDays[dateKey];
+    } else {
+        sonstigeDays[dateKey] = entries;
+    }
+    try { localStorage.setItem('schichtzeitSonstigeDays', JSON.stringify(sonstigeDays)); } catch(e){}
+}
+function hasAnyEntry(dateKey) {
+    return getEntries(dateKey).length > 0;
+}
 
 var notifiedFlags = safeGetObject('schichtzeitNotified');
 var savedGroup = '1';
@@ -676,7 +748,7 @@ function closeBackupMenu() { document.getElementById('backupMenuModal').classLis
 
 function getBackupJSON() {
     var backup = {
-        version: 4,
+        version: 5,
         date: new Date().toISOString(),
         group: document.getElementById('groupSelect').value,
         color: selectedColor,
@@ -819,18 +891,6 @@ function getShift(date, group) {
     if (index < 0) index += CYCLE_35.length;
     return CYCLE_35[index];
 }
-function isColorDark(hex) {
-    var c = String(hex).replace('#','');
-    var r = parseInt(c.substr(0,2),16), g = parseInt(c.substr(2,2),16), b = parseInt(c.substr(4,2),16);
-    return ((0.299*r + 0.587*g + 0.114*b) / 255) < 0.55;
-}
-function getEntry(dateKey) {
-    var e = sonstigeDays[dateKey];
-    if (!e) return null;
-    if (typeof e === 'string') return { color:e, text:'', time:'', notify:false, icon:'\uD83D\uDD14' };
-    if (!e.icon) e.icon = '\uD83D\uDD14';
-    return e;
-}
 function escapeHtml(s) {
     return String(s).replace(/[&<>"']/g, function(c){ return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]; });
 }
@@ -960,36 +1020,62 @@ function renderCalendar() {
         var st = document.createElement('span');
         st.textContent = shift === '_' ? '' : shift;
         dayEl.appendChild(st);
-        var entry = getEntry(dateKey);
-        if (entry && sickDays.indexOf(dateKey) < 0 && vacationDays.indexOf(dateKey) < 0) {
+
+        var entries = getEntries(dateKey);
+        var hasKrankUrlaub = sickDays.indexOf(dateKey) > -1 || vacationDays.indexOf(dateKey) > -1;
+
+        // Diagonale Teilung nur wenn keine Krank/Urlaub-Markierung
+        if (entries.length > 0 && !hasKrankUrlaub) {
             dayEl.classList.add('sonstige');
+            var firstEntry = entries[0];
             var shiftColor = SHIFT_COLORS[shift] || '#f9f9f9';
-            dayEl.style.background = 'linear-gradient(135deg, ' + shiftColor + ' 0%, ' + shiftColor + ' 50%, ' + entry.color + ' 50%, ' + entry.color + ' 100%)';
-            if (String(entry.color).toUpperCase() === '#FFFFFF') dayEl.style.border = '2px solid #999';
-            var tipParts = [];
-            if (entry.text) tipParts.push(entry.text);
-            if (entry.time) tipParts.push('Uhrzeit: ' + entry.time);
-            if (entry.notify && entry.time) tipParts.push('Erinnerung aktiv');
-            if (tipParts.length) dayEl.title = tipParts.join(' | ');
-            if (entry.text || entry.time || entry.notify) {
-                var m = document.createElement('span');
-                m.className = 'sonstige-marker';
-                m.textContent = entry.icon || '\uD83D\uDD14';
-                dayEl.appendChild(m);
+            dayEl.style.background = 'linear-gradient(135deg, ' + shiftColor + ' 0%, ' + shiftColor + ' 50%, ' + firstEntry.color + ' 50%, ' + firstEntry.color + ' 100%)';
+            if (String(firstEntry.color).toUpperCase() === '#FFFFFF') dayEl.style.border = '2px solid #999';
+        }
+
+        // Icons + Zaehler immer anzeigen, wenn Eintraege existieren
+        if (entries.length > 0) {
+            if (hasKrankUrlaub) dayEl.classList.add('sonstige');
+            var badges = document.createElement('div');
+            badges.className = 'sonstige-badges';
+
+            if (entries.length > 1) {
+                var cnt = document.createElement('span');
+                cnt.className = 'sonstige-count';
+                cnt.textContent = '+' + (entries.length - 1);
+                badges.appendChild(cnt);
             }
-            if (entry.text) {
+
+            var m = document.createElement('span');
+            m.className = 'sonstige-marker';
+            m.textContent = entries[0].icon || '\uD83D\uDD14';
+            badges.appendChild(m);
+            dayEl.appendChild(badges);
+
+            // Tooltip mit allen Eintraegen
+            var tipParts = [];
+            entries.forEach(function(en){
+                var t = en.text || 'Termin';
+                if (en.time) t += ' (' + en.time + ')';
+                tipParts.push(t);
+            });
+            dayEl.title = tipParts.join(' | ');
+
+            // Vorschau des ersten Eintrags
+            if (entries[0].text) {
                 var prev = document.createElement('span');
                 prev.className = 'sonstige-preview';
-                prev.textContent = entry.text.length > 12 ? entry.text.substr(0, 11) + '\u2026' : entry.text;
+                prev.textContent = entries[0].text.length > 12 ? entries[0].text.substr(0, 11) + '\u2026' : entries[0].text;
                 dayEl.appendChild(prev);
             }
         }
+
         dayEl.addEventListener('click', function(){
             if (suppressClick) return;
             if (currentMode === 'krank') toggleDay(dateKey, 'krank');
             else if (currentMode === 'urlaub') toggleDay(dateKey, 'urlaub');
             else if (currentMode === 'sonstige') openEntryEditor(dateKey);
-            else { if (getEntry(dateKey)) openEntryEditor(dateKey); }
+            else { if (hasAnyEntry(dateKey)) openEntryEditor(dateKey); }
         });
         calendarEl.appendChild(dayEl);
     };
@@ -1016,15 +1102,19 @@ function toggleDay(dateKey, type, forceRemove) {
         array.push(dateKey);
         if (type === 'krank') { var vi = vacationDays.indexOf(dateKey); if (vi > -1) vacationDays.splice(vi, 1); }
         else if (type === 'urlaub') { var si = sickDays.indexOf(dateKey); if (si > -1) sickDays.splice(si, 1); }
-        if (sonstigeDays[dateKey]) { delete sonstigeDays[dateKey]; try { localStorage.setItem('schichtzeitSonstigeDays', JSON.stringify(sonstigeDays)); } catch(e){} }
     }
     if (type === 'krank' || forceRemove) try { localStorage.setItem('schichtzeitSickDays', JSON.stringify(sickDays)); } catch(e){}
     if (type === 'urlaub' || forceRemove) try { localStorage.setItem('schichtzeitVacationDays', JSON.stringify(vacationDays)); } catch(e){}
     renderCalendar();
 }
 
+// ============================================================
+// ENTRY MODAL - ZWEI SCREENS (Liste / Bearbeiten)
+// ============================================================
 var editingDateKey = null;
+var editingIndex = -1; // -1 = neuer Eintrag
 var editingSymbol = '\uD83D\uDD14';
+
 function renderSymbolGrid() {
     var grid = document.getElementById('symbolGrid');
     if (!grid) return;
@@ -1044,74 +1134,238 @@ function renderSymbolGrid() {
         })(btns[i]);
     }
 }
+
+function showListScreen() {
+    if (!editingDateKey) return;
+    var entries = getEntries(editingDateKey);
+    var parts = editingDateKey.split('-');
+    var dateStr = parts[2] + '.' + parts[1] + '.' + parts[0];
+    document.getElementById('listDate').textContent = dateStr;
+
+    var body = document.getElementById('entryListBody');
+    body.innerHTML = '';
+
+    if (entries.length === 0) {
+        var empty = document.createElement('div');
+        empty.className = 'entry-empty';
+        empty.textContent = 'Noch keine Eintr\u00E4ge.';
+        body.appendChild(empty);
+    } else {
+        entries.forEach(function(en, i){
+            var item = document.createElement('div');
+            item.className = 'entry-item';
+
+            var iconEl = document.createElement('span');
+            iconEl.className = 'e-icon';
+            iconEl.textContent = en.icon || '\uD83D\uDD14';
+
+            var infoEl = document.createElement('div');
+            infoEl.className = 'e-info';
+            var textEl = document.createElement('div');
+            textEl.className = 'e-text';
+            textEl.textContent = en.text || 'Ohne Beschreibung';
+            infoEl.appendChild(textEl);
+
+            var metaParts = [];
+            if (en.time) metaParts.push('Uhrzeit: ' + en.time);
+            if (en.notify && en.time) metaParts.push('Erinnerung');
+            if (metaParts.length > 0) {
+                var metaEl = document.createElement('div');
+                metaEl.className = 'e-meta';
+                metaEl.textContent = metaParts.join(' \u00B7 ');
+                infoEl.appendChild(metaEl);
+            }
+
+            var delBtn = document.createElement('button');
+            delBtn.className = 'e-del';
+            delBtn.textContent = '\uD83D\uDDD1';
+            delBtn.setAttribute('aria-label', 'L\u00F6schen');
+            delBtn.addEventListener('click', function(ev){
+                ev.stopPropagation();
+                ev.preventDefault();
+                deleteFromList(i);
+            });
+            delBtn.addEventListener('touchend', function(ev){
+                ev.stopPropagation();
+                ev.preventDefault();
+                deleteFromList(i);
+            });
+
+            item.appendChild(iconEl);
+            item.appendChild(infoEl);
+            item.appendChild(delBtn);
+
+            item.addEventListener('click', function(){
+                editingIndex = i;
+                showEditScreen();
+            });
+
+            body.appendChild(item);
+        });
+    }
+
+    document.getElementById('entryListScreen').style.display = 'block';
+    document.getElementById('entryEditScreen').style.display = 'none';
+}
+
+function showEditScreen() {
+    if (!editingDateKey) return;
+    var parts = editingDateKey.split('-');
+    var dateStr = parts[2] + '.' + parts[1] + '.' + parts[0];
+    document.getElementById('modalDate').textContent = dateStr;
+
+    if (editingIndex >= 0) {
+        var entries = getEntries(editingDateKey);
+        var entry = entries[editingIndex] || {};
+        document.getElementById('modalTitle').textContent = 'Eintrag bearbeiten';
+        document.getElementById('entryText').value = entry.text || '';
+        document.getElementById('entryTime').value = entry.time || '';
+        document.getElementById('entryColor').value = entry.color || selectedColor;
+        document.getElementById('entryNotify').checked = !!entry.notify;
+        editingSymbol = entry.icon || selectedSymbol;
+        document.getElementById('modalDeleteBtn').style.display = 'block';
+    } else {
+        document.getElementById('modalTitle').textContent = 'Neuer Eintrag';
+        document.getElementById('entryText').value = '';
+        document.getElementById('entryTime').value = '';
+        document.getElementById('entryColor').value = selectedColor;
+        document.getElementById('entryNotify').checked = false;
+        editingSymbol = selectedSymbol;
+        document.getElementById('modalDeleteBtn').style.display = 'none';
+    }
+    renderSymbolGrid();
+
+    var hint = document.getElementById('notifHint');
+    if (!('Notification' in window)) hint.classList.add('active');
+    else hint.classList.remove('active');
+
+    document.getElementById('entryListScreen').style.display = 'none';
+    document.getElementById('entryEditScreen').style.display = 'block';
+}
+
 function openEntryEditor(dateKey) {
     editingDateKey = dateKey;
-    var parts = dateKey.split('-');
-    var entry = getEntry(dateKey);
-    document.getElementById('modalTitle').textContent = entry ? 'Eintrag ansehen / bearbeiten' : 'Neuer Eintrag';
-    document.getElementById('modalDate').textContent = parts[2] + '.' + parts[1] + '.' + parts[0];
-    document.getElementById('entryText').value = entry ? (entry.text || '') : '';
-    document.getElementById('entryTime').value = entry ? (entry.time || '') : '';
-    document.getElementById('entryColor').value = entry ? entry.color : selectedColor;
-    document.getElementById('entryNotify').checked = entry ? !!entry.notify : false;
-    editingSymbol = (entry && entry.icon) ? entry.icon : selectedSymbol;
-    renderSymbolGrid();
-    document.getElementById('modalDeleteBtn').style.display = entry ? 'block' : 'none';
+    editingIndex = -1;
+    var entries = getEntries(dateKey);
     document.getElementById('entryModal').classList.add('active');
+    if (entries.length === 0) {
+        showEditScreen();
+    } else {
+        showListScreen();
+    }
 }
-function closeEntryEditor() { document.getElementById('entryModal').classList.remove('active'); editingDateKey = null; }
+
+function closeEntryEditor() {
+    document.getElementById('entryModal').classList.remove('active');
+    editingDateKey = null;
+    editingIndex = -1;
+}
+
 function saveEntry() {
     if (!editingDateKey) return;
     var text = document.getElementById('entryText').value.trim();
     var time = document.getElementById('entryTime').value;
     var color = document.getElementById('entryColor').value;
     var notify = document.getElementById('entryNotify').checked;
+
     if (notify && time && 'Notification' in window && Notification.permission === 'default') {
         try { Notification.requestPermission().then(function(){ updateNotifButton(); }); } catch(e){}
     }
-    sonstigeDays[editingDateKey] = { color: color, text: text, time: time, notify: notify && !!time, icon: editingSymbol };
+
+    var entries = getEntries(editingDateKey);
+    var newEntry = {
+        id: (editingIndex >= 0 && entries[editingIndex] && entries[editingIndex].id) ? entries[editingIndex].id : genEntryId(),
+        color: color,
+        text: text,
+        time: time,
+        notify: notify && !!time,
+        icon: editingSymbol
+    };
+
+    if (editingIndex >= 0 && editingIndex < entries.length) {
+        entries[editingIndex] = newEntry;
+    } else {
+        entries.push(newEntry);
+    }
+    setEntries(editingDateKey, entries);
+
+    // Letztes Symbol speichern
     selectedSymbol = editingSymbol;
     try { localStorage.setItem('schichtzeitSymbol', selectedSymbol); } catch(e){}
-    var si = sickDays.indexOf(editingDateKey); if (si > -1) sickDays.splice(si, 1);
-    var vi = vacationDays.indexOf(editingDateKey); if (vi > -1) vacationDays.splice(vi, 1);
-    try {
-        localStorage.setItem('schichtzeitSickDays', JSON.stringify(sickDays));
-        localStorage.setItem('schichtzeitVacationDays', JSON.stringify(vacationDays));
-    } catch(e){}
-    delete notifiedFlags[editingDateKey + '_1d'];
-    delete notifiedFlags[editingDateKey + '_2h'];
-    delete notifiedFlags[editingDateKey + '_30m'];
-    if (time && notify) {
-        var parts = editingDateKey.split('-').map(Number);
-        var tparts = time.split(':').map(Number);
-        var evMs = new Date(parts[0], parts[1]-1, parts[2], tparts[0], tparts[1], 0, 0).getTime();
-        var diffMin = (evMs - Date.now()) / 60000;
-        if (diffMin < 1320) notifiedFlags[editingDateKey + '_1d'] = true;
-        if (diffMin < 60)   notifiedFlags[editingDateKey + '_2h'] = true;
-        if (diffMin < 5)    notifiedFlags[editingDateKey + '_30m'] = true;
-    }
-    try {
-        localStorage.setItem('schichtzeitNotified', JSON.stringify(notifiedFlags));
-        localStorage.setItem('schichtzeitSonstigeDays', JSON.stringify(sonstigeDays));
-    } catch(e){}
-    closeEntryEditor();
+
+    // Erinnerungsflags fuer diesen Eintrag zuruecksetzen
+    var prefix = editingDateKey + '_' + newEntry.id;
+    Object.keys(notifiedFlags).forEach(function(k){
+        if (k.indexOf(prefix) === 0) delete notifiedFlags[k];
+    });
+    try { localStorage.setItem('schichtzeitNotified', JSON.stringify(notifiedFlags)); } catch(e){}
+
+    // Zurueck zur Liste
+    editingIndex = -1;
+    showListScreen();
     renderCalendar();
+    checkReminders();
 }
-function deleteEntry() {
+
+function deleteCurrentEntry() {
     if (!editingDateKey) return;
+    if (editingIndex < 0) return;
     if (!confirm('Diesen Eintrag wirklich l\u00F6schen?')) return;
-    delete sonstigeDays[editingDateKey];
-    delete notifiedFlags[editingDateKey + '_1d'];
-    delete notifiedFlags[editingDateKey + '_2h'];
-    delete notifiedFlags[editingDateKey + '_30m'];
-    try {
-        localStorage.setItem('schichtzeitSonstigeDays', JSON.stringify(sonstigeDays));
-        localStorage.setItem('schichtzeitNotified', JSON.stringify(notifiedFlags));
-    } catch(e){}
-    closeEntryEditor();
+    var entries = getEntries(editingDateKey);
+    var removed = entries[editingIndex];
+    if (removed && removed.id) {
+        var prefix = editingDateKey + '_' + removed.id;
+        Object.keys(notifiedFlags).forEach(function(k){
+            if (k.indexOf(prefix) === 0) delete notifiedFlags[k];
+        });
+        try { localStorage.setItem('schichtzeitNotified', JSON.stringify(notifiedFlags)); } catch(e){}
+    }
+    entries.splice(editingIndex, 1);
+    setEntries(editingDateKey, entries);
+    editingIndex = -1;
+    if (entries.length === 0) {
+        closeEntryEditor();
+    } else {
+        showListScreen();
+    }
     renderCalendar();
 }
 
+function deleteFromList(index) {
+    if (!editingDateKey) return;
+    var entries = getEntries(editingDateKey);
+    var removed = entries[index];
+    if (!removed) return;
+    if (!confirm('Diesen Eintrag wirklich l\u00F6schen?')) return;
+    if (removed.id) {
+        var prefix = editingDateKey + '_' + removed.id;
+        Object.keys(notifiedFlags).forEach(function(k){
+            if (k.indexOf(prefix) === 0) delete notifiedFlags[k];
+        });
+        try { localStorage.setItem('schichtzeitNotified', JSON.stringify(notifiedFlags)); } catch(e){}
+    }
+    entries.splice(index, 1);
+    setEntries(editingDateKey, entries);
+    if (entries.length === 0) {
+        closeEntryEditor();
+    } else {
+        showListScreen();
+    }
+    renderCalendar();
+}
+
+function backFromEdit() {
+    if (!editingDateKey) { closeEntryEditor(); return; }
+    var entries = getEntries(editingDateKey);
+    if (entries.length === 0) {
+        closeEntryEditor();
+    } else {
+        editingIndex = -1;
+        showListScreen();
+    }
+}
+
+// NOTIFICATIONS
 function showBanner(title, body) {
     var old = document.getElementById('notifBanner');
     if (old) old.parentNode.removeChild(old);
@@ -1143,32 +1397,35 @@ function saveNotified() { try { localStorage.setItem('schichtzeitNotified', JSON
 function checkReminders() {
     var nowMs = Date.now();
     Object.keys(sonstigeDays).forEach(function(dateKey){
-        var entry = getEntry(dateKey);
-        if (!entry || !entry.notify || !entry.time) return;
-        var p = dateKey.split('-').map(Number);
-        var t = entry.time.split(':').map(Number);
-        if (isNaN(t[0]) || isNaN(t[1])) return;
-        var eventMs = new Date(p[0], p[1]-1, p[2], t[0], t[1], 0, 0).getTime();
-        var diffMin = (eventMs - nowMs) / 60000;
-        if (diffMin <= 0) return;
-        var label = entry.text ? entry.text : 'Sonstiger Termin';
-        var icon = entry.icon || '\uD83D\uDD14';
-        var triggers = [
-            { key:'_1d', lo: 1320, hi: 1560, msg: icon + ' Morgen um ' + entry.time + ' Uhr' },
-            { key:'_2h', lo: 60, hi: 180, msg: 'In 2 Stunden: ' + entry.time + ' Uhr' },
-            { key:'_30m', lo: 5, hi: 55, msg: icon + ' In 30 Minuten: ' + entry.time + ' Uhr' }
-        ];
-        triggers.forEach(function(tr){
-            var fullKey = dateKey + tr.key;
-            if (notifiedFlags[fullKey]) return;
-            if (diffMin >= tr.lo && diffMin <= tr.hi) {
-                notifyUser(tr.msg, label);
-                notifiedFlags[fullKey] = true;
-                saveNotified();
-            } else if (diffMin < tr.lo) {
-                notifiedFlags[fullKey] = true;
-                saveNotified();
-            }
+        var entries = getEntries(dateKey);
+        entries.forEach(function(entry){
+            if (!entry || !entry.notify || !entry.time) return;
+            if (!entry.id) entry.id = genEntryId();
+            var p = dateKey.split('-').map(Number);
+            var t = entry.time.split(':').map(Number);
+            if (isNaN(t[0]) || isNaN(t[1])) return;
+            var eventMs = new Date(p[0], p[1]-1, p[2], t[0], t[1], 0, 0).getTime();
+            var diffMin = (eventMs - nowMs) / 60000;
+            if (diffMin <= 0) return;
+            var label = entry.text ? entry.text : 'Sonstiger Termin';
+            var icon = entry.icon || '\uD83D\uDD14';
+            var baseKey = dateKey + '_' + entry.id;
+            var triggers = [
+                { key:baseKey + '_1d', lo: 1320, hi: 1560, msg: icon + ' Morgen um ' + entry.time + ' Uhr' },
+                { key:baseKey + '_2h', lo: 60, hi: 180, msg: 'In 2 Stunden: ' + entry.time + ' Uhr' },
+                { key:baseKey + '_30m', lo: 5, hi: 55, msg: icon + ' In 30 Minuten: ' + entry.time + ' Uhr' }
+            ];
+            triggers.forEach(function(tr){
+                if (notifiedFlags[tr.key]) return;
+                if (diffMin >= tr.lo && diffMin <= tr.hi) {
+                    notifyUser(tr.msg, label);
+                    notifiedFlags[tr.key] = true;
+                    saveNotified();
+                } else if (diffMin < tr.lo) {
+                    notifiedFlags[tr.key] = true;
+                    saveNotified();
+                }
+            });
         });
     });
     var cutoff = new Date(); cutoff.setDate(cutoff.getDate() - 7);
@@ -1184,13 +1441,15 @@ function getUpcomingReminders(limit) {
     var now = new Date();
     var items = [];
     Object.keys(sonstigeDays).forEach(function(k){
-        var e = getEntry(k);
-        if (!e || !e.notify || !e.time) return;
-        var p = k.split('-').map(Number);
-        var t = e.time.split(':').map(Number);
-        if (isNaN(t[0]) || isNaN(t[1])) return;
-        var dt = new Date(p[0], p[1]-1, p[2], t[0], t[1], 0, 0);
-        if (dt.getTime() >= now.getTime() - 30*60000) items.push({key:k, entry:e, dt:dt});
+        var entries = getEntries(k);
+        entries.forEach(function(e){
+            if (!e || !e.notify || !e.time) return;
+            var p = k.split('-').map(Number);
+            var t = e.time.split(':').map(Number);
+            if (isNaN(t[0]) || isNaN(t[1])) return;
+            var dt = new Date(p[0], p[1]-1, p[2], t[0], t[1], 0, 0);
+            if (dt.getTime() >= now.getTime() - 30*60000) items.push({key:k, entry:e, dt:dt});
+        });
     });
     items.sort(function(a,b){ return a.dt - b.dt; });
     return items.slice(0, limit || 10);
@@ -1228,7 +1487,11 @@ function updateYearOverview() {
     if (el) el.textContent = year;
     var yearSick = sickDays.filter(function(d){ return d.indexOf(year+'-') === 0; }).sort();
     var yearVacation = vacationDays.filter(function(d){ return d.indexOf(year+'-') === 0; }).sort();
-    var yearSonstige = Object.keys(sonstigeDays).filter(function(d){ return d.indexOf(year+'-') === 0; }).sort();
+    // Sonstige: alle Tage mit mindestens einem Eintrag
+    var yearSonstige = Object.keys(sonstigeDays).filter(function(d){
+        if (d.indexOf(year+'-') !== 0) return false;
+        return getEntries(d).length > 0;
+    }).sort();
     var quota = getVacationQuota(year);
     var used = yearVacation.length;
     var left = quota - used;
@@ -1245,13 +1508,18 @@ function updateYearOverview() {
     document.getElementById('listKrank').innerHTML = yearSick.length ? yearSick.map(function(d){ return '<li>'+f(d)+'</li>'; }).join('') : '<li>Keine Eintr\u00E4ge</li>';
     document.getElementById('listUrlaub').innerHTML = yearVacation.length ? yearVacation.map(function(d){ return '<li>'+f(d)+'</li>'; }).join('') : '<li>Keine Eintr\u00E4ge</li>';
     document.getElementById('listSonstige').innerHTML = yearSonstige.length ? yearSonstige.map(function(d){
-        var e = getEntry(d);
-        var extra = [];
-        if (e.icon) extra.push(e.icon);
-        if (e.time) extra.push('Uhrzeit: ' + e.time);
-        if (e.text) extra.push(escapeHtml(e.text));
-        var extraStr = extra.length ? ' - ' + extra.join(' . ') : '';
-        return '<li><span style="display:inline-block;width:14px;height:14px;background:'+e.color+';border:1px solid #999;border-radius:3px;vertical-align:middle;margin-right:6px;"></span>'+f(d)+extraStr+'</li>';
+        var entries = getEntries(d);
+        var items = entries.map(function(en){
+            var parts = [];
+            if (en.icon) parts.push(en.icon);
+            if (en.time) parts.push('Uhrzeit: ' + en.time);
+            if (en.text) parts.push(escapeHtml(en.text));
+            return '<div style="margin-left:6px;font-size:13px;color:#666;">' + parts.join(' \u00B7 ') + '</div>';
+        }).join('');
+        return '<li style="list-style:none;margin-bottom:6px;">' +
+            '<div style="font-weight:bold;">' + f(d) + (entries.length > 1 ? ' <span style="color:#0056b3;">(' + entries.length + ')</span>' : '') + '</div>' +
+            items +
+            '</li>';
     }).join('') : '<li>Keine Eintr\u00E4ge</li>';
 }
 function toggleYearOverview() {
@@ -1285,6 +1553,26 @@ function applyRestoredData(data) {
     vacationDays = data.vacationDays || [];
     sonstigeDays = data.sonstigeDays || {};
     notifiedFlags = data.notifiedFlags || {};
+
+    // Migration falls noetig
+    Object.keys(sonstigeDays).forEach(function(k){
+        var v = sonstigeDays[k];
+        if (typeof v === 'string') {
+            sonstigeDays[k] = [{ id: genEntryId(), color: v, text: '', time: '', notify: false, icon: '\uD83D\uDD14' }];
+        } else if (v && typeof v === 'object' && !Array.isArray(v)) {
+            if (!v.id) v.id = genEntryId();
+            if (!v.icon) v.icon = '\uD83D\uDD14';
+            sonstigeDays[k] = [v];
+        } else if (Array.isArray(v)) {
+            for (var i = 0; i < v.length; i++) {
+                if (v[i] && typeof v[i] === 'object') {
+                    if (!v[i].id) v[i].id = genEntryId();
+                    if (!v[i].icon) v[i].icon = '\uD83D\uDD14';
+                }
+            }
+        }
+    });
+
     if (data.vacationQuota && typeof data.vacationQuota === 'object') {
         vacationQuota = data.vacationQuota;
         try { localStorage.setItem('schichtzeitVacationQuota', JSON.stringify(vacationQuota)); } catch(err){}
@@ -1353,10 +1641,18 @@ function init() {
     document.getElementById('donateModal').addEventListener('click', function(e){ if (e.target.id === 'donateModal') closeDonateModal(); });
     document.getElementById('donateConfirmLink').addEventListener('click', function(){ setTimeout(closeDonateModal, 200); });
     document.getElementById('entryNotify').addEventListener('change', function(){ setTimeout(openDonateModal, 60); });
+
+    // Entry-Modal Buttons
     document.getElementById('modalSaveBtn').addEventListener('click', saveEntry);
-    document.getElementById('modalDeleteBtn').addEventListener('click', deleteEntry);
-    document.getElementById('modalCancelBtn').addEventListener('click', closeEntryEditor);
+    document.getElementById('modalDeleteBtn').addEventListener('click', deleteCurrentEntry);
+    document.getElementById('modalBackBtn').addEventListener('click', backFromEdit);
+    document.getElementById('listAddBtn').addEventListener('click', function(){
+        editingIndex = -1;
+        showEditScreen();
+    });
+    document.getElementById('listCloseBtn').addEventListener('click', closeEntryEditor);
     document.getElementById('entryModal').addEventListener('click', function(e){ if (e.target.id === 'entryModal') closeEntryEditor(); });
+
     document.getElementById('prevBtn').addEventListener('click', function(){ unlockAudio(); changeMonth(-1); });
     document.getElementById('nextBtn').addEventListener('click', function(){ unlockAudio(); changeMonth(1); });
     document.getElementById('groupSelect').addEventListener('change', function(e){
