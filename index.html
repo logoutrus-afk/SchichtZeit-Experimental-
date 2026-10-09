@@ -168,7 +168,6 @@ button:active{background:#0056b3}
 .section-title{font-size:14px;font-weight:bold;color:#555;text-transform:uppercase;letter-spacing:0.5px;margin:18px 0 8px 0}
 .section-title:first-of-type{margin-top:0}
 
-/* Eintrags-Liste */
 .entry-list{margin:10px 0}
 .entry-item{display:flex;align-items:center;gap:12px;padding:12px;background:#f1f3f5;border:1px solid #dee2e6;border-radius:10px;margin-bottom:8px;cursor:pointer;text-align:left}
 .entry-item:hover,.entry-item:active{background:#e9ecef;border-color:#0056b3}
@@ -277,7 +276,35 @@ body.dark .sonstige-count{background:#1e2124;color:#e4e6ea;border-color:#555}
 <path d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7s-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81 1.66 0 3-1.34 3-3s-1.34-3-3-3-3 1.34-3 3c0 .24.04.47.09.7L8.04 9.81C7.5 9.31 6.79 9 6 9c-1.66 0-3 1.34-3 3s1.34 3 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.16c-.05.21-.08.43-.08.65 0 1.61 1.31 2.92 2.92 2.92s2.92-1.31 2.92-2.92-1.31-2.92-2.92-2.92z"/>
 </svg>
 </button>
-<button class="top-btn settings-btn" id="settingsBtn" title="Einstellungen" aria-label="Einstellungen">&#8942;</button>
+<button class="top-btn settings-btn" id="settingsBtn" title="Einstellungen" aria-label="Einstellungen">
+<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" aria-hidden="true">
+  <line x1="12" y1="6" x2="12" y2="4.2" stroke-width="1.1"/>
+  <line x1="12" y1="18" x2="12" y2="19.8" stroke-width="1.1"/>
+  <line x1="6" y1="12" x2="4.2" y2="12" stroke-width="1.1"/>
+  <line x1="18" y1="12" x2="19.8" y2="12" stroke-width="1.1"/>
+  <line x1="7.76" y1="7.76" x2="6.49" y2="6.49" stroke-width="1.1"/>
+  <line x1="16.24" y1="16.24" x2="17.51" y2="17.51" stroke-width="1.1"/>
+  <line x1="16.24" y1="7.76" x2="17.51" y2="6.49" stroke-width="1.1"/>
+  <line x1="7.76" y1="16.24" x2="6.49" y2="17.51" stroke-width="1.1"/>
+  <circle cx="12" cy="3" r="1.7" fill="currentColor" stroke="none"/>
+  <circle cx="12" cy="21" r="1.7" fill="currentColor" stroke="none"/>
+  <circle cx="3" cy="12" r="1.7" fill="currentColor" stroke="none"/>
+  <circle cx="21" cy="12" r="1.7" fill="currentColor" stroke="none"/>
+  <circle cx="5.64" cy="5.64" r="1.7" fill="currentColor" stroke="none"/>
+  <circle cx="18.36" cy="18.36" r="1.7" fill="currentColor" stroke="none"/>
+  <circle cx="18.36" cy="5.64" r="1.7" fill="currentColor" stroke="none"/>
+  <circle cx="5.64" cy="18.36" r="1.7" fill="currentColor" stroke="none"/>
+  <circle cx="12" cy="12" r="3.2" stroke-width="2.2" stroke="currentColor"/>
+  <line x1="12" y1="8.6" x2="12" y2="7" stroke-width="2.4" stroke="currentColor"/>
+  <line x1="12" y1="15.4" x2="12" y2="17" stroke-width="2.4" stroke="currentColor"/>
+  <line x1="8.6" y1="12" x2="7" y2="12" stroke-width="2.4" stroke="currentColor"/>
+  <line x1="15.4" y1="12" x2="17" y2="12" stroke-width="2.4" stroke="currentColor"/>
+  <line x1="9.6" y1="9.6" x2="8.46" y2="8.46" stroke-width="2.4" stroke="currentColor"/>
+  <line x1="14.4" y1="14.4" x2="15.54" y2="15.54" stroke-width="2.4" stroke="currentColor"/>
+  <line x1="14.4" y1="9.6" x2="15.54" y2="8.46" stroke-width="2.4" stroke="currentColor"/>
+  <line x1="9.6" y1="14.4" x2="8.46" y2="15.54" stroke-width="2.4" stroke="currentColor"/>
+</svg>
+</button>
 <div class="err-box" id="errBox"></div>
 <div id="onlineStatus" class="online-status loading">Uhr wird geladen...</div>
 
@@ -385,9 +412,7 @@ body.dark .sonstige-count{background:#1e2124;color:#e4e6ea;border-color:#555}
 
 </div>
 
-<!-- ENTRY MODAL (List + Edit) -->
 <div class="modal-overlay" id="entryModal"><div class="modal">
-    <!-- LIST SCREEN -->
     <div id="entryListScreen" style="display:none;">
         <h3>Eintr&auml;ge am <span id="listDate"></span></h3>
         <div class="entry-list" id="entryListBody"></div>
@@ -396,7 +421,6 @@ body.dark .sonstige-count{background:#1e2124;color:#e4e6ea;border-color:#555}
             <button id="listCloseBtn" style="background:#6c757d;">Schlie&szlig;en</button>
         </div>
     </div>
-    <!-- EDIT SCREEN -->
     <div id="entryEditScreen">
         <h3 id="modalTitle">Eintrag</h3>
         <div class="modal-date" id="modalDate"></div>
@@ -468,7 +492,6 @@ body.dark .sonstige-count{background:#1e2124;color:#e4e6ea;border-color:#555}
 <div class="box">Ein zweiter Klick auf einen Krank-/Urlaub-Tag entfernt die Markierung.</div>
 
 <h4>3. Eigene Termine eintragen &ndash; auch mehrere pro Tag</h4>
-<p>So geht's:</p>
 <ul>
 <li>Modus <b>Sonstige</b> w&auml;hlen.</li>
 <li>Auf den gew&uuml;nschten Tag tippen.</li>
@@ -489,7 +512,7 @@ body.dark .sonstige-count{background:#1e2124;color:#e4e6ea;border-color:#555}
 <p>Der Knopf <b>Ferien</b> blendet die bayerischen Schulferien ein.</p>
 
 <h4>6. Einstellungen &ouml;ffnen</h4>
-<p>&Uuml;ber das <b>Drei-Punkte-Men&uuml;</b> oben rechts: Urlaubstage pro Jahr, Schichtsystem, <b>Design / Modus</b> (Hell / Dunkel) und diese Anleitung.</p>
+<p>&Uuml;ber das <b>Zahnrad-Symbol</b> oben rechts: Urlaubstage pro Jahr, Schichtsystem, <b>Design / Modus</b> (Hell / Dunkel) und diese Anleitung.</p>
 
 <h4>7. Backup &ndash; Sichern und Wiederherstellen</h4>
 <ul>
@@ -612,7 +635,6 @@ if (Object.keys(vacationQuota).length === 0) {
 function getVacationQuota(year) { return vacationQuota[String(year)] != null ? vacationQuota[String(year)] : 30; }
 function setVacationQuota(year, value) { vacationQuota[String(year)] = value; try { localStorage.setItem('schichtzeitVacationQuota', JSON.stringify(vacationQuota)); } catch(e){} }
 
-// MIGRATION: Einzeleintrag -> Array von Eintraegen
 function genEntryId() {
     return 'e' + Date.now().toString(36) + Math.random().toString(36).slice(2, 7);
 }
@@ -1024,7 +1046,6 @@ function renderCalendar() {
         var entries = getEntries(dateKey);
         var hasKrankUrlaub = sickDays.indexOf(dateKey) > -1 || vacationDays.indexOf(dateKey) > -1;
 
-        // Diagonale Teilung nur wenn keine Krank/Urlaub-Markierung
         if (entries.length > 0 && !hasKrankUrlaub) {
             dayEl.classList.add('sonstige');
             var firstEntry = entries[0];
@@ -1033,7 +1054,6 @@ function renderCalendar() {
             if (String(firstEntry.color).toUpperCase() === '#FFFFFF') dayEl.style.border = '2px solid #999';
         }
 
-        // Icons + Zaehler immer anzeigen, wenn Eintraege existieren
         if (entries.length > 0) {
             if (hasKrankUrlaub) dayEl.classList.add('sonstige');
             var badges = document.createElement('div');
@@ -1052,7 +1072,6 @@ function renderCalendar() {
             badges.appendChild(m);
             dayEl.appendChild(badges);
 
-            // Tooltip mit allen Eintraegen
             var tipParts = [];
             entries.forEach(function(en){
                 var t = en.text || 'Termin';
@@ -1061,7 +1080,6 @@ function renderCalendar() {
             });
             dayEl.title = tipParts.join(' | ');
 
-            // Vorschau des ersten Eintrags
             if (entries[0].text) {
                 var prev = document.createElement('span');
                 prev.className = 'sonstige-preview';
@@ -1108,11 +1126,8 @@ function toggleDay(dateKey, type, forceRemove) {
     renderCalendar();
 }
 
-// ============================================================
-// ENTRY MODAL - ZWEI SCREENS (Liste / Bearbeiten)
-// ============================================================
 var editingDateKey = null;
-var editingIndex = -1; // -1 = neuer Eintrag
+var editingIndex = -1;
 var editingSymbol = '\uD83D\uDD14';
 
 function renderSymbolGrid() {
@@ -1181,13 +1196,11 @@ function showListScreen() {
             delBtn.textContent = '\uD83D\uDDD1';
             delBtn.setAttribute('aria-label', 'L\u00F6schen');
             delBtn.addEventListener('click', function(ev){
-                ev.stopPropagation();
-                ev.preventDefault();
+                ev.stopPropagation(); ev.preventDefault();
                 deleteFromList(i);
             });
             delBtn.addEventListener('touchend', function(ev){
-                ev.stopPropagation();
-                ev.preventDefault();
+                ev.stopPropagation(); ev.preventDefault();
                 deleteFromList(i);
             });
 
@@ -1289,18 +1302,15 @@ function saveEntry() {
     }
     setEntries(editingDateKey, entries);
 
-    // Letztes Symbol speichern
     selectedSymbol = editingSymbol;
     try { localStorage.setItem('schichtzeitSymbol', selectedSymbol); } catch(e){}
 
-    // Erinnerungsflags fuer diesen Eintrag zuruecksetzen
     var prefix = editingDateKey + '_' + newEntry.id;
     Object.keys(notifiedFlags).forEach(function(k){
         if (k.indexOf(prefix) === 0) delete notifiedFlags[k];
     });
     try { localStorage.setItem('schichtzeitNotified', JSON.stringify(notifiedFlags)); } catch(e){}
 
-    // Zurueck zur Liste
     editingIndex = -1;
     showListScreen();
     renderCalendar();
@@ -1365,7 +1375,6 @@ function backFromEdit() {
     }
 }
 
-// NOTIFICATIONS
 function showBanner(title, body) {
     var old = document.getElementById('notifBanner');
     if (old) old.parentNode.removeChild(old);
@@ -1487,7 +1496,6 @@ function updateYearOverview() {
     if (el) el.textContent = year;
     var yearSick = sickDays.filter(function(d){ return d.indexOf(year+'-') === 0; }).sort();
     var yearVacation = vacationDays.filter(function(d){ return d.indexOf(year+'-') === 0; }).sort();
-    // Sonstige: alle Tage mit mindestens einem Eintrag
     var yearSonstige = Object.keys(sonstigeDays).filter(function(d){
         if (d.indexOf(year+'-') !== 0) return false;
         return getEntries(d).length > 0;
@@ -1554,7 +1562,6 @@ function applyRestoredData(data) {
     sonstigeDays = data.sonstigeDays || {};
     notifiedFlags = data.notifiedFlags || {};
 
-    // Migration falls noetig
     Object.keys(sonstigeDays).forEach(function(k){
         var v = sonstigeDays[k];
         if (typeof v === 'string') {
@@ -1642,7 +1649,6 @@ function init() {
     document.getElementById('donateConfirmLink').addEventListener('click', function(){ setTimeout(closeDonateModal, 200); });
     document.getElementById('entryNotify').addEventListener('change', function(){ setTimeout(openDonateModal, 60); });
 
-    // Entry-Modal Buttons
     document.getElementById('modalSaveBtn').addEventListener('click', saveEntry);
     document.getElementById('modalDeleteBtn').addEventListener('click', deleteCurrentEntry);
     document.getElementById('modalBackBtn').addEventListener('click', backFromEdit);
