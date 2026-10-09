@@ -67,12 +67,14 @@ button:active{background:#0056b3}
 .ferien-marker{position:absolute;bottom:3px;left:5px;font-size:clamp(10px,2.5vw,14px);color:#17a2b8;font-weight:bold;background:#fff;border-radius:3px;padding:0 4px;line-height:1.1}
 .day .date-num{font-size:clamp(12px,1.8vw,17px);position:absolute;top:5px;left:7px;color:#555;font-weight:bold;line-height:1}
 .day.sonstige .date-num{font-weight:bold}
-.sonstige-badges{position:absolute;top:3px;right:4px;display:flex;align-items:center;gap:3px;pointer-events:none}
+.sonstige-badges{position:absolute;top:3px;right:4px;display:flex;align-items:center;gap:3px;pointer-events:none;z-index:3}
 .sonstige-marker{font-size:clamp(16px,2.6vw,26px);line-height:1;filter:drop-shadow(0 1px 2px rgba(0,0,0,0.6))}
-/* Multi-Task-Symbol: kleines weisses Badge mit Zahnrad-Symbol */
 .sonstige-count{background:#fff;color:#222;border-radius:50%;width:20px;height:20px;padding:0;border:1.5px solid rgba(0,0,0,0.5);line-height:1;display:inline-flex;align-items:center;justify-content:center;box-shadow:0 1px 3px rgba(0,0,0,0.35)}
 .sonstige-count svg{display:block;width:13px;height:13px}
-.sonstige-preview{position:absolute;bottom:4px;left:4px;right:4px;font-size:clamp(9px,1.4vw,13px);line-height:1.05;text-align:center;overflow:hidden;white-space:nowrap;text-overflow:ellipsis;opacity:0.98;pointer-events:none;font-weight:bold;color:#fff}
+/* Vierteilung des Tages: 2 Diagonalen -> bis zu 4 Farbflächen */
+.day .split-layer{position:absolute;top:0;left:0;right:0;bottom:0;z-index:0;pointer-events:none;border-radius:inherit;overflow:hidden}
+.day .split-layer span{position:absolute;top:0;left:0;right:0;bottom:0;display:block;pointer-events:none}
+.sonstige-preview{position:absolute;bottom:4px;left:4px;right:4px;font-size:clamp(9px,1.4vw,13px);line-height:1.05;text-align:center;overflow:hidden;white-space:nowrap;text-overflow:ellipsis;opacity:0.98;pointer-events:none;font-weight:bold;color:#fff;z-index:3}
 .legend{margin-top:18px;font-size:13px;display:flex;justify-content:center;gap:10px;flex-wrap:wrap}
 .legend-item{display:flex;align-items:center;gap:5px}
 .legend-box{width:16px;height:16px;border-radius:4px;border:1px solid #ccc}
@@ -140,7 +142,6 @@ button:active{background:#0056b3}
 .donate-amounts{display:flex;flex-wrap:wrap;gap:8px;margin:12px 0 6px 0;justify-content:center}
 .donate-amounts span{background:#f1f3f5;color:#333;border:1px solid #ccc;border-radius:20px;padding:6px 14px;font-size:14px;font-weight:600}
 .share-toast{position:fixed;left:50%;bottom:30px;transform:translateX(-50%);background:#333;color:#fff;padding:12px 20px;border-radius:10px;font-size:14px;z-index:9999;box-shadow:0 6px 20px rgba(0,0,0,0.35)}
-
 .help-btn{background:#17a2b8;display:block;width:100%;margin-top:8px;padding:14px;font-size:16px}
 .help-body{font-size:14.5px;line-height:1.65;color:#333}
 .help-body h4{margin:18px 0 6px 0;color:#0056b3;font-size:16px;border-bottom:1px solid #e5e9f0;padding-bottom:4px}
@@ -161,7 +162,6 @@ button:active{background:#0056b3}
 .help-body td{padding:5px 8px;border-bottom:1px solid #eee;vertical-align:top}
 .help-body td:first-child{font-weight:bold;white-space:nowrap;color:#0056b3;width:40%}
 .help-footer{margin-top:16px;padding-top:14px;border-top:1px solid #e5e9f0;font-size:13px;color:#777;text-align:center}
-
 .backup-option{display:flex;align-items:center;gap:14px;padding:16px;border:2px solid #e0e4e9;border-radius:10px;cursor:pointer;background:#fff;margin-bottom:10px;text-align:left;font-family:inherit;width:100%;font-size:15px;color:#333}
 .backup-option:hover,.backup-option:active{background:#f1f3f5;border-color:#0056b3}
 .backup-option .icon{font-size:28px;flex-shrink:0;width:36px;text-align:center}
@@ -169,7 +169,6 @@ button:active{background:#0056b3}
 .backup-option .desc{font-size:13px;color:#666;line-height:1.4}
 .section-title{font-size:14px;font-weight:bold;color:#555;text-transform:uppercase;letter-spacing:0.5px;margin:18px 0 8px 0}
 .section-title:first-of-type{margin-top:0}
-
 .entry-list{margin:10px 0}
 .entry-item{display:flex;align-items:center;gap:12px;padding:12px;background:#f1f3f5;border:1px solid #dee2e6;border-radius:10px;margin-bottom:8px;cursor:pointer;text-align:left}
 .entry-item:hover,.entry-item:active{background:#e9ecef;border-color:#0056b3}
@@ -180,13 +179,11 @@ button:active{background:#0056b3}
 .entry-item .e-del{background:#dc3545;color:#fff;border:none;padding:8px 10px;border-radius:8px;font-size:16px;cursor:pointer;font-weight:bold;flex-shrink:0;font-family:inherit}
 .entry-item .e-del:active{background:#a71d2a}
 .entry-empty{text-align:center;color:#999;font-style:italic;padding:20px;font-size:14px}
-
 .theme-row{display:flex;gap:8px;margin-bottom:14px}
 .theme-choice{flex:1;padding:14px 8px;font-size:15px;border-radius:8px;cursor:pointer;font-weight:bold;font-family:inherit;transition:box-shadow .15s}
 .theme-choice[data-theme="light"]{background:#ffffff;color:#333333;border:2px solid #cccccc}
 .theme-choice[data-theme="dark"]{background:#2a2e33;color:#e4e6ea;border:2px solid #555555}
 .theme-choice.active{border-color:#0056b3!important;box-shadow:0 0 0 3px rgba(0,86,179,0.35)}
-
 body.dark{background:#14171a;color:#e4e6ea}
 body.dark .container{background:#1e2124;box-shadow:0 4px 15px rgba(0,0,0,0.5)}
 body.dark h2{color:#6ab0ff}
@@ -281,7 +278,6 @@ body.dark .sonstige-count{background:#e4e6ea;color:#1e2124;border-color:#666}
 <button class="top-btn settings-btn" id="settingsBtn" title="Einstellungen" aria-label="Einstellungen">&#8942;</button>
 <div class="err-box" id="errBox"></div>
 <div id="onlineStatus" class="online-status loading">Uhr wird geladen...</div>
-
 <div class="top-row">
 <label>Schicht:
 <select id="groupSelect">
@@ -289,20 +285,17 @@ body.dark .sonstige-count{background:#e4e6ea;color:#1e2124;border-color:#666}
 </select>
 </label>
 </div>
-
 <div class="nav-row">
 <button id="prevBtn" title="Zur&uuml;ck">&larr;</button>
 <span id="monthDisplay"></span>
 <button id="nextBtn" title="Weiter">&rarr;</button>
 </div>
-
 <div class="mode-controls">
 <button class="mode-btn active" data-mode="normal">Normal</button>
 <button class="mode-btn" data-mode="krank">Krank</button>
 <button class="mode-btn" data-mode="urlaub">Urlaub</button>
 <button class="mode-btn" data-mode="sonstige">Sonstige</button>
 </div>
-
 <div class="color-picker-row" id="colorPickerRow">
 <label for="sonstigeColor">Farbe:</label>
 <input type="color" id="sonstigeColor" value="#FFD700">
@@ -313,14 +306,11 @@ body.dark .sonstige-count{background:#e4e6ea;color:#1e2124;border-color:#666}
 <button class="color-preset" data-color="#FFFFFF" style="background:#FFFFFF;"><span class="preset-letter" style="color:#999;">-</span></button>
 </div>
 </div>
-
 <div class="calendar" id="calendar"></div>
-
 <div class="reminders-box" id="remindersBox">
 <strong>Kommende Erinnerungen</strong>
 <ul id="remindersList"></ul>
 </div>
-
 <div class="legend">
 <div class="legend-item"><div class="legend-box" style="background:#FFD700;"></div> F (Fr&uuml;h)</div>
 <div class="legend-item"><div class="legend-box" style="background:#FF4500;"></div> S (Sp&auml;t)</div>
@@ -333,7 +323,6 @@ body.dark .sonstige-count{background:#e4e6ea;color:#1e2124;border-color:#666}
 <div class="legend-item"><div class="legend-box" style="background:#fff;border:2px dashed #17a2b8;"></div> Ferien</div>
 <div class="legend-item"><div class="legend-box" style="background:#fff;border-radius:50%;width:16px;height:16px;display:flex;align-items:center;justify-content:center;"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="#222" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 12l10 5 10-5"/><path d="M2 17l10 5 10-5"/></svg></div> Mehrfach</div>
 </div>
-
 <div class="footer">
 <button id="resetBtn" style="background:#dc3545;">Alle Markierungen l&ouml;schen</button>
 <button id="yearOverviewBtn" style="background:#28a745;">Jahres&uuml;bersicht</button>
@@ -342,19 +331,15 @@ body.dark .sonstige-count{background:#e4e6ea;color:#1e2124;border-color:#666}
 <button id="notifBtn" style="background:#00796b;">Erinnerungen aktivieren</button>
 <input type="file" id="restoreFileInput" accept=".json" style="display:none;">
 </div>
-
 <div class="notif-info">Erinnerungen werden als Banner oben und per Ton angezeigt. Die Seite muss daf&uuml;r ge&ouml;ffnet sein.</div>
-
 <div class="holiday-note">
 <strong class="title">Feiertage in diesem Monat:</strong>
 <div id="holidayList"></div>
 </div>
-
 <div class="ferien-note" id="ferienNote">
 <strong>Ferien in Bayern:</strong><br>
 <span id="ferienList"></span>
 </div>
-
 <div id="yearOverview" class="overview-container">
 <h3>Jahres&uuml;bersicht <span id="overviewYear"></span></h3>
 <div class="overview-stats">
@@ -379,14 +364,11 @@ body.dark .sonstige-count{background:#e4e6ea;color:#1e2124;border-color:#666}
 <div class="overview-list"><strong>Sonstige Tage:</strong><ul id="listSonstige"></ul></div>
 <button class="close-btn" id="yearOverviewCloseBtn">Schlie&szlig;en</button>
 </div>
-
 <div class="paypal-note">
 <p><strong>Gef&auml;llt dir Schichtzeit?</strong><br>Du kannst mich mit einer kleinen Spende unterst&uuml;tzen:</p>
 <a href="https://www.paypal.com/biz/profile/schichtzeit" target="_blank" rel="noopener" class="paypal-btn">Mit PayPal unterst&uuml;tzen</a>
 </div>
-
 </div>
-
 <div class="modal-overlay" id="entryModal"><div class="modal">
     <div id="entryListScreen" style="display:none;">
         <h3>Eintr&auml;ge am <span id="listDate"></span></h3>
@@ -416,7 +398,6 @@ body.dark .sonstige-count{background:#e4e6ea;color:#1e2124;border-color:#666}
         </div>
     </div>
 </div></div>
-
 <div class="modal-overlay" id="settingsModal"><div class="modal">
 <h3>Einstellungen</h3>
 <div class="modal-date" id="settingsYearDisplay"></div>
@@ -441,13 +422,11 @@ body.dark .sonstige-count{background:#e4e6ea;color:#1e2124;border-color:#666}
 <button id="settingsSaveBtn" style="background:#007bff;">Speichern</button>
 </div>
 </div></div>
-
 <div class="modal-overlay" id="helpModal"><div class="modal">
 <h3>Anleitung</h3>
 <div class="modal-date">Bedienungsanleitung f&uuml;r SchichtZeit</div>
 <div class="help-body">
 <p>Willkommen bei <b>SchichtZeit</b>. Diese App zeigt euch den Schichtplan und hilft euch, Urlaub, Krankheit und eigene Termine einzutragen.</p>
-
 <h4>1. Die Schicht w&auml;hlen</h4>
 <p>Oben im Dropdown <b>Schicht</b> w&auml;hlt jeder seine Gruppe (1 bis 5). Danach zeigt der Kalender die passenden Buchstaben f&uuml;r eure Schicht:</p>
 <table>
@@ -456,7 +435,6 @@ body.dark .sonstige-count{background:#e4e6ea;color:#1e2124;border-color:#666}
 <tr><td><span class="tag tag-N">N</span></td><td>Nachtschicht</td></tr>
 <tr><td><span class="tag tag-_-">&ndash;</span></td><td>Frei</td></tr>
 </table>
-
 <h4>2. Was macht die Modi-Leiste?</h4>
 <ul>
 <li><b>Normal</b> &ndash; nur anschauen. Ein Klick auf einen Tag mit Eintrag &ouml;ffnet ihn.</li>
@@ -465,7 +443,6 @@ body.dark .sonstige-count{background:#e4e6ea;color:#1e2124;border-color:#666}
 <li><b>Sonstige</b> &ndash; Klick auf einen Tag &ouml;ffnet das Fenster f&uuml;r eigene Termine.</li>
 </ul>
 <div class="box">Ein zweiter Klick auf einen Krank-/Urlaub-Tag entfernt die Markierung.</div>
-
 <h4>3. Eigene Termine eintragen &ndash; auch mehrere pro Tag</h4>
 <ul>
 <li>Modus <b>Sonstige</b> w&auml;hlen.</li>
@@ -474,21 +451,18 @@ body.dark .sonstige-count{background:#e4e6ea;color:#1e2124;border-color:#666}
 <li>F&uuml;r eine Erinnerung H&auml;kchen bei <b>&bdquo;Erinnerung senden&ldquo;</b> setzen.</li>
 <li>Speichern.</li>
 </ul>
-<p><b>Mehrere Termine am selben Tag:</b> Einfach erneut auf den Tag tippen und <b>&bdquo;+ Neuer Eintrag&ldquo;</b> w&auml;hlen. Alle Eintr&auml;ge werden in einer <b>Liste</b> angezeigt.</p>
-<p>Im Kalender erscheint eine <b>diagonal geteilte Zelle</b> und zus&auml;tzlich ein kleines <b>Zahnrad-Symbol</b> mit drei Ebenen oben rechts. Das Symbol bedeutet: <b>dieser Tag hat mehr als einen Eintrag</b> (Mehrfachbelegung).</p>
+<p><b>Mehrere Termine am selben Tag:</b> Einfach erneut auf den Tag tippen und <b>&bdquo;+ Neuer Eintrag&ldquo;</b> w&auml;hlen. Der Tag wird dann durch <b>beide Diagonalen in bis zu vier Fl&auml;chen</b> geteilt. So siehst du die Schichtfarbe (bzw. Urlaub/Krank) und bis zu <b>drei Terminfarben</b> gleichzeitig.</p>
+<p><b>Fl&auml;chen antippen:</b> Ein Tipp auf eine <b>farbige Fl&auml;che</b> &ouml;ffnet direkt den Termin mit genau dieser Farbe. Ein Tipp auf die <b>Schicht-/Urlaubs-/Krank-Fl&auml;che</b> &ouml;ffnet die Liste aller Termine des Tages.</p>
+<p>Bei mehreren Eintr&auml;gen erscheint oben rechts ein kleines <b>Ebenen-Symbol</b> (drei gestapelte Ebenen). Das bedeutet: <b>dieser Tag hat mehr als einen Eintrag</b>.</p>
 <p>Erinnerungen kommen <b>1 Tag, 2 Stunden und 30 Minuten</b> vorher (Banner + Ton) &ndash; f&uuml;r jeden Eintrag einzeln.</p>
 <p>Verf&uuml;gbare Symbole:</p>
 <p class="emoji-list">&#x1F514; &#x23F0; &#x1F4CC; &#x2B50; &#x2764;&#xFE0F; &#x26A0;&#xFE0F; &#x1F4DE; &#x1F48A; &#x1F3E5; &#x1F4C5; &#x2708;&#xFE0F; &#x1F382; &#x1F389; &#x1F697; &#x1F4BC; &#x1F4DD;</p>
-
 <h4>4. Jahres&uuml;bersicht</h4>
 <p>Zeigt Urlaub (verplant/gesamt/&uuml;brig), Krank und Sonstige. Bei weniger als 5 Resttagen wird die Urlaubskarte <b>gelb</b>, bei &Uuml;berschreitung <b>rot</b>.</p>
-
 <h4>5. Ferien anzeigen</h4>
 <p>Der Knopf <b>Ferien</b> blendet die bayerischen Schulferien ein.</p>
-
 <h4>6. Einstellungen &ouml;ffnen</h4>
 <p>&Uuml;ber das <b>Drei-Punkte-Men&uuml;</b> oben rechts: Urlaubstage pro Jahr, Schichtsystem, <b>Design / Modus</b> (Hell / Dunkel) und diese Anleitung.</p>
-
 <h4>7. Backup &ndash; Sichern und Wiederherstellen</h4>
 <ul>
 <li><b>Sichern &rarr; Auf Ger&auml;t speichern</b> &ndash; Datei landet im Download-Ordner.</li>
@@ -496,23 +470,17 @@ body.dark .sonstige-count{background:#e4e6ea;color:#1e2124;border-color:#666}
 <li><b>Wiederherstellen</b> &ndash; eine zuvor gesicherte Datei ausw&auml;hlen.</li>
 </ul>
 <div class="box warn">Beim Handywechsel <b>unbedingt vorher sichern</b>, sonst sind alle Eintr&auml;ge verloren.</div>
-
 <h4>8. Erinnerungen aktivieren</h4>
 <p>Einmal unten auf <b>&bdquo;Erinnerungen aktivieren&ldquo;</b> tippen. Der Browser fragt nach Erlaubnis.</p>
 <div class="box">Erinnerungen kommen nur, solange die App im Browser ge&ouml;ffnet ist. Bei geschlossenem Browser kommen keine Hinweise mehr.</div>
-
 <h4>9. Teilen (Knopf oben links)</h4>
 <p>&Ouml;ffnet das Teilen-Men&uuml; des Handys.</p>
-
 <h4>10. Feiertage und Ferien (Bayern)</h4>
 <p>Feiertage bekommen einen <b>goldenen Rahmen</b>, Ferientage einen <b>gestrichelten blauen Rahmen</b>.</p>
-
 <h4>11. Hinweis zu Google Kalender</h4>
 <div class="box warn">Wenn ihr Erinnerungen auch bei <b>geschlossener App</b> erhalten wollt &ndash; tragt wichtige Termine zus&auml;tzlich in euren <b>Google Kalender</b> ein.</div>
-
 <h4>12. Bei Problemen</h4>
 <p>Meldet euch beim Schichtleiter oder bei der Person, die die App eingerichtet hat.</p>
-
 <div class="help-footer">
 SchichtZeit &ndash; der digitale Schichtplan f&uuml;r unsere Schicht.
 </div>
@@ -521,7 +489,6 @@ SchichtZeit &ndash; der digitale Schichtplan f&uuml;r unsere Schicht.
 <button id="helpCloseBtn" style="background:#007bff;">Alles klar</button>
 </div>
 </div></div>
-
 <div class="modal-overlay" id="backupMenuModal"><div class="modal">
 <h3>Backup</h3>
 <div class="modal-date">Daten sichern oder wiederherstellen</div>
@@ -552,7 +519,6 @@ SchichtZeit &ndash; der digitale Schichtplan f&uuml;r unsere Schicht.
 <button id="backupCancelBtn" style="background:#6c757d;">Schlie&szlig;en</button>
 </div>
 </div></div>
-
 <div class="modal-overlay" id="donateModal"><div class="modal">
 <h3>Funktion noch nicht finanziert</h3>
 <p class="donate-text">F&uuml;r die Entwicklung dieser <b>Erinnerungsfunktion</b> wurden leider noch nicht gen&uuml;gend Mittel gesammelt. Deine Unterst&uuml;tzung hilft, dieses Feature fertigzustellen.</p>
@@ -563,15 +529,12 @@ SchichtZeit &ndash; der digitale Schichtplan f&uuml;r unsere Schicht.
 <a href="https://www.paypal.com/biz/profile/schichtzeit" target="_blank" rel="noopener" class="donate-link" id="donateConfirmLink">Jetzt unterst&uuml;tzen</a>
 </div>
 </div></div>
-
 <script>
 (function(){
 try {
-
 var SHARE_URL = "https://logoutrus-afk.github.io/SchichtZeit-Experimental-/";
 var SHARE_TITLE = "Schichtzeit";
 var SHARE_TEXT = "Schichtplan f\u00FCr unsere Schicht - Schichtzeit";
-
 var BASE_DATE_UTC = Date.UTC(2026, 9, 1);
 var CYCLE_35 = ['F','F','N','N','N','_','_','_','S','S','S','_','F','F','N','N','_','_','_','S','S','S','_','F','F','F','N','N','_','_','_','_','_','_','_'];
 var START_INDEX_BY_GROUP = { '1': 29, '2': 1, '3': 8, '4': 15, '5': 22 };
@@ -579,10 +542,7 @@ var SHIFT_COLORS = { 'F': '#FFD700', 'S': '#FF4500', 'N': '#1E90FF', '_': '#f9f9
 var monthNames = ["Januar","Februar","M\u00E4rz","April","Mai","Juni","Juli","August","September","Oktober","November","Dezember"];
 var dayNames = ["Mo","Di","Mi","Do","Fr","Sa","So"];
 var SYMBOLS = ['\uD83D\uDD14','\u23F0','\uD83D\uDCCC','\u2B50','\u2764\uFE0F','\u26A0\uFE0F','\uD83D\uDCDE','\uD83D\uDC8A','\uD83C\uDFE5','\uD83D\uDCC5','\u2708\uFE0F','\uD83C\uDF82','\uD83C\uDF89','\uD83D\uDE97','\uD83D\uDCBC','\uD83D\uDCDD'];
-
-// SVG für "Mehrfachbelegung" - drei Ebenen/Stapel
 var MULTI_SVG = '<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 12l10 5 10-5"/><path d="M2 17l10 5 10-5"/></svg>';
-
 var currentDate = new Date(2026, 9, 1);
 var currentMode = 'normal';
 var showFerien = false;
@@ -591,20 +551,16 @@ var selectedColor = '#FFD700';
 var selectedSymbol = '\uD83D\uDD14';
 var shiftSystem = '5';
 var currentTheme = 'light';
-
 function safeParse(s, fallback) { try { var v = JSON.parse(s); return (v == null) ? fallback : v; } catch(e){ return fallback; } }
 function safeGetArray(k) { var v = safeParse(localStorage.getItem(k), []); return Array.isArray(v) ? v : []; }
 function safeGetObject(k) { var v = safeParse(localStorage.getItem(k), {}); return (v && typeof v === 'object' && !Array.isArray(v)) ? v : {}; }
-
 try { selectedColor = localStorage.getItem('schichtzeitColor') || '#FFD700'; } catch(e){}
 try { selectedSymbol = localStorage.getItem('schichtzeitSymbol') || '\uD83D\uDD14'; } catch(e){}
 try { shiftSystem = localStorage.getItem('schichtzeitShiftSystem') || '5'; } catch(e){}
 try { currentTheme = localStorage.getItem('schichtzeitTheme') || 'light'; } catch(e){}
-
 var sickDays = safeGetArray('schichtzeitSickDays');
 var vacationDays = safeGetArray('schichtzeitVacationDays');
 var sonstigeDays = safeGetObject('schichtzeitSonstigeDays');
-
 var vacationQuota = safeGetObject('schichtzeitVacationQuota');
 if (Object.keys(vacationQuota).length === 0) {
     vacationQuota['2026'] = 30;
@@ -612,22 +568,16 @@ if (Object.keys(vacationQuota).length === 0) {
 }
 function getVacationQuota(year) { return vacationQuota[String(year)] != null ? vacationQuota[String(year)] : 30; }
 function setVacationQuota(year, value) { vacationQuota[String(year)] = value; try { localStorage.setItem('schichtzeitVacationQuota', JSON.stringify(vacationQuota)); } catch(e){} }
-
-function genEntryId() {
-    return 'e' + Date.now().toString(36) + Math.random().toString(36).slice(2, 7);
-}
+function genEntryId() { return 'e' + Date.now().toString(36) + Math.random().toString(36).slice(2, 7); }
 (function migrateSonstige(){
     var changed = false;
     Object.keys(sonstigeDays).forEach(function(k){
         var v = sonstigeDays[k];
-        if (typeof v === 'string') {
-            sonstigeDays[k] = [{ id: genEntryId(), color: v, text: '', time: '', notify: false, icon: '\uD83D\uDD14' }];
-            changed = true;
-        } else if (v && typeof v === 'object' && !Array.isArray(v)) {
+        if (typeof v === 'string') { sonstigeDays[k] = [{ id: genEntryId(), color: v, text: '', time: '', notify: false, icon: '\uD83D\uDD14' }]; changed = true; }
+        else if (v && typeof v === 'object' && !Array.isArray(v)) {
             if (!v.id) v.id = genEntryId();
             if (!v.icon) v.icon = '\uD83D\uDD14';
-            sonstigeDays[k] = [v];
-            changed = true;
+            sonstigeDays[k] = [v]; changed = true;
         } else if (Array.isArray(v)) {
             for (var i = 0; i < v.length; i++) {
                 if (v[i] && typeof v[i] === 'object') {
@@ -639,7 +589,6 @@ function genEntryId() {
     });
     if (changed) { try { localStorage.setItem('schichtzeitSonstigeDays', JSON.stringify(sonstigeDays)); } catch(e){} }
 })();
-
 function getEntries(dateKey) {
     var arr = sonstigeDays[dateKey];
     if (!arr) return [];
@@ -647,21 +596,14 @@ function getEntries(dateKey) {
     return arr;
 }
 function setEntries(dateKey, entries) {
-    if (!entries || entries.length === 0) {
-        delete sonstigeDays[dateKey];
-    } else {
-        sonstigeDays[dateKey] = entries;
-    }
+    if (!entries || entries.length === 0) delete sonstigeDays[dateKey];
+    else sonstigeDays[dateKey] = entries;
     try { localStorage.setItem('schichtzeitSonstigeDays', JSON.stringify(sonstigeDays)); } catch(e){}
 }
-function hasAnyEntry(dateKey) {
-    return getEntries(dateKey).length > 0;
-}
-
+function hasAnyEntry(dateKey) { return getEntries(dateKey).length > 0; }
 var notifiedFlags = safeGetObject('schichtzeitNotified');
 var savedGroup = '1';
 try { savedGroup = localStorage.getItem('schichtzeitGroup') || '1'; } catch(e){}
-
 function applyTheme(theme) {
     currentTheme = theme;
     try { localStorage.setItem('schichtzeitTheme', theme); } catch(e){}
@@ -673,7 +615,6 @@ function applyTheme(theme) {
         else choices[i].classList.remove('active');
     }
 }
-
 function showToast(text) {
     var old = document.getElementById('shareToast');
     if (old) old.parentNode.removeChild(old);
@@ -688,13 +629,7 @@ function shareSchichtzeit() {
     var url = SHARE_URL;
     var data = { title: SHARE_TITLE, text: SHARE_TEXT, url: url };
     if (navigator.share) {
-        try {
-            navigator.share(data).then(function(){}).catch(function(err){
-                if (err && err.name === 'AbortError') return;
-                copyShareLink(url);
-            });
-            return;
-        } catch(e) {}
+        try { navigator.share(data).then(function(){}).catch(function(err){ if (err && err.name === 'AbortError') return; copyShareLink(url); }); return; } catch(e) {}
     }
     copyShareLink(url);
 }
@@ -716,7 +651,6 @@ function legacyCopy(url) {
         if (ok) showToast('Link kopiert'); else showToast(url);
     } catch(e) { showToast(url); }
 }
-
 function openSettings() {
     var year = currentDate.getFullYear();
     document.getElementById('settingsYearDisplay').textContent = 'Jahr ' + year;
@@ -742,33 +676,15 @@ function openHelp() { closeSettings(); document.getElementById('helpModal').clas
 function closeHelp() { document.getElementById('helpModal').classList.remove('active'); }
 function openDonateModal() { document.getElementById('donateModal').classList.add('active'); }
 function closeDonateModal() { document.getElementById('donateModal').classList.remove('active'); }
-
 function openBackupMenu() { document.getElementById('backupMenuModal').classList.add('active'); }
 function closeBackupMenu() { document.getElementById('backupMenuModal').classList.remove('active'); }
-
 function getBackupJSON() {
-    var backup = {
-        version: 5,
-        date: new Date().toISOString(),
-        group: document.getElementById('groupSelect').value,
-        color: selectedColor,
-        sickDays: sickDays,
-        vacationDays: vacationDays,
-        sonstigeDays: sonstigeDays,
-        notifiedFlags: notifiedFlags,
-        vacationQuota: vacationQuota,
-        shiftSystem: shiftSystem,
-        theme: currentTheme
-    };
+    var backup = { version: 5, date: new Date().toISOString(), group: document.getElementById('groupSelect').value, color: selectedColor, sickDays: sickDays, vacationDays: vacationDays, sonstigeDays: sonstigeDays, notifiedFlags: notifiedFlags, vacationQuota: vacationQuota, shiftSystem: shiftSystem, theme: currentTheme };
     return JSON.stringify(backup, null, 2);
 }
 function getBackupFilename() {
     var now = new Date();
-    return 'Schichtzeit_Backup_' +
-        now.getFullYear() + '-' + String(now.getMonth()+1).padStart(2,'0') + '-' +
-        String(now.getDate()).padStart(2,'0') + '_' +
-        String(now.getHours()).padStart(2,'0') + '-' +
-        String(now.getMinutes()).padStart(2,'0') + '.json';
+    return 'Schichtzeit_Backup_' + now.getFullYear() + '-' + String(now.getMonth()+1).padStart(2,'0') + '-' + String(now.getDate()).padStart(2,'0') + '_' + String(now.getHours()).padStart(2,'0') + '-' + String(now.getMinutes()).padStart(2,'0') + '.json';
 }
 function backupToDevice() {
     try {
@@ -776,16 +692,11 @@ function backupToDevice() {
         var blob = new Blob([json], {type: 'application/json'});
         var url = URL.createObjectURL(blob);
         var link = document.createElement('a');
-        link.href = url;
-        link.download = getBackupFilename();
-        document.body.appendChild(link);
-        link.click();
-        document.body.removeChild(link);
+        link.href = url; link.download = getBackupFilename();
+        document.body.appendChild(link); link.click(); document.body.removeChild(link);
         setTimeout(function(){ URL.revokeObjectURL(url); }, 3000);
         showToast('Datei gespeichert');
-    } catch(e) {
-        showToast('Fehler: ' + e.message);
-    }
+    } catch(e) { showToast('Fehler: ' + e.message); }
 }
 function backupShare() {
     try {
@@ -794,29 +705,18 @@ function backupShare() {
         var blob = new Blob([json], {type: 'application/json'});
         var file = new File([blob], filename, {type: 'application/json'});
         if (navigator.canShare && navigator.canShare({files: [file]}) && navigator.share) {
-            navigator.share({
-                files: [file],
-                title: 'Schichtzeit Backup',
-                text: 'Backup meiner Schichtzeit-Daten'
-            }).then(function(){}).catch(function(err){
-                if (err && err.name === 'AbortError') return;
-                backupToDevice();
-            });
+            navigator.share({ files: [file], title: 'Schichtzeit Backup', text: 'Backup meiner Schichtzeit-Daten' }).then(function(){}).catch(function(err){ if (err && err.name === 'AbortError') return; backupToDevice(); });
         } else {
             showToast('Direktes Teilen nicht verf\u00FCgbar - Datei wird gespeichert');
             setTimeout(backupToDevice, 800);
         }
-    } catch(e) {
-        showToast('Fehler: ' + e.message);
-    }
+    } catch(e) { showToast('Fehler: ' + e.message); }
 }
 function restoreFromFile() {
     closeBackupMenu();
     var input = document.getElementById('restoreFileInput');
-    input.value = '';
-    input.click();
+    input.value = ''; input.click();
 }
-
 function updateOnlineStatus(text, status) {
     var el = document.getElementById('onlineStatus');
     if (!el) return;
@@ -841,7 +741,6 @@ function scheduleMinuteTick() {
     if (ms < 50) ms += 60000;
     setTimeout(function(){ syncClock(); scheduleMinuteTick(); }, ms);
 }
-
 function calculateEaster(year) {
     var a=year%19,b=Math.floor(year/100),c=year%100,d=Math.floor(b/4),e=b%4,f=Math.floor((b+8)/25),g=Math.floor((b-f+1)/3),h=(19*a+b-d-g+15)%30,i=Math.floor(c/4),k=c%4,l=(32+2*e+2*i-h-k)%7,m=Math.floor((a+11*h+22*l)/451),month=Math.floor((h+l-7*m+114)/31),day=((h+l-7*m+114)%31)+1;
     return new Date(year, month-1, day);
@@ -861,7 +760,6 @@ function getHolidayList(year) {
     return list;
 }
 function getHolidaySet(year) { var s = new Set(); getHolidayList(year).forEach(function(h){ s.add(h.key); }); return s; }
-
 var FERIEN = {
 2026:[{name:"Winterferien",start:"2026-02-16",end:"2026-02-20"},{name:"Osterferien",start:"2026-03-30",end:"2026-04-10"},{name:"Pfingstferien",start:"2026-05-26",end:"2026-06-05"},{name:"Sommerferien",start:"2026-08-01",end:"2026-09-14"},{name:"Herbstferien",start:"2026-11-02",end:"2026-11-06"},{name:"Weihnachtsferien",start:"2026-12-21",end:"2026-12-31"}],
 2027:[{name:"Winterferien",start:"2027-02-15",end:"2027-02-19"},{name:"Osterferien",start:"2027-03-22",end:"2027-04-02"},{name:"Pfingstferien",start:"2027-05-18",end:"2027-05-28"},{name:"Sommerferien",start:"2027-08-02",end:"2027-09-13"},{name:"Herbstferien",start:"2027-11-02",end:"2027-11-05"},{name:"Weihnachtsferien",start:"2027-12-23",end:"2027-12-31"}],
@@ -878,7 +776,6 @@ function getFerienSet(year) {
     });
     return set;
 }
-
 function formatDateKey(date) { return date.getFullYear()+'-'+String(date.getMonth()+1).padStart(2,'0')+'-'+String(date.getDate()).padStart(2,'0'); }
 function getShift(date, group) {
     if (shiftSystem !== '5') return '_';
@@ -894,7 +791,6 @@ function getShift(date, group) {
 function escapeHtml(s) {
     return String(s).replace(/[&<>"']/g, function(c){ return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]; });
 }
-
 var audioCtx = null;
 function ensureAudio() { if (audioCtx) return audioCtx; try { var AC = window.AudioContext || window.webkitAudioContext; if (!AC) return null; audioCtx = new AC(); } catch(e){ audioCtx = null; } return audioCtx; }
 function unlockAudio() { var ctx = ensureAudio(); if (ctx && ctx.state === 'suspended') { try { ctx.resume(); } catch(e){} } }
@@ -917,7 +813,6 @@ function playNotifySound() {
     tone(1046.5, 0.18, 0.75, 0.26);
     tone(1568.0, 0.42, 0.45, 0.14);
 }
-
 var suppressClick = false;
 function changeMonth(delta) { currentDate.setMonth(currentDate.getMonth() + delta); renderCalendar(); animateCalendar(delta > 0 ? 'next' : 'prev'); }
 function animateCalendar(direction) {
@@ -949,15 +844,11 @@ function setupSwipe(){
         if (dx < 0) changeMonth(1); else changeMonth(-1);
     }, {passive:true});
 }
-
 function renderHolidayNote(year, month) {
     var listEl = document.getElementById('holidayList');
     if (!listEl) return;
     var currentList = getHolidayList(year).filter(function(h){ return h.date.getMonth() === month; });
-    if (currentList.length === 0) {
-        listEl.innerHTML = '<span style="color:#999;font-style:italic;">Keine Feiertage in diesem Monat.</span>';
-        return;
-    }
+    if (currentList.length === 0) { listEl.innerHTML = '<span style="color:#999;font-style:italic;">Keine Feiertage in diesem Monat.</span>'; return; }
     listEl.innerHTML = currentList.map(function(h){
         var dd = String(h.date.getDate()).padStart(2,'0');
         var mm = String(h.date.getMonth()+1).padStart(2,'0');
@@ -1004,8 +895,13 @@ function renderCalendar() {
         var shift = getShift(date, group);
         var dayEl = document.createElement('div');
         dayEl.className = 'day ' + shift;
-        if (sickDays.indexOf(dateKey) > -1) dayEl.classList.add('krank');
-        else if (vacationDays.indexOf(dateKey) > -1) dayEl.classList.add('urlaub');
+
+        var isKrank = sickDays.indexOf(dateKey) > -1;
+        var isUrlaub = vacationDays.indexOf(dateKey) > -1;
+
+        if (isKrank) dayEl.classList.add('krank');
+        else if (isUrlaub) dayEl.classList.add('urlaub');
+
         if (date.getTime() === actualToday.getTime()) dayEl.classList.add('today');
         if (holidays.has(dateKey)) dayEl.classList.add('feiertag');
         if (showFerien && ferienSet.has(dateKey)) {
@@ -1019,21 +915,57 @@ function renderCalendar() {
         dayEl.appendChild(dn);
         var st = document.createElement('span');
         st.textContent = shift === '_' ? '' : shift;
+        st.style.position = 'relative';   /* damit der Buchstabe über der Farbfläche liegt */
         dayEl.appendChild(st);
 
         var entries = getEntries(dateKey);
-        var hasKrankUrlaub = sickDays.indexOf(dateKey) > -1 || vacationDays.indexOf(dateKey) > -1;
-
-        if (entries.length > 0 && !hasKrankUrlaub) {
-            dayEl.classList.add('sonstige');
-            var firstEntry = entries[0];
-            var shiftColor = SHIFT_COLORS[shift] || '#f9f9f9';
-            dayEl.style.background = 'linear-gradient(135deg, ' + shiftColor + ' 0%, ' + shiftColor + ' 50%, ' + firstEntry.color + ' 50%, ' + firstEntry.color + ' 100%)';
-            if (String(firstEntry.color).toUpperCase() === '#FFFFFF') dayEl.style.border = '2px solid #999';
-        }
 
         if (entries.length > 0) {
-            if (hasKrankUrlaub) dayEl.classList.add('sonstige');
+            dayEl.classList.add('sonstige');
+
+            // Basis-Farbe: Krank > Urlaub > Schicht
+            var baseColor;
+            if (isKrank) baseColor = '#DDA0DD';
+            else if (isUrlaub) baseColor = '#90EE90';
+            else baseColor = SHIFT_COLORS[shift] || '#f9f9f9';
+
+            // 4 Segmente im Uhrzeigersinn ab 45°: [0]=rechts, [1]=unten, [2]=links, [3]=oben
+            var segColors = [baseColor, baseColor, baseColor, baseColor];
+            var segEntry  = [-1, -1, -1, -1];
+
+            if (entries.length === 1) {
+                // klassischer diagonaler Schnitt (halbe / halbe)
+                segColors[0] = entries[0].color; segEntry[0] = 0;
+                segColors[3] = entries[0].color; segEntry[3] = 0;
+            } else {
+                segColors[0] = entries[0].color; segEntry[0] = 0;
+                segColors[1] = entries[1].color; segEntry[1] = 1;
+                if (entries.length >= 3) { segColors[2] = entries[2].color; segEntry[2] = 2; }
+            }
+
+            var clips = [
+                'polygon(50% 50%, 100% 0, 100% 100%)',  // rechts
+                'polygon(50% 50%, 100% 100%, 0 100%)',  // unten
+                'polygon(50% 50%, 0 100%, 0 0)',        // links
+                'polygon(50% 50%, 0 0, 100% 0)'         // oben
+            ];
+            var splitLayer = document.createElement('div');
+            splitLayer.className = 'split-layer';
+            for (var q = 0; q < 4; q++) {
+                var seg = document.createElement('span');
+                seg.style.background = segColors[q];
+                seg.style.clipPath = clips[q];
+                if ('webkitClipPath' in seg.style) seg.style.webkitClipPath = clips[q];
+                splitLayer.appendChild(seg);
+            }
+            dayEl.insertBefore(splitLayer, dayEl.firstChild);
+
+            var anyWhite = false;
+            for (var w = 0; w < 4; w++) {
+                if (String(segColors[w]).toUpperCase() === '#FFFFFF') anyWhite = true;
+            }
+            if (anyWhite) dayEl.style.border = '2px solid #999';
+
             var badges = document.createElement('div');
             badges.className = 'sonstige-badges';
 
@@ -1067,12 +999,32 @@ function renderCalendar() {
             }
         }
 
-        dayEl.addEventListener('click', function(){
+        dayEl.addEventListener('click', function(ev){
             if (suppressClick) return;
-            if (currentMode === 'krank') toggleDay(dateKey, 'krank');
-            else if (currentMode === 'urlaub') toggleDay(dateKey, 'urlaub');
-            else if (currentMode === 'sonstige') openEntryEditor(dateKey);
-            else { if (hasAnyEntry(dateKey)) openEntryEditor(dateKey); }
+            if (currentMode === 'krank') { toggleDay(dateKey, 'krank'); return; }
+            if (currentMode === 'urlaub') { toggleDay(dateKey, 'urlaub'); return; }
+
+            // Welche der vier Flächen wurde getroffen?
+            var entryIdx = -1;
+            if (entries.length > 0) {
+                var rect = dayEl.getBoundingClientRect();
+                if (rect.width > 0 && rect.height > 0) {
+                    var px = (ev.clientX - rect.left) / rect.width - 0.5;
+                    var py = (ev.clientY - rect.top) / rect.height - 0.5;
+                    var quad;
+                    if (px > Math.abs(py)) quad = 0;          // rechts
+                    else if (-px > Math.abs(py)) quad = 2;    // links
+                    else quad = (py > 0) ? 1 : 3;             // unten / oben
+                    entryIdx = segEntry[quad];
+                }
+            }
+
+            // Treffer auf eine Terminfarbe -> genau diesen Eintrag öffnen
+            if (entryIdx >= 0) { openEntryEditor(dateKey, entryIdx); return; }
+
+            // Fläche ohne Termin (Schicht / Urlaub / Krank)
+            if (currentMode === 'sonstige') { openEntryEditor(dateKey); return; }
+            if (entries.length > 0) openEntryEditor(dateKey);
         });
         calendarEl.appendChild(dayEl);
     };
@@ -1104,11 +1056,9 @@ function toggleDay(dateKey, type, forceRemove) {
     if (type === 'urlaub' || forceRemove) try { localStorage.setItem('schichtzeitVacationDays', JSON.stringify(vacationDays)); } catch(e){}
     renderCalendar();
 }
-
 var editingDateKey = null;
 var editingIndex = -1;
 var editingSymbol = '\uD83D\uDD14';
-
 function renderSymbolGrid() {
     var grid = document.getElementById('symbolGrid');
     if (!grid) return;
@@ -1128,17 +1078,14 @@ function renderSymbolGrid() {
         })(btns[i]);
     }
 }
-
 function showListScreen() {
     if (!editingDateKey) return;
     var entries = getEntries(editingDateKey);
     var parts = editingDateKey.split('-');
     var dateStr = parts[2] + '.' + parts[1] + '.' + parts[0];
     document.getElementById('listDate').textContent = dateStr;
-
     var body = document.getElementById('entryListBody');
     body.innerHTML = '';
-
     if (entries.length === 0) {
         var empty = document.createElement('div');
         empty.className = 'entry-empty';
@@ -1148,18 +1095,15 @@ function showListScreen() {
         entries.forEach(function(en, i){
             var item = document.createElement('div');
             item.className = 'entry-item';
-
             var iconEl = document.createElement('span');
             iconEl.className = 'e-icon';
             iconEl.textContent = en.icon || '\uD83D\uDD14';
-
             var infoEl = document.createElement('div');
             infoEl.className = 'e-info';
             var textEl = document.createElement('div');
             textEl.className = 'e-text';
             textEl.textContent = en.text || 'Ohne Beschreibung';
             infoEl.appendChild(textEl);
-
             var metaParts = [];
             if (en.time) metaParts.push('Uhrzeit: ' + en.time);
             if (en.notify && en.time) metaParts.push('Erinnerung');
@@ -1169,43 +1113,27 @@ function showListScreen() {
                 metaEl.textContent = metaParts.join(' \u00B7 ');
                 infoEl.appendChild(metaEl);
             }
-
             var delBtn = document.createElement('button');
             delBtn.className = 'e-del';
             delBtn.textContent = '\uD83D\uDDD1';
             delBtn.setAttribute('aria-label', 'L\u00F6schen');
-            delBtn.addEventListener('click', function(ev){
-                ev.stopPropagation(); ev.preventDefault();
-                deleteFromList(i);
-            });
-            delBtn.addEventListener('touchend', function(ev){
-                ev.stopPropagation(); ev.preventDefault();
-                deleteFromList(i);
-            });
-
+            delBtn.addEventListener('click', function(ev){ ev.stopPropagation(); ev.preventDefault(); deleteFromList(i); });
+            delBtn.addEventListener('touchend', function(ev){ ev.stopPropagation(); ev.preventDefault(); deleteFromList(i); });
             item.appendChild(iconEl);
             item.appendChild(infoEl);
             item.appendChild(delBtn);
-
-            item.addEventListener('click', function(){
-                editingIndex = i;
-                showEditScreen();
-            });
-
+            item.addEventListener('click', function(){ editingIndex = i; showEditScreen(); });
             body.appendChild(item);
         });
     }
-
     document.getElementById('entryListScreen').style.display = 'block';
     document.getElementById('entryEditScreen').style.display = 'none';
 }
-
 function showEditScreen() {
     if (!editingDateKey) return;
     var parts = editingDateKey.split('-');
     var dateStr = parts[2] + '.' + parts[1] + '.' + parts[0];
     document.getElementById('modalDate').textContent = dateStr;
-
     if (editingIndex >= 0) {
         var entries = getEntries(editingDateKey);
         var entry = entries[editingIndex] || {};
@@ -1226,76 +1154,58 @@ function showEditScreen() {
         document.getElementById('modalDeleteBtn').style.display = 'none';
     }
     renderSymbolGrid();
-
     var hint = document.getElementById('notifHint');
-    if (!('Notification' in window)) hint.classList.add('active');
-    else hint.classList.remove('active');
-
+    if (!('Notification' in window)) hint.classList.add('active'); else hint.classList.remove('active');
     document.getElementById('entryListScreen').style.display = 'none';
     document.getElementById('entryEditScreen').style.display = 'block';
 }
-
-function openEntryEditor(dateKey) {
+function openEntryEditor(dateKey, entryIndex) {
     editingDateKey = dateKey;
-    editingIndex = -1;
     var entries = getEntries(dateKey);
     document.getElementById('entryModal').classList.add('active');
-    if (entries.length === 0) {
+    if (typeof entryIndex === 'number' && entryIndex >= 0 && entryIndex < entries.length) {
+        editingIndex = entryIndex;      // direkt den passenden Termin öffnen
+        showEditScreen();
+    } else if (entries.length === 0) {
+        editingIndex = -1;
         showEditScreen();
     } else {
+        editingIndex = -1;
         showListScreen();
     }
 }
-
 function closeEntryEditor() {
     document.getElementById('entryModal').classList.remove('active');
     editingDateKey = null;
     editingIndex = -1;
 }
-
 function saveEntry() {
     if (!editingDateKey) return;
     var text = document.getElementById('entryText').value.trim();
     var time = document.getElementById('entryTime').value;
     var color = document.getElementById('entryColor').value;
     var notify = document.getElementById('entryNotify').checked;
-
     if (notify && time && 'Notification' in window && Notification.permission === 'default') {
         try { Notification.requestPermission().then(function(){ updateNotifButton(); }); } catch(e){}
     }
-
     var entries = getEntries(editingDateKey);
     var newEntry = {
         id: (editingIndex >= 0 && entries[editingIndex] && entries[editingIndex].id) ? entries[editingIndex].id : genEntryId(),
-        color: color,
-        text: text,
-        time: time,
-        notify: notify && !!time,
-        icon: editingSymbol
+        color: color, text: text, time: time, notify: notify && !!time, icon: editingSymbol
     };
-
-    if (editingIndex >= 0 && editingIndex < entries.length) {
-        entries[editingIndex] = newEntry;
-    } else {
-        entries.push(newEntry);
-    }
+    if (editingIndex >= 0 && editingIndex < entries.length) entries[editingIndex] = newEntry;
+    else entries.push(newEntry);
     setEntries(editingDateKey, entries);
-
     selectedSymbol = editingSymbol;
     try { localStorage.setItem('schichtzeitSymbol', selectedSymbol); } catch(e){}
-
     var prefix = editingDateKey + '_' + newEntry.id;
-    Object.keys(notifiedFlags).forEach(function(k){
-        if (k.indexOf(prefix) === 0) delete notifiedFlags[k];
-    });
+    Object.keys(notifiedFlags).forEach(function(k){ if (k.indexOf(prefix) === 0) delete notifiedFlags[k]; });
     try { localStorage.setItem('schichtzeitNotified', JSON.stringify(notifiedFlags)); } catch(e){}
-
     editingIndex = -1;
     showListScreen();
     renderCalendar();
     checkReminders();
 }
-
 function deleteCurrentEntry() {
     if (!editingDateKey) return;
     if (editingIndex < 0) return;
@@ -1304,22 +1214,16 @@ function deleteCurrentEntry() {
     var removed = entries[editingIndex];
     if (removed && removed.id) {
         var prefix = editingDateKey + '_' + removed.id;
-        Object.keys(notifiedFlags).forEach(function(k){
-            if (k.indexOf(prefix) === 0) delete notifiedFlags[k];
-        });
+        Object.keys(notifiedFlags).forEach(function(k){ if (k.indexOf(prefix) === 0) delete notifiedFlags[k]; });
         try { localStorage.setItem('schichtzeitNotified', JSON.stringify(notifiedFlags)); } catch(e){}
     }
     entries.splice(editingIndex, 1);
     setEntries(editingDateKey, entries);
     editingIndex = -1;
-    if (entries.length === 0) {
-        closeEntryEditor();
-    } else {
-        showListScreen();
-    }
+    if (entries.length === 0) closeEntryEditor();
+    else showListScreen();
     renderCalendar();
 }
-
 function deleteFromList(index) {
     if (!editingDateKey) return;
     var entries = getEntries(editingDateKey);
@@ -1328,32 +1232,21 @@ function deleteFromList(index) {
     if (!confirm('Diesen Eintrag wirklich l\u00F6schen?')) return;
     if (removed.id) {
         var prefix = editingDateKey + '_' + removed.id;
-        Object.keys(notifiedFlags).forEach(function(k){
-            if (k.indexOf(prefix) === 0) delete notifiedFlags[k];
-        });
+        Object.keys(notifiedFlags).forEach(function(k){ if (k.indexOf(prefix) === 0) delete notifiedFlags[k]; });
         try { localStorage.setItem('schichtzeitNotified', JSON.stringify(notifiedFlags)); } catch(e){}
     }
     entries.splice(index, 1);
     setEntries(editingDateKey, entries);
-    if (entries.length === 0) {
-        closeEntryEditor();
-    } else {
-        showListScreen();
-    }
+    if (entries.length === 0) closeEntryEditor();
+    else showListScreen();
     renderCalendar();
 }
-
 function backFromEdit() {
     if (!editingDateKey) { closeEntryEditor(); return; }
     var entries = getEntries(editingDateKey);
-    if (entries.length === 0) {
-        closeEntryEditor();
-    } else {
-        editingIndex = -1;
-        showListScreen();
-    }
+    if (entries.length === 0) closeEntryEditor();
+    else { editingIndex = -1; showListScreen(); }
 }
-
 function showBanner(title, body) {
     var old = document.getElementById('notifBanner');
     if (old) old.parentNode.removeChild(old);
@@ -1381,7 +1274,6 @@ function updateNotifButton() {
     else { btn.textContent = 'Erinnerungen aktivieren'; btn.style.background = '#00796b'; }
 }
 function saveNotified() { try { localStorage.setItem('schichtzeitNotified', JSON.stringify(notifiedFlags)); } catch(e){} }
-
 function checkReminders() {
     var nowMs = Date.now();
     Object.keys(sonstigeDays).forEach(function(dateKey){
@@ -1419,12 +1311,9 @@ function checkReminders() {
     var cutoff = new Date(); cutoff.setDate(cutoff.getDate() - 7);
     var cutoffKey = formatDateKey(cutoff);
     var cleaned = false;
-    Object.keys(notifiedFlags).forEach(function(k){
-        if (k.split('_')[0] < cutoffKey) { delete notifiedFlags[k]; cleaned = true; }
-    });
+    Object.keys(notifiedFlags).forEach(function(k){ if (k.split('_')[0] < cutoffKey) { delete notifiedFlags[k]; cleaned = true; } });
     if (cleaned) saveNotified();
 }
-
 function getUpcomingReminders(limit) {
     var now = new Date();
     var items = [];
@@ -1468,17 +1357,13 @@ function updateRemindersList() {
         return '<li>' + icon + ' <b>' + dd + '.' + mm + '.' + yyyy + '</b> - ' + hh + ':' + mn + ' - ' + escapeHtml(text) + ' <span class="when">(' + when + ')</span></li>';
     }).join('');
 }
-
 function updateYearOverview() {
     var year = currentDate.getFullYear();
     var el = document.getElementById('overviewYear');
     if (el) el.textContent = year;
     var yearSick = sickDays.filter(function(d){ return d.indexOf(year+'-') === 0; }).sort();
     var yearVacation = vacationDays.filter(function(d){ return d.indexOf(year+'-') === 0; }).sort();
-    var yearSonstige = Object.keys(sonstigeDays).filter(function(d){
-        if (d.indexOf(year+'-') !== 0) return false;
-        return getEntries(d).length > 0;
-    }).sort();
+    var yearSonstige = Object.keys(sonstigeDays).filter(function(d){ if (d.indexOf(year+'-') !== 0) return false; return getEntries(d).length > 0; }).sort();
     var quota = getVacationQuota(year);
     var used = yearVacation.length;
     var left = quota - used;
@@ -1503,15 +1388,12 @@ function updateYearOverview() {
             if (en.text) parts.push(escapeHtml(en.text));
             return '<div style="margin-left:6px;font-size:13px;color:#666;">' + parts.join(' \u00B7 ') + '</div>';
         }).join('');
-        return '<li style="list-style:none;margin-bottom:6px;">' +
-            '<div style="font-weight:bold;">' + f(d) + (entries.length > 1 ? ' <span style="color:#0056b3;">(' + entries.length + ')</span>' : '') + '</div>' +
-            items +
-            '</li>';
+        return '<li style="list-style:none;margin-bottom:6px;">' + '<div style="font-weight:bold;">' + f(d) + (entries.length > 1 ? ' <span style="color:#0056b3;">(' + entries.length + ')</span>' : '') + '</div>' + items + '</li>';
     }).join('') : '<li>Keine Eintr\u00E4ge</li>';
 }
 function toggleYearOverview() {
     var o = document.getElementById('yearOverview');
-    if (o.style.display === 'block') { o.style.display = 'none'; }
+    if (o.style.display === 'block') o.style.display = 'none';
     else { o.style.display = 'block'; updateYearOverview(); }
 }
 function toggleFerien() {
@@ -1534,18 +1416,15 @@ function resetData() {
         renderCalendar();
     }
 }
-
 function applyRestoredData(data) {
     sickDays = data.sickDays || [];
     vacationDays = data.vacationDays || [];
     sonstigeDays = data.sonstigeDays || {};
     notifiedFlags = data.notifiedFlags || {};
-
     Object.keys(sonstigeDays).forEach(function(k){
         var v = sonstigeDays[k];
-        if (typeof v === 'string') {
-            sonstigeDays[k] = [{ id: genEntryId(), color: v, text: '', time: '', notify: false, icon: '\uD83D\uDD14' }];
-        } else if (v && typeof v === 'object' && !Array.isArray(v)) {
+        if (typeof v === 'string') sonstigeDays[k] = [{ id: genEntryId(), color: v, text: '', time: '', notify: false, icon: '\uD83D\uDD14' }];
+        else if (v && typeof v === 'object' && !Array.isArray(v)) {
             if (!v.id) v.id = genEntryId();
             if (!v.icon) v.icon = '\uD83D\uDD14';
             sonstigeDays[k] = [v];
@@ -1558,22 +1437,10 @@ function applyRestoredData(data) {
             }
         }
     });
-
-    if (data.vacationQuota && typeof data.vacationQuota === 'object') {
-        vacationQuota = data.vacationQuota;
-        try { localStorage.setItem('schichtzeitVacationQuota', JSON.stringify(vacationQuota)); } catch(err){}
-    }
-    if (data.shiftSystem) {
-        shiftSystem = data.shiftSystem;
-        try { localStorage.setItem('schichtzeitShiftSystem', shiftSystem); } catch(err){}
-    }
-    if (data.theme) {
-        applyTheme(data.theme);
-    }
-    if (data.group) {
-        document.getElementById('groupSelect').value = data.group;
-        try { localStorage.setItem('schichtzeitGroup', data.group); } catch(err){}
-    }
+    if (data.vacationQuota && typeof data.vacationQuota === 'object') { vacationQuota = data.vacationQuota; try { localStorage.setItem('schichtzeitVacationQuota', JSON.stringify(vacationQuota)); } catch(err){} }
+    if (data.shiftSystem) { shiftSystem = data.shiftSystem; try { localStorage.setItem('schichtzeitShiftSystem', shiftSystem); } catch(err){} }
+    if (data.theme) applyTheme(data.theme);
+    if (data.group) { document.getElementById('groupSelect').value = data.group; try { localStorage.setItem('schichtzeitGroup', data.group); } catch(err){} }
     if (data.color) {
         selectedColor = data.color;
         document.getElementById('sonstigeColor').value = selectedColor;
@@ -1589,10 +1456,8 @@ function applyRestoredData(data) {
     } catch(err){}
     renderCalendar();
 }
-
 function init() {
     applyTheme(currentTheme);
-
     document.getElementById('shareBtn').addEventListener('click', shareSchichtzeit);
     document.getElementById('settingsBtn').addEventListener('click', openSettings);
     document.getElementById('settingsCancelBtn').addEventListener('click', closeSettings);
@@ -1601,49 +1466,33 @@ function init() {
     document.getElementById('openHelpBtn').addEventListener('click', openHelp);
     document.getElementById('helpCloseBtn').addEventListener('click', closeHelp);
     document.getElementById('helpModal').addEventListener('click', function(e){ if (e.target.id === 'helpModal') closeHelp(); });
-
     var themeBtns = document.querySelectorAll('.theme-choice');
     for (var t = 0; t < themeBtns.length; t++) {
-        (function(btn){
-            btn.addEventListener('click', function(){
-                applyTheme(btn.getAttribute('data-theme'));
-            });
-        })(themeBtns[t]);
+        (function(btn){ btn.addEventListener('click', function(){ applyTheme(btn.getAttribute('data-theme')); }); })(themeBtns[t]);
     }
-
     document.getElementById('resetBtn').addEventListener('click', resetData);
     document.getElementById('yearOverviewBtn').addEventListener('click', toggleYearOverview);
     document.getElementById('yearOverviewCloseBtn').addEventListener('click', toggleYearOverview);
     document.getElementById('ferienBtn').addEventListener('click', toggleFerien);
     document.getElementById('backupBtn').addEventListener('click', openBackupMenu);
-
     document.getElementById('backupSaveDeviceBtn').addEventListener('click', backupToDevice);
     document.getElementById('backupShareBtn').addEventListener('click', backupShare);
     document.getElementById('backupRestoreBtn').addEventListener('click', restoreFromFile);
     document.getElementById('backupCancelBtn').addEventListener('click', closeBackupMenu);
     document.getElementById('backupMenuModal').addEventListener('click', function(e){ if (e.target.id === 'backupMenuModal') closeBackupMenu(); });
-
     document.getElementById('donateCancelBtn').addEventListener('click', closeDonateModal);
     document.getElementById('donateModal').addEventListener('click', function(e){ if (e.target.id === 'donateModal') closeDonateModal(); });
     document.getElementById('donateConfirmLink').addEventListener('click', function(){ setTimeout(closeDonateModal, 200); });
     document.getElementById('entryNotify').addEventListener('change', function(){ setTimeout(openDonateModal, 60); });
-
     document.getElementById('modalSaveBtn').addEventListener('click', saveEntry);
     document.getElementById('modalDeleteBtn').addEventListener('click', deleteCurrentEntry);
     document.getElementById('modalBackBtn').addEventListener('click', backFromEdit);
-    document.getElementById('listAddBtn').addEventListener('click', function(){
-        editingIndex = -1;
-        showEditScreen();
-    });
+    document.getElementById('listAddBtn').addEventListener('click', function(){ editingIndex = -1; showEditScreen(); });
     document.getElementById('listCloseBtn').addEventListener('click', closeEntryEditor);
     document.getElementById('entryModal').addEventListener('click', function(e){ if (e.target.id === 'entryModal') closeEntryEditor(); });
-
     document.getElementById('prevBtn').addEventListener('click', function(){ unlockAudio(); changeMonth(-1); });
     document.getElementById('nextBtn').addEventListener('click', function(){ unlockAudio(); changeMonth(1); });
-    document.getElementById('groupSelect').addEventListener('change', function(e){
-        try { localStorage.setItem('schichtzeitGroup', e.target.value); } catch(err){}
-        renderCalendar();
-    });
+    document.getElementById('groupSelect').addEventListener('change', function(e){ try { localStorage.setItem('schichtzeitGroup', e.target.value); } catch(err){} renderCalendar(); });
     var modeBtns = document.querySelectorAll('.mode-btn');
     for (var i = 0; i < modeBtns.length; i++) {
         (function(btn){
@@ -1702,9 +1551,7 @@ function init() {
     setupSwipe();
     document.addEventListener('touchstart', unlockAudio, {once:true, passive:true});
     document.addEventListener('click', unlockAudio, {once:true});
-    document.addEventListener('visibilitychange', function(){
-        if (!document.hidden) { syncClock(); checkReminders(); scheduleMinuteTick(); }
-    });
+    document.addEventListener('visibilitychange', function(){ if (!document.hidden) { syncClock(); checkReminders(); scheduleMinuteTick(); } });
     window.addEventListener('focus', function(){ syncClock(); checkReminders(); });
     document.getElementById('groupSelect').value = savedGroup;
     document.getElementById('sonstigeColor').value = selectedColor;
@@ -1716,19 +1563,12 @@ function init() {
     setInterval(checkReminders, 30 * 1000);
     setInterval(updateRemindersList, 60 * 1000);
 }
-
 if (document.readyState === 'loading') {
     document.addEventListener('DOMContentLoaded', init);
-} else {
-    init();
-}
-
+} else { init(); }
 } catch(err) {
     var box = document.getElementById('errBox');
-    if (box) {
-        box.style.display = 'block';
-        box.textContent = 'FEHLER: ' + err.message;
-    }
+    if (box) { box.style.display = 'block'; box.textContent = 'FEHLER: ' + err.message; }
 }
 })();
 </script>
@@ -1736,16 +1576,11 @@ if (document.readyState === 'loading') {
 <script>
 (function(){
   var KEY = 'szServerVersion';
-
   function showBanner(serverTime) {
     if (document.getElementById('szUpdateBanner')) return;
     var el = document.createElement('div');
     el.id = 'szUpdateBanner';
-    el.style.cssText = 'position:fixed;bottom:16px;left:50%;transform:translateX(-50%);' +
-      'background:#28a745;color:#fff;padding:14px 24px;border-radius:12px;font-size:15px;' +
-      'font-weight:bold;z-index:99998;box-shadow:0 6px 24px rgba(0,0,0,0.5);cursor:pointer;' +
-      'font-family:-apple-system,BlinkMacSystemFont,sans-serif;max-width:calc(100% - 32px);' +
-      'text-align:center;user-select:none';
+    el.style.cssText = 'position:fixed;bottom:16px;left:50%;transform:translateX(-50%);background:#28a745;color:#fff;padding:14px 24px;border-radius:12px;font-size:15px;font-weight:bold;z-index:99998;box-shadow:0 6px 24px rgba(0,0,0,0.5);cursor:pointer;font-family:-apple-system,BlinkMacSystemFont,sans-serif;max-width:calc(100% - 32px);text-align:center;user-select:none';
     el.textContent = '\uD83D\uDD04 Neue Version verf\u00FCgbar \u2014 tippen zum Aktualisieren';
     el.addEventListener('click', function(){
       try { localStorage.setItem(KEY, String(serverTime)); } catch(e){}
@@ -1753,7 +1588,6 @@ if (document.readyState === 'loading') {
     });
     document.body.appendChild(el);
   }
-
   function check() {
     try {
       fetch(location.pathname + '?check=' + Date.now(), { method: 'HEAD', cache: 'no-store' })
@@ -1762,23 +1596,15 @@ if (document.readyState === 'loading') {
           if (!lm) return;
           var serverTime = new Date(lm).getTime();
           var myVersion = parseInt(localStorage.getItem(KEY) || '0', 10);
-          if (myVersion === 0) {
-            try { localStorage.setItem(KEY, String(serverTime)); } catch(e){}
-            return;
-          }
-          if (serverTime > myVersion + 60000) {
-            showBanner(serverTime);
-          }
+          if (myVersion === 0) { try { localStorage.setItem(KEY, String(serverTime)); } catch(e){} return; }
+          if (serverTime > myVersion + 60000) showBanner(serverTime);
         })
         .catch(function(){});
     } catch(e){}
   }
-
   setTimeout(check, 3000);
   setInterval(check, 5 * 60 * 1000);
-  document.addEventListener('visibilitychange', function(){
-    if (!document.hidden) check();
-  });
+  document.addEventListener('visibilitychange', function(){ if (!document.hidden) check(); });
 })();
 </script>
 </body>
