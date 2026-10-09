@@ -1344,4 +1344,161 @@ function init() {
     document.getElementById('backupBtn').addEventListener('click', openBackupMenu);
 
     document.getElementById('backupSaveDeviceBtn').addEventListener('click', backupToDevice);
-    document.getElementById('backup
+    document.getElementById('backupShareBtn').addEventListener('click', backupShare);
+    document.getElementById('backupRestoreBtn').addEventListener('click', restoreFromFile);
+    document.getElementById('backupCancelBtn').addEventListener('click', closeBackupMenu);
+    document.getElementById('backupMenuModal').addEventListener('click', function(e){ if (e.target.id === 'backupMenuModal') closeBackupMenu(); });
+
+    document.getElementById('donateCancelBtn').addEventListener('click', closeDonateModal);
+    document.getElementById('donateModal').addEventListener('click', function(e){ if (e.target.id === 'donateModal') closeDonateModal(); });
+    document.getElementById('donateConfirmLink').addEventListener('click', function(){ setTimeout(closeDonateModal, 200); });
+    document.getElementById('entryNotify').addEventListener('change', function(){ setTimeout(openDonateModal, 60); });
+    document.getElementById('modalSaveBtn').addEventListener('click', saveEntry);
+    document.getElementById('modalDeleteBtn').addEventListener('click', deleteEntry);
+    document.getElementById('modalCancelBtn').addEventListener('click', closeEntryEditor);
+    document.getElementById('entryModal').addEventListener('click', function(e){ if (e.target.id === 'entryModal') closeEntryEditor(); });
+    document.getElementById('prevBtn').addEventListener('click', function(){ unlockAudio(); changeMonth(-1); });
+    document.getElementById('nextBtn').addEventListener('click', function(){ unlockAudio(); changeMonth(1); });
+    document.getElementById('groupSelect').addEventListener('change', function(e){
+        try { localStorage.setItem('schichtzeitGroup', e.target.value); } catch(err){}
+        renderCalendar();
+    });
+    var modeBtns = document.querySelectorAll('.mode-btn');
+    for (var i = 0; i < modeBtns.length; i++) {
+        (function(btn){
+            btn.addEventListener('click', function(){
+                var all = document.querySelectorAll('.mode-btn');
+                for (var j = 0; j < all.length; j++) all[j].classList.remove('active');
+                btn.classList.add('active');
+                currentMode = btn.getAttribute('data-mode');
+                var picker = document.getElementById('colorPickerRow');
+                if (currentMode === 'sonstige') picker.classList.add('active');
+                else picker.classList.remove('active');
+            });
+        })(modeBtns[i]);
+    }
+    document.getElementById('sonstigeColor').addEventListener('input', function(e){
+        selectedColor = e.target.value;
+        try { localStorage.setItem('schichtzeitColor', selectedColor); } catch(err){}
+        document.getElementById('legendSonstige').style.background = selectedColor;
+        updateColorPresetsActive();
+    });
+    var presets = document.querySelectorAll('.color-preset');
+    for (var k = 0; k < presets.length; k++) {
+        (function(btn){
+            btn.addEventListener('click', function(){
+                selectedColor = btn.getAttribute('data-color');
+                document.getElementById('sonstigeColor').value = selectedColor;
+                document.getElementById('legendSonstige').style.background = selectedColor;
+                try { localStorage.setItem('schichtzeitColor', selectedColor); } catch(err){}
+                updateColorPresetsActive();
+            });
+        })(presets[k]);
+    }
+    document.getElementById('legendSonstige').style.background = selectedColor;
+    document.getElementById('notifBtn').addEventListener('click', function(){
+        unlockAudio();
+        notifyUser('Test-Erinnerung', 'Banner und Ton funktionieren.');
+        if ('Notification' in window && Notification.permission === 'default') {
+            try { Notification.requestPermission().then(function(){ updateNotifButton(); checkReminders(); }); } catch(e){}
+        } else if ('Notification' in window && Notification.permission === 'granted') { checkReminders(); }
+    });
+    document.getElementById('restoreFileInput').addEventListener('change', function(e){
+        var file = e.target.files[0];
+        if (!file) return;
+        var reader = new FileReader();
+        reader.onload = function(event){
+            try {
+                var data = JSON.parse(event.target.result);
+                if (!data.sickDays && !data.vacationDays && !data.sonstigeDays) { alert('Ung\u00FCltige Backup-Datei.'); return; }
+                if (!confirm('Backup wiederherstellen? Aktuelle Daten werden \u00FCberschrieben.')) return;
+                applyRestoredData(data);
+                alert('Backup erfolgreich wiederhergestellt.');
+            } catch(err) { alert('Fehler beim Lesen der Backup-Datei: ' + err.message); }
+        };
+        reader.readAsText(file);
+    });
+    setupSwipe();
+    document.addEventListener('touchstart', unlockAudio, {once:true, passive:true});
+    document.addEventListener('click', unlockAudio, {once:true});
+    document.addEventListener('visibilitychange', function(){
+        if (!document.hidden) { syncClock(); checkReminders(); scheduleMinuteTick(); }
+    });
+    window.addEventListener('focus', function(){ syncClock(); checkReminders(); });
+    document.getElementById('groupSelect').value = savedGroup;
+    document.getElementById('sonstigeColor').value = selectedColor;
+    updateColorPresetsActive();
+    syncClock();
+    updateNotifButton();
+    scheduleMinuteTick();
+    setTimeout(checkReminders, 3000);
+    setInterval(checkReminders, 30 * 1000);
+    setInterval(updateRemindersList, 60 * 1000);
+}
+
+if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', init);
+} else {
+    init();
+}
+
+} catch(err) {
+    var box = document.getElementById('errBox');
+    if (box) {
+        box.style.display = 'block';
+        box.textContent = 'FEHLER: ' + err.message;
+    }
+}
+})();
+</script>
+
+<script>
+(function(){
+  var KEY = 'szServerVersion';
+
+  function showBanner(serverTime) {
+    if (document.getElementById('szUpdateBanner')) return;
+    var el = document.createElement('div');
+    el.id = 'szUpdateBanner';
+    el.style.cssText = 'position:fixed;bottom:16px;left:50%;transform:translateX(-50%);' +
+      'background:#28a745;color:#fff;padding:14px 24px;border-radius:12px;font-size:15px;' +
+      'font-weight:bold;z-index:99998;box-shadow:0 6px 24px rgba(0,0,0,0.5);cursor:pointer;' +
+      'font-family:-apple-system,BlinkMacSystemFont,sans-serif;max-width:calc(100% - 32px);' +
+      'text-align:center;user-select:none';
+    el.textContent = '\uD83D\uDD04 Neue Version verf\u00FCgbar \u2014 tippen zum Aktualisieren';
+    el.addEventListener('click', function(){
+      try { localStorage.setItem(KEY, String(serverTime)); } catch(e){}
+      location.replace(location.pathname + '?v=' + Date.now());
+    });
+    document.body.appendChild(el);
+  }
+
+  function check() {
+    try {
+      fetch(location.pathname + '?check=' + Date.now(), { method: 'HEAD', cache: 'no-store' })
+        .then(function(r){
+          var lm = r.headers.get('Last-Modified');
+          if (!lm) return;
+          var serverTime = new Date(lm).getTime();
+          var myVersion = parseInt(localStorage.getItem(KEY) || '0', 10);
+          if (myVersion === 0) {
+            try { localStorage.setItem(KEY, String(serverTime)); } catch(e){}
+            return;
+          }
+          if (serverTime > myVersion + 60000) {
+            showBanner(serverTime);
+          }
+        })
+        .catch(function(){});
+    } catch(e){}
+  }
+
+  setTimeout(check, 3000);
+  setInterval(check, 5 * 60 * 1000);
+  document.addEventListener('visibilitychange', function(){
+    if (!document.hidden) check();
+  });
+})();
+</script>
+</body>
+</html>
