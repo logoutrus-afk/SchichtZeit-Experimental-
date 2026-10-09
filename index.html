@@ -136,6 +136,28 @@ button:active{background:#0056b3}
 .donate-amounts{display:flex;flex-wrap:wrap;gap:8px;margin:12px 0 6px 0;justify-content:center}
 .donate-amounts span{background:#f1f3f5;color:#333;border:1px solid #ccc;border-radius:20px;padding:6px 14px;font-size:14px;font-weight:600}
 .share-toast{position:fixed;left:50%;bottom:30px;transform:translateX(-50%);background:#333;color:#fff;padding:12px 20px;border-radius:10px;font-size:14px;z-index:9999;box-shadow:0 6px 20px rgba(0,0,0,0.35)}
+
+/* ANLEITUNG */
+.help-btn{background:#17a2b8;display:block;width:100%;margin-top:8px;padding:14px;font-size:16px}
+.help-body{font-size:14.5px;line-height:1.65;color:#333}
+.help-body h4{margin:18px 0 6px 0;color:#0056b3;font-size:16px;border-bottom:1px solid #e5e9f0;padding-bottom:4px}
+.help-body h4:first-of-type{margin-top:6px}
+.help-body p{margin:6px 0}
+.help-body ul{margin:6px 0;padding-left:22px}
+.help-body li{margin-bottom:4px}
+.help-body .box{background:#f1f3f5;border-left:4px solid #0056b3;border-radius:6px;padding:10px 12px;margin:10px 0;font-size:14px}
+.help-body .box.warn{background:#fff3cd;border-left-color:#ffc107}
+.help-body .box.ok{background:#d4edda;border-left-color:#28a745}
+.help-body .tag{display:inline-block;padding:2px 8px;border-radius:5px;font-size:13px;font-weight:bold;margin-right:4px}
+.help-body .tag-F{background:#FFD700;color:#000}
+.help-body .tag-S{background:#FF4500;color:#fff}
+.help-body .tag-N{background:#1E90FF;color:#fff}
+.help-body .tag-_-{background:#f1f3f5;color:#666;border:1px solid #ccc}
+.help-body .emoji-list{font-size:20px;letter-spacing:3px;line-height:1.6}
+.help-body table{width:100%;border-collapse:collapse;margin:8px 0;font-size:14px}
+.help-body td{padding:5px 8px;border-bottom:1px solid #eee;vertical-align:top}
+.help-body td:first-child{font-weight:bold;white-space:nowrap;color:#0056b3;width:40%}
+.help-footer{margin-top:16px;padding-top:14px;border-top:1px solid #e5e9f0;font-size:13px;color:#777;text-align:center}
 </style>
 </head>
 <body>
@@ -255,6 +277,7 @@ button:active{background:#0056b3}
 
 </div>
 
+<!-- ENTRY MODAL -->
 <div class="modal-overlay" id="entryModal"><div class="modal">
 <h3 id="modalTitle">Eintrag</h3>
 <div class="modal-date" id="modalDate"></div>
@@ -274,6 +297,7 @@ button:active{background:#0056b3}
 </div>
 </div></div>
 
+<!-- SETTINGS MODAL -->
 <div class="modal-overlay" id="settingsModal"><div class="modal">
 <h3>Einstellungen</h3>
 <div class="modal-date" id="settingsYearDisplay"></div>
@@ -286,12 +310,113 @@ button:active{background:#0056b3}
 <option value="3" disabled>3-Schicht-System (bald)</option>
 <option value="6" disabled>6-Schicht-System (bald)</option>
 </select>
+<button class="help-btn" id="openHelpBtn">Anleitung / Hilfe oeffnen</button>
 <div class="modal-buttons">
 <button id="settingsCancelBtn" style="background:#6c757d;">Abbrechen</button>
 <button id="settingsSaveBtn" style="background:#007bff;">Speichern</button>
 </div>
 </div></div>
 
+<!-- HELP MODAL -->
+<div class="modal-overlay" id="helpModal"><div class="modal">
+<h3>Anleitung</h3>
+<div class="modal-date">Bedienungsanleitung fuer SchichtZeit</div>
+
+<div class="help-body">
+
+<p>Willkommen bei <b>SchichtZeit</b>. Diese App zeigt euch den Schichtplan und hilft euch, Urlaub, Krankheit und eigene Termine einzutragen.</p>
+
+<h4>1. Die Schicht waehlen</h4>
+<p>Oben im Dropdown <b>Schicht</b> w&auml;hlt jeder seine Gruppe (1 bis 5). Danach zeigt der Kalender die passenden Buchstaben f&uuml;r eure Schicht:</p>
+<table>
+<tr><td><span class="tag tag-F">F</span></td><td>Fr&uuml;hschicht</td></tr>
+<tr><td><span class="tag tag-S">S</span></td><td>Sp&auml;tschicht</td></tr>
+<tr><td><span class="tag tag-N">N</span></td><td>Nachtschicht</td></tr>
+<tr><td><span class="tag tag-_-">&ndash;</span></td><td>Frei</td></tr>
+</table>
+
+<h4>2. Was macht die Modi-Leiste?</h4>
+<p>Unter dem Kalender stehen vier Modi zur Auswahl:</p>
+<ul>
+<li><b>Normal</b> &ndash; nur anschauen. Ein Klick auf einen Tag mit Eintrag &ouml;ffnet ihn.</li>
+<li><b>Krank</b> &ndash; Klick auf einen Tag markiert ihn als <b>Krank</b> (lila).</li>
+<li><b>Urlaub</b> &ndash; Klick auf einen Tag markiert ihn als <b>Urlaub</b> (gr&uuml;n). Wird aufs Urlaubskonto angerechnet.</li>
+<li><b>Sonstige</b> &ndash; Klick auf einen Tag &ouml;ffnet ein Fenster f&uuml;r eigene Termine (Arzt, Elternabend usw.).</li>
+</ul>
+<div class="box">Ein zweiter Klick auf einen markierten Tag entfernt die Markierung wieder.</div>
+
+<h4>3. Eigenen Termin eintragen</h4>
+<p>So geht's:</p>
+<ul>
+<li>Modus <b>Sonstige</b> w&auml;hlen.</li>
+<li>Auf den gew&uuml;nschten Tag tippen.</li>
+<li>Beschreibung eingeben (z.B. <i>Zahnarzt</i>).</li>
+<li>Uhrzeit w&auml;hlen (optional).</li>
+<li>Symbol aus den <b>16 Vorlagen</b> ausw&auml;hlen.</li>
+<li>Farbe festlegen.</li>
+<li>Wenn eine Erinnerung gew&uuml;nscht ist: <b>H&auml;kchen bei &bdquo;Erinnerung senden&ldquo;</b> setzen.</li>
+<li>Speichern.</li>
+</ul>
+<p>Der Termin erscheint als farbige Zelle mit Symbol. Bei aktivierter Erinnerung erhaltet ihr <b>1 Tag, 2 Stunden und 30 Minuten</b> vorher einen Hinweis (Banner + Ton).</p>
+<p>Verf&uuml;gbare Symbole:</p>
+<p class="emoji-list">&#x1F514; &#x23F0; &#x1F4CC; &#x2B50; &#x2764;&#xFE0F; &#x26A0;&#xFE0F; &#x1F4DE; &#x1F48A; &#x1F3E5; &#x1F4C5; &#x2708;&#xFE0F; &#x1F382; &#x1F389; &#x1F697; &#x1F4BC; &#x1F4DD;</p>
+
+<h4>4. Jahresuebersicht</h4>
+<p>Zeigt euch auf einen Blick:</p>
+<ul>
+<li><b>Urlaub</b> &ndash; wie viele Tage ihr verplant habt, wie viele euch insgesamt zustehen und wie viele noch &uuml;brig sind.</li>
+<li><b>Krank</b> &ndash; Summe aller Krankheitstage.</li>
+<li><b>Sonstige</b> &ndash; Summe aller sonstigen Eintr&auml;ge.</li>
+</ul>
+<p>Wenn euer Urlaub zur Neige geht, f&auml;rbt sich die Karte <b>gelb</b> (weniger als 5 Tage) oder <b>rot</b> (Kontingent &uuml;berschritten).</p>
+
+<h4>5. Ferien anzeigen</h4>
+<p>Der Knopf <b>Ferien</b> blendet die bayerischen Schulferien ein. Ferientage bekommen einen gestrichelten Rahmen.</p>
+
+<h4>6. Einstellungen &ouml;ffnen</h4>
+<p>&Uuml;ber das <b>Drei-Punkte-Men&uuml;</b> oben rechts:</p>
+<ul>
+<li><b>Urlaubstage pro Jahr</b> &ndash; tragt hier euer pers&ouml;nliches Urlaubskontingent ein (Standard: 30).</li>
+<li><b>Schichtsystem</b> &ndash; aktuell nur das <b>5-Schicht-System</b> verf&uuml;gbar.</li>
+<li><b>Anleitung</b> &ndash; dieses Fenster hier.</li>
+</ul>
+
+<h4>7. Backup und Wiederherstellen</h4>
+<ul>
+<li><b>Backup</b> &ndash; alle eure Daten als Datei herunterladen. Praktisch beim Handywechsel oder als Sicherung.</li>
+<li><b>Restore</b> &ndash; gespeicherte Datei ausw&auml;hlen und Daten wiederherstellen.</li>
+</ul>
+<div class="box warn">Beim Handywechsel <b>unbedingt vorher ein Backup machen</b>, sonst sind alle Eintr&auml;ge verloren.</div>
+
+<h4>8. Erinnerungen aktivieren</h4>
+<p>Beim ersten Besuch unten auf <b>&bdquo;Erinnerungen aktivieren&ldquo;</b> tippen. Der Browser fragt dann nach Erlaubnis.</p>
+<div class="box">Erinnerungen kommen nur, solange die App im Browser ge&ouml;ffnet ist. Wenn der Browser komplett geschlossen wird, kommen keine Hinweise mehr.</div>
+
+<h4>9. Teilen (Knopf oben links)</h4>
+<p>Öffnet das Teilen-Men&uuml; des Handys. So k&ouml;nnt ihr den Link an Kollegen weitergeben &ndash; z.B. per WhatsApp, E-Mail oder Messenger.</p>
+
+<h4>10. Feiertage und Ferien (Bayern)</h4>
+<p>Alle bayerischen Feiertage sind fest hinterlegt: Neujahr, Heilige Drei K&ouml;nige, Karfreitag, Ostermontag, Tag der Arbeit, Christi Himmelfahrt, Pfingstmontag, Fronleichnam, Mari&auml; Himmelfahrt, Tag der Deutschen Einheit, Allerheiligen, 1. &amp; 2. Weihnachtstag.</p>
+<p>Feiertage bekommen einen <b>goldenen Rahmen</b>, Ferientage einen <b>gestrichelten blauen Rahmen</b>.</p>
+
+<h4>11. Hinweis zu Google Kalender</h4>
+<div class="box warn">Wenn ihr Erinnerungen auch dann erhalten wollt, wenn die App <b>geschlossen</b> ist &ndash; tragt wichtige Termine zus&auml;tzlich in euren <b>Google Kalender</b> ein. Dort funktionieren die Push-Benachrichtigungen zuverl&auml;ssig auf dem ganzen Handy.</div>
+
+<h4>12. Bei Problemen</h4>
+<p>Wenn etwas nicht funktioniert oder ihr Fragen habt &ndash; meldet euch beim Schichtleiter oder bei der Person, die die App eingerichtet hat.</p>
+
+<div class="help-footer">
+SchichtZeit &ndash; der digitale Schichtplan f&uuml;r unsere Schicht.
+</div>
+
+</div>
+
+<div class="modal-buttons">
+<button id="helpCloseBtn" style="background:#007bff;">Alles klar</button>
+</div>
+</div></div>
+
+<!-- DONATE MODAL -->
 <div class="modal-overlay" id="donateModal"><div class="modal">
 <h3>Funktion noch nicht finanziert</h3>
 <p class="donate-text">Fuer die Entwicklung dieser <b>Erinnerungsfunktion</b> wurden leider noch nicht genuegend Mittel gesammelt. Deine Unterstuetzung hilft, dieses Feature fertigzustellen.</p>
@@ -423,6 +548,8 @@ function saveSettings() {
     closeSettings();
     updateYearOverview();
 }
+function openHelp() { closeSettings(); document.getElementById('helpModal').classList.add('active'); }
+function closeHelp() { document.getElementById('helpModal').classList.remove('active'); }
 function openDonateModal() { document.getElementById('donateModal').classList.add('active'); }
 function closeDonateModal() { document.getElementById('donateModal').classList.remove('active'); }
 
@@ -982,6 +1109,9 @@ function init() {
     document.getElementById('settingsCancelBtn').addEventListener('click', closeSettings);
     document.getElementById('settingsSaveBtn').addEventListener('click', saveSettings);
     document.getElementById('settingsModal').addEventListener('click', function(e){ if (e.target.id === 'settingsModal') closeSettings(); });
+    document.getElementById('openHelpBtn').addEventListener('click', openHelp);
+    document.getElementById('helpCloseBtn').addEventListener('click', closeHelp);
+    document.getElementById('helpModal').addEventListener('click', function(e){ if (e.target.id === 'helpModal') closeHelp(); });
     document.getElementById('donateCancelBtn').addEventListener('click', closeDonateModal);
     document.getElementById('donateModal').addEventListener('click', function(e){ if (e.target.id === 'donateModal') closeDonateModal(); });
     document.getElementById('donateConfirmLink').addEventListener('click', function(){ setTimeout(closeDonateModal, 200); });
