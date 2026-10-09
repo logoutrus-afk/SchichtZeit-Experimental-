@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Test</title>
+<style>
+body{font-family:Arial,sans-serif;background:#f4f4f9;text-align:center;padding:20px;margin:0}
+h1{color:#0056b3}
+.uhr{font-size:18px;padding:10px;background:#d4edda;border-radius:10px;display:inline-block;margin-bottom:20px;font-weight:bold}
+.cal{display:grid;grid-template-columns:repeat(7,1fr);gap:5px;max-width:600px;margin:0 auto}
+.tag{aspect-ratio:1;display:flex;align-items:center;justify-content:center;border-radius:8px;font-size:22px;font-weight:bold;background:#f9f9f9;border:1px solid #eee}
+.F{background:#FFD700;color:#000}
+.S{background:#FF4500;color:#fff}
+.N{background:#1E90FF;color:#fff}
+.Feiertag{border:3px solid #CD7F32}
+</style>
+</head>
+<body>
+<h1>Test</h1>
+<div class="uhr" id="uhr">laedt...</div>
+<div class="cal" id="kal"></div>
+
+<script>
+(function(){
+try {
+    var BASE = Date.UTC(2026, 9, 1);
+    var CYCLE = ['F','F','N','N','N','_','_','_','S','S','S','_','F','F','N','N','_','_','_','S','S','S','_','F','F','F','N','N','_','_','_','_','_','_','_'];
+    var START = { '1': 29, '2': 1, '3': 8, '4': 15, '5': 22 };
+
+    function uhr() {
+        var d = new Date();
+        var hh = String(d.getHours()).padStart(2,'0');
+        var mm = String(d.getMinutes()).padStart(2,'0');
+        document.getElementById('uhr').textContent = hh + ':' + mm + ' Uhr - funktioniert!';
+    }
+    uhr();
+    setInterval(uhr, 30000);
+
+    function key(date) {
+        return date.getFullYear() + '-' + String(date.getMonth()+1).padStart(2,'0') + '-' + String(date.getDate()).padStart(2,'0');
+    }
+    function shift(date, group) {
+        var si = START[String(group)];
+        if (si === undefined) return '_';
+        var du = Date.UTC(date.getFullYear(), date.getMonth(), date.getDate());
+        var diff = Math.round((du - BASE) / 86400000);
+        var idx = (si + diff) % CYCLE.length;
+        if (idx < 0) idx += CYCLE.length;
+        return CYCLE[idx];
+    }
+
+    // Zeige Oktober 2026, Gruppe 1
+    var kal = document.getElementById('kal');
+    var first = new Date(2026, 9, 1);
+    var last = new Date(2026, 10, 0);
+    var startDay = first.getDay();
+    startDay = startDay === 0 ? 6 : startDay - 1;
+
+    for (var i = 0; i < startDay; i++) {
+        var e = document.createElement('div');
+        kal.appendChild(e);
+    }
+    for (var d = 1; d <= last.getDate(); d++) {
+        var dt = new Date(2026, 9, d);
+        var s = shift(dt, '1');
+        var el = document.createElement('div');
+        el.className = 'tag ' + (s === '_' ? '' : s);
+        el.textContent = d + ' ' + (s === '_' ? '' : s);
+        kal.appendChild(el);
+    }
+} catch(err) {
+    document.body.innerHTML = '<h1 style="color:red">FEHLER: ' + err.message + '</h1>';
+}
+})();
+</script>
+</body>
+</html>
