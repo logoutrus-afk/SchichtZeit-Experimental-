@@ -188,7 +188,7 @@ button:active{background:#0056b3}
 </div>
 
 <div class="nav-row">
-<button id="prevBtn" title="Zurueck">&larr;</button>
+<button id="prevBtn" title="Zur&uuml;ck">&larr;</button>
 <span id="monthDisplay"></span>
 <button id="nextBtn" title="Weiter">&rarr;</button>
 </div>
@@ -219,8 +219,8 @@ button:active{background:#0056b3}
 </div>
 
 <div class="legend">
-<div class="legend-item"><div class="legend-box" style="background:#FFD700;"></div> F (Frueh)</div>
-<div class="legend-item"><div class="legend-box" style="background:#FF4500;"></div> S (Spaet)</div>
+<div class="legend-item"><div class="legend-box" style="background:#FFD700;"></div> F (Fr&uuml;h)</div>
+<div class="legend-item"><div class="legend-box" style="background:#FF4500;"></div> S (Sp&auml;t)</div>
 <div class="legend-item"><div class="legend-box" style="background:#1E90FF;"></div> N (Nacht)</div>
 <div class="legend-item"><div class="legend-box" style="background:#f9f9f9;"></div> Frei</div>
 <div class="legend-item"><div class="legend-box" style="background:#DDA0DD;"></div> Krank</div>
@@ -231,15 +231,15 @@ button:active{background:#0056b3}
 </div>
 
 <div class="footer">
-<button id="resetBtn" style="background:#dc3545;">Alle Markierungen loeschen</button>
-<button id="yearOverviewBtn" style="background:#28a745;">Jahresuebersicht</button>
+<button id="resetBtn" style="background:#dc3545;">Alle Markierungen l&ouml;schen</button>
+<button id="yearOverviewBtn" style="background:#28a745;">Jahres&uuml;bersicht</button>
 <button id="ferienBtn" style="background:#17a2b8;">Ferien</button>
 <button id="backupBtn" style="background:#6f42c1;">Backup</button>
 <button id="notifBtn" style="background:#00796b;">Erinnerungen aktivieren</button>
 <input type="file" id="restoreFileInput" accept=".json" style="display:none;">
 </div>
 
-<div class="notif-info">Erinnerungen werden als Banner oben und per Ton angezeigt. Die Seite muss dafuer geoeffnet sein.</div>
+<div class="notif-info">Erinnerungen werden als Banner oben und per Ton angezeigt. Die Seite muss daf&uuml;r ge&ouml;ffnet sein.</div>
 
 <div class="holiday-note">
 <strong class="title">Feiertage in diesem Monat:</strong>
@@ -252,12 +252,12 @@ button:active{background:#0056b3}
 </div>
 
 <div id="yearOverview" class="overview-container">
-<h3>Jahresuebersicht <span id="overviewYear"></span></h3>
+<h3>Jahres&uuml;bersicht <span id="overviewYear"></span></h3>
 <div class="overview-stats">
 <div class="urlaub-stat" id="urlaubStat">
 <span class="label">Urlaub</span>
 <span class="value"><span id="countUrlaub">0</span> / <span id="countUrlaubQuota">30</span></span>
-<span class="sub">Uebrig: <span id="countUrlaubLeft">30</span> Tage</span>
+<span class="sub">&Uuml;brig: <span id="countUrlaubLeft">30</span> Tage</span>
 </div>
 <div class="urlaub-stat" style="background:#f3e9ff;border-color:#c9a8e6">
 <span class="label" style="color:#8A2BE2">Krank</span>
@@ -273,12 +273,12 @@ button:active{background:#0056b3}
 <div class="overview-list"><strong>Urlaubstage:</strong><ul id="listUrlaub"></ul></div>
 <div class="overview-list"><strong>Krankheitstage:</strong><ul id="listKrank"></ul></div>
 <div class="overview-list"><strong>Sonstige Tage:</strong><ul id="listSonstige"></ul></div>
-<button class="close-btn" id="yearOverviewCloseBtn">Schliessen</button>
+<button class="close-btn" id="yearOverviewCloseBtn">Schlie&szlig;en</button>
 </div>
 
 <div class="paypal-note">
-<p><strong>Gefaellt dir Schichtzeit?</strong><br>Du kannst mich mit einer kleinen Spende unterstuetzen:</p>
-<a href="https://www.paypal.com/biz/profile/schichtzeit" target="_blank" rel="noopener" class="paypal-btn">Mit PayPal unterstuetzen</a>
+<p><strong>Gef&auml;llt dir Schichtzeit?</strong><br>Du kannst mich mit einer kleinen Spende unterst&uuml;tzen:</p>
+<a href="https://www.paypal.com/biz/profile/schichtzeit" target="_blank" rel="noopener" class="paypal-btn">Mit PayPal unterst&uuml;tzen</a>
 </div>
 
 </div>
@@ -294,11 +294,11 @@ button:active{background:#0056b3}
 <label>Farbe<input type="color" id="entryColor" value="#FFD700"></label>
 <label class="checkbox-row" for="entryNotify">
 <input type="checkbox" id="entryNotify">
-<span>Erinnerung senden - <b>1 Tag</b>, <b>2 Stunden</b> und <b>30 Minuten</b> vorher</span>
+<span>Erinnerung senden &mdash; <b>1 Tag</b>, <b>2 Stunden</b> und <b>30 Minuten</b> vorher</span>
 </label>
 <div class="modal-buttons">
-<button id="modalDeleteBtn" style="background:#dc3545;">Loeschen</button>
-<button id="modalCancelBtn" style="background:#6c757d;">Schliessen</button>
+<button id="modalDeleteBtn" style="background:#dc3545;">L&ouml;schen</button>
+<button id="modalCancelBtn" style="background:#6c757d;">Schlie&szlig;en</button>
 <button id="modalSaveBtn" style="background:#007bff;">Speichern</button>
 </div>
 </div></div>
@@ -308,7 +308,7 @@ button:active{background:#0056b3}
 <h3>Einstellungen</h3>
 <div class="modal-date" id="settingsYearDisplay"></div>
 <label>Urlaubstage pro Jahr<input type="number" id="vacQuotaInput" min="0" max="365" step="1" value="30"></label>
-<div class="hint-row">Dein Urlaubskontingent fuer <span id="settingsYearHint"></span>.</div>
+<div class="hint-row">Dein Urlaubskontingent f&uuml;r <span id="settingsYearHint"></span>.</div>
 <div class="field-label">Schichtsystem</div>
 <select id="shiftSystemSelect">
 <option value="5">5-Schicht-System (aktuell)</option>
@@ -316,7 +316,7 @@ button:active{background:#0056b3}
 <option value="3" disabled>3-Schicht-System (bald)</option>
 <option value="6" disabled>6-Schicht-System (bald)</option>
 </select>
-<button class="help-btn" id="openHelpBtn">Anleitung / Hilfe oeffnen</button>
+<button class="help-btn" id="openHelpBtn">Anleitung / Hilfe &ouml;ffnen</button>
 <div class="modal-buttons">
 <button id="settingsCancelBtn" style="background:#6c757d;">Abbrechen</button>
 <button id="settingsSaveBtn" style="background:#007bff;">Speichern</button>
@@ -326,13 +326,13 @@ button:active{background:#0056b3}
 <!-- HELP MODAL -->
 <div class="modal-overlay" id="helpModal"><div class="modal">
 <h3>Anleitung</h3>
-<div class="modal-date">Bedienungsanleitung fuer SchichtZeit</div>
+<div class="modal-date">Bedienungsanleitung f&uuml;r SchichtZeit</div>
 
 <div class="help-body">
 
 <p>Willkommen bei <b>SchichtZeit</b>. Diese App zeigt euch den Schichtplan und hilft euch, Urlaub, Krankheit und eigene Termine einzutragen.</p>
 
-<h4>1. Die Schicht waehlen</h4>
+<h4>1. Die Schicht w&auml;hlen</h4>
 <p>Oben im Dropdown <b>Schicht</b> w&auml;hlt jeder seine Gruppe (1 bis 5). Danach zeigt der Kalender die passenden Buchstaben f&uuml;r eure Schicht:</p>
 <table>
 <tr><td><span class="tag tag-F">F</span></td><td>Fr&uuml;hschicht</td></tr>
@@ -367,7 +367,7 @@ button:active{background:#0056b3}
 <p>Verf&uuml;gbare Symbole:</p>
 <p class="emoji-list">&#x1F514; &#x23F0; &#x1F4CC; &#x2B50; &#x2764;&#xFE0F; &#x26A0;&#xFE0F; &#x1F4DE; &#x1F48A; &#x1F3E5; &#x1F4C5; &#x2708;&#xFE0F; &#x1F382; &#x1F389; &#x1F697; &#x1F4BC; &#x1F4DD;</p>
 
-<h4>4. Jahresuebersicht</h4>
+<h4>4. Jahres&uuml;bersicht</h4>
 <p>Zeigt euch auf einen Blick:</p>
 <ul>
 <li><b>Urlaub</b> &ndash; wie viele Tage ihr verplant habt, wie viele euch insgesamt zustehen und wie viele noch &uuml;brig sind.</li>
@@ -379,7 +379,7 @@ button:active{background:#0056b3}
 <h4>5. Ferien anzeigen</h4>
 <p>Der Knopf <b>Ferien</b> blendet die bayerischen Schulferien ein. Ferientage bekommen einen gestrichelten Rahmen.</p>
 
-<h4>6. Einstellungen oeffnen</h4>
+<h4>6. Einstellungen &ouml;ffnen</h4>
 <p>&Uuml;ber das <b>Drei-Punkte-Men&uuml;</b> oben rechts:</p>
 <ul>
 <li><b>Urlaubstage pro Jahr</b> &ndash; tragt hier euer pers&ouml;nliches Urlaubskontingent ein (Standard: 30).</li>
@@ -462,19 +462,19 @@ SchichtZeit &ndash; der digitale Schichtplan f&uuml;r unsere Schicht.
 </button>
 
 <div class="modal-buttons">
-<button id="backupCancelBtn" style="background:#6c757d;">Schliessen</button>
+<button id="backupCancelBtn" style="background:#6c757d;">Schlie&szlig;en</button>
 </div>
 </div></div>
 
 <!-- DONATE MODAL -->
 <div class="modal-overlay" id="donateModal"><div class="modal">
 <h3>Funktion noch nicht finanziert</h3>
-<p class="donate-text">Fuer die Entwicklung dieser <b>Erinnerungsfunktion</b> wurden leider noch nicht genuegend Mittel gesammelt. Deine Unterstuetzung hilft, dieses Feature fertigzustellen.</p>
-<p class="donate-text" style="text-align:center;margin-top:14px;"><b>Jede kleine Spende zaehlt.</b> Danke!</p>
-<div class="donate-amounts"><span>1 EUR</span><span>3 EUR</span><span>5 EUR</span><span>10 EUR</span></div>
+<p class="donate-text">F&uuml;r die Entwicklung dieser <b>Erinnerungsfunktion</b> wurden leider noch nicht gen&uuml;gend Mittel gesammelt. Deine Unterst&uuml;tzung hilft, dieses Feature fertigzustellen.</p>
+<p class="donate-text" style="text-align:center;margin-top:14px;"><b>Jede kleine Spende z&auml;hlt.</b> Danke!</p>
+<div class="donate-amounts"><span>1 &euro;</span><span>3 &euro;</span><span>5 &euro;</span><span>10 &euro;</span></div>
 <div class="modal-buttons">
-<button id="donateCancelBtn" style="background:#6c757d;">Spaeter</button>
-<a href="https://www.paypal.com/biz/profile/schichtzeit" target="_blank" rel="noopener" class="donate-link" id="donateConfirmLink">Jetzt unterstuetzen</a>
+<button id="donateCancelBtn" style="background:#6c757d;">Sp&auml;ter</button>
+<a href="https://www.paypal.com/biz/profile/schichtzeit" target="_blank" rel="noopener" class="donate-link" id="donateConfirmLink">Jetzt unterst&uuml;tzen</a>
 </div>
 </div></div>
 
@@ -484,7 +484,7 @@ try {
 
 var SHARE_URL = "https://logoutrus-afk.github.io/SchichtZeit-Experimental-/";
 var SHARE_TITLE = "Schichtzeit";
-var SHARE_TEXT = "Schichtplan fuer unsere Schicht - Schichtzeit";
+var SHARE_TEXT = "Schichtplan f\u00FCr unsere Schicht - Schichtzeit";
 
 var BASE_DATE_UTC = Date.UTC(2026, 9, 1);
 var CYCLE_35 = ['F','F','N','N','N','_','_','_','S','S','S','_','F','F','N','N','_','_','_','S','S','S','_','F','F','F','N','N','_','_','_','_','_','_','_'];
@@ -662,7 +662,7 @@ function backupShare() {
                 backupToDevice();
             });
         } else {
-            showToast('Direktes Teilen nicht verfuegbar - Datei wird gespeichert');
+            showToast('Direktes Teilen nicht verf\u00FCgbar - Datei wird gespeichert');
             setTimeout(backupToDevice, 800);
         }
     } catch(e) {
@@ -708,8 +708,8 @@ function calculateEaster(year) {
 function getHolidayList(year) {
     var list = [];
     function add(m,d,name){ var dt=new Date(year,m-1,d); list.push({name:name,date:dt,key:year+'-'+String(m).padStart(2,'0')+'-'+String(d).padStart(2,'0')}); }
-    add(1,1,"Neujahr"); add(1,6,"Heilige Drei Koenige");
-    add(5,1,"Tag der Arbeit"); add(8,15,"Maria Himmelfahrt");
+    add(1,1,"Neujahr"); add(1,6,"Heilige Drei K\u00F6nige");
+    add(5,1,"Tag der Arbeit"); add(8,15,"Mari\u00E4 Himmelfahrt");
     add(10,3,"Tag der Deutschen Einheit"); add(11,1,"Allerheiligen");
     add(12,25,"1. Weihnachtstag"); add(12,26,"2. Weihnachtstag");
     var easter = calculateEaster(year);
@@ -937,7 +937,7 @@ function updateFerienList(year) {
     var listEl = document.getElementById('ferienList');
     if (!listEl) return;
     var periods = FERIEN[year] || [];
-    if (periods.length === 0) { listEl.innerHTML = 'Keine Daten fuer dieses Jahr verfuegbar.'; return; }
+    if (periods.length === 0) { listEl.innerHTML = 'Keine Daten f\u00FCr dieses Jahr verf\u00FCgbar.'; return; }
     function f(s){ var p = s.split('-'); return p[2]+'.'+p[1]+'.'+p[0]; }
     listEl.innerHTML = periods.map(function(p){ return p.name + ': ' + f(p.start) + ' - ' + f(p.end); }).join('<br>');
 }
@@ -1033,7 +1033,7 @@ function saveEntry() {
 }
 function deleteEntry() {
     if (!editingDateKey) return;
-    if (!confirm('Diesen Eintrag wirklich loeschen?')) return;
+    if (!confirm('Diesen Eintrag wirklich l\u00F6schen?')) return;
     delete sonstigeDays[editingDateKey];
     delete notifiedFlags[editingDateKey + '_1d'];
     delete notifiedFlags[editingDateKey + '_2h'];
@@ -1176,8 +1176,8 @@ function updateYearOverview() {
     if (left < 0) statEl.classList.add('danger');
     else if (left <= 5) statEl.classList.add('warn');
     function f(s){ var p = s.split('-'); return p[2]+'.'+p[1]+'.'+p[0]; }
-    document.getElementById('listKrank').innerHTML = yearSick.length ? yearSick.map(function(d){ return '<li>'+f(d)+'</li>'; }).join('') : '<li>Keine Eintraege</li>';
-    document.getElementById('listUrlaub').innerHTML = yearVacation.length ? yearVacation.map(function(d){ return '<li>'+f(d)+'</li>'; }).join('') : '<li>Keine Eintraege</li>';
+    document.getElementById('listKrank').innerHTML = yearSick.length ? yearSick.map(function(d){ return '<li>'+f(d)+'</li>'; }).join('') : '<li>Keine Eintr\u00E4ge</li>';
+    document.getElementById('listUrlaub').innerHTML = yearVacation.length ? yearVacation.map(function(d){ return '<li>'+f(d)+'</li>'; }).join('') : '<li>Keine Eintr\u00E4ge</li>';
     document.getElementById('listSonstige').innerHTML = yearSonstige.length ? yearSonstige.map(function(d){
         var e = getEntry(d);
         var extra = [];
@@ -1186,7 +1186,7 @@ function updateYearOverview() {
         if (e.text) extra.push(escapeHtml(e.text));
         var extraStr = extra.length ? ' - ' + extra.join(' . ') : '';
         return '<li><span style="display:inline-block;width:14px;height:14px;background:'+e.color+';border:1px solid #999;border-radius:3px;vertical-align:middle;margin-right:6px;"></span>'+f(d)+extraStr+'</li>';
-    }).join('') : '<li>Keine Eintraege</li>';
+    }).join('') : '<li>Keine Eintr\u00E4ge</li>';
 }
 function toggleYearOverview() {
     var o = document.getElementById('yearOverview');
@@ -1202,7 +1202,7 @@ function toggleFerien() {
     renderCalendar();
 }
 function resetData() {
-    if (confirm('Moechtest du wirklich alle Markierungen loeschen?')) {
+    if (confirm('M\u00F6chtest du wirklich alle Markierungen l\u00F6schen?')) {
         sickDays = []; vacationDays = []; sonstigeDays = {}; notifiedFlags = {};
         try {
             localStorage.removeItem('schichtzeitSickDays');
@@ -1257,7 +1257,6 @@ function init() {
     document.getElementById('helpCloseBtn').addEventListener('click', closeHelp);
     document.getElementById('helpModal').addEventListener('click', function(e){ if (e.target.id === 'helpModal') closeHelp(); });
 
-    // Footer-Buttons mit Event Listenern
     document.getElementById('resetBtn').addEventListener('click', resetData);
     document.getElementById('yearOverviewBtn').addEventListener('click', toggleYearOverview);
     document.getElementById('yearOverviewCloseBtn').addEventListener('click', toggleYearOverview);
@@ -1331,8 +1330,8 @@ function init() {
         reader.onload = function(event){
             try {
                 var data = JSON.parse(event.target.result);
-                if (!data.sickDays && !data.vacationDays && !data.sonstigeDays) { alert('Ungueltige Backup-Datei.'); return; }
-                if (!confirm('Backup wiederherstellen? Aktuelle Daten werden ueberschrieben.')) return;
+                if (!data.sickDays && !data.vacationDays && !data.sonstigeDays) { alert('Ung\u00FCltige Backup-Datei.'); return; }
+                if (!confirm('Backup wiederherstellen? Aktuelle Daten werden \u00FCberschrieben.')) return;
                 applyRestoredData(data);
                 alert('Backup erfolgreich wiederhergestellt.');
             } catch(err) { alert('Fehler beim Lesen der Backup-Datei: ' + err.message); }
