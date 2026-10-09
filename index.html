@@ -158,14 +158,11 @@ button:active{background:#0056b3}
 .help-body td:first-child{font-weight:bold;white-space:nowrap;color:#0056b3;width:40%}
 .help-footer{margin-top:16px;padding-top:14px;border-top:1px solid #e5e9f0;font-size:13px;color:#777;text-align:center}
 
-/* Backup-Modal */
 .backup-option{display:flex;align-items:center;gap:14px;padding:16px;border:2px solid #e0e4e9;border-radius:10px;cursor:pointer;background:#fff;margin-bottom:10px;text-align:left;font-family:inherit;width:100%;font-size:15px;color:#333}
 .backup-option:hover,.backup-option:active{background:#f1f3f5;border-color:#0056b3}
 .backup-option .icon{font-size:28px;flex-shrink:0;width:36px;text-align:center}
 .backup-option .title{font-weight:bold;color:#0056b3;font-size:16px;display:block;margin-bottom:2px}
 .backup-option .desc{font-size:13px;color:#666;line-height:1.4}
-.backup-option.danger .title{color:#b02a37}
-.backup-option.danger:hover,.backup-option.danger:active{border-color:#dc3545;background:#fff5f5}
 .section-title{font-size:14px;font-weight:bold;color:#555;text-transform:uppercase;letter-spacing:0.5px;margin:18px 0 8px 0}
 .section-title:first-of-type{margin-top:0}
 </style>
@@ -234,10 +231,10 @@ button:active{background:#0056b3}
 </div>
 
 <div class="footer">
-<button onclick="resetData()" style="background:#dc3545;">Alle Markierungen loeschen</button>
-<button onclick="toggleYearOverview()" style="background:#28a745;">Jahresuebersicht</button>
-<button onclick="toggleFerien()" id="ferienBtn" style="background:#17a2b8;">Ferien</button>
-<button onclick="openBackupMenu()" style="background:#6f42c1;">Backup</button>
+<button id="resetBtn" style="background:#dc3545;">Alle Markierungen loeschen</button>
+<button id="yearOverviewBtn" style="background:#28a745;">Jahresuebersicht</button>
+<button id="ferienBtn" style="background:#17a2b8;">Ferien</button>
+<button id="backupBtn" style="background:#6f42c1;">Backup</button>
 <button id="notifBtn" style="background:#00796b;">Erinnerungen aktivieren</button>
 <input type="file" id="restoreFileInput" accept=".json" style="display:none;">
 </div>
@@ -276,7 +273,7 @@ button:active{background:#0056b3}
 <div class="overview-list"><strong>Urlaubstage:</strong><ul id="listUrlaub"></ul></div>
 <div class="overview-list"><strong>Krankheitstage:</strong><ul id="listKrank"></ul></div>
 <div class="overview-list"><strong>Sonstige Tage:</strong><ul id="listSonstige"></ul></div>
-<button class="close-btn" onclick="toggleYearOverview()">Schliessen</button>
+<button class="close-btn" id="yearOverviewCloseBtn">Schliessen</button>
 </div>
 
 <div class="paypal-note">
@@ -606,9 +603,6 @@ function closeHelp() { document.getElementById('helpModal').classList.remove('ac
 function openDonateModal() { document.getElementById('donateModal').classList.add('active'); }
 function closeDonateModal() { document.getElementById('donateModal').classList.remove('active'); }
 
-// ============================================================
-// BACKUP MENU
-// ============================================================
 function openBackupMenu() { document.getElementById('backupMenuModal').classList.add('active'); }
 function closeBackupMenu() { document.getElementById('backupMenuModal').classList.remove('active'); }
 
@@ -627,7 +621,6 @@ function getBackupJSON() {
     };
     return JSON.stringify(backup, null, 2);
 }
-
 function getBackupFilename() {
     var now = new Date();
     return 'Schichtzeit_Backup_' +
@@ -636,7 +629,6 @@ function getBackupFilename() {
         String(now.getHours()).padStart(2,'0') + '-' +
         String(now.getMinutes()).padStart(2,'0') + '.json';
 }
-
 function backupToDevice() {
     try {
         var json = getBackupJSON();
@@ -651,40 +643,32 @@ function backupToDevice() {
         setTimeout(function(){ URL.revokeObjectURL(url); }, 3000);
         showToast('Datei gespeichert');
     } catch(e) {
-        showToast('Fehler beim Speichern: ' + e.message);
+        showToast('Fehler: ' + e.message);
     }
 }
-
 function backupShare() {
     try {
         var json = getBackupJSON();
         var filename = getBackupFilename();
         var blob = new Blob([json], {type: 'application/json'});
         var file = new File([blob], filename, {type: 'application/json'});
-
-        // Prüfen ob Web Share API mit Dateien verfügbar ist
         if (navigator.canShare && navigator.canShare({files: [file]}) && navigator.share) {
             navigator.share({
                 files: [file],
                 title: 'Schichtzeit Backup',
                 text: 'Backup meiner Schichtzeit-Daten'
-            }).then(function(){
-                // erfolgreich geteilt
-            }).catch(function(err){
+            }).then(function(){}).catch(function(err){
                 if (err && err.name === 'AbortError') return;
-                // Falls Fehler -> auf Gerät speichern
                 backupToDevice();
             });
         } else {
-            // Fallback: normal auf Gerät speichern
             showToast('Direktes Teilen nicht verfuegbar - Datei wird gespeichert');
             setTimeout(backupToDevice, 800);
         }
     } catch(e) {
-        showToast('Fehler beim Teilen: ' + e.message);
+        showToast('Fehler: ' + e.message);
     }
 }
-
 function restoreFromFile() {
     closeBackupMenu();
     var input = document.getElementById('restoreFileInput');
@@ -1209,6 +1193,14 @@ function toggleYearOverview() {
     if (o.style.display === 'block') { o.style.display = 'none'; }
     else { o.style.display = 'block'; updateYearOverview(); }
 }
+function toggleFerien() {
+    showFerien = !showFerien;
+    var btn = document.getElementById('ferienBtn');
+    var note = document.getElementById('ferienNote');
+    if (showFerien) { btn.style.background = '#0d8a99'; note.style.display = 'block'; }
+    else { btn.style.background = '#17a2b8'; note.style.display = 'none'; }
+    renderCalendar();
+}
 function resetData() {
     if (confirm('Moechtest du wirklich alle Markierungen loeschen?')) {
         sickDays = []; vacationDays = []; sonstigeDays = {}; notifiedFlags = {};
@@ -1264,6 +1256,13 @@ function init() {
     document.getElementById('openHelpBtn').addEventListener('click', openHelp);
     document.getElementById('helpCloseBtn').addEventListener('click', closeHelp);
     document.getElementById('helpModal').addEventListener('click', function(e){ if (e.target.id === 'helpModal') closeHelp(); });
+
+    // Footer-Buttons mit Event Listenern
+    document.getElementById('resetBtn').addEventListener('click', resetData);
+    document.getElementById('yearOverviewBtn').addEventListener('click', toggleYearOverview);
+    document.getElementById('yearOverviewCloseBtn').addEventListener('click', toggleYearOverview);
+    document.getElementById('ferienBtn').addEventListener('click', toggleFerien);
+    document.getElementById('backupBtn').addEventListener('click', openBackupMenu);
 
     document.getElementById('backupSaveDeviceBtn').addEventListener('click', backupToDevice);
     document.getElementById('backupShareBtn').addEventListener('click', backupShare);
