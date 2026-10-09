@@ -57,7 +57,6 @@ button:active{background:#0056b3}
 .day.urlaub{background-color:#90EE90!important;color:#000!important;border:2px solid #228B22}
 .day.sonstige{border:2px solid rgba(0,0,0,0.35);color:#fff;text-shadow:-1px -1px 0 #000,1px -1px 0 #000,-1px 1px 0 #000,1px 1px 0 #000,0 0 3px rgba(0,0,0,0.7)}
 .day.sonstige .date-num{color:#fff;text-shadow:-1px -1px 0 #000,1px -1px 0 #000,-1px 1px 0 #000,1px 1px 0 #000,0 0 2px rgba(0,0,0,0.7)}
-.day.sonstige .sonstige-preview{text-shadow:-1px -1px 0 #000,1px -1px 0 #000,-1px 1px 0 #000,1px 1px 0 #000,0 0 3px rgba(0,0,0,0.85)}
 .day.empty{background:transparent;border:none;cursor:default}
 .day.today{border:3px solid #000;box-shadow:0 0 8px rgba(0,0,0,0.5);font-weight:900}
 .day.today .date-num{text-decoration:underline;text-decoration-thickness:2.5px;text-underline-offset:2px;font-weight:900}
@@ -72,6 +71,35 @@ button:active{background:#0056b3}
 .day .split-layer span{position:absolute;top:0;left:0;right:0;bottom:0;display:block;pointer-events:none}
 /* Icon je Termin — sitzt genau in der farbigen Fläche des Termins */
 .day .term-icon{position:absolute;transform:translate(-50%,-50%);font-size:clamp(14px,2.4vw,22px);line-height:1;z-index:2;pointer-events:none;filter:drop-shadow(0 1px 2px rgba(0,0,0,0.75))}
+/* Beschreibung an der Kante jeder Farbfläche */
+.day .term-text{
+  position:absolute;
+  font-size:clamp(8px,1.05vw,11px);
+  font-weight:bold;
+  color:#fff;
+  text-shadow:0 0 2px rgba(0,0,0,0.95),0 1px 2px rgba(0,0,0,0.95);
+  pointer-events:none;
+  z-index:3;
+  white-space:nowrap;
+  overflow:hidden;
+  text-overflow:ellipsis;
+  letter-spacing:0;
+  -webkit-font-smoothing:antialiased;
+}
+.day .term-text.t-top{top:2px;left:50%;transform:translateX(-50%);max-width:calc(100% - 6px)}
+.day .term-text.t-bottom{bottom:2px;left:50%;transform:translateX(-50%);max-width:calc(100% - 6px)}
+.day .term-text.t-right{
+  right:2px;top:50%;
+  writing-mode:vertical-rl;
+  transform:translateY(-50%);
+  max-height:calc(100% - 6px);
+}
+.day .term-text.t-left{
+  left:2px;top:50%;
+  writing-mode:vertical-rl;
+  transform:translateY(-50%) rotate(180deg);
+  max-height:calc(100% - 6px);
+}
 .sonstige-preview{position:absolute;bottom:3px;left:4px;right:4px;font-size:clamp(9px,1.4vw,13px);line-height:1.05;text-align:center;overflow:hidden;white-space:nowrap;text-overflow:ellipsis;opacity:0.98;pointer-events:none;font-weight:bold;color:#fff;z-index:3}
 .legend{margin-top:18px;font-size:13px;display:flex;justify-content:center;gap:10px;flex-wrap:wrap}
 .legend-item{display:flex;align-items:center;gap:5px}
@@ -447,8 +475,14 @@ body.dark .entry-empty{color:#8a8f95}
 <li>F&uuml;r eine Erinnerung H&auml;kchen bei <b>&bdquo;Erinnerung senden&ldquo;</b> setzen.</li>
 <li>Speichern.</li>
 </ul>
-<p><b>Mehrere Termine am selben Tag:</b> Einfach erneut auf den Tag tippen und <b>&bdquo;+ Neuer Eintrag&ldquo;</b> w&auml;hlen. Der Tag wird dann durch <b>beide Diagonalen in bis zu vier Fl&auml;chen</b> geteilt. Das <b>Symbol jedes Termins</b> sitzt direkt in der farbigen Fl&auml;che des Termins.</p>
-<p><b>Fl&auml;chen antippen:</b> Ein Tipp auf eine <b>farbige Fl&auml;che</b> &ouml;ffnet direkt den Termin mit genau dieser Farbe. Ein Tipp auf die <b>Schicht-/Urlaubs-/Krank-Fl&auml;che</b> &ouml;ffnet die Liste aller Termine des Tages.</p>
+<p><b>Mehrere Termine am selben Tag:</b> Der Tag wird durch <b>beide Diagonalen in bis zu vier Fl&auml;chen</b> geteilt:</p>
+<ul>
+<li>Rechts oben &ndash; <b>1. Termin</b>: Symbol in der Fl&auml;che, Beschreibung <b>rechts senkrecht von oben nach unten</b>.</li>
+<li>Oben &ndash; <b>2. Termin</b>: Symbol in der Fl&auml;che, Beschreibung <b>oben waagerecht</b>.</li>
+<li>Links &ndash; <b>3. Termin</b>: Symbol in der Fl&auml;che, Beschreibung <b>links senkrecht von unten nach oben</b>.</li>
+<li>Unten &ndash; Schicht / Urlaub / Krank (Basis).</li>
+</ul>
+<p><b>Fl&auml;chen antippen:</b> Ein Tipp auf eine <b>farbige Fl&auml;che</b> &ouml;ffnet direkt den Termin dieser Farbe. Ein Tipp auf die <b>Basisfl&auml;che</b> &ouml;ffnet die Liste aller Termine des Tages.</p>
 <p>Erinnerungen kommen <b>1 Tag, 2 Stunden und 30 Minuten</b> vorher (Banner + Ton) &ndash; f&uuml;r jeden Eintrag einzeln.</p>
 <p>Verf&uuml;gbare Symbole:</p>
 <p class="emoji-list">&#x1F514; &#x23F0; &#x1F4CC; &#x2B50; &#x2764;&#xFE0F; &#x26A0;&#xFE0F; &#x1F4DE; &#x1F48A; &#x1F3E5; &#x1F4C5; &#x2708;&#xFE0F; &#x1F382; &#x1F389; &#x1F697; &#x1F4BC; &#x1F4DD;</p>
@@ -923,17 +957,25 @@ function renderCalendar() {
             else if (isUrlaub) baseColor = '#90EE90';
             else baseColor = SHIFT_COLORS[shift] || '#f9f9f9';
 
-            // 4 Segmente im Uhrzeigersinn ab 45°: [0]=rechts, [1]=unten, [2]=links, [3]=oben
+            // Segmente: [0]=rechts, [1]=unten, [2]=links, [3]=oben
+            // 1 Termin -> rechts + oben (obere Hälfte diagonal)
+            // 2 Termine -> rechts + oben
+            // 3 Termine -> rechts + oben + links
+            // 4 Termine -> rechts + oben + links + unten
             var segColors = [baseColor, baseColor, baseColor, baseColor];
             var segEntry  = [-1, -1, -1, -1];
 
             if (entries.length === 1) {
-                segColors[0] = entries[0].color; segEntry[0] = 0;
-                segColors[3] = entries[0].color; segEntry[3] = 0;
+                segColors[0] = entries[0].color; segEntry[0] = 0;  // rechts
+                segColors[3] = entries[0].color; segEntry[3] = 0;  // oben
+            } else if (entries.length === 2) {
+                segColors[0] = entries[0].color; segEntry[0] = 0;  // rechts
+                segColors[3] = entries[1].color; segEntry[3] = 1;  // oben
             } else {
-                segColors[0] = entries[0].color; segEntry[0] = 0;
-                segColors[1] = entries[1].color; segEntry[1] = 1;
-                if (entries.length >= 3) { segColors[2] = entries[2].color; segEntry[2] = 2; }
+                segColors[0] = entries[0].color; segEntry[0] = 0;  // rechts
+                segColors[3] = entries[1].color; segEntry[3] = 1;  // oben
+                segColors[2] = entries[2].color; segEntry[2] = 2;  // links
+                if (entries.length >= 4) { segColors[1] = entries[3].color; segEntry[1] = 3; } // unten
             }
 
             var clips = [
@@ -959,7 +1001,7 @@ function renderCalendar() {
             }
             if (anyWhite) dayEl.style.border = '2px solid #999';
 
-            // Icon je Termin – positioniert in der zugehörigen Fläche
+            // Icon je Termin – positioniert in der Mitte seiner Fläche
             var quadCenters = [
                 {x: 72, y: 50},   // rechts (0)
                 {x: 50, y: 72},   // unten  (1)
@@ -988,6 +1030,29 @@ function renderCalendar() {
                 dayEl.appendChild(iconSpan);
             }
 
+            // Beschreibung an der Kante jeder Fläche
+            if (entries.length >= 2) {
+                for (var ti = 0; ti < entries.length; ti++) {
+                    var tquads = [];
+                    for (var tq = 0; tq < 4; tq++) {
+                        if (segEntry[tq] === ti) tquads.push(tq);
+                    }
+                    if (tquads.length === 0) continue;
+                    var txt = (entries[ti].text || '').trim();
+                    if (!txt) continue;
+                    var pq = tquads[0];
+                    var tspan = document.createElement('span');
+                    tspan.className = 'term-text';
+                    if (pq === 0) tspan.className += ' t-right';
+                    else if (pq === 1) tspan.className += ' t-bottom';
+                    else if (pq === 2) tspan.className += ' t-left';
+                    else tspan.className += ' t-top';
+                    tspan.textContent = txt.length > 12 ? txt.substr(0, 11) + '\u2026' : txt;
+                    tspan.title = txt;
+                    dayEl.appendChild(tspan);
+                }
+            }
+
             var tipParts = [];
             entries.forEach(function(en){
                 var t = en.text || 'Termin';
@@ -996,7 +1061,8 @@ function renderCalendar() {
             });
             dayEl.title = tipParts.join(' | ');
 
-            if (entries[0].text) {
+            // Vorschau nur bei EINEM Termin (unten mittig)
+            if (entries.length === 1 && entries[0].text) {
                 var prev = document.createElement('span');
                 prev.className = 'sonstige-preview';
                 prev.textContent = entries[0].text.length > 12 ? entries[0].text.substr(0, 11) + '\u2026' : entries[0].text;
