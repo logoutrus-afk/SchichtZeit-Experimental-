@@ -69,7 +69,9 @@ button:active{background:#0056b3}
 .day.sonstige .date-num{font-weight:bold}
 .sonstige-badges{position:absolute;top:3px;right:4px;display:flex;align-items:center;gap:3px;pointer-events:none}
 .sonstige-marker{font-size:clamp(16px,2.6vw,26px);line-height:1;filter:drop-shadow(0 1px 2px rgba(0,0,0,0.6))}
-.sonstige-count{background:#fff;color:#333;font-size:10px;font-weight:bold;border-radius:8px;padding:1px 5px;border:1px solid rgba(0,0,0,0.35);line-height:1.3}
+/* Multi-Task-Symbol: kleines weisses Badge mit Zahnrad-Symbol */
+.sonstige-count{background:#fff;color:#222;border-radius:50%;width:20px;height:20px;padding:0;border:1.5px solid rgba(0,0,0,0.5);line-height:1;display:inline-flex;align-items:center;justify-content:center;box-shadow:0 1px 3px rgba(0,0,0,0.35)}
+.sonstige-count svg{display:block;width:13px;height:13px}
 .sonstige-preview{position:absolute;bottom:4px;left:4px;right:4px;font-size:clamp(9px,1.4vw,13px);line-height:1.05;text-align:center;overflow:hidden;white-space:nowrap;text-overflow:ellipsis;opacity:0.98;pointer-events:none;font-weight:bold;color:#fff}
 .legend{margin-top:18px;font-size:13px;display:flex;justify-content:center;gap:10px;flex-wrap:wrap}
 .legend-item{display:flex;align-items:center;gap:5px}
@@ -265,7 +267,7 @@ body.dark .entry-item:hover,body.dark .entry-item:active{background:#3a3f44;bord
 body.dark .entry-item .e-text{color:#e4e6ea}
 body.dark .entry-item .e-meta{color:#a0a5ab}
 body.dark .entry-empty{color:#8a8f95}
-body.dark .sonstige-count{background:#1e2124;color:#e4e6ea;border-color:#555}
+body.dark .sonstige-count{background:#e4e6ea;color:#1e2124;border-color:#666}
 </style>
 </head>
 <body>
@@ -276,35 +278,7 @@ body.dark .sonstige-count{background:#1e2124;color:#e4e6ea;border-color:#555}
 <path d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7s-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81 1.66 0 3-1.34 3-3s-1.34-3-3-3-3 1.34-3 3c0 .24.04.47.09.7L8.04 9.81C7.5 9.31 6.79 9 6 9c-1.66 0-3 1.34-3 3s1.34 3 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.16c-.05.21-.08.43-.08.65 0 1.61 1.31 2.92 2.92 2.92s2.92-1.31 2.92-2.92-1.31-2.92-2.92-2.92z"/>
 </svg>
 </button>
-<button class="top-btn settings-btn" id="settingsBtn" title="Einstellungen" aria-label="Einstellungen">
-<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" aria-hidden="true">
-  <line x1="12" y1="6" x2="12" y2="4.2" stroke-width="1.1"/>
-  <line x1="12" y1="18" x2="12" y2="19.8" stroke-width="1.1"/>
-  <line x1="6" y1="12" x2="4.2" y2="12" stroke-width="1.1"/>
-  <line x1="18" y1="12" x2="19.8" y2="12" stroke-width="1.1"/>
-  <line x1="7.76" y1="7.76" x2="6.49" y2="6.49" stroke-width="1.1"/>
-  <line x1="16.24" y1="16.24" x2="17.51" y2="17.51" stroke-width="1.1"/>
-  <line x1="16.24" y1="7.76" x2="17.51" y2="6.49" stroke-width="1.1"/>
-  <line x1="7.76" y1="16.24" x2="6.49" y2="17.51" stroke-width="1.1"/>
-  <circle cx="12" cy="3" r="1.7" fill="currentColor" stroke="none"/>
-  <circle cx="12" cy="21" r="1.7" fill="currentColor" stroke="none"/>
-  <circle cx="3" cy="12" r="1.7" fill="currentColor" stroke="none"/>
-  <circle cx="21" cy="12" r="1.7" fill="currentColor" stroke="none"/>
-  <circle cx="5.64" cy="5.64" r="1.7" fill="currentColor" stroke="none"/>
-  <circle cx="18.36" cy="18.36" r="1.7" fill="currentColor" stroke="none"/>
-  <circle cx="18.36" cy="5.64" r="1.7" fill="currentColor" stroke="none"/>
-  <circle cx="5.64" cy="18.36" r="1.7" fill="currentColor" stroke="none"/>
-  <circle cx="12" cy="12" r="3.2" stroke-width="2.2" stroke="currentColor"/>
-  <line x1="12" y1="8.6" x2="12" y2="7" stroke-width="2.4" stroke="currentColor"/>
-  <line x1="12" y1="15.4" x2="12" y2="17" stroke-width="2.4" stroke="currentColor"/>
-  <line x1="8.6" y1="12" x2="7" y2="12" stroke-width="2.4" stroke="currentColor"/>
-  <line x1="15.4" y1="12" x2="17" y2="12" stroke-width="2.4" stroke="currentColor"/>
-  <line x1="9.6" y1="9.6" x2="8.46" y2="8.46" stroke-width="2.4" stroke="currentColor"/>
-  <line x1="14.4" y1="14.4" x2="15.54" y2="15.54" stroke-width="2.4" stroke="currentColor"/>
-  <line x1="14.4" y1="9.6" x2="15.54" y2="8.46" stroke-width="2.4" stroke="currentColor"/>
-  <line x1="9.6" y1="14.4" x2="8.46" y2="15.54" stroke-width="2.4" stroke="currentColor"/>
-</svg>
-</button>
+<button class="top-btn settings-btn" id="settingsBtn" title="Einstellungen" aria-label="Einstellungen">&#8942;</button>
 <div class="err-box" id="errBox"></div>
 <div id="onlineStatus" class="online-status loading">Uhr wird geladen...</div>
 
@@ -357,6 +331,7 @@ body.dark .sonstige-count{background:#1e2124;color:#e4e6ea;border-color:#555}
 <div class="legend-item"><div class="legend-box" id="legendSonstige" style="background:#FFD700;"></div> Sonstige</div>
 <div class="legend-item"><div class="legend-box" style="background:#fff;border:3px solid #CD7F32;"></div> Feiertag</div>
 <div class="legend-item"><div class="legend-box" style="background:#fff;border:2px dashed #17a2b8;"></div> Ferien</div>
+<div class="legend-item"><div class="legend-box" style="background:#fff;border-radius:50%;width:16px;height:16px;display:flex;align-items:center;justify-content:center;"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="#222" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 12l10 5 10-5"/><path d="M2 17l10 5 10-5"/></svg></div> Mehrfach</div>
 </div>
 
 <div class="footer">
@@ -499,8 +474,8 @@ body.dark .sonstige-count{background:#1e2124;color:#e4e6ea;border-color:#555}
 <li>F&uuml;r eine Erinnerung H&auml;kchen bei <b>&bdquo;Erinnerung senden&ldquo;</b> setzen.</li>
 <li>Speichern.</li>
 </ul>
-<p><b>Mehrere Termine am selben Tag:</b> Einfach erneut auf den Tag tippen und <b>&bdquo;+ Neuer Eintrag&ldquo;</b> w&auml;hlen. Alle Eintr&auml;ge werden in einer <b>Liste</b> angezeigt. Jeder Eintrag kann einzeln bearbeitet oder gel&ouml;scht werden (M&uuml;lleimer-Symbol).</p>
-<p>Im Kalender erscheint eine <b>diagonal geteilte Zelle</b>: die obere linke H&auml;lfte beh&auml;lt die Schichtfarbe, die untere rechte H&auml;lfte bekommt die Terminfarbe. Bei mehr als einem Termin zeigt ein kleiner Z&auml;hler (+1, +2&hellip;) an, wie viele weitere Eintr&auml;ge es gibt.</p>
+<p><b>Mehrere Termine am selben Tag:</b> Einfach erneut auf den Tag tippen und <b>&bdquo;+ Neuer Eintrag&ldquo;</b> w&auml;hlen. Alle Eintr&auml;ge werden in einer <b>Liste</b> angezeigt.</p>
+<p>Im Kalender erscheint eine <b>diagonal geteilte Zelle</b> und zus&auml;tzlich ein kleines <b>Zahnrad-Symbol</b> mit drei Ebenen oben rechts. Das Symbol bedeutet: <b>dieser Tag hat mehr als einen Eintrag</b> (Mehrfachbelegung).</p>
 <p>Erinnerungen kommen <b>1 Tag, 2 Stunden und 30 Minuten</b> vorher (Banner + Ton) &ndash; f&uuml;r jeden Eintrag einzeln.</p>
 <p>Verf&uuml;gbare Symbole:</p>
 <p class="emoji-list">&#x1F514; &#x23F0; &#x1F4CC; &#x2B50; &#x2764;&#xFE0F; &#x26A0;&#xFE0F; &#x1F4DE; &#x1F48A; &#x1F3E5; &#x1F4C5; &#x2708;&#xFE0F; &#x1F382; &#x1F389; &#x1F697; &#x1F4BC; &#x1F4DD;</p>
@@ -512,7 +487,7 @@ body.dark .sonstige-count{background:#1e2124;color:#e4e6ea;border-color:#555}
 <p>Der Knopf <b>Ferien</b> blendet die bayerischen Schulferien ein.</p>
 
 <h4>6. Einstellungen &ouml;ffnen</h4>
-<p>&Uuml;ber das <b>Zahnrad-Symbol</b> oben rechts: Urlaubstage pro Jahr, Schichtsystem, <b>Design / Modus</b> (Hell / Dunkel) und diese Anleitung.</p>
+<p>&Uuml;ber das <b>Drei-Punkte-Men&uuml;</b> oben rechts: Urlaubstage pro Jahr, Schichtsystem, <b>Design / Modus</b> (Hell / Dunkel) und diese Anleitung.</p>
 
 <h4>7. Backup &ndash; Sichern und Wiederherstellen</h4>
 <ul>
@@ -604,6 +579,9 @@ var SHIFT_COLORS = { 'F': '#FFD700', 'S': '#FF4500', 'N': '#1E90FF', '_': '#f9f9
 var monthNames = ["Januar","Februar","M\u00E4rz","April","Mai","Juni","Juli","August","September","Oktober","November","Dezember"];
 var dayNames = ["Mo","Di","Mi","Do","Fr","Sa","So"];
 var SYMBOLS = ['\uD83D\uDD14','\u23F0','\uD83D\uDCCC','\u2B50','\u2764\uFE0F','\u26A0\uFE0F','\uD83D\uDCDE','\uD83D\uDC8A','\uD83C\uDFE5','\uD83D\uDCC5','\u2708\uFE0F','\uD83C\uDF82','\uD83C\uDF89','\uD83D\uDE97','\uD83D\uDCBC','\uD83D\uDCDD'];
+
+// SVG für "Mehrfachbelegung" - drei Ebenen/Stapel
+var MULTI_SVG = '<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 12l10 5 10-5"/><path d="M2 17l10 5 10-5"/></svg>';
 
 var currentDate = new Date(2026, 9, 1);
 var currentMode = 'normal';
@@ -1062,7 +1040,8 @@ function renderCalendar() {
             if (entries.length > 1) {
                 var cnt = document.createElement('span');
                 cnt.className = 'sonstige-count';
-                cnt.textContent = '+' + (entries.length - 1);
+                cnt.title = entries.length + ' Eintr\u00E4ge (Mehrfachbelegung)';
+                cnt.innerHTML = MULTI_SVG;
                 badges.appendChild(cnt);
             }
 
