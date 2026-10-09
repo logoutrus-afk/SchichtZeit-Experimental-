@@ -165,6 +165,92 @@ button:active{background:#0056b3}
 .backup-option .desc{font-size:13px;color:#666;line-height:1.4}
 .section-title{font-size:14px;font-weight:bold;color:#555;text-transform:uppercase;letter-spacing:0.5px;margin:18px 0 8px 0}
 .section-title:first-of-type{margin-top:0}
+
+/* Design-Auswahl in Einstellungen */
+.theme-row{display:flex;gap:8px;margin-bottom:14px}
+.theme-choice{flex:1;padding:14px 8px;font-size:15px;border-radius:8px;cursor:pointer;font-weight:bold;font-family:inherit;transition:box-shadow .15s}
+.theme-choice[data-theme="light"]{background:#ffffff;color:#333333;border:2px solid #cccccc}
+.theme-choice[data-theme="dark"]{background:#2a2e33;color:#e4e6ea;border:2px solid #555555}
+.theme-choice.active{border-color:#0056b3!important;box-shadow:0 0 0 3px rgba(0,86,179,0.35)}
+
+/* ============================================ */
+/* DUNKEL-MODUS                                 */
+/* ============================================ */
+body.dark{background:#14171a;color:#e4e6ea}
+body.dark .container{background:#1e2124;box-shadow:0 4px 15px rgba(0,0,0,0.5)}
+body.dark h2{color:#6ab0ff}
+body.dark .online-status.online{background:#1e4c2a;color:#8fdc9e}
+body.dark .online-status.loading{background:#4a3d10;color:#ffdb70}
+body.dark .top-btn{background:#2a2e33;color:#e4e6ea;border-color:#3a3f44}
+body.dark .top-btn:active{background:#3a3f44}
+body.dark select{background:#2a2e33;color:#e4e6ea;border-color:#3a3f44}
+body.dark button{background:#0056b3;color:#fff}
+body.dark button:active{background:#003d80}
+body.dark .mode-controls{background:#2a2e33}
+body.dark .mode-btn{background:#1e2124;color:#e4e6ea;border-color:#3a3f44}
+body.dark .mode-btn.active{background:#0056b3;color:#fff;border-color:#0056b3}
+body.dark .color-picker-row{background:#2a2e33;border-color:#555;color:#e4e6ea}
+body.dark .color-preset{border-color:#1e2124}
+body.dark .color-preset.active{box-shadow:0 0 0 3px #6ab0ff}
+body.dark #monthDisplay{color:#e4e6ea}
+body.dark .day-header{color:#a0a5ab}
+body.dark .day._{background:#232629;color:#5a5f66;border-color:#2f3338}
+body.dark .day.empty{background:transparent}
+body.dark .day .date-num{color:#c0c5cb}
+body.dark .legend{color:#c0c5cb}
+body.dark .legend-box{border-color:#3a3f44}
+body.dark .overview-container{background:#232629;border-color:#3a3f44;color:#c0c5cb}
+body.dark .overview-container h3{color:#6ab0ff;border-bottom-color:#3a3f44}
+body.dark .overview-list strong{color:#e4e6ea}
+body.dark .overview-list ul{color:#a0a5ab}
+body.dark .holiday-note{background:#232629;color:#a0a5ab;border-left-color:#CD7F32}
+body.dark .holiday-note .holiday-item{background:#2a2e33;border-color:#3a3f44}
+body.dark .holiday-note .holiday-item.current{background:#4a3510;color:#ffdb70;border-color:#CD7F32}
+body.dark .ferien-note{background:#1a3a40;color:#a0c8d0;border-left-color:#17a2b8}
+body.dark .reminders-box{background:#1a2634;border-left-color:#0056b3;color:#c0c5cb}
+body.dark .reminders-box strong{color:#6ab0ff}
+body.dark .reminders-box li{color:#e4e6ea;border-bottom-color:#2a3a4a}
+body.dark .reminders-box .when{color:#8a8f95}
+body.dark .paypal-note{background:#1a2330;border-color:#2a3a4a;color:#c0c5cb}
+body.dark .modal{background:#1e2124;color:#e4e6ea}
+body.dark .modal h3{color:#6ab0ff}
+body.dark .modal-date{color:#a0a5ab}
+body.dark .modal label{color:#e4e6ea}
+body.dark .field-label{color:#e4e6ea}
+body.dark .modal input[type="text"],body.dark .modal input[type="time"],body.dark .modal input[type="number"],body.dark .modal select{background:#2a2e33;color:#e4e6ea;border-color:#3a3f44}
+body.dark .symbol-btn{background:#2a2e33;color:#e4e6ea;border-color:#3a3f44}
+body.dark .symbol-btn:active{background:#3a3f44}
+body.dark .symbol-btn.active{background:#0056b3;border-color:#0056b3;color:#fff}
+body.dark .modal .checkbox-row{background:#2a2e33;color:#c0c5cb}
+body.dark .notif-info{background:#2a2e33;color:#a0a5ab}
+body.dark .hint-row{color:#a0a5ab}
+body.dark .donate-text{color:#c0c5cb}
+body.dark .donate-amounts span{background:#2a2e33;color:#e4e6ea;border-color:#3a3f44}
+body.dark .backup-option{background:#232629;border-color:#3a3f44;color:#e4e6ea}
+body.dark .backup-option:hover,body.dark .backup-option:active{background:#2a2e33;border-color:#0056b3}
+body.dark .backup-option .title{color:#6ab0ff}
+body.dark .backup-option .desc{color:#a0a5ab}
+body.dark .section-title{color:#a0a5ab}
+body.dark .help-body{color:#c0c5cb}
+body.dark .help-body h4{color:#6ab0ff;border-bottom-color:#3a3f44}
+body.dark .help-body .box{background:#2a2e33;color:#c0c5cb}
+body.dark .help-body .box.warn{background:#4a3d10;color:#ffdb70}
+body.dark .help-body .box.ok{background:#1e4c2a;color:#8fdc9e}
+body.dark .help-body td{border-bottom-color:#3a3f44}
+body.dark .help-body td:first-child{color:#6ab0ff}
+body.dark .help-body .tag-_-{background:#2a2e33;color:#a0a5ab;border-color:#3a3f44}
+body.dark .help-footer{color:#8a8f95;border-top-color:#3a3f44}
+body.dark .urlaub-stat{background:#1e3524;border-color:#3a5a44;color:#c0c5cb}
+body.dark .urlaub-stat .label{color:#6ecf8a}
+body.dark .urlaub-stat .value{color:#8fdc9e}
+body.dark .urlaub-stat .sub{color:#a0a5ab}
+body.dark .urlaub-stat.warn{background:#4a3d10;border-color:#ffc107}
+body.dark .urlaub-stat.warn .label,body.dark .urlaub-stat.warn .value{color:#ffdb70}
+body.dark .urlaub-stat.danger{background:#4a1a1f;border-color:#dc3545}
+body.dark .urlaub-stat.danger .label,body.dark .urlaub-stat.danger .value{color:#ff8a95}
+body.dark .close-btn{background:#3a3f44}
+body.dark .err-box{background:#4a1a1f;color:#ff8a95;border-color:#dc3545}
+body.dark .share-toast{background:#e4e6ea;color:#1e2124}
 </style>
 </head>
 <body>
@@ -316,6 +402,12 @@ button:active{background:#0056b3}
 <option value="3" disabled>3-Schicht-System (bald)</option>
 <option value="6" disabled>6-Schicht-System (bald)</option>
 </select>
+<div class="field-label">Design / Modus</div>
+<div class="theme-row">
+<button type="button" class="theme-choice" data-theme="light">&#x2600;&#xFE0F; Hell</button>
+<button type="button" class="theme-choice" data-theme="dark">&#x1F319; Dunkel</button>
+</div>
+<div class="hint-row">Unabh&auml;ngig von der System-Einstellung.</div>
 <button class="help-btn" id="openHelpBtn">Anleitung / Hilfe &ouml;ffnen</button>
 <div class="modal-buttons">
 <button id="settingsCancelBtn" style="background:#6c757d;">Abbrechen</button>
@@ -384,6 +476,7 @@ button:active{background:#0056b3}
 <ul>
 <li><b>Urlaubstage pro Jahr</b> &ndash; tragt hier euer pers&ouml;nliches Urlaubskontingent ein (Standard: 30).</li>
 <li><b>Schichtsystem</b> &ndash; aktuell nur das <b>5-Schicht-System</b> verf&uuml;gbar.</li>
+<li><b>Design / Modus</b> &ndash; hier w&auml;hlt ihr zwischen <b>Hell</b> und <b>Dunkel</b>. Die Wahl ist unabh&auml;ngig von der System-Einstellung des Ger&auml;ts und bleibt gespeichert.</li>
 <li><b>Anleitung</b> &ndash; dieses Fenster hier.</li>
 </ul>
 
@@ -500,6 +593,7 @@ var actualToday = new Date(); actualToday.setHours(0,0,0,0);
 var selectedColor = '#FFD700';
 var selectedSymbol = '\uD83D\uDD14';
 var shiftSystem = '5';
+var currentTheme = 'light';
 
 function safeParse(s, fallback) { try { var v = JSON.parse(s); return (v == null) ? fallback : v; } catch(e){ return fallback; } }
 function safeGetArray(k) { var v = safeParse(localStorage.getItem(k), []); return Array.isArray(v) ? v : []; }
@@ -508,6 +602,7 @@ function safeGetObject(k) { var v = safeParse(localStorage.getItem(k), {}); retu
 try { selectedColor = localStorage.getItem('schichtzeitColor') || '#FFD700'; } catch(e){}
 try { selectedSymbol = localStorage.getItem('schichtzeitSymbol') || '\uD83D\uDD14'; } catch(e){}
 try { shiftSystem = localStorage.getItem('schichtzeitShiftSystem') || '5'; } catch(e){}
+try { currentTheme = localStorage.getItem('schichtzeitTheme') || 'light'; } catch(e){}
 
 var sickDays = safeGetArray('schichtzeitSickDays');
 var vacationDays = safeGetArray('schichtzeitVacationDays');
@@ -534,6 +629,18 @@ function setVacationQuota(year, value) { vacationQuota[String(year)] = value; tr
 var notifiedFlags = safeGetObject('schichtzeitNotified');
 var savedGroup = '1';
 try { savedGroup = localStorage.getItem('schichtzeitGroup') || '1'; } catch(e){}
+
+function applyTheme(theme) {
+    currentTheme = theme;
+    try { localStorage.setItem('schichtzeitTheme', theme); } catch(e){}
+    if (theme === 'dark') document.body.classList.add('dark');
+    else document.body.classList.remove('dark');
+    var choices = document.querySelectorAll('.theme-choice');
+    for (var i = 0; i < choices.length; i++) {
+        if (choices[i].getAttribute('data-theme') === theme) choices[i].classList.add('active');
+        else choices[i].classList.remove('active');
+    }
+}
 
 function showToast(text) {
     var old = document.getElementById('shareToast');
@@ -584,6 +691,7 @@ function openSettings() {
     document.getElementById('settingsYearHint').textContent = year;
     document.getElementById('vacQuotaInput').value = getVacationQuota(year);
     document.getElementById('shiftSystemSelect').value = shiftSystem;
+    applyTheme(currentTheme);
     document.getElementById('settingsModal').classList.add('active');
 }
 function closeSettings() { document.getElementById('settingsModal').classList.remove('active'); }
@@ -608,7 +716,7 @@ function closeBackupMenu() { document.getElementById('backupMenuModal').classLis
 
 function getBackupJSON() {
     var backup = {
-        version: 2,
+        version: 3,
         date: new Date().toISOString(),
         group: document.getElementById('groupSelect').value,
         color: selectedColor,
@@ -617,7 +725,8 @@ function getBackupJSON() {
         sonstigeDays: sonstigeDays,
         notifiedFlags: notifiedFlags,
         vacationQuota: vacationQuota,
-        shiftSystem: shiftSystem
+        shiftSystem: shiftSystem,
+        theme: currentTheme
     };
     return JSON.stringify(backup, null, 2);
 }
@@ -1227,6 +1336,9 @@ function applyRestoredData(data) {
         shiftSystem = data.shiftSystem;
         try { localStorage.setItem('schichtzeitShiftSystem', shiftSystem); } catch(err){}
     }
+    if (data.theme) {
+        applyTheme(data.theme);
+    }
     if (data.group) {
         document.getElementById('groupSelect').value = data.group;
         try { localStorage.setItem('schichtzeitGroup', data.group); } catch(err){}
@@ -1248,6 +1360,8 @@ function applyRestoredData(data) {
 }
 
 function init() {
+    applyTheme(currentTheme);
+
     document.getElementById('shareBtn').addEventListener('click', shareSchichtzeit);
     document.getElementById('settingsBtn').addEventListener('click', openSettings);
     document.getElementById('settingsCancelBtn').addEventListener('click', closeSettings);
@@ -1256,6 +1370,15 @@ function init() {
     document.getElementById('openHelpBtn').addEventListener('click', openHelp);
     document.getElementById('helpCloseBtn').addEventListener('click', closeHelp);
     document.getElementById('helpModal').addEventListener('click', function(e){ if (e.target.id === 'helpModal') closeHelp(); });
+
+    var themeBtns = document.querySelectorAll('.theme-choice');
+    for (var t = 0; t < themeBtns.length; t++) {
+        (function(btn){
+            btn.addEventListener('click', function(){
+                applyTheme(btn.getAttribute('data-theme'));
+            });
+        })(themeBtns[t]);
+    }
 
     document.getElementById('resetBtn').addEventListener('click', resetData);
     document.getElementById('yearOverviewBtn').addEventListener('click', toggleYearOverview);
