@@ -64,17 +64,15 @@ button:active{background:#0056b3}
 .day.feiertag{border:3px solid #CD7F32;animation:pulse-glow 3s infinite ease-in-out;z-index:2}
 @keyframes pulse-glow{0%,100%{box-shadow:0 0 0 0 rgba(205,127,50,0.9);border-color:#CD7F32}50%{box-shadow:0 0 15px 8px rgba(205,127,50,0.8);border-color:#FFA500}}
 .day.ferien{border:2px dashed #17a2b8;z-index:1}
-.ferien-marker{position:absolute;bottom:3px;left:5px;font-size:clamp(10px,2.5vw,14px);color:#17a2b8;font-weight:bold;background:#fff;border-radius:3px;padding:0 4px;line-height:1.1}
-.day .date-num{font-size:clamp(12px,1.8vw,17px);position:absolute;top:5px;left:7px;color:#555;font-weight:bold;line-height:1}
+.ferien-marker{position:absolute;bottom:3px;left:5px;font-size:clamp(10px,2.5vw,14px);color:#17a2b8;font-weight:bold;background:#fff;border-radius:3px;padding:0 4px;line-height:1.1;z-index:3}
+.day .date-num{font-size:clamp(12px,1.8vw,17px);position:absolute;top:5px;left:7px;color:#555;font-weight:bold;line-height:1;z-index:3}
 .day.sonstige .date-num{font-weight:bold}
-.sonstige-badges{position:absolute;top:3px;right:4px;display:flex;align-items:center;gap:3px;pointer-events:none;z-index:3}
-.sonstige-marker{font-size:clamp(16px,2.6vw,26px);line-height:1;filter:drop-shadow(0 1px 2px rgba(0,0,0,0.6))}
-.sonstige-count{background:#fff;color:#222;border-radius:50%;width:20px;height:20px;padding:0;border:1.5px solid rgba(0,0,0,0.5);line-height:1;display:inline-flex;align-items:center;justify-content:center;box-shadow:0 1px 3px rgba(0,0,0,0.35)}
-.sonstige-count svg{display:block;width:13px;height:13px}
 /* Vierteilung des Tages: 2 Diagonalen -> bis zu 4 Farbflächen */
 .day .split-layer{position:absolute;top:0;left:0;right:0;bottom:0;z-index:0;pointer-events:none;border-radius:inherit;overflow:hidden}
 .day .split-layer span{position:absolute;top:0;left:0;right:0;bottom:0;display:block;pointer-events:none}
-.sonstige-preview{position:absolute;bottom:4px;left:4px;right:4px;font-size:clamp(9px,1.4vw,13px);line-height:1.05;text-align:center;overflow:hidden;white-space:nowrap;text-overflow:ellipsis;opacity:0.98;pointer-events:none;font-weight:bold;color:#fff;z-index:3}
+/* Icon je Termin — sitzt genau in der farbigen Fläche des Termins */
+.day .term-icon{position:absolute;transform:translate(-50%,-50%);font-size:clamp(14px,2.4vw,22px);line-height:1;z-index:2;pointer-events:none;filter:drop-shadow(0 1px 2px rgba(0,0,0,0.75))}
+.sonstige-preview{position:absolute;bottom:3px;left:4px;right:4px;font-size:clamp(9px,1.4vw,13px);line-height:1.05;text-align:center;overflow:hidden;white-space:nowrap;text-overflow:ellipsis;opacity:0.98;pointer-events:none;font-weight:bold;color:#fff;z-index:3}
 .legend{margin-top:18px;font-size:13px;display:flex;justify-content:center;gap:10px;flex-wrap:wrap}
 .legend-item{display:flex;align-items:center;gap:5px}
 .legend-box{width:16px;height:16px;border-radius:4px;border:1px solid #ccc}
@@ -264,7 +262,6 @@ body.dark .entry-item:hover,body.dark .entry-item:active{background:#3a3f44;bord
 body.dark .entry-item .e-text{color:#e4e6ea}
 body.dark .entry-item .e-meta{color:#a0a5ab}
 body.dark .entry-empty{color:#8a8f95}
-body.dark .sonstige-count{background:#e4e6ea;color:#1e2124;border-color:#666}
 </style>
 </head>
 <body>
@@ -321,7 +318,6 @@ body.dark .sonstige-count{background:#e4e6ea;color:#1e2124;border-color:#666}
 <div class="legend-item"><div class="legend-box" id="legendSonstige" style="background:#FFD700;"></div> Sonstige</div>
 <div class="legend-item"><div class="legend-box" style="background:#fff;border:3px solid #CD7F32;"></div> Feiertag</div>
 <div class="legend-item"><div class="legend-box" style="background:#fff;border:2px dashed #17a2b8;"></div> Ferien</div>
-<div class="legend-item"><div class="legend-box" style="background:#fff;border-radius:50%;width:16px;height:16px;display:flex;align-items:center;justify-content:center;"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="#222" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 12l10 5 10-5"/><path d="M2 17l10 5 10-5"/></svg></div> Mehrfach</div>
 </div>
 <div class="footer">
 <button id="resetBtn" style="background:#dc3545;">Alle Markierungen l&ouml;schen</button>
@@ -451,9 +447,8 @@ body.dark .sonstige-count{background:#e4e6ea;color:#1e2124;border-color:#666}
 <li>F&uuml;r eine Erinnerung H&auml;kchen bei <b>&bdquo;Erinnerung senden&ldquo;</b> setzen.</li>
 <li>Speichern.</li>
 </ul>
-<p><b>Mehrere Termine am selben Tag:</b> Einfach erneut auf den Tag tippen und <b>&bdquo;+ Neuer Eintrag&ldquo;</b> w&auml;hlen. Der Tag wird dann durch <b>beide Diagonalen in bis zu vier Fl&auml;chen</b> geteilt. So siehst du die Schichtfarbe (bzw. Urlaub/Krank) und bis zu <b>drei Terminfarben</b> gleichzeitig.</p>
+<p><b>Mehrere Termine am selben Tag:</b> Einfach erneut auf den Tag tippen und <b>&bdquo;+ Neuer Eintrag&ldquo;</b> w&auml;hlen. Der Tag wird dann durch <b>beide Diagonalen in bis zu vier Fl&auml;chen</b> geteilt. Das <b>Symbol jedes Termins</b> sitzt direkt in der farbigen Fl&auml;che des Termins.</p>
 <p><b>Fl&auml;chen antippen:</b> Ein Tipp auf eine <b>farbige Fl&auml;che</b> &ouml;ffnet direkt den Termin mit genau dieser Farbe. Ein Tipp auf die <b>Schicht-/Urlaubs-/Krank-Fl&auml;che</b> &ouml;ffnet die Liste aller Termine des Tages.</p>
-<p>Bei mehreren Eintr&auml;gen erscheint oben rechts ein kleines <b>Ebenen-Symbol</b> (drei gestapelte Ebenen). Das bedeutet: <b>dieser Tag hat mehr als einen Eintrag</b>.</p>
 <p>Erinnerungen kommen <b>1 Tag, 2 Stunden und 30 Minuten</b> vorher (Banner + Ton) &ndash; f&uuml;r jeden Eintrag einzeln.</p>
 <p>Verf&uuml;gbare Symbole:</p>
 <p class="emoji-list">&#x1F514; &#x23F0; &#x1F4CC; &#x2B50; &#x2764;&#xFE0F; &#x26A0;&#xFE0F; &#x1F4DE; &#x1F48A; &#x1F3E5; &#x1F4C5; &#x2708;&#xFE0F; &#x1F382; &#x1F389; &#x1F697; &#x1F4BC; &#x1F4DD;</p>
@@ -542,7 +537,6 @@ var SHIFT_COLORS = { 'F': '#FFD700', 'S': '#FF4500', 'N': '#1E90FF', '_': '#f9f9
 var monthNames = ["Januar","Februar","M\u00E4rz","April","Mai","Juni","Juli","August","September","Oktober","November","Dezember"];
 var dayNames = ["Mo","Di","Mi","Do","Fr","Sa","So"];
 var SYMBOLS = ['\uD83D\uDD14','\u23F0','\uD83D\uDCCC','\u2B50','\u2764\uFE0F','\u26A0\uFE0F','\uD83D\uDCDE','\uD83D\uDC8A','\uD83C\uDFE5','\uD83D\uDCC5','\u2708\uFE0F','\uD83C\uDF82','\uD83C\uDF89','\uD83D\uDE97','\uD83D\uDCBC','\uD83D\uDCDD'];
-var MULTI_SVG = '<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 12l10 5 10-5"/><path d="M2 17l10 5 10-5"/></svg>';
 var currentDate = new Date(2026, 9, 1);
 var currentMode = 'normal';
 var showFerien = false;
@@ -915,7 +909,8 @@ function renderCalendar() {
         dayEl.appendChild(dn);
         var st = document.createElement('span');
         st.textContent = shift === '_' ? '' : shift;
-        st.style.position = 'relative';   /* damit der Buchstabe über der Farbfläche liegt */
+        st.style.position = 'relative';
+        st.style.zIndex = '2';
         dayEl.appendChild(st);
 
         var entries = getEntries(dateKey);
@@ -923,7 +918,6 @@ function renderCalendar() {
         if (entries.length > 0) {
             dayEl.classList.add('sonstige');
 
-            // Basis-Farbe: Krank > Urlaub > Schicht
             var baseColor;
             if (isKrank) baseColor = '#DDA0DD';
             else if (isUrlaub) baseColor = '#90EE90';
@@ -934,7 +928,6 @@ function renderCalendar() {
             var segEntry  = [-1, -1, -1, -1];
 
             if (entries.length === 1) {
-                // klassischer diagonaler Schnitt (halbe / halbe)
                 segColors[0] = entries[0].color; segEntry[0] = 0;
                 segColors[3] = entries[0].color; segEntry[3] = 0;
             } else {
@@ -966,22 +959,34 @@ function renderCalendar() {
             }
             if (anyWhite) dayEl.style.border = '2px solid #999';
 
-            var badges = document.createElement('div');
-            badges.className = 'sonstige-badges';
+            // Icon je Termin – positioniert in der zugehörigen Fläche
+            var quadCenters = [
+                {x: 72, y: 50},   // rechts (0)
+                {x: 50, y: 72},   // unten  (1)
+                {x: 28, y: 50},   // links  (2)
+                {x: 50, y: 28}    // oben   (3)
+            ];
+            for (var ei = 0; ei < entries.length; ei++) {
+                var quadsOfEntry = [];
+                for (var qi = 0; qi < 4; qi++) {
+                    if (segEntry[qi] === ei) quadsOfEntry.push(qi);
+                }
+                if (quadsOfEntry.length === 0) continue;
+                var sx = 0, sy = 0;
+                for (var kk = 0; kk < quadsOfEntry.length; kk++) {
+                    sx += quadCenters[quadsOfEntry[kk]].x;
+                    sy += quadCenters[quadsOfEntry[kk]].y;
+                }
+                var cx = (sx / quadsOfEntry.length) + '%';
+                var cy = (sy / quadsOfEntry.length) + '%';
 
-            if (entries.length > 1) {
-                var cnt = document.createElement('span');
-                cnt.className = 'sonstige-count';
-                cnt.title = entries.length + ' Eintr\u00E4ge (Mehrfachbelegung)';
-                cnt.innerHTML = MULTI_SVG;
-                badges.appendChild(cnt);
+                var iconSpan = document.createElement('span');
+                iconSpan.className = 'term-icon';
+                iconSpan.textContent = entries[ei].icon || '\uD83D\uDD14';
+                iconSpan.style.left = cx;
+                iconSpan.style.top = cy;
+                dayEl.appendChild(iconSpan);
             }
-
-            var m = document.createElement('span');
-            m.className = 'sonstige-marker';
-            m.textContent = entries[0].icon || '\uD83D\uDD14';
-            badges.appendChild(m);
-            dayEl.appendChild(badges);
 
             var tipParts = [];
             entries.forEach(function(en){
@@ -1004,7 +1009,6 @@ function renderCalendar() {
             if (currentMode === 'krank') { toggleDay(dateKey, 'krank'); return; }
             if (currentMode === 'urlaub') { toggleDay(dateKey, 'urlaub'); return; }
 
-            // Welche der vier Flächen wurde getroffen?
             var entryIdx = -1;
             if (entries.length > 0) {
                 var rect = dayEl.getBoundingClientRect();
@@ -1012,17 +1016,14 @@ function renderCalendar() {
                     var px = (ev.clientX - rect.left) / rect.width - 0.5;
                     var py = (ev.clientY - rect.top) / rect.height - 0.5;
                     var quad;
-                    if (px > Math.abs(py)) quad = 0;          // rechts
-                    else if (-px > Math.abs(py)) quad = 2;    // links
-                    else quad = (py > 0) ? 1 : 3;             // unten / oben
+                    if (px > Math.abs(py)) quad = 0;
+                    else if (-px > Math.abs(py)) quad = 2;
+                    else quad = (py > 0) ? 1 : 3;
                     entryIdx = segEntry[quad];
                 }
             }
 
-            // Treffer auf eine Terminfarbe -> genau diesen Eintrag öffnen
             if (entryIdx >= 0) { openEntryEditor(dateKey, entryIdx); return; }
-
-            // Fläche ohne Termin (Schicht / Urlaub / Krank)
             if (currentMode === 'sonstige') { openEntryEditor(dateKey); return; }
             if (entries.length > 0) openEntryEditor(dateKey);
         });
@@ -1164,7 +1165,7 @@ function openEntryEditor(dateKey, entryIndex) {
     var entries = getEntries(dateKey);
     document.getElementById('entryModal').classList.add('active');
     if (typeof entryIndex === 'number' && entryIndex >= 0 && entryIndex < entries.length) {
-        editingIndex = entryIndex;      // direkt den passenden Termin öffnen
+        editingIndex = entryIndex;
         showEditScreen();
     } else if (entries.length === 0) {
         editingIndex = -1;
