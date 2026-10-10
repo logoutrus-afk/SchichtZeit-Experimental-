@@ -410,6 +410,7 @@ body.easter-disco .day{animation:egg-disco .6s ease-in-out infinite alternate}
 <button id="ferienBtn" style="background:#17a2b8;">Ferien</button>
 <button id="backupBtn" style="background:#6f42c1;">Backup</button>
 <button id="notifBtn" style="background:#00796b;">Erinnerungen aktivieren</button>
+<button id="reportBtn" style="background:#e83e8c;">Fehler melden</button>
 <input type="file" id="restoreFileInput" accept=".json" style="display:none;">
 </div>
 <div class="notif-info">Erinnerungen werden als Banner oben und per Ton angezeigt. Die Seite muss daf&uuml;r ge&ouml;ffnet sein.</div>
@@ -494,6 +495,8 @@ body.easter-disco .day{animation:egg-disco .6s ease-in-out infinite alternate}
 <p>Halte einen Tag <b>etwa eine halbe Sekunde lang gedr&uuml;ckt</b>, um L&ouml;schoptionen zu &ouml;ffnen.</p>
 <h4>5. Jahres&uuml;bersicht</h4>
 <p>Klappt weich auf und zeigt Urlaub / Krank / Sonstige.</p>
+<h4>6. Fehler melden</h4>
+<p>Der Knopf <b>Fehler melden</b> &ouml;ffnet dein E-Mail-Programm mit einer vorausgef&uuml;llten Nachricht. Beschreibe kurz, welcher Tag falsch ist.</p>
 <div class="help-footer">SchichtZeit &ndash; der digitale Schichtplan.</div>
 </div>
 <div class="modal-buttons"><button id="helpCloseBtn" style="background:#007bff;">Alles klar</button></div>
@@ -524,6 +527,7 @@ body.easter-disco .day{animation:egg-disco .6s ease-in-out infinite alternate}
 <script>
 (function(){
 try {
+var REPORT_EMAIL = 'Logout@kabelmail.de';
 var SHARE_URL="https://logoutrus-afk.github.io/SchichtZeit-Experimental-/";
 var SHARE_TITLE="Schichtzeit";
 var SHARE_TEXT="Schichtplan f\u00FCr unsere Schicht - Schichtzeit";
@@ -576,6 +580,36 @@ function showToast(t){var o=document.getElementById('shareToast');if(o)o.parentN
 function shareSchichtzeit(){var url=SHARE_URL;var d={title:SHARE_TITLE,text:SHARE_TEXT,url:url};if(navigator.share){try{navigator.share(d).then(function(){}).catch(function(err){if(err&&err.name==='AbortError')return;copyShareLink(url);});return;}catch(e){}}copyShareLink(url);}
 function copyShareLink(url){if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(url).then(function(){showToast('Link kopiert');}).catch(function(){legacyCopy(url);});return;}legacyCopy(url);}
 function legacyCopy(url){try{var i=document.createElement('input');i.type='text';i.value=url;i.style.position='fixed';i.style.left='-9999px';document.body.appendChild(i);i.focus();i.select();var ok=document.execCommand('copy');document.body.removeChild(i);if(ok)showToast('Link kopiert');else showToast(url);}catch(e){showToast(url);}}
+function reportError(){
+    try{
+        var sel=document.getElementById('groupSelect');
+        var group=sel?sel.value:'?';
+        var sysName=shiftSystem==='5'?'5-Schicht':(shiftSystem==='4x12'?'4x12-Schicht':'3x12-Schicht');
+        var monat=monthNames[currentDate.getMonth()]+' '+currentDate.getFullYear();
+        var heute=new Date();
+        var hh=String(heute.getHours()).padStart(2,'0');
+        var mm=String(heute.getMinutes()).padStart(2,'0');
+        var heuteStr=String(heute.getDate()).padStart(2,'0')+'.'+String(heute.getMonth()+1).padStart(2,'0')+'.'+heute.getFullYear()+' '+hh+':'+mm;
+        var subject='Schichtzeit Fehler: '+sysName+' / Gruppe '+group;
+        var body=
+            'Hallo,\n\n'+
+            'ich habe einen Fehler im Schichtkalender gefunden.\n\n'+
+            '--- Automatische Angaben ---\n'+
+            'Schichtsystem: '+sysName+'\n'+
+            'Gruppe: '+group+'\n'+
+            'Monat im Kalender: '+monat+'\n'+
+            'Gesendet am: '+heuteStr+'\n\n'+
+            '--- Bitte ausf\u00FCllen ---\n'+
+            'Datum des Fehlers: \n'+
+            'Angezeigt im Kalender: \n'+
+            'Sollte sein: \n\n'+
+            'Bemerkung:\n\n\n'+
+            'Danke!';
+        window.location.href='mailto:'+REPORT_EMAIL+
+            '?subject='+encodeURIComponent(subject)+
+            '&body='+encodeURIComponent(body);
+    }catch(e){showToast('Fehler: '+e.message);}
+}
 function openSettings(){var y=currentDate.getFullYear();document.getElementById('settingsYearDisplay').textContent='Jahr '+y;document.getElementById('settingsYearHint').textContent=y;document.getElementById('vacQuotaInput').value=getVacationQuota(y);document.getElementById('shiftSystemSelect').value=shiftSystem;applyTheme(currentTheme);document.getElementById('settingsModal').classList.add('active');}
 function closeSettings(){document.getElementById('settingsModal').classList.remove('active');}
 function saveSettings(){
@@ -787,6 +821,7 @@ function init(){
     document.getElementById('lpOverlay').addEventListener('click',function(e){if(e.target.id==='lpOverlay')closeLongPressMenu();});
     document.getElementById('prevBtn').addEventListener('click',function(){unlockAudio();changeMonth(-1);});
     document.getElementById('nextBtn').addEventListener('click',function(){unlockAudio();changeMonth(1);});
+    document.getElementById('reportBtn').addEventListener('click',function(){unlockAudio();reportError();});
     document.getElementById('groupSelect').addEventListener('change',function(e){try{localStorage.setItem('schichtzeitGroup',e.target.value);}catch(err){}renderCalendar();});
     var mb=document.querySelectorAll('.mode-btn');for(var i=0;i<mb.length;i++){(function(btn){btn.addEventListener('click',function(){var a=document.querySelectorAll('.mode-btn');for(var j=0;j<a.length;j++)a[j].classList.remove('active');btn.classList.add('active');currentMode=btn.getAttribute('data-mode');var p=document.getElementById('colorPickerRow');if(currentMode==='sonstige')p.classList.add('active');else p.classList.remove('active');});})(mb[i]);}
     document.getElementById('sonstigeColor').addEventListener('input',function(e){selectedColor=e.target.value;try{localStorage.setItem('schichtzeitColor',selectedColor);}catch(err){}var ls=document.getElementById('legendSonstige');if(ls)ls.style.background=selectedColor;updateColorPresetsActive();});
