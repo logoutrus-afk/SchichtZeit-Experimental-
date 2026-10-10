@@ -392,8 +392,7 @@ body.easter-disco .day{animation:egg-disco .6s ease-in-out infinite alternate}
 <div class="err-box" id="errBox"></div>
 <div id="onlineStatus" class="online-status loading">Uhr wird geladen...</div>
 <div class="top-row">
-<label>Schichtsystem:<select id="shiftSystemSelectTop"><option value="5">5-Schicht (F/S/N)</option><option value="4x12">4×12-Schicht (A/B/C/D)</option><option value="3x12">3×12-Schicht (I/II/III)</option></select></label>
-<label>Gruppe:<select id="groupSelect"></select></label>
+<label>Schicht:<select id="groupSelect"></select></label>
 </div>
 <div class="nav-row"><button id="prevBtn" title="Zur&uuml;ck">&larr;</button><span id="monthDisplay"></span><button id="nextBtn" title="Weiter">&rarr;</button></div>
 <div class="mode-controls">
@@ -494,6 +493,7 @@ body.easter-disco .day{animation:egg-disco .6s ease-in-out infinite alternate}
 <li><b>3×12-Schicht</b> &ndash; 3-Tage-Zyklus Frei&nbsp;&rarr;&nbsp;T&nbsp;&rarr;&nbsp;N (Gruppen I/II/III).</li>
 </ul>
 <p>Startdatum aller 12-h-Zyklen: <b>04.01.2027</b>. Buchstaben: <b>T</b> = Tagschicht, <b>N</b> = Nachtschicht, <b>&ndash;</b> = frei.</p>
+<p>Das Schichtsystem wird in den <b>Einstellungen</b> gew&auml;hlt (Zahnrad oben rechts). Oben in der Leiste w&auml;hlst du nur deine <b>Gruppe</b>.</p>
 <h4>2. Modi-Leiste</h4>
 <ul>
 <li><b>Normal</b> / <b>Sonstige</b> &ndash; Klick auf Tag &ouml;ffnet Termin-Fenster.</li>
@@ -541,21 +541,14 @@ var SHARE_URL="https://logoutrus-afk.github.io/SchichtZeit-Experimental-/";
 var SHARE_TITLE="Schichtzeit";
 var SHARE_TEXT="Schichtplan f\u00FCr unsere Schicht - Schichtzeit";
 
-/* ============ 5-Schicht ============ */
 var BASE_DATE_UTC_5=Date.UTC(2026,9,1);
 var CYCLE_35=['F','F','N','N','N','_','_','_','S','S','S','_','F','F','N','N','_','_','_','S','S','S','_','F','F','F','N','N','_','_','_','_','_','_','_'];
 var START_INDEX_BY_GROUP_5={'1':29,'2':1,'3':8,'4':15,'5':22};
 
-/* ============ 4x12-Schicht (A/B/C/D) ============
-   Zyklus: T,N,_,_  Start: 04.01.2027 (Group A = Tag)
-================================================= */
 var BASE_DATE_UTC_4X12=Date.UTC(2027,0,4);
 var CYCLE_4X12=['T','N','_','_'];
 var START_INDEX_4X12={'A':0,'B':1,'C':2,'D':3};
 
-/* ============ 3x12-Schicht (I/II/III) ============
-   Zyklus: _,T,N  Start: 04.01.2027 (Group I = frei)
-================================================= */
 var BASE_DATE_UTC_3X12=Date.UTC(2027,0,4);
 var CYCLE_3X12=['_','T','N'];
 var START_INDEX_3X12={'I':0,'II':1,'III':2};
@@ -611,7 +604,6 @@ function saveSettings(){
         shiftSystem=newSys;
         rebuildGroupOptions(true);
         rebuildLegend();
-        document.getElementById('shiftSystemSelectTop').value=shiftSystem;
     }
     try{localStorage.setItem('schichtzeitShiftSystem',shiftSystem);}catch(e){}
     closeSettings();updateYearOverview();renderCalendar();
@@ -681,7 +673,6 @@ function setupSwipe(){var el=document.getElementById('calendar');if(!el)return;v
 function renderHolidayNote(y,m){var l=document.getElementById('holidayList');if(!l)return;var cl=getHolidayList(y).filter(function(h){return h.date.getMonth()===m;});if(cl.length===0){l.innerHTML='<span style="color:#999;font-style:italic;">Keine Feiertage in diesem Monat.</span>';return;}l.innerHTML=cl.map(function(h){var dd=String(h.date.getDate()).padStart(2,'0');var mm=String(h.date.getMonth()+1).padStart(2,'0');return '<span class="holiday-item current">'+h.name+' ('+dd+'.'+mm+')</span>';}).join('');}
 function updateColorPresetsActive(){var a=document.querySelectorAll('.color-preset');for(var i=0;i<a.length;i++){var c=a[i].getAttribute('data-color').toLowerCase();if(c===selectedColor.toLowerCase())a[i].classList.add('active');else a[i].classList.remove('active');}}
 
-/* ============ Group-Select rebuild ============ */
 function rebuildGroupOptions(keepSelection){
     var sel=document.getElementById('groupSelect');
     if(!sel)return;
@@ -725,7 +716,7 @@ function rebuildLegend(){
     box.innerHTML=html;
 }
 
-/* ===================== EASTER EGG ===================== */
+/* EASTER EGG */
 var EGG_KONAMI = ['arrowup','arrowup','arrowdown','arrowdown','arrowleft','arrowright','arrowleft','arrowright','b','a'];
 var eggKonamiIdx = 0;
 var eggTapCount = 0;
@@ -749,9 +740,8 @@ function launchEasterEgg(){
 }
 document.addEventListener('keydown',function(e){var k=(e.key||'').toLowerCase();if(k===EGG_KONAMI[eggKonamiIdx]){eggKonamiIdx++;if(eggKonamiIdx===EGG_KONAMI.length){eggKonamiIdx=0;launchEasterEgg();}}else{eggKonamiIdx=(k===EGG_KONAMI[0])?1:0;}});
 (function(){var h2=document.querySelector('h2');if(!h2)return;h2.style.cursor='pointer';h2.addEventListener('click',function(){eggTapCount++;if(eggTapTimer)clearTimeout(eggTapTimer);eggTapTimer=setTimeout(function(){eggTapCount=0;},2500);if(eggTapCount>=7){eggTapCount=0;launchEasterEgg();}});})();
-/* =================== /EASTER EGG ====================== */
 
-/* ===================== LONG-PRESS MENU ===================== */
+/* LONG-PRESS MENU */
 var lpDateKey = null;
 function openLongPressMenu(dateKey){
     lpDateKey=dateKey;
@@ -813,7 +803,6 @@ function lpToggleDay(dateKey,type){
     closeLongPressMenu();
     renderCalendar();
 }
-/* =================== /LONG-PRESS MENU ====================== */
 
 function renderCalendar(){
     var year=currentDate.getFullYear();
@@ -941,7 +930,7 @@ function updateYearOverview(){var y=currentDate.getFullYear();var el=document.ge
 function toggleYearOverview(){var o=document.getElementById('yearOverview');if(!o)return;if(o.classList.contains('active'))o.classList.remove('active');else{updateYearOverview();o.classList.add('active');setTimeout(function(){try{o.scrollIntoView({behavior:'smooth',block:'nearest'});}catch(e){o.scrollIntoView(false);}},200);}}
 function toggleFerien(){showFerien=!showFerien;var b=document.getElementById('ferienBtn');var n=document.getElementById('ferienNote');if(showFerien){b.style.background='#0d8a99';n.style.display='block';}else{b.style.background='#17a2b8';n.style.display='none';}renderCalendar();}
 function resetData(){if(confirm('M\u00F6chtest du wirklich alle Markierungen l\u00F6schen?')){sickDays=[];vacationDays=[];sonstigeDays={};notifiedFlags={};try{localStorage.removeItem('schichtzeitSickDays');localStorage.removeItem('schichtzeitVacationDays');localStorage.removeItem('schichtzeitSonstigeDays');localStorage.removeItem('schichtzeitNotified');}catch(e){}renderCalendar();}}
-function applyRestoredData(data){sickDays=data.sickDays||[];vacationDays=data.vacationDays||[];sonstigeDays=data.sonstigeDays||{};notifiedFlags=data.notifiedFlags||{};Object.keys(sonstigeDays).forEach(function(k){var v=sonstigeDays[k];if(typeof v==='string')sonstigeDays[k]=[{id:genEntryId(),color:v,text:'',time:'',notify:false,icon:'\uD83D\uDD14'}];else if(v&&typeof v==='object'&&!Array.isArray(v)){if(!v.id)v.id=genEntryId();if(!v.icon)v.icon='\uD83D\uDD14';sonstigeDays[k]=[v];}else if(Array.isArray(v)){for(var i=0;i<v.length;i++){if(v[i]&&typeof v[i]==='object'){if(!v[i].id)v[i].id=genEntryId();if(!v[i].icon)v[i].icon='\uD83D\uDD14';}}}});if(data.vacationQuota&&typeof data.vacationQuota==='object'){vacationQuota=data.vacationQuota;try{localStorage.setItem('schichtzeitVacationQuota',JSON.stringify(vacationQuota));}catch(e){}}if(data.shiftSystem){shiftSystem=data.shiftSystem;try{localStorage.setItem('schichtzeitShiftSystem',shiftSystem);}catch(e){}}if(data.theme)applyTheme(data.theme);if(data.color){selectedColor=data.color;document.getElementById('sonstigeColor').value=selectedColor;try{localStorage.setItem('schichtzeitColor',selectedColor);}catch(e){}updateColorPresetsActive();}try{localStorage.setItem('schichtzeitSickDays',JSON.stringify(sickDays));localStorage.setItem('schichtzeitVacationDays',JSON.stringify(vacationDays));localStorage.setItem('schichtzeitSonstigeDays',JSON.stringify(sonstigeDays));localStorage.setItem('schichtzeitNotified',JSON.stringify(notifiedFlags));}catch(e){}if(data.group){savedGroup=data.group;}rebuildGroupOptions(false);rebuildLegend();document.getElementById('shiftSystemSelectTop').value=shiftSystem;document.getElementById('shiftSystemSelect').value=shiftSystem;if(data.group){var gs=document.getElementById('groupSelect');var opt=false;for(var i=0;i<gs.options.length;i++)if(gs.options[i].value===data.group)opt=true;if(opt)gs.value=data.group;}renderCalendar();}
+function applyRestoredData(data){sickDays=data.sickDays||[];vacationDays=data.vacationDays||[];sonstigeDays=data.sonstigeDays||{};notifiedFlags=data.notifiedFlags||{};Object.keys(sonstigeDays).forEach(function(k){var v=sonstigeDays[k];if(typeof v==='string')sonstigeDays[k]=[{id:genEntryId(),color:v,text:'',time:'',notify:false,icon:'\uD83D\uDD14'}];else if(v&&typeof v==='object'&&!Array.isArray(v)){if(!v.id)v.id=genEntryId();if(!v.icon)v.icon='\uD83D\uDD14';sonstigeDays[k]=[v];}else if(Array.isArray(v)){for(var i=0;i<v.length;i++){if(v[i]&&typeof v[i]==='object'){if(!v[i].id)v[i].id=genEntryId();if(!v[i].icon)v[i].icon='\uD83D\uDD14';}}}});if(data.vacationQuota&&typeof data.vacationQuota==='object'){vacationQuota=data.vacationQuota;try{localStorage.setItem('schichtzeitVacationQuota',JSON.stringify(vacationQuota));}catch(e){}}if(data.shiftSystem){shiftSystem=data.shiftSystem;try{localStorage.setItem('schichtzeitShiftSystem',shiftSystem);}catch(e){}}if(data.theme)applyTheme(data.theme);if(data.color){selectedColor=data.color;document.getElementById('sonstigeColor').value=selectedColor;try{localStorage.setItem('schichtzeitColor',selectedColor);}catch(e){}updateColorPresetsActive();}try{localStorage.setItem('schichtzeitSickDays',JSON.stringify(sickDays));localStorage.setItem('schichtzeitVacationDays',JSON.stringify(vacationDays));localStorage.setItem('schichtzeitSonstigeDays',JSON.stringify(sonstigeDays));localStorage.setItem('schichtzeitNotified',JSON.stringify(notifiedFlags));}catch(e){}if(data.group){savedGroup=data.group;}rebuildGroupOptions(false);rebuildLegend();document.getElementById('shiftSystemSelect').value=shiftSystem;if(data.group){var gs=document.getElementById('groupSelect');var opt=false;for(var i=0;i<gs.options.length;i++)if(gs.options[i].value===data.group)opt=true;if(opt)gs.value=data.group;}renderCalendar();}
 function init(){
     applyTheme(currentTheme);
     document.getElementById('shareBtn').addEventListener('click',shareSchichtzeit);
@@ -978,18 +967,6 @@ function init(){
     document.getElementById('lpOverlay').addEventListener('click',function(e){if(e.target.id==='lpOverlay')closeLongPressMenu();});
     document.getElementById('prevBtn').addEventListener('click',function(){unlockAudio();changeMonth(-1);});
     document.getElementById('nextBtn').addEventListener('click',function(){unlockAudio();changeMonth(1);});
-    /* Top selector */
-    document.getElementById('shiftSystemSelectTop').addEventListener('change',function(e){
-        var v=e.target.value;
-        if(v!==shiftSystem){
-            shiftSystem=v;
-            try{localStorage.setItem('schichtzeitShiftSystem',shiftSystem);}catch(err){}
-            document.getElementById('shiftSystemSelect').value=shiftSystem;
-            rebuildGroupOptions(true);
-            rebuildLegend();
-            renderCalendar();
-        }
-    });
     document.getElementById('groupSelect').addEventListener('change',function(e){
         try{localStorage.setItem('schichtzeitGroup',e.target.value);}catch(err){}
         renderCalendar();
@@ -1045,9 +1022,7 @@ function init(){
     document.addEventListener('click',unlockAudio,{once:true});
     document.addEventListener('visibilitychange',function(){if(!document.hidden){syncClock();checkReminders();scheduleMinuteTick();}});
     window.addEventListener('focus',function(){syncClock();checkReminders();});
-    /* Initial */
     document.getElementById('shiftSystemSelect').value=shiftSystem;
-    document.getElementById('shiftSystemSelectTop').value=shiftSystem;
     rebuildGroupOptions(false);
     rebuildLegend();
     document.getElementById('sonstigeColor').value=selectedColor;
