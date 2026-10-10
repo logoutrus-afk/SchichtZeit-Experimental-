@@ -461,10 +461,11 @@ body.easter-disco .day{animation:egg-disco .6s ease-in-out infinite alternate}
 <div class="field-label">Schichtsystem</div>
 <select id="shiftSystemSelect">
 <option value="5">5-Schicht (F/S/N)</option>
-<option value="4x12">4×12-Schicht (A/B/C/D)</option>
-<option value="3x12">3×12-Schicht (I/II/III)</option>
+<option value="4vk">4-Schicht Vollkonti (F/S/N, 8h, IGBCE)</option>
+<option value="4x12">4×12-Schicht (T/N, A/B/C/D)</option>
+<option value="3x12">3×12-Schicht (T/N, I/II/III)</option>
 </select>
-<div class="hint-row">4×12 und 3×12 sind 12-Stunden-Systeme: T = Tag, N = Nacht.</div>
+<div class="hint-row">4-Schicht Vollkonti: 2F&nbsp;&rarr;&nbsp;2S&nbsp;&rarr;&nbsp;2N&nbsp;&rarr;&nbsp;2 frei, 8-Tage-Zyklus. 12h-Systeme: T = Tag, N = Nacht.</div>
 <div class="field-label">Design / Modus</div>
 <div class="theme-row"><button type="button" class="theme-choice" data-theme="light">&#x2600;&#xFE0F; Hell</button><button type="button" class="theme-choice" data-theme="dark">&#x1F319; Dunkel</button></div>
 <div class="hint-row">Unabh&auml;ngig von der System-Einstellung.</div>
@@ -479,11 +480,11 @@ body.easter-disco .day{animation:egg-disco .6s ease-in-out infinite alternate}
 <h4>1. Schichtsystem w&auml;hlen</h4>
 <ul>
 <li><b>5-Schicht</b> &ndash; 35-Tage-Zyklus, Buchstaben F, S, N, &ndash; (Gruppen 1–5).</li>
+<li><b>4-Schicht Vollkonti (8h, IGBCE)</b> &ndash; klassisches Chemie-System mit 4 Brigaden (A/B/C/D), 8-Tage-Zyklus: 2&nbsp;Fr&uuml;h&nbsp;&rarr;&nbsp;2&nbsp;Sp&auml;t&nbsp;&rarr;&nbsp;2&nbsp;Nacht&nbsp;&rarr;&nbsp;2 frei. Zeiten: F&nbsp;06–14, S&nbsp;14–22, N&nbsp;22–06.</li>
 <li><b>4×12-Schicht</b> &ndash; 4-Tage-Zyklus T&nbsp;&rarr;&nbsp;N&nbsp;&rarr;&nbsp;Frei&nbsp;&rarr;&nbsp;Frei (Gruppen A/B/C/D).</li>
 <li><b>3×12-Schicht</b> &ndash; 3-Tage-Zyklus Frei&nbsp;&rarr;&nbsp;T&nbsp;&rarr;&nbsp;N (Gruppen I/II/III).</li>
 </ul>
-<p>Startdatum aller 12-h-Zyklen: <b>04.01.2027</b>. Buchstaben: <b>T</b> = Tagschicht, <b>N</b> = Nachtschicht, <b>&ndash;</b> = frei.</p>
-<p>Das Schichtsystem wird in den <b>Einstellungen</b> gew&auml;hlt (Zahnrad oben rechts). Oben in der Leiste w&auml;hlst du nur deine <b>Gruppe</b>.</p>
+<p>Startdatum aller Zyklen: <b>04.01.2027</b>. Das Schichtsystem wird in den <b>Einstellungen</b> gew&auml;hlt (Zahnrad oben rechts). Oben in der Leiste w&auml;hlst du nur deine <b>Gruppe</b>.</p>
 <h4>2. Modi-Leiste</h4>
 <ul>
 <li><b>Normal</b> / <b>Sonstige</b> &ndash; Klick auf Tag &ouml;ffnet Termin-Fenster.</li>
@@ -496,7 +497,7 @@ body.easter-disco .day{animation:egg-disco .6s ease-in-out infinite alternate}
 <h4>5. Jahres&uuml;bersicht</h4>
 <p>Klappt weich auf und zeigt Urlaub / Krank / Sonstige.</p>
 <h4>6. Fehler melden</h4>
-<p>Der Knopf <b>Fehler melden</b> &ouml;ffnet dein E-Mail-Programm mit einer vorausgef&uuml;llten Nachricht. Beschreibe kurz, welcher Tag falsch ist.</p>
+<p>Der Knopf <b>Fehler melden</b> &ouml;ffnet dein E-Mail-Programm mit einer vorausgef&uuml;llten Nachricht.</p>
 <div class="help-footer">SchichtZeit &ndash; der digitale Schichtplan.</div>
 </div>
 <div class="modal-buttons"><button id="helpCloseBtn" style="background:#007bff;">Alles klar</button></div>
@@ -534,6 +535,12 @@ var SHARE_TEXT="Schichtplan f\u00FCr unsere Schicht - Schichtzeit";
 var BASE_DATE_UTC_5=Date.UTC(2026,9,1);
 var CYCLE_35=['F','F','N','N','N','_','_','_','S','S','S','_','F','F','N','N','_','_','_','S','S','S','_','F','F','F','N','N','_','_','_','_','_','_','_'];
 var START_INDEX_BY_GROUP_5={'1':29,'2':1,'3':8,'4':15,'5':22};
+
+/* 4-Schicht-Vollkonti 8-Tage-Zyklus, Vorwärtswechsel F→S→N→frei */
+var BASE_DATE_UTC_4VK=Date.UTC(2027,0,4);
+var CYCLE_4VK=['F','F','S','S','N','N','_','_'];
+var OFFSET_4VK={'A':0,'B':2,'C':4,'D':6};
+
 var BASE_DATE_UTC_4X12=Date.UTC(2027,0,4);
 var CYCLE_4X12_BASE=['T','N','_','_'];
 var SHIFT_4X12={'A':0,'B':1,'C':3,'D':2};
@@ -559,7 +566,7 @@ try{selectedColor=localStorage.getItem('schichtzeitColor')||'#FFD700';}catch(e){
 try{selectedSymbol=localStorage.getItem('schichtzeitSymbol')||'\uD83D\uDD14';}catch(e){}
 try{shiftSystem=localStorage.getItem('schichtzeitShiftSystem')||'5';}catch(e){}
 try{currentTheme=localStorage.getItem('schichtzeitTheme')||'light';}catch(e){}
-if(shiftSystem!=='5'&&shiftSystem!=='4x12'&&shiftSystem!=='3x12')shiftSystem='5';
+if(shiftSystem!=='5'&&shiftSystem!=='4x12'&&shiftSystem!=='3x12'&&shiftSystem!=='4vk')shiftSystem='5';
 var sickDays=safeGetArray('schichtzeitSickDays');
 var vacationDays=safeGetArray('schichtzeitVacationDays');
 var sonstigeDays=safeGetObject('schichtzeitSonstigeDays');
@@ -584,30 +591,19 @@ function reportError(){
     try{
         var sel=document.getElementById('groupSelect');
         var group=sel?sel.value:'?';
-        var sysName=shiftSystem==='5'?'5-Schicht':(shiftSystem==='4x12'?'4x12-Schicht':'3x12-Schicht');
+        var sysName='';
+        if(shiftSystem==='5')sysName='5-Schicht';
+        else if(shiftSystem==='4vk')sysName='4-Schicht Vollkonti';
+        else if(shiftSystem==='4x12')sysName='4x12-Schicht';
+        else sysName='3x12-Schicht';
         var monat=monthNames[currentDate.getMonth()]+' '+currentDate.getFullYear();
         var heute=new Date();
         var hh=String(heute.getHours()).padStart(2,'0');
         var mm=String(heute.getMinutes()).padStart(2,'0');
         var heuteStr=String(heute.getDate()).padStart(2,'0')+'.'+String(heute.getMonth()+1).padStart(2,'0')+'.'+heute.getFullYear()+' '+hh+':'+mm;
         var subject='Schichtzeit Fehler: '+sysName+' / Gruppe '+group;
-        var body=
-            'Hallo,\n\n'+
-            'ich habe einen Fehler im Schichtkalender gefunden.\n\n'+
-            '--- Automatische Angaben ---\n'+
-            'Schichtsystem: '+sysName+'\n'+
-            'Gruppe: '+group+'\n'+
-            'Monat im Kalender: '+monat+'\n'+
-            'Gesendet am: '+heuteStr+'\n\n'+
-            '--- Bitte ausf\u00FCllen ---\n'+
-            'Datum des Fehlers: \n'+
-            'Angezeigt im Kalender: \n'+
-            'Sollte sein: \n\n'+
-            'Bemerkung:\n\n\n'+
-            'Danke!';
-        window.location.href='mailto:'+REPORT_EMAIL+
-            '?subject='+encodeURIComponent(subject)+
-            '&body='+encodeURIComponent(body);
+        var body='Hallo,\n\nich habe einen Fehler im Schichtkalender gefunden.\n\n--- Automatische Angaben ---\nSchichtsystem: '+sysName+'\nGruppe: '+group+'\nMonat im Kalender: '+monat+'\nGesendet am: '+heuteStr+'\n\n--- Bitte ausf\u00FCllen ---\nDatum des Fehlers: \nAngezeigt im Kalender: \nSollte sein: \n\nBemerkung:\n\n\nDanke!';
+        window.location.href='mailto:'+REPORT_EMAIL+'?subject='+encodeURIComponent(subject)+'&body='+encodeURIComponent(body);
     }catch(e){showToast('Fehler: '+e.message);}
 }
 function openSettings(){var y=currentDate.getFullYear();document.getElementById('settingsYearDisplay').textContent='Jahr '+y;document.getElementById('settingsYearHint').textContent=y;document.getElementById('vacQuotaInput').value=getVacationQuota(y);document.getElementById('shiftSystemSelect').value=shiftSystem;applyTheme(currentTheme);document.getElementById('settingsModal').classList.add('active');}
@@ -617,11 +613,7 @@ function saveSettings(){
     var q=parseInt(document.getElementById('vacQuotaInput').value,10);
     if(isNaN(q)||q<0)q=0;if(q>365)q=365;setVacationQuota(y,q);
     var newSys=document.getElementById('shiftSystemSelect').value;
-    if(newSys!==shiftSystem){
-        shiftSystem=newSys;
-        rebuildGroupOptions(true);
-        rebuildLegend();
-    }
+    if(newSys!==shiftSystem){shiftSystem=newSys;rebuildGroupOptions(true);rebuildLegend();}
     try{localStorage.setItem('schichtzeitShiftSystem',shiftSystem);}catch(e){}
     closeSettings();updateYearOverview();renderCalendar();
 }
@@ -631,7 +623,7 @@ function openDonateModal(){document.getElementById('donateModal').classList.add(
 function closeDonateModal(){document.getElementById('donateModal').classList.remove('active');}
 function openBackupMenu(){document.getElementById('backupMenuModal').classList.add('active');}
 function closeBackupMenu(){document.getElementById('backupMenuModal').classList.remove('active');}
-function getBackupJSON(){var b={version:6,date:new Date().toISOString(),shiftSystem:shiftSystem,group:document.getElementById('groupSelect').value,color:selectedColor,sickDays:sickDays,vacationDays:vacationDays,sonstigeDays:sonstigeDays,notifiedFlags:notifiedFlags,vacationQuota:vacationQuota,theme:currentTheme};return JSON.stringify(b,null,2);}
+function getBackupJSON(){var b={version:7,date:new Date().toISOString(),shiftSystem:shiftSystem,group:document.getElementById('groupSelect').value,color:selectedColor,sickDays:sickDays,vacationDays:vacationDays,sonstigeDays:sonstigeDays,notifiedFlags:notifiedFlags,vacationQuota:vacationQuota,theme:currentTheme};return JSON.stringify(b,null,2);}
 function getBackupFilename(){var n=new Date();return 'Schichtzeit_Backup_'+n.getFullYear()+'-'+String(n.getMonth()+1).padStart(2,'0')+'-'+String(n.getDate()).padStart(2,'0')+'_'+String(n.getHours()).padStart(2,'0')+'-'+String(n.getMinutes()).padStart(2,'0')+'.json';}
 function backupToDevice(){try{var j=getBackupJSON();var b=new Blob([j],{type:'application/json'});var u=URL.createObjectURL(b);var l=document.createElement('a');l.href=u;l.download=getBackupFilename();document.body.appendChild(l);l.click();document.body.removeChild(l);setTimeout(function(){URL.revokeObjectURL(u);},3000);showToast('Datei gespeichert');}catch(e){showToast('Fehler: '+e.message);}}
 function backupShare(){try{var j=getBackupJSON();var fn=getBackupFilename();var b=new Blob([j],{type:'application/json'});var f=new File([b],fn,{type:'application/json'});if(navigator.canShare&&navigator.canShare({files:[f]})&&navigator.share){navigator.share({files:[f],title:'Schichtzeit Backup',text:'Backup meiner Schichtzeit-Daten'}).then(function(){}).catch(function(err){if(err&&err.name==='AbortError')return;backupToDevice();});}else{showToast('Direktes Teilen nicht verf\u00FCgbar - Datei wird gespeichert');setTimeout(backupToDevice,800);}}catch(e){showToast('Fehler: '+e.message);}}
@@ -654,6 +646,13 @@ function getShift(date, group){
         var dd5=Math.round((du5-BASE_DATE_UTC_5)/86400000);
         var idx5=(si5+dd5)%CYCLE_35.length;if(idx5<0)idx5+=CYCLE_35.length;
         return CYCLE_35[idx5];
+    }
+    if(shiftSystem==='4vk'){
+        var off=OFFSET_4VK[g];if(off===undefined)return '_';
+        var duVK=Date.UTC(date.getFullYear(),date.getMonth(),date.getDate());
+        var ddVK=Math.round((duVK-BASE_DATE_UTC_4VK)/86400000);
+        var idxVK=((ddVK+off)%8+8)%8;
+        return CYCLE_4VK[idxVK];
     }
     if(shiftSystem==='4x12'){
         var s4=SHIFT_4X12[g];if(s4===undefined)return '_';
@@ -682,8 +681,8 @@ function animateCalendar(dir){var c=document.getElementById('calendar');if(!c)re
 function setupSwipe(){var el=document.getElementById('calendar');if(!el)return;var sx=0,sy=0,st=0;el.addEventListener('touchstart',function(e){if(e.touches.length!==1)return;sx=e.touches[0].clientX;sy=e.touches[0].clientY;st=Date.now();},{passive:true});el.addEventListener('touchend',function(e){if(e.changedTouches.length!==1)return;var dx=e.changedTouches[0].clientX-sx;var dy=e.changedTouches[0].clientY-sy;var dt=Date.now()-st;if(dt>900)return;if(Math.abs(dx)<60)return;if(Math.abs(dx)<Math.abs(dy)*1.5)return;suppressClick=true;setTimeout(function(){suppressClick=false;},450);if(dx<0)changeMonth(1);else changeMonth(-1);},{passive:true});}
 function renderHolidayNote(y,m){var l=document.getElementById('holidayList');if(!l)return;var cl=getHolidayList(y).filter(function(h){return h.date.getMonth()===m;});if(cl.length===0){l.innerHTML='<span style="color:#999;font-style:italic;">Keine Feiertage in diesem Monat.</span>';return;}l.innerHTML=cl.map(function(h){var dd=String(h.date.getDate()).padStart(2,'0');var mm=String(h.date.getMonth()+1).padStart(2,'0');return '<span class="holiday-item current">'+h.name+' ('+dd+'.'+mm+')</span>';}).join('');}
 function updateColorPresetsActive(){var a=document.querySelectorAll('.color-preset');for(var i=0;i<a.length;i++){var c=a[i].getAttribute('data-color').toLowerCase();if(c===selectedColor.toLowerCase())a[i].classList.add('active');else a[i].classList.remove('active');}}
-function rebuildGroupOptions(keepSelection){var sel=document.getElementById('groupSelect');if(!sel)return;var prev=keepSelection?sel.value:savedGroup;var opts;if(shiftSystem==='5'){opts=[['1','1'],['2','2'],['3','3'],['4','4'],['5','5']];}else if(shiftSystem==='4x12'){opts=[['A','A'],['B','B'],['C','C'],['D','D']];}else{opts=[['I','I'],['II','II'],['III','III']];}var html='';var found=false;for(var i=0;i<opts.length;i++){if(opts[i][0]===prev)found=true;html+='<option value="'+opts[i][0]+'">'+opts[i][1]+'</option>';}sel.innerHTML=html;sel.value=found?prev:opts[0][0];try{localStorage.setItem('schichtzeitGroup',sel.value);}catch(e){}}
-function rebuildLegend(){var box=document.getElementById('legendBox');if(!box)return;var items;if(shiftSystem==='5'){items=[['#FFD700','F (Fr&uuml;h)'],['#FF4500','S (Sp&auml;t)'],['#1E90FF','N (Nacht)'],['#f9f9f9','Frei']];}else{items=[['#FFD700','T (Tag)'],['#1E90FF','N (Nacht)'],['#f9f9f9','Frei']];}var html='';for(var i=0;i<items.length;i++){html+='<div class="legend-item"><div class="legend-box" style="background:'+items[i][0]+';"></div> '+items[i][1]+'</div>';}html+='<div class="legend-item"><div class="legend-box" style="background:#DDA0DD;"></div> Krank</div><div class="legend-item"><div class="legend-box" style="background:#90EE90;"></div> Urlaub</div><div class="legend-item"><div class="legend-box" id="legendSonstige" style="background:'+selectedColor+';"></div> Sonstige</div><div class="legend-item"><div class="legend-box" style="background:#fff;border:3px solid #CD7F32;"></div> Feiertag</div><div class="legend-item"><div class="legend-box" style="background:#fff;border:2px dashed #17a2b8;"></div> Ferien</div>';box.innerHTML=html;}
+function rebuildGroupOptions(keepSelection){var sel=document.getElementById('groupSelect');if(!sel)return;var prev=keepSelection?sel.value:savedGroup;var opts;if(shiftSystem==='5'){opts=[['1','1'],['2','2'],['3','3'],['4','4'],['5','5']];}else if(shiftSystem==='4vk'){opts=[['A','A'],['B','B'],['C','C'],['D','D']];}else if(shiftSystem==='4x12'){opts=[['A','A'],['B','B'],['C','C'],['D','D']];}else{opts=[['I','I'],['II','II'],['III','III']];}var html='';var found=false;for(var i=0;i<opts.length;i++){if(opts[i][0]===prev)found=true;html+='<option value="'+opts[i][0]+'">'+opts[i][1]+'</option>';}sel.innerHTML=html;sel.value=found?prev:opts[0][0];try{localStorage.setItem('schichtzeitGroup',sel.value);}catch(e){}}
+function rebuildLegend(){var box=document.getElementById('legendBox');if(!box)return;var items;if(shiftSystem==='5'){items=[['#FFD700','F (Fr&uuml;h 06\u201314)'],['#FF4500','S (Sp&auml;t 14\u201322)'],['#1E90FF','N (Nacht 22\u201306)'],['#f9f9f9','Frei']];}else if(shiftSystem==='4vk'){items=[['#FFD700','F (Fr&uuml;h 06\u201314)'],['#FF4500','S (Sp&auml;t 14\u201322)'],['#1E90FF','N (Nacht 22\u201306)'],['#f9f9f9','Frei']];}else{items=[['#FFD700','T (Tag)'],['#1E90FF','N (Nacht)'],['#f9f9f9','Frei']];}var html='';for(var i=0;i<items.length;i++){html+='<div class="legend-item"><div class="legend-box" style="background:'+items[i][0]+';"></div> '+items[i][1]+'</div>';}html+='<div class="legend-item"><div class="legend-box" style="background:#DDA0DD;"></div> Krank</div><div class="legend-item"><div class="legend-box" style="background:#90EE90;"></div> Urlaub</div><div class="legend-item"><div class="legend-box" id="legendSonstige" style="background:'+selectedColor+';"></div> Sonstige</div><div class="legend-item"><div class="legend-box" style="background:#fff;border:3px solid #CD7F32;"></div> Feiertag</div><div class="legend-item"><div class="legend-box" style="background:#fff;border:2px dashed #17a2b8;"></div> Ferien</div>';box.innerHTML=html;}
 var EGG_KONAMI=['arrowup','arrowup','arrowdown','arrowdown','arrowleft','arrowright','arrowleft','arrowright','b','a'];
 var eggKonamiIdx=0,eggTapCount=0,eggTapTimer=null,eggBusy=false;
 function launchEasterEgg(){if(eggBusy)return;eggBusy=true;try{playNotifySound();}catch(e){}var overlay=document.createElement('div');overlay.className='egg-overlay';overlay.innerHTML='<div class="egg-content"><div class="egg-emoji">🎉 🍺 😴 🌙 ✨</div><div class="egg-title">Schicht frei f&uuml;r alle!</div><div class="egg-text">Nur Spa&szlig; &mdash; die Schicht l&auml;uft weiter. Aber du hast das Geheimnis gefunden 😄</div><div class="egg-hint">Tippen zum Schlie&szlig;en</div></div>';document.body.appendChild(overlay);requestAnimationFrame(function(){overlay.classList.add('show');});var colors=['#FFD700','#FF4500','#1E90FF','#DDA0DD','#90EE90','#CD7F32','#17a2b8','#fff'];for(var i=0;i<90;i++){(function(i){setTimeout(function(){var c=document.createElement('div');c.className='egg-confetti';c.style.left=Math.random()*100+'%';c.style.background=colors[Math.floor(Math.random()*colors.length)];c.style.width=(5+Math.random()*8)+'px';c.style.height=(10+Math.random()*14)+'px';c.style.animationDuration=(2+Math.random()*2.5)+'s';document.body.appendChild(c);setTimeout(function(){if(c.parentNode)c.parentNode.removeChild(c);},5200);},i*25);})(i);}document.body.classList.add('easter-disco');function cleanup(){overlay.classList.remove('show');document.body.classList.remove('easter-disco');setTimeout(function(){if(overlay.parentNode)overlay.parentNode.removeChild(overlay);eggBusy=false;},400);}overlay.addEventListener('click',cleanup);setTimeout(function(){if(eggBusy)cleanup();},6500);}
