@@ -488,9 +488,8 @@ body.easter-disco .day{animation:egg-disco .6s ease-in-out infinite alternate}
 <h3>Anleitung</h3>
 <div class="modal-date">Bedienungsanleitung f&uuml;r SchichtZeit</div>
 <div class="help-body">
-<p>Willkommen bei <b>SchichtZeit</b>. Diese App zeigt euch den Schichtplan und hilft euch, Urlaub, Krankheit und eigene Termine einzutragen.</p>
+<p>Willkommen bei <b>SchichtZeit</b>.</p>
 <h4>1. Die Schicht w&auml;hlen</h4>
-<p>Oben im Dropdown <b>Schicht</b> w&auml;hlt jeder seine Gruppe (1 bis 5).</p>
 <table>
 <tr><td><span class="tag tag-F">F</span></td><td>Fr&uuml;hschicht</td></tr>
 <tr><td><span class="tag tag-S">S</span></td><td>Sp&auml;tschicht</td></tr>
@@ -499,24 +498,16 @@ body.easter-disco .day{animation:egg-disco .6s ease-in-out infinite alternate}
 </table>
 <h4>2. Modi-Leiste</h4>
 <ul>
-<li><b>Normal</b> &ndash; Klick auf Tag &ouml;ffnet Termin-Fenster.</li>
-<li><b>Krank</b> &ndash; Klick markiert Tag als Krank (lila).</li>
-<li><b>Urlaub</b> &ndash; Klick markiert Tag als Urlaub (gr&uuml;n).</li>
-<li><b>Sonstige</b> &ndash; Klick &ouml;ffnet Termin-Fenster.</li>
+<li><b>Normal</b> / <b>Sonstige</b> &ndash; Klick auf Tag &ouml;ffnet Termin-Fenster.</li>
+<li><b>Krank</b> / <b>Urlaub</b> &ndash; Klick markiert Tag.</li>
 </ul>
-<div class="box">Ein zweiter Klick entfernt die Markierung.</div>
 <h4>3. Eigene Termine</h4>
-<p>Der Tag wird durch <b>beide Diagonalen in bis zu vier Fl&auml;chen</b> geteilt: rechts oben 1. Termin, oben 2. Termin, links 3. Termin, unten Basis (Schicht/Urlaub/Krank). Symbol sitzt in der Fl&auml;che, Beschreibung an der Kante.</p>
-<p><b>Fl&auml;chen antippen:</b> farbige Fl&auml;che &rarr; genau dieser Termin &ouml;ffnet sich. Basisfl&auml;che &rarr; Liste aller Termine des Tages.</p>
-<h4>4. Lange dr&uuml;cken &ndash; L&ouml;schen-Men&uuml;</h4>
-<p>Halte einen Tag <b>etwa eine halbe Sekunde lang gedr&uuml;ckt</b> &ndash; es &ouml;ffnet sich ein Men&uuml;, in dem du wahlweise alle Termine, die Krank- oder die Urlaubs-Markierung dieses Tages entfernen kannst.</p>
+<p>Bis zu 4 Termine pro Tag, farblich getrennt. Symbol sitzt in der Fl&auml;che, Beschreibung an der Kante.</p>
+<h4>4. Lange dr&uuml;cken</h4>
+<p>Halte einen Tag <b>etwa eine halbe Sekunde lang gedr&uuml;ckt</b>, um L&ouml;schoptionen zu &ouml;ffnen.</p>
 <h4>5. Jahres&uuml;bersicht</h4>
-<p>Der Knopf <b>Jahres&uuml;bersicht</b> schiebt die Statistik weich herein. Nochmal tippen &ndash; sie klappt zu.</p>
-<h4>6. Backup</h4>
-<p><b>Auf Ger&auml;t speichern</b> / <b>Teilen</b> / <b>Aus Datei wiederherstellen</b>. Beim Handywechsel unbedingt vorher sichern.</p>
-<h4>7. Erinnerungen aktivieren</h4>
-<p>Einmal unten auf <b>&bdquo;Erinnerungen aktivieren&ldquo;</b> tippen. Erinnerungen kommen nur, solange die App im Browser ge&ouml;ffnet ist.</p>
-<div class="help-footer">SchichtZeit &ndash; der digitale Schichtplan f&uuml;r unsere Schicht.</div>
+<p>Klappt weich auf und zeigt Urlaub / Krank / Sonstige.</p>
+<div class="help-footer">SchichtZeit &ndash; der digitale Schichtplan.</div>
 </div>
 <div class="modal-buttons"><button id="helpCloseBtn" style="background:#007bff;">Alles klar</button></div>
 </div></div>
@@ -867,16 +858,13 @@ function renderCalendar(){
             openEntryEditor(dk);
         });
 
-        /* === Long-Press-Handler (Touch + Maus) === */
         (function(cellKey, el){
-            var lpTimer=null, lpFired=false;
+            var lpTimer=null;
             var sx0=0, sy0=0;
             function startLP(x,y){
                 cancelLP();
-                lpFired=false;
                 sx0=x; sy0=y;
                 lpTimer=setTimeout(function(){
-                    lpFired=true;
                     try { if (navigator.vibrate) navigator.vibrate(35); } catch(e){}
                     suppressClick=true;
                     setTimeout(function(){ suppressClick=false; }, 500);
@@ -955,4 +943,125 @@ function init(){
     document.getElementById('helpCloseBtn').addEventListener('click',closeHelp);
     document.getElementById('helpModal').addEventListener('click',function(e){if(e.target.id==='helpModal')closeHelp();});
     var tb=document.querySelectorAll('.theme-choice');
-    for(var t=0;t<tb.length;t++){(function(btn){btn
+    for(var t=0;t<tb.length;t++){(function(btn){btn.addEventListener('click',function(){applyTheme(btn.getAttribute('data-theme'));});})(tb[t]);}
+    document.getElementById('resetBtn').addEventListener('click',resetData);
+    document.getElementById('yearOverviewBtn').addEventListener('click',toggleYearOverview);
+    document.getElementById('yearOverviewCloseBtn').addEventListener('click',toggleYearOverview);
+    document.getElementById('ferienBtn').addEventListener('click',toggleFerien);
+    document.getElementById('backupBtn').addEventListener('click',openBackupMenu);
+    document.getElementById('backupSaveDeviceBtn').addEventListener('click',backupToDevice);
+    document.getElementById('backupShareBtn').addEventListener('click',backupShare);
+    document.getElementById('backupRestoreBtn').addEventListener('click',restoreFromFile);
+    document.getElementById('backupCancelBtn').addEventListener('click',closeBackupMenu);
+    document.getElementById('backupMenuModal').addEventListener('click',function(e){if(e.target.id==='backupMenuModal')closeBackupMenu();});
+    document.getElementById('donateCancelBtn').addEventListener('click',closeDonateModal);
+    document.getElementById('donateModal').addEventListener('click',function(e){if(e.target.id==='donateModal')closeDonateModal();});
+    document.getElementById('donateConfirmLink').addEventListener('click',function(){setTimeout(closeDonateModal,200);});
+    document.getElementById('entryNotify').addEventListener('change',function(){setTimeout(openDonateModal,60);});
+    document.getElementById('modalSaveBtn').addEventListener('click',saveEntry);
+    document.getElementById('modalDeleteBtn').addEventListener('click',deleteCurrentEntry);
+    document.getElementById('modalBackBtn').addEventListener('click',backFromEdit);
+    document.getElementById('listAddBtn').addEventListener('click',function(){editingIndex=-1;showEditScreen();});
+    document.getElementById('listCloseBtn').addEventListener('click',closeEntryEditor);
+    document.getElementById('entryModal').addEventListener('click',function(e){if(e.target.id==='entryModal')closeEntryEditor();});
+    document.getElementById('lpCancelBtn').addEventListener('click',closeLongPressMenu);
+    document.getElementById('lpOverlay').addEventListener('click',function(e){if(e.target.id==='lpOverlay')closeLongPressMenu();});
+    document.getElementById('prevBtn').addEventListener('click',function(){unlockAudio();changeMonth(-1);});
+    document.getElementById('nextBtn').addEventListener('click',function(){unlockAudio();changeMonth(1);});
+    document.getElementById('groupSelect').addEventListener('change',function(e){try{localStorage.setItem('schichtzeitGroup',e.target.value);}catch(err){}renderCalendar();});
+    var mb=document.querySelectorAll('.mode-btn');
+    for(var i=0;i<mb.length;i++){
+        (function(btn){btn.addEventListener('click',function(){
+            var a=document.querySelectorAll('.mode-btn');
+            for(var j=0;j<a.length;j++)a[j].classList.remove('active');
+            btn.classList.add('active');
+            currentMode=btn.getAttribute('data-mode');
+            var p=document.getElementById('colorPickerRow');
+            if(currentMode==='sonstige')p.classList.add('active');else p.classList.remove('active');
+        });})(mb[i]);
+    }
+    document.getElementById('sonstigeColor').addEventListener('input',function(e){
+        selectedColor=e.target.value;
+        try{localStorage.setItem('schichtzeitColor',selectedColor);}catch(err){}
+        document.getElementById('legendSonstige').style.background=selectedColor;
+        updateColorPresetsActive();
+    });
+    var pr=document.querySelectorAll('.color-preset');
+    for(var k=0;k<pr.length;k++){
+        (function(btn){btn.addEventListener('click',function(){
+            selectedColor=btn.getAttribute('data-color');
+            document.getElementById('sonstigeColor').value=selectedColor;
+            document.getElementById('legendSonstige').style.background=selectedColor;
+            try{localStorage.setItem('schichtzeitColor',selectedColor);}catch(err){}
+            updateColorPresetsActive();
+        });})(pr[k]);
+    }
+    document.getElementById('legendSonstige').style.background=selectedColor;
+    document.getElementById('notifBtn').addEventListener('click',function(){
+        unlockAudio();
+        notifyUser('Test-Erinnerung','Banner und Ton funktionieren.');
+        if('Notification' in window&&Notification.permission==='default'){
+            try{Notification.requestPermission().then(function(){updateNotifButton();checkReminders();});}catch(e){}
+        } else if('Notification' in window&&Notification.permission==='granted'){checkReminders();}
+    });
+    document.getElementById('restoreFileInput').addEventListener('change',function(e){
+        var f=e.target.files[0];if(!f)return;
+        var r=new FileReader();
+        r.onload=function(ev){
+            try{
+                var data=JSON.parse(ev.target.result);
+                if(!data.sickDays&&!data.vacationDays&&!data.sonstigeDays){alert('Ung\u00FCltige Backup-Datei.');return;}
+                if(!confirm('Backup wiederherstellen? Aktuelle Daten werden \u00FCberschrieben.'))return;
+                applyRestoredData(data);
+                alert('Backup erfolgreich wiederhergestellt.');
+            }catch(err){alert('Fehler beim Lesen der Backup-Datei: '+err.message);}
+        };
+        r.readAsText(f);
+    });
+    setupSwipe();
+    document.addEventListener('touchstart',unlockAudio,{once:true,passive:true});
+    document.addEventListener('click',unlockAudio,{once:true});
+    document.addEventListener('visibilitychange',function(){if(!document.hidden){syncClock();checkReminders();scheduleMinuteTick();}});
+    window.addEventListener('focus',function(){syncClock();checkReminders();});
+    document.getElementById('groupSelect').value=savedGroup;
+    document.getElementById('sonstigeColor').value=selectedColor;
+    updateColorPresetsActive();
+    syncClock();
+    updateNotifButton();
+    scheduleMinuteTick();
+    setTimeout(checkReminders,3000);
+    setInterval(checkReminders,30*1000);
+    setInterval(updateRemindersList,60*1000);
+}
+if(document.readyState==='loading'){document.addEventListener('DOMContentLoaded',init);}else{init();}
+}catch(err){
+    var box=document.getElementById('errBox');
+    if(box){box.style.display='block';box.textContent='FEHLER: '+err.message;}
+}
+})();
+</script>
+<script>
+(function(){
+  var KEY='szServerVersion';
+  function showBanner(serverTime){
+    if(document.getElementById('szUpdateBanner'))return;
+    var el=document.createElement('div');el.id='szUpdateBanner';
+    el.style.cssText='position:fixed;bottom:16px;left:50%;transform:translateX(-50%);background:#28a745;color:#fff;padding:14px 24px;border-radius:12px;font-size:15px;font-weight:bold;z-index:99998;box-shadow:0 6px 24px rgba(0,0,0,0.5);cursor:pointer;font-family:-apple-system,BlinkMacSystemFont,sans-serif;max-width:calc(100% - 32px);text-align:center;user-select:none';
+    el.textContent='\uD83D\uDD04 Neue Version verf\u00FCgbar \u2014 tippen zum Aktualisieren';
+    el.addEventListener('click',function(){try{localStorage.setItem(KEY,String(serverTime));}catch(e){}location.replace(location.pathname+'?v='+Date.now());});
+    document.body.appendChild(el);
+  }
+  function check(){
+    try{
+      fetch(location.pathname+'?check='+Date.now(),{method:'HEAD',cache:'no-store'})
+        .then(function(r){var lm=r.headers.get('Last-Modified');if(!lm)return;var st=new Date(lm).getTime();var mv=parseInt(localStorage.getItem(KEY)||'0',10);if(mv===0){try{localStorage.setItem(KEY,String(st));}catch(e){}return;}if(st>mv+60000)showBanner(st);})
+        .catch(function(){});
+    }catch(e){}
+  }
+  setTimeout(check,3000);
+  setInterval(check,5*60*1000);
+  document.addEventListener('visibilitychange',function(){if(!document.hidden)check();});
+})();
+</script>
+</body>
+</html>
