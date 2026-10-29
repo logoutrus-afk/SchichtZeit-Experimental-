@@ -179,14 +179,6 @@ body.dark .help-body code{background:#2a2e33;color:#e4e6ea}
 .help-body .box{background:#f1f3f5;border-left:5px solid #0056b3;border-radius:7px;padding:12px 14px;margin:12px 0;font-size:15px}
 .help-body .box.warn{background:#fff3cd;border-left-color:#ffc107}
 .help-body .box.ok{background:#d4edda;border-left-color:#28a745}
-.help-body .tag{display:inline-block;padding:3px 10px;border-radius:6px;font-size:14px;font-weight:bold;margin-right:5px}
-.help-body .tag-F{background:#FFD700;color:#000}
-.help-body .tag-S{background:#FF4500;color:#fff}
-.help-body .tag-N{background:#1E90FF;color:#fff}
-.help-body .tag-_-{background:#f1f3f5;color:#666;border:1px solid #ccc}
-.help-body table{width:100%;border-collapse:collapse;margin:10px 0;font-size:15px}
-.help-body td{padding:7px 10px;border-bottom:1px solid #eee;vertical-align:top}
-.help-body td:first-child{font-weight:bold;white-space:nowrap;color:#0056b3;width:40%}
 .help-footer{margin-top:18px;padding-top:16px;border-top:1px solid #e5e9f0;font-size:14px;color:#777;text-align:center}
 .backup-option{display:flex;align-items:center;gap:16px;padding:18px;border:2px solid #e0e4e9;border-radius:12px;cursor:pointer;background:#fff;margin-bottom:12px;text-align:left;font-family:inherit;width:100%;font-size:16px;color:#333}
 .backup-option:hover{background:#f1f3f5;border-color:#0056b3}
@@ -452,6 +444,28 @@ body.dark .plan-summary{background:#1a3a40;color:#a0c8d0}
 body.dark .plan-share-box{background:#1a2330;color:#c0c5cb}
 .plan-share-box textarea{width:100%;min-height:80px;padding:8px;font-size:12px;border:1px solid #ccc;border-radius:6px;font-family:monospace;box-sizing:border-box;resize:vertical;margin-top:6px}
 body.dark .plan-share-box textarea{background:#2a2e33;color:#e4e6ea;border-color:#3a3f44}
+
+/* === Halloween Bats === */
+.halloween-bats{position:fixed;inset:0;pointer-events:none;z-index:50;overflow:hidden}
+.bat{position:absolute;top:0;left:0;color:#2a1a3a;opacity:.38;will-change:transform;animation:bat-fly linear infinite}
+body.dark .bat{color:#a088ff;opacity:.4}
+.bat svg{width:100%;height:100%;display:block;animation:bat-flap .34s ease-in-out infinite alternate;transform-origin:center}
+@keyframes bat-fly{
+  0%{transform:translate(-60px,calc(var(--y,10vh) - 4vh)) rotate(-8deg)}
+  25%{transform:translate(25vw,calc(var(--y,10vh) + 4vh)) rotate(8deg)}
+  50%{transform:translate(50vw,calc(var(--y,10vh) - 3vh)) rotate(-6deg)}
+  75%{transform:translate(75vw,calc(var(--y,10vh) + 5vh)) rotate(10deg)}
+  100%{transform:translate(calc(100vw + 60px),calc(var(--y,10vh) + 2vh)) rotate(-8deg)}
+}
+@keyframes bat-flap{
+  0%{transform:scaleY(1)}
+  100%{transform:scaleY(.82)}
+}
+@media (prefers-reduced-motion: reduce){.halloween-bats{display:none}}
+@media (max-width:600px){
+  .bat{opacity:.3}
+  body.dark .bat{opacity:.35}
+}
 </style>
 </head>
 <body>
@@ -856,21 +870,7 @@ function calculateEaster(y){var a=y%19,b=Math.floor(y/100),c=y%100,d=Math.floor(
 function getHolidayList(y){var list=[];function add(m,d,n){var dt=new Date(y,m-1,d);list.push({name:n,date:dt,key:y+'-'+String(m).padStart(2,'0')+'-'+String(d).padStart(2,'0')});}add(1,1,"Neujahr");add(1,6,"Heilige Drei K\u00F6nige");add(5,1,"Tag der Arbeit");add(8,15,"Mari\u00E4 Himmelfahrt");add(10,3,"Tag der Deutschen Einheit");add(11,1,"Allerheiligen");add(12,25,"1. Weihnachtstag");add(12,26,"2. Weihnachtstag");var ea=calculateEaster(y);function addE(d,n){var dt=new Date(ea);dt.setDate(dt.getDate()+d);add(dt.getMonth()+1,dt.getDate(),n);}addE(-2,"Karfreitag");addE(1,"Ostermontag");addE(39,"Christi Himmelfahrt");addE(50,"Pfingstmontag");addE(60,"Fronleichnam");list.sort(function(a,b){return a.date-b.date;});return list;}
 function getHolidaySet(y){var s=new Set();getHolidayList(y).forEach(function(h){s.add(h.key);});return s;}
 function getHolidayIcon(name){
-    var icons={
-        'Neujahr':'\uD83C\uDF89',
-        'Heilige Drei K\u00F6nige':'\uD83D\uDC51',
-        'Tag der Arbeit':'\u2692\uFE0F',
-        'Mari\u00E4 Himmelfahrt':'\u26EA',
-        'Tag der Deutschen Einheit':'\uD83C\uDDE9\uD83C\uDDEA',
-        'Allerheiligen':'\uD83D\uDD6F\uFE0F',
-        '1. Weihnachtstag':'\uD83C\uDF84',
-        '2. Weihnachtstag':'\uD83C\uDF84',
-        'Karfreitag':'\u271D\uFE0F',
-        'Ostermontag':'\uD83D\uDC23',
-        'Christi Himmelfahrt':'\u2601\uFE0F',
-        'Pfingstmontag':'\uD83D\uDD4A\uFE0F',
-        'Fronleichnam':'\u26EA'
-    };
+    var icons={'Neujahr':'\uD83C\uDF89','Heilige Drei K\u00F6nige':'\uD83D\uDC51','Tag der Arbeit':'\u2692\uFE0F','Mari\u00E4 Himmelfahrt':'\u26EA','Tag der Deutschen Einheit':'\uD83C\uDDE9\uD83C\uDDEA','Allerheiligen':'\uD83D\uDD6F\uFE0F','1. Weihnachtstag':'\uD83C\uDF84','2. Weihnachtstag':'\uD83C\uDF84','Karfreitag':'\u271D\uFE0F','Ostermontag':'\uD83D\uDC23','Christi Himmelfahrt':'\u2601\uFE0F','Pfingstmontag':'\uD83D\uDD4A\uFE0F','Fronleichnam':'\u26EA'};
     return icons[name]||'\uD83C\uDF89';
 }
 function getHolidayIconMap(y){var map={};getHolidayList(y).forEach(function(h){map[h.key]=getHolidayIcon(h.name);});return map;}
@@ -1109,11 +1109,7 @@ function toggleYearOverview(){var o=document.getElementById('yearOverview');if(!
 function toggleFerien(){showFerien=!showFerien;var b=document.getElementById('ferienBtn');var n=document.getElementById('ferienNote');if(showFerien){b.style.background='#0d8a99';n.style.display='block';}else{b.style.background='#17a2b8';n.style.display='none';}renderCalendar();}
 function resetData(){if(confirm('M\u00F6chtest du wirklich alle Markierungen l\u00F6schen?\n(Deine eigenen Schichtpl\u00E4ne bleiben erhalten.)')){sickDays=[];vacationDays=[];einbringerDays=[];sonstigeDays={};notifiedFlags={};try{localStorage.removeItem('schichtzeitSickDays');localStorage.removeItem('schichtzeitVacationDays');localStorage.removeItem('schichtzeitEinbringerDays');localStorage.removeItem('schichtzeitSonstigeDays');localStorage.removeItem('schichtzeitNotified');}catch(e){}renderCalendar();}}
 function applyRestoredData(data){
-    sickDays=data.sickDays||[];
-    vacationDays=data.vacationDays||[];
-    einbringerDays=data.einbringerDays||[];
-    sonstigeDays=data.sonstigeDays||{};
-    notifiedFlags=data.notifiedFlags||{};
+    sickDays=data.sickDays||[];vacationDays=data.vacationDays||[];einbringerDays=data.einbringerDays||[];sonstigeDays=data.sonstigeDays||{};notifiedFlags=data.notifiedFlags||{};
     if(data.customPlans&&typeof data.customPlans==='object'){customPlans=data.customPlans;saveCustomPlans();}
     Object.keys(sonstigeDays).forEach(function(k){var v=sonstigeDays[k];if(typeof v==='string')sonstigeDays[k]=[{id:genEntryId(),color:v,text:'',time:'',notify:false,icon:'\uD83D\uDD14'}];else if(v&&typeof v==='object'&&!Array.isArray(v)){if(!v.id)v.id=genEntryId();if(!v.icon)v.icon='\uD83D\uDD14';sonstigeDays[k]=[v];}else if(Array.isArray(v)){for(var i=0;i<v.length;i++){if(v[i]&&typeof v[i]==='object'){if(!v[i].id)v[i].id=genEntryId();if(!v[i].icon)v[i].icon='\uD83D\uDD14';}}}});
     if(data.vacationQuota&&typeof data.vacationQuota==='object'){vacationQuota=data.vacationQuota;try{localStorage.setItem('schichtzeitVacationQuota',JSON.stringify(vacationQuota));}catch(e){}}
@@ -1127,15 +1123,13 @@ function applyRestoredData(data){
     if(data.group){var gs=document.getElementById('groupSelect');var opt=false;for(var i=0;i<gs.options.length;i++)if(gs.options[i].value===data.group)opt=true;if(opt)gs.value=data.group;}
     renderCalendar();
 }
-var editingPlanId=null;
-var editingPlanBlocks=[];
+var editingPlanId=null;var editingPlanBlocks=[];
 function openPlanEditor(){document.getElementById('planEditorModal').classList.add('active');showPlanList();}
 function closePlanEditor(){document.getElementById('planEditorModal').classList.remove('active');document.getElementById('planShareBox').style.display='none';}
 function showPlanList(){
     document.getElementById('planListScreen').style.display='block';
     document.getElementById('planEditScreen').style.display='none';
-    var body=document.getElementById('planListBody');
-    var keys=Object.keys(customPlans);
+    var body=document.getElementById('planListBody');var keys=Object.keys(customPlans);
     if(keys.length===0){body.innerHTML='<div class="plan-empty">Noch keine eigenen Pl\u00E4ne.<br>Tippe auf <b>+ Neuer Plan</b>.</div>';return;}
     body.innerHTML='';
     keys.forEach(function(k){
@@ -1157,22 +1151,8 @@ function openPlanEdit(planId){
     document.getElementById('planListScreen').style.display='none';
     document.getElementById('planEditScreen').style.display='block';
     document.getElementById('planShareBox').style.display='none';
-    if(planId&&customPlans[planId]){
-        var p=customPlans[planId];
-        document.getElementById('planEditTitle').textContent='Plan bearbeiten';
-        document.getElementById('planNameInput').value=p.name||'';
-        document.getElementById('planStartInput').value=p.startDate||formatDateKey(new Date());
-        editingPlanBlocks=JSON.parse(JSON.stringify(p.blocks||[]));
-        document.getElementById('planDeleteBtn').style.display='block';
-        document.getElementById('planShareBtn').style.display='block';
-    }else{
-        document.getElementById('planEditTitle').textContent='Neuer Plan';
-        document.getElementById('planNameInput').value='Meine Schicht';
-        document.getElementById('planStartInput').value=formatDateKey(new Date());
-        editingPlanBlocks=[{code:'F',color:'#FFD700',days:2},{code:'S',color:'#FF4500',days:2},{code:'N',color:'#1E90FF',days:2},{code:'_',color:'#f9f9f9',days:2}];
-        document.getElementById('planDeleteBtn').style.display='none';
-        document.getElementById('planShareBtn').style.display='none';
-    }
+    if(planId&&customPlans[planId]){var p=customPlans[planId];document.getElementById('planEditTitle').textContent='Plan bearbeiten';document.getElementById('planNameInput').value=p.name||'';document.getElementById('planStartInput').value=p.startDate||formatDateKey(new Date());editingPlanBlocks=JSON.parse(JSON.stringify(p.blocks||[]));document.getElementById('planDeleteBtn').style.display='block';document.getElementById('planShareBtn').style.display='block';}
+    else{document.getElementById('planEditTitle').textContent='Neuer Plan';document.getElementById('planNameInput').value='Meine Schicht';document.getElementById('planStartInput').value=formatDateKey(new Date());editingPlanBlocks=[{code:'F',color:'#FFD700',days:2},{code:'S',color:'#FF4500',days:2},{code:'N',color:'#1E90FF',days:2},{code:'_',color:'#f9f9f9',days:2}];document.getElementById('planDeleteBtn').style.display='none';document.getElementById('planShareBtn').style.display='none';}
     renderPlanBlocks();
 }
 function renderPlanBlocks(){
@@ -1195,8 +1175,7 @@ function renderPlanBlocks(){
 }
 function recalcPlanSummary(){
     var total=0;editingPlanBlocks.forEach(function(b){total+=Math.max(0,parseInt(b.days,10)||0);});
-    var start=document.getElementById('planStartInput').value;
-    var summary='';
+    var start=document.getElementById('planStartInput').value;var summary='';
     if(total<=0){summary='Noch keine Tage im Zyklus.';}
     else if(start){var s=new Date(start+'T00:00:00');var e=new Date(s);e.setDate(e.getDate()+total-1);function fmt(dt){return String(dt.getDate()).padStart(2,'0')+'.'+String(dt.getMonth()+1).padStart(2,'0')+'.'+dt.getFullYear();}summary='Block: <b>'+fmt(s)+'</b> bis <b>'+fmt(e)+'</b> ('+total+' Tage) &middot; wiederholt sich automatisch.';}
     else{summary='Zyklus: '+total+' Tage. Bitte Startdatum angeben.';}
@@ -1211,13 +1190,10 @@ function savePlanFromEditor(){
     var cleanBlocks=[];
     for(var i=0;i<editingPlanBlocks.length;i++){var b=editingPlanBlocks[i];var d=Math.max(1,parseInt(b.days,10)||1);cleanBlocks.push({code:(b.code||'_').toUpperCase(),color:b.color||'#f9f9f9',days:d});}
     var id=editingPlanId;if(!id){id=genPlanId();}
-    customPlans[id]={name:name,startDate:start,blocks:cleanBlocks};
-    saveCustomPlans();
+    customPlans[id]={name:name,startDate:start,blocks:cleanBlocks};saveCustomPlans();
     if(shiftSystem!=='custom'){shiftSystem='custom';try{localStorage.setItem('schichtzeitShiftSystem',shiftSystem);}catch(e){}document.getElementById('shiftSystemSelect').value=shiftSystem;}
-    savedGroup=id;
-    rebuildGroupOptions(false);rebuildLegend();renderCalendar();
-    showToast('Plan gespeichert');
-    showPlanList();
+    savedGroup=id;rebuildGroupOptions(false);rebuildLegend();renderCalendar();
+    showToast('Plan gespeichert');showPlanList();
 }
 function deletePlan(planId){if(!confirm('Plan wirklich l\u00F6schen?'))return;delete customPlans[planId];saveCustomPlans();if(editingPlanId===planId)editingPlanId=null;rebuildGroupOptions(false);rebuildLegend();renderCalendar();if(document.getElementById('planEditorModal').classList.contains('active'))showPlanList();}
 function deletePlanFromEditor(){if(!editingPlanId)return;if(!confirm('Plan wirklich l\u00F6schen?'))return;delete customPlans[editingPlanId];saveCustomPlans();editingPlanId=null;rebuildGroupOptions(false);rebuildLegend();renderCalendar();showPlanList();}
@@ -1342,6 +1318,43 @@ function init(){
     setInterval(updateRemindersList,60*1000);
     try{handlePlanImport();}catch(e){console.error('Plan-Import:',e);}
     window.addEventListener('hashchange',function(){try{handlePlanImport();}catch(e){}});
+
+    /* === Halloween Fledermäuse === */
+    try{
+        var now=new Date();
+        var mo=now.getMonth();
+        var da=now.getDate();
+        var isHalloween=(mo===9&&da>=25)||(mo===10&&da<=3);
+        var forceBats=location.search.indexOf('bats=1')!==-1;
+        var disableBats=location.search.indexOf('nobats=1')!==-1;
+        if(!disableBats&&(isHalloween||forceBats)){
+            if(!window.matchMedia||!window.matchMedia('(prefers-reduced-motion: reduce)').matches){
+                var batsWrap=document.createElement('div');
+                batsWrap.className='halloween-bats';
+                batsWrap.setAttribute('aria-hidden','true');
+                document.body.appendChild(batsWrap);
+                var BAT_SVG='<svg viewBox="0 0 64 32" xmlns="http://www.w3.org/2000/svg"><path d="M32 12 C30 6 26 2 20 4 C22 8 18 10 14 8 C10 6 4 8 2 12 C6 12 8 14 6 16 C4 18 2 18 2 22 C6 20 10 20 12 22 C16 20 20 20 24 22 C26 20 28 16 30 14 L32 12 C34 14 36 20 38 22 C42 20 46 20 50 22 C52 20 56 20 60 22 C60 18 58 18 56 16 C54 14 56 12 60 12 C58 8 52 6 48 8 C44 10 40 8 42 4 C36 2 34 6 32 12 Z" fill="currentColor"/></svg>';
+                var numBats=window.innerWidth<600?5:9;
+                for(var bi=0;bi<numBats;bi++){
+                    var bat=document.createElement('div');
+                    bat.className='bat';
+                    bat.innerHTML=BAT_SVG;
+                    var size=22+Math.random()*26;
+                    var dur=12+Math.random()*10;
+                    var del=-Math.random()*dur;
+                    var yPos=6+Math.random()*42;
+                    var rot=(Math.random()-0.5)*8;
+                    bat.style.width=size+'px';
+                    bat.style.height=size+'px';
+                    bat.style.animationDuration=dur+'s';
+                    bat.style.animationDelay=del+'s';
+                    bat.style.setProperty('--y',yPos+'vh');
+                    bat.style.setProperty('--r',rot+'deg');
+                    batsWrap.appendChild(bat);
+                }
+            }
+        }
+    }catch(e){console.warn('Bats:',e);}
 }
 if(document.readyState==='loading'){document.addEventListener('DOMContentLoaded',init);}else{init();}
 }catch(err){var box=document.getElementById('errBox');if(box){box.style.display='block';box.textContent='FEHLER: '+err.message;}}
