@@ -14,20 +14,20 @@
 <link rel="apple-touch-icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 180 180'%3E%3Crect width='180' height='180' rx='40' fill='%230056b3'/%3E%3Ctext x='90' y='120' font-size='90' text-anchor='middle' fill='white' font-family='Arial' font-weight='bold'%3ESZ%3C/text%3E%3C/svg%3E">
 <style>
 body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial,sans-serif;background:#f4f4f9;color:#333;text-align:center;padding:8px;padding-top:env(safe-area-inset-top,8px);padding-bottom:env(safe-area-inset-bottom,8px);margin:0;-webkit-tap-highlight-color:transparent;font-size:17px}
-.container{position:relative;max-width:1400px;margin:0 auto;background:#fff;padding:14px;border-radius:14px;box-shadow:0 4px 18px rgba(0,0,0,0.1)}
-h2{margin:0 0 8px 0;color:#0056b3;font-size:32px;letter-spacing:.3px;padding:0 110px}
-.top-btn{position:absolute;top:14px;background:#f1f3f5;color:#333;border:1px solid #ccc;border-radius:10px;width:46px;height:46px;font-size:24px;font-weight:bold;cursor:pointer;line-height:1;padding:0;font-family:inherit;display:flex;align-items:center;justify-content:center}
+.container{position:relative;max-width:1400px;margin:0 auto;background:#fff;padding:14px;border-radius:14px;box-shadow:0 4px 18px rgba(0,0,0,0.1);overflow:hidden}
+h2{margin:0 0 8px 0;color:#0056b3;font-size:32px;letter-spacing:.3px;padding:0 110px;position:relative;z-index:10}
+.top-btn{position:absolute;top:14px;background:#f1f3f5;color:#333;border:1px solid #ccc;border-radius:10px;width:46px;height:46px;font-size:24px;font-weight:bold;cursor:pointer;line-height:1;padding:0;font-family:inherit;display:flex;align-items:center;justify-content:center;z-index:10}
 .top-btn:active{background:#e2e6ea}
 .share-btn{left:14px}
 .settings-btn{right:14px}
 .share-btn svg,.settings-btn svg{width:26px;height:26px}
-.online-status{font-size:14px;padding:5px 11px;border-radius:16px;display:inline-block;margin-bottom:0;font-weight:bold;white-space:nowrap}
+.online-status{font-size:14px;padding:5px 11px;border-radius:16px;display:inline-block;margin-bottom:0;font-weight:bold;white-space:nowrap;position:relative;z-index:10}
 .online-status.online{background:#d4edda;color:#155724}
 .online-status.loading{background:#fff3cd;color:#856404}
-.top-row{display:flex;justify-content:center;align-items:center;margin-bottom:10px;font-size:16px;gap:10px;flex-wrap:wrap}
+.top-row{display:flex;justify-content:center;align-items:center;margin-bottom:10px;font-size:16px;gap:10px;flex-wrap:wrap;position:relative;z-index:10}
 .top-row label{display:inline-flex;align-items:center;gap:5px;font-size:16px;font-weight:normal}
 .top-row select{padding:7px 12px;font-size:15px}
-.nav-row{display:flex;justify-content:center;align-items:center;gap:16px;margin-bottom:8px;flex-wrap:nowrap}
+.nav-row{display:flex;justify-content:center;align-items:center;gap:16px;margin-bottom:8px;flex-wrap:nowrap;position:relative;z-index:10}
 .nav-row button#prevBtn,.nav-row button#nextBtn{padding:4px 14px;font-size:18px;min-width:44px;height:40px;line-height:1;border-radius:8px;font-weight:bold}
 select,button{padding:13px 20px;font-size:17px;border-radius:9px;border:1px solid #ccc;background:#fff;cursor:pointer;font-family:inherit}
 button{background:#007bff;color:#fff;border:none;font-weight:bold}
@@ -39,10 +39,10 @@ button:active,.top-btn:active,.symbol-btn:active{transform:scale(0.94);filter:br
 .backup-option:active{transform:scale(0.98);background:#e9ecef}
 .color-preset:active{transform:scale(0.9)}
 .entry-item:active{transform:scale(0.98)}
-.mode-controls{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-bottom:10px;background:#e9ecef;padding:8px;border-radius:12px}
+.mode-controls{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-bottom:10px;background:#e9ecef;padding:8px;border-radius:12px;position:relative;z-index:10}
 .mode-btn{background:#fff;color:#333;border:1px solid #ccc;font-size:16px;padding:11px 6px;font-weight:600;border-radius:9px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .mode-btn.active{background:#0056b3;color:#fff;border-color:#0056b3;font-weight:bold}
-.color-picker-row{display:none;justify-content:center;align-items:center;gap:14px;margin-bottom:12px;padding:12px;background:#f1f3f5;border-radius:12px;border:1px dashed #999;flex-wrap:wrap}
+.color-picker-row{display:none;justify-content:center;align-items:center;gap:14px;margin-bottom:12px;padding:12px;background:#f1f3f5;border-radius:12px;border:1px dashed #999;flex-wrap:wrap;position:relative;z-index:10}
 .color-picker-row.active{display:flex}
 .color-picker-row label{font-size:17px;font-weight:bold}
 .color-picker-row input[type="color"]{width:56px;height:44px;border:2px solid #999;border-radius:9px;cursor:pointer;padding:0;background:#fff}
@@ -52,7 +52,7 @@ button:active,.top-btn:active,.symbol-btn:active{transform:scale(0.94);filter:br
 .color-preset .preset-letter{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);font-size:17px;font-weight:bold;color:#000;pointer-events:none}
 .color-preset[data-color="#1E90FF"] .preset-letter,.color-preset[data-color="#FF4500"] .preset-letter{color:#fff}
 #monthDisplay{font-size:26px;font-weight:bold;min-width:240px;display:inline-block}
-.calendar{display:grid;grid-template-columns:repeat(7,1fr);gap:8px;touch-action:pan-y;max-width:none;margin:0 auto}
+.calendar{display:grid;grid-template-columns:repeat(7,1fr);gap:8px;touch-action:pan-y;max-width:none;margin:0 auto;position:relative;z-index:10}
 .calendar.anim-left{animation:cal-slide-left .28s ease}
 .calendar.anim-right{animation:cal-slide-right .28s ease}
 @keyframes cal-slide-left{from{opacity:.35;transform:translateX(24px)}to{opacity:1;transform:translateX(0)}}
@@ -89,11 +89,11 @@ button:active,.top-btn:active,.symbol-btn:active{transform:scale(0.94);filter:br
 .day .term-text.t-right{right:4px;top:50%;writing-mode:vertical-rl;transform:translateY(-50%);max-height:calc(100% - 10px)}
 .day .term-text.t-left{left:4px;top:50%;writing-mode:vertical-rl;transform:translateY(-50%) rotate(180deg);max-height:calc(100% - 10px)}
 .sonstige-preview{position:absolute;bottom:6px;left:6px;right:6px;font-size:clamp(11px,1.3vw,15px);line-height:1.05;text-align:center;overflow:hidden;white-space:nowrap;text-overflow:ellipsis;pointer-events:none;font-weight:bold;color:#fff;z-index:3}
-.legend{margin-top:14px;font-size:15px;display:flex;justify-content:center;gap:12px;flex-wrap:wrap}
+.legend{margin-top:14px;font-size:15px;display:flex;justify-content:center;gap:12px;flex-wrap:wrap;position:relative;z-index:10}
 .legend-item{display:flex;align-items:center;gap:7px}
 .legend-box{width:20px;height:20px;border-radius:5px;border:1px solid #ccc}
-.footer{margin-top:22px;display:flex;justify-content:center;gap:12px;flex-wrap:wrap}
-.overview-container{max-height:0;overflow:hidden;opacity:0;padding:0 20px;margin-top:0;border:0 solid #dee2e6;border-radius:12px;background:#f8f9fa;text-align:left;font-size:16px;transition:max-height .6s cubic-bezier(.22,.61,.36,1),opacity .4s ease,padding .4s ease,margin .4s ease,border-width .4s ease}
+.footer{margin-top:22px;display:flex;justify-content:center;gap:12px;flex-wrap:wrap;position:relative;z-index:10}
+.overview-container{max-height:0;overflow:hidden;opacity:0;padding:0 20px;margin-top:0;border:0 solid #dee2e6;border-radius:12px;background:#f8f9fa;text-align:left;font-size:16px;transition:max-height .6s cubic-bezier(.22,.61,.36,1),opacity .4s ease,padding .4s ease,margin .4s ease,border-width .4s ease;position:relative;z-index:10}
 .overview-container.active{max-height:6000px;opacity:1;padding:20px;margin-top:26px;border-width:1px}
 .overview-container h3{margin-top:0;color:#0056b3;border-bottom:1px solid #ccc;padding-bottom:8px;font-size:21px}
 .overview-stats{display:flex;justify-content:space-around;margin-bottom:18px;font-weight:bold;flex-wrap:wrap;gap:10px;font-size:16px}
@@ -112,23 +112,23 @@ button:active,.top-btn:active,.symbol-btn:active{transform:scale(0.94);filter:br
 .overview-list ul{margin:0;padding-left:24px;font-size:15px;color:#555}
 .overview-list li{margin-bottom:5px}
 .close-btn{background:#6c757d;font-size:15px;padding:10px 18px;margin-top:12px}
-.holiday-note{margin-top:16px;font-size:14px;color:#666;text-align:left;background:#f8f9fa;padding:12px;border-radius:10px;border-left:5px solid #CD7F32;line-height:1.9}
+.holiday-note{margin-top:16px;font-size:14px;color:#666;text-align:left;background:#f8f9fa;padding:12px;border-radius:10px;border-left:5px solid #CD7F32;line-height:1.9;position:relative;z-index:10}
 .holiday-note strong.title{color:#CD7F32;display:block;margin-bottom:8px;font-size:15px}
 .holiday-note .holiday-item{display:inline-block;padding:4px 10px;margin:4px 4px;border-radius:6px;background:#fff;border:1px solid #eee;font-size:14px}
 .holiday-note .holiday-item.current{background:#FFE8C9;border:2px solid #CD7F32;color:#6b3a06;font-weight:bold}
-.ferien-note{display:none;margin-top:16px;font-size:14px;color:#666;text-align:left;background:#e7f6f8;padding:12px;border-radius:10px;border-left:5px solid #17a2b8;line-height:1.8}
+.ferien-note{display:none;margin-top:16px;font-size:14px;color:#666;text-align:left;background:#e7f6f8;padding:12px;border-radius:10px;border-left:5px solid #17a2b8;line-height:1.8;position:relative;z-index:10}
 .ferien-note strong{color:#17a2b8;font-size:15px}
-.reminders-box{display:none;margin-top:22px;text-align:left;background:#eef6ff;padding:14px 18px;border-radius:12px;border-left:6px solid #0056b3;font-size:15px}
+.reminders-box{display:none;margin-top:22px;text-align:left;background:#eef6ff;padding:14px 18px;border-radius:12px;border-left:6px solid #0056b3;font-size:15px;position:relative;z-index:10}
 .reminders-box strong{display:block;color:#0056b3;font-size:16px;margin-bottom:10px}
 .reminders-box ul{margin:0;padding-left:0;list-style:none;font-size:15px;color:#333}
 .reminders-box li{padding:8px 0;border-bottom:1px solid #d6e7ff}
 .reminders-box li:last-child{border-bottom:none}
 .reminders-box .when{color:#666;font-size:14px}
-.paypal-note{margin-top:28px;padding:18px;background:#f0f4ff;border-radius:12px;border:1px solid #c3d4ff;text-align:center;font-size:15px;color:#333;line-height:1.6}
+.paypal-note{margin-top:28px;padding:18px;background:#f0f4ff;border-radius:12px;border:1px solid #c3d4ff;text-align:center;font-size:15px;color:#333;line-height:1.6;position:relative;z-index:10}
 .paypal-note p{margin:0 0 14px 0}
 .paypal-btn{display:inline-block;background:#0070ba;color:#fff;padding:14px 24px;border-radius:10px;text-decoration:none;font-size:17px;font-weight:bold;transition:transform .1s ease, filter .1s ease}
 .paypal-btn:active{transform:scale(0.95);filter:brightness(0.9)}
-.privacy-footer-link{display:inline-block;margin:18px auto 4px;padding:10px 16px;font-size:14px;color:#495057;background:#f1f3f5;border:1px solid #dee2e6;border-radius:10px;text-decoration:none;font-weight:600;transition:transform .1s ease,background .15s ease}
+.privacy-footer-link{display:inline-block;margin:18px auto 4px;padding:10px 16px;font-size:14px;color:#495057;background:#f1f3f5;border:1px solid #dee2e6;border-radius:10px;text-decoration:none;font-weight:600;transition:transform .1s ease,background .15s ease;position:relative;z-index:10}
 .privacy-footer-link:hover{background:#e9ecef}
 .privacy-footer-link:active{transform:scale(0.96)}
 body.dark .privacy-footer-link{color:#c0c5cb;background:#2a2e33;border-color:#3a3f44}
@@ -158,8 +158,8 @@ body.dark .privacy-footer-link:hover{background:#3a3f44}
 @keyframes notifIn{from{opacity:0;transform:translateX(-50%) translateY(-18px)}to{opacity:1;transform:translateX(-50%) translateY(0)}}
 .notif-banner strong{display:block;font-size:18px;margin-bottom:6px}
 .notif-banner-close{position:absolute;top:8px;right:12px;background:transparent;color:#fff;border:none;font-size:28px;line-height:1;padding:2px 12px;cursor:pointer;font-weight:bold;font-family:inherit}
-.notif-info{font-size:13px;color:#666;background:#f1f3f5;padding:10px 12px;border-radius:8px;margin-top:14px;line-height:1.6;text-align:left}
-.err-box{display:none;background:#f8d7da;color:#721c24;padding:12px;border-radius:9px;border:1px solid #dc3545;margin-bottom:12px;font-size:14px;text-align:left;font-family:monospace;white-space:pre-wrap}
+.notif-info{font-size:13px;color:#666;background:#f1f3f5;padding:10px 12px;border-radius:8px;margin-top:14px;line-height:1.6;text-align:left;position:relative;z-index:10}
+.err-box{display:none;background:#f8d7da;color:#721c24;padding:12px;border-radius:9px;border:1px solid #dc3545;margin-bottom:12px;font-size:14px;text-align:left;font-family:monospace;white-space:pre-wrap;position:relative;z-index:10}
 .hint-row{font-size:13px;color:#666;margin-top:-8px;margin-bottom:14px;line-height:1.5}
 .donate-text{font-size:16px;line-height:1.6;color:#444;margin:12px 0 8px 0}
 .donate-text b{color:#0056b3}
@@ -445,31 +445,36 @@ body.dark .plan-share-box{background:#1a2330;color:#c0c5cb}
 .plan-share-box textarea{width:100%;min-height:80px;padding:8px;font-size:12px;border:1px solid #ccc;border-radius:6px;font-family:monospace;box-sizing:border-box;resize:vertical;margin-top:6px}
 body.dark .plan-share-box textarea{background:#2a2e33;color:#e4e6ea;border-color:#3a3f44}
 
-/* === Halloween Bats === */
-.halloween-bats{position:fixed;inset:0;pointer-events:none;z-index:50;overflow:hidden}
-.bat{position:absolute;top:0;left:0;color:#2a1a3a;opacity:.38;will-change:transform;animation:bat-fly linear infinite}
-body.dark .bat{color:#a088ff;opacity:.4}
-.bat svg{width:100%;height:100%;display:block;animation:bat-flap .34s ease-in-out infinite alternate;transform-origin:center}
-@keyframes bat-fly{
-  0%{transform:translate(-60px,calc(var(--y,10vh) - 4vh)) rotate(-8deg)}
-  25%{transform:translate(25vw,calc(var(--y,10vh) + 4vh)) rotate(8deg)}
-  50%{transform:translate(50vw,calc(var(--y,10vh) - 3vh)) rotate(-6deg)}
-  75%{transform:translate(75vw,calc(var(--y,10vh) + 5vh)) rotate(10deg)}
-  100%{transform:translate(calc(100vw + 60px),calc(var(--y,10vh) + 2vh)) rotate(-8deg)}
+/* === Effekte Layer (Fledermäuse, Schnee, Blätter) === */
+.effects-layer{position:absolute;inset:0;pointer-events:none;overflow:hidden;z-index:5;border-radius:inherit}
+.effect-particle{position:absolute;top:-50px;will-change:transform}
+.bat-particle{position:absolute;will-change:transform;animation:fly-across linear infinite}
+.bat-particle svg{width:100%;height:100%;display:block;animation:bat-flap .34s ease-in-out infinite alternate;transform-origin:center}
+@keyframes fly-across{
+  0%{transform:translateX(-100px) translateY(0) rotate(-5deg)}
+  25%{transform:translateX(25vw) translateY(15px) rotate(5deg)}
+  50%{transform:translateX(50vw) translateY(-10px) rotate(-5deg)}
+  75%{transform:translateX(75vw) translateY(20px) rotate(5deg)}
+  100%{transform:translateX(calc(100vw + 100px)) translateY(0) rotate(-5deg)}
 }
 @keyframes bat-flap{
   0%{transform:scaleY(1)}
-  100%{transform:scaleY(.82)}
+  100%{transform:scaleY(.8)}
 }
-@media (prefers-reduced-motion: reduce){.halloween-bats{display:none}}
-@media (max-width:600px){
-  .bat{opacity:.3}
-  body.dark .bat{opacity:.35}
+@keyframes fall-down{
+  0%{transform:translateY(-50px) rotate(0deg);opacity:1}
+  100%{transform:translateY(120vh) rotate(360deg);opacity:0.8}
 }
+@keyframes sway{
+  0%,100%{transform:translateX(0)}
+  50%{transform:translateX(30px)}
+}
+@media (prefers-reduced-motion: reduce){.effects-layer{display:none!important}}
 </style>
 </head>
 <body>
-<div class="container">
+<div class="container" id="mainContainer">
+<div class="effects-layer" id="effectsLayer"></div>
 <h2>Schichtzeit</h2>
 <button class="top-btn share-btn" id="shareBtn" title="Teilen" aria-label="Teilen"><svg width="26" height="26" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7s-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81 1.66 0 3-1.34 3-3s-1.34-3-3-3-3 1.34-3 3c0 .24.04.47.09.7L8.04 9.81C7.5 9.31 6.79 9 6 9c-1.66 0-3 1.34-3 3s1.34 3 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.16c-.05.21-.08.43-.08.65 0 1.61 1.31 2.92 2.92 2.92s2.92-1.31 2.92-2.92-1.31-2.92-2.92-2.92z"/></svg></button>
 <button class="top-btn settings-btn" id="settingsBtn" title="Einstellungen" aria-label="Einstellungen"><svg width="26" height="26" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M19.14 12.94c.04-.3.06-.61.06-.94 0-.32-.02-.64-.07-.94l2.03-1.58c.18-.14.23-.41.12-.61l-1.92-3.32c-.12-.22-.37-.29-.59-.22l-2.39.96c-.5-.38-1.03-.7-1.62-.94l-.36-2.54c-.04-.24-.24-.41-.48-.41h-3.84c-.24 0-.43.17-.47.41l-.36 2.54c-.59.24-1.13.57-1.62.94l-2.39-.96c-.22-.08-.47 0-.59.22L2.74 8.87c-.12.21-.08.47.12.61l2.03 1.58c-.05.3-.09.63-.09.94s.02.64.07.94l-2.03 1.58c-.18.14-.23.41-.12.61l1.92 3.32c.12.22.37.29.59.22l2.39-.96c.5.38 1.03.7 1.62.94l.36 2.54c.05.24.24.41.48.41h3.84c.24 0 .44-.17.47-.41l.36-2.54c.59-.24 1.13-.56 1.62-.94l2.39.96c.22.08.47 0 .59-.22l1.92-3.32c.12-.22.07-.47-.12-.61l-2.01-1.58zM12 15.6c-1.98 0-3.6-1.62-3.6-3.6s1.62-3.6 3.6-3.6 3.6 1.62 3.6 3.6-1.62 3.6-3.6 3.6z"/></svg></button>
@@ -580,6 +585,15 @@ body.dark .bat{color:#a088ff;opacity:.4}
 <div class="field-label">Design / Modus</div>
 <div class="theme-row"><button type="button" class="theme-choice" data-theme="light">&#x2600;&#xFE0F; Hell</button><button type="button" class="theme-choice" data-theme="dark">&#x1F319; Dunkel</button></div>
 <div class="hint-row">Unabh&auml;ngig von der System-Einstellung.</div>
+<div class="field-label">Effekte im Kalender</div>
+<select id="effectSelect">
+<option value="auto">Automatisch (Jahreszeiten)</option>
+<option value="bats">Flederm&auml;use (Halloween)</option>
+<option value="snowflakes">Schneeflocken (Winter)</option>
+<option value="leaves">Bl&auml;tter (Herbst)</option>
+<option value="none">Keine Effekte</option>
+</select>
+<div class="hint-row">W&auml;hle ein Effekt-Design oder schalte es komplett aus.</div>
 <button class="help-btn" id="openHelpBtn">Anleitung / Hilfe &ouml;ffnen</button>
 <button class="help-btn" id="settingsPrivacyBtn" style="background:#495057;">&#x1F512; Datenschutz / Privatsph&auml;re</button>
 <div class="modal-buttons"><button id="settingsCancelBtn" style="background:#6c757d;">Abbrechen</button><button id="settingsSaveBtn" style="background:#007bff;">Speichern</button></div>
@@ -605,7 +619,7 @@ body.dark .bat{color:#a088ff;opacity:.4}
 <li><b>Krank</b> / <b>Urlaub</b> &ndash; Klick markiert Tag sofort.</li>
 </ul>
 <h4>3. Heute erkennen</h4>
-<p>Der heutige Tag ist <b>dunkelblau umrandet</b> und die Tageszahl hat einen <b>dunkelblauen Hintergrund</b>. Feiertage haben einen <b>bronzenen Rand und ein Emoji-Symbol</b> in der Ecke (&#x1F389; Neujahr, &#x1F384; Weihnachten, &#x1F423; Ostern, &#x1F1E9;&#x1F1EA; Tag der Deutschen Einheit &hellip;).</p>
+<p>Der heutige Tag ist <b>dunkelblau umrandet</b> und die Tageszahl hat einen <b>dunkelblauen Hintergrund</b>. Feiertage haben einen <b>bronzenen Rand und ein Emoji-Symbol</b> in der Ecke.</p>
 <h4>4. Eigene Termine</h4>
 <p>Bis zu 4 Termine pro Tag, farblich getrennt. Symbol sitzt in der Fl&auml;che, Beschreibung an der Kante.</p>
 <h4>5. Lange dr&uuml;cken</h4>
@@ -614,8 +628,8 @@ body.dark .bat{color:#a088ff;opacity:.4}
 <p>Klappt weich auf und zeigt Urlaub / Krank / Sonstige / Einbringer.</p>
 <h4>7. Eigene Pl&auml;ne teilen</h4>
 <p>Im Plan-Editor auf <b>&#x1F517; Teilen</b> tippen &ndash; der Link enth&auml;lt deinen kompletten Plan und kann weitergegeben werden. Beim &Ouml;ffnen des Links fragt die App, ob der Plan importiert werden soll.</p>
-<h4>8. Wecker</h4>
-<p>Wecker pro Schicht einstellen &ndash; diese Funktion ist noch nicht finanziert.</p>
+<h4>8. Effekte</h4>
+<p>In den Einstellungen kannst du festlegen, ob kleine Animationen (Flederm&auml;use, Schnee, Bl&auml;tter) im Kalender angezeigt werden. Standardm&auml;&szlig;ig sind sie auf "Automatisch" gestellt und passen sich der Jahreszeit an.</p>
 <h4>9. Datenschutz</h4>
 <p>Alle Daten bleiben <b>lokal auf deinem Ger&auml;t</b>. Keine Server, kein Tracking, keine Werbung, keine Registrierung. Details &uuml;ber den Button <b>&#x1F512; Datenschutz</b>.</p>
 <h4>10. Fehler melden</h4>
@@ -769,6 +783,7 @@ var selectedColor='#FFD700';
 var selectedSymbol='\uD83D\uDD14';
 var shiftSystem='5';
 var currentTheme='light';
+var currentEffect='auto';
 function safeParse(s,f){try{var v=JSON.parse(s);return(v==null)?f:v;}catch(e){return f;}}
 function safeGetArray(k){var v=safeParse(localStorage.getItem(k),[]);return Array.isArray(v)?v:[];}
 function safeGetObject(k){var v=safeParse(localStorage.getItem(k),{});return(v&&typeof v==='object'&&!Array.isArray(v))?v:{};}
@@ -776,6 +791,7 @@ try{selectedColor=localStorage.getItem('schichtzeitColor')||'#FFD700';}catch(e){
 try{selectedSymbol=localStorage.getItem('schichtzeitSymbol')||'\uD83D\uDD14';}catch(e){}
 try{shiftSystem=localStorage.getItem('schichtzeitShiftSystem')||'5';}catch(e){}
 try{currentTheme=localStorage.getItem('schichtzeitTheme')||'light';}catch(e){}
+try{currentEffect=localStorage.getItem('schichtzeitEffect')||'auto';}catch(e){}
 if(shiftSystem!=='5'&&shiftSystem!=='4x12'&&shiftSystem!=='3x12'&&shiftSystem!=='4vk'&&shiftSystem!=='custom'&&shiftSystem!=='blank')shiftSystem='5';
 var sickDays=safeGetArray('schichtzeitSickDays');
 var vacationDays=safeGetArray('schichtzeitVacationDays');
@@ -828,6 +844,7 @@ function openSettings(){
     document.getElementById('settingsYearHint').textContent=y;
     document.getElementById('vacQuotaInput').value=getVacationQuota(y);
     document.getElementById('shiftSystemSelect').value=shiftSystem;
+    document.getElementById('effectSelect').value=currentEffect;
     document.getElementById('managePlansBtn').style.display=(shiftSystem==='custom')?'block':'none';
     applyTheme(currentTheme);
     document.getElementById('settingsModal').classList.add('active');
@@ -840,6 +857,12 @@ function saveSettings(){
     var newSys=document.getElementById('shiftSystemSelect').value;
     if(newSys!==shiftSystem){shiftSystem=newSys;rebuildGroupOptions(true);rebuildLegend();}
     try{localStorage.setItem('schichtzeitShiftSystem',shiftSystem);}catch(e){}
+    var newEffect=document.getElementById('effectSelect').value;
+    if(newEffect!==currentEffect){
+        currentEffect=newEffect;
+        try{localStorage.setItem('schichtzeitEffect',currentEffect);}catch(e){}
+        applyEffects();
+    }
     closeSettings();updateYearOverview();renderCalendar();
     if(shiftSystem==='custom'&&Object.keys(customPlans).length===0){
         showToast('Noch kein eigener Plan \u2013 lege jetzt einen an!');
@@ -855,7 +878,7 @@ function closeBackupMenu(){document.getElementById('backupMenuModal').classList.
 function openPrivacy(){document.getElementById('privacyModal').classList.add('active');}
 function closePrivacy(){document.getElementById('privacyModal').classList.remove('active');}
 function getBackupJSON(){
-    var b={version:9,date:new Date().toISOString(),shiftSystem:shiftSystem,group:document.getElementById('groupSelect').value,color:selectedColor,sickDays:sickDays,vacationDays:vacationDays,einbringerDays:einbringerDays,sonstigeDays:sonstigeDays,notifiedFlags:notifiedFlags,vacationQuota:vacationQuota,theme:currentTheme,customPlans:customPlans};
+    var b={version:9,date:new Date().toISOString(),shiftSystem:shiftSystem,group:document.getElementById('groupSelect').value,color:selectedColor,sickDays:sickDays,vacationDays:vacationDays,einbringerDays:einbringerDays,sonstigeDays:sonstigeDays,notifiedFlags:notifiedFlags,vacationQuota:vacationQuota,theme:currentTheme,customPlans:customPlans,effect:currentEffect};
     return JSON.stringify(b,null,2);
 }
 function getBackupFilename(){var n=new Date();return 'Schichtzeit_Backup_'+n.getFullYear()+'-'+String(n.getMonth()+1).padStart(2,'0')+'-'+String(n.getDate()).padStart(2,'0')+'_'+String(n.getHours()).padStart(2,'0')+'-'+String(n.getMinutes()).padStart(2,'0')+'.json';}
@@ -1111,6 +1134,7 @@ function resetData(){if(confirm('M\u00F6chtest du wirklich alle Markierungen l\u
 function applyRestoredData(data){
     sickDays=data.sickDays||[];vacationDays=data.vacationDays||[];einbringerDays=data.einbringerDays||[];sonstigeDays=data.sonstigeDays||{};notifiedFlags=data.notifiedFlags||{};
     if(data.customPlans&&typeof data.customPlans==='object'){customPlans=data.customPlans;saveCustomPlans();}
+    if(data.effect){currentEffect=data.effect;try{localStorage.setItem('schichtzeitEffect',currentEffect);}catch(e){}}
     Object.keys(sonstigeDays).forEach(function(k){var v=sonstigeDays[k];if(typeof v==='string')sonstigeDays[k]=[{id:genEntryId(),color:v,text:'',time:'',notify:false,icon:'\uD83D\uDD14'}];else if(v&&typeof v==='object'&&!Array.isArray(v)){if(!v.id)v.id=genEntryId();if(!v.icon)v.icon='\uD83D\uDD14';sonstigeDays[k]=[v];}else if(Array.isArray(v)){for(var i=0;i<v.length;i++){if(v[i]&&typeof v[i]==='object'){if(!v[i].id)v[i].id=genEntryId();if(!v[i].icon)v[i].icon='\uD83D\uDD14';}}}});
     if(data.vacationQuota&&typeof data.vacationQuota==='object'){vacationQuota=data.vacationQuota;try{localStorage.setItem('schichtzeitVacationQuota',JSON.stringify(vacationQuota));}catch(e){}}
     if(data.shiftSystem){shiftSystem=data.shiftSystem;try{localStorage.setItem('schichtzeitShiftSystem',shiftSystem);}catch(e){}}
@@ -1122,6 +1146,7 @@ function applyRestoredData(data){
     document.getElementById('shiftSystemSelect').value=shiftSystem;
     if(data.group){var gs=document.getElementById('groupSelect');var opt=false;for(var i=0;i<gs.options.length;i++)if(gs.options[i].value===data.group)opt=true;if(opt)gs.value=data.group;}
     renderCalendar();
+    applyEffects();
 }
 var editingPlanId=null;var editingPlanBlocks=[];
 function openPlanEditor(){document.getElementById('planEditorModal').classList.add('active');showPlanList();}
@@ -1227,6 +1252,86 @@ function handlePlanImport(){
     history.replaceState(null,'',location.href.split('#')[0]);
     showToast('Plan "'+data.n+'" importiert');
 }
+
+/* === Effects Engine === */
+function applyEffects(){
+    var layer=document.getElementById('effectsLayer');
+    if(!layer)return;
+    layer.innerHTML='';
+    if(currentEffect==='none')return;
+    
+    var activeEffect=currentEffect;
+    if(activeEffect==='auto'){
+        var now=new Date();var mo=now.getMonth();var da=now.getDate();
+        if((mo===9&&da>=20)||(mo===10&&da<=5))activeEffect='bats';
+        else if(mo===11||mo===0)activeEffect='snowflakes';
+        else if(mo===8||mo===10)activeEffect='leaves';
+        else activeEffect='none';
+    }
+    
+    if(activeEffect==='none')return;
+    
+    var isDark=document.body.classList.contains('dark');
+    var numParticles=window.innerWidth<600?5:9;
+    
+    if(activeEffect==='bats'){
+        var batSVG='<svg viewBox="0 0 100 50" xmlns="http://www.w3.org/2000/svg">'
+            +'<path d="M48 25 C40 15, 20 5, 5 15 C12 18, 15 25, 10 30 C18 28, 22 33, 20 38 C28 34, 35 38, 40 42 C42 35, 45 30, 48 25 Z" fill="'+(isDark?'#a088ff':'#2a1a3a')+'"/>'
+            +'<path d="M52 25 C60 15, 80 5, 95 15 C88 18, 85 25, 90 30 C82 28, 78 33, 80 38 C72 34, 65 38, 60 42 C58 35, 55 30, 52 25 Z" fill="'+(isDark?'#a088ff':'#2a1a3a')+'"/>'
+            +'<ellipse cx="50" cy="28" rx="8" ry="12" fill="'+(isDark?'#a088ff':'#2a1a3a')+'"/>'
+            +'<path d="M44 20 L42 10 L48 18 Z" fill="'+(isDark?'#a088ff':'#2a1a3a')+'"/>'
+            +'<path d="M56 20 L58 10 L52 18 Z" fill="'+(isDark?'#a088ff':'#2a1a3a')+'"/>'
+            +'<circle cx="46" cy="24" r="3.5" fill="white"/>'
+            +'<circle cx="54" cy="24" r="3.5" fill="white"/>'
+            +'<circle cx="47" cy="24" r="1.5" fill="black"/>'
+            +'<circle cx="53" cy="24" r="1.5" fill="black"/>'
+            +'</svg>';
+        
+        for(var i=0;i<numParticles;i++){
+            var bat=document.createElement('div');
+            bat.className='bat-particle';
+            bat.innerHTML=batSVG;
+            var size=22+Math.random()*26;
+            var dur=12+Math.random()*10;
+            var del=-Math.random()*dur;
+            var yPos=6+Math.random()*42;
+            bat.style.width=size+'px';
+            bat.style.height=size+'px';
+            bat.style.top=yPos+'%';
+            bat.style.left='-100px';
+            bat.style.animationDuration=dur+'s';
+            bat.style.animationDelay=del+'s';
+            layer.appendChild(bat);
+        }
+    } else if(activeEffect==='snowflakes'){
+        for(var i=0;i<numParticles*2;i++){
+            var snow=document.createElement('div');
+            snow.className='effect-particle';
+            snow.textContent='\u2744\uFE0F';
+            snow.style.left=Math.random()*100+'%';
+            snow.style.fontSize=(10+Math.random()*15)+'px';
+            snow.style.opacity=(0.4+Math.random()*0.5);
+            snow.style.animation='fall-down '+(6+Math.random()*8)+'s linear infinite';
+            snow.style.animationDelay=(-Math.random()*10)+'s';
+            snow.style.color=isDark?'#fff':'#82ccdd';
+            layer.appendChild(snow);
+        }
+    } else if(activeEffect==='leaves'){
+        var leafIcons=['\uD83C\uDF42','\uD83C\uDF41','\uD83C\uDF43'];
+        for(var i=0;i<numParticles*1.5;i++){
+            var leaf=document.createElement('div');
+            leaf.className='effect-particle';
+            leaf.textContent=leafIcons[Math.floor(Math.random()*leafIcons.length)];
+            leaf.style.left=Math.random()*100+'%';
+            leaf.style.fontSize=(14+Math.random()*16)+'px';
+            leaf.style.opacity=(0.5+Math.random()*0.5);
+            leaf.style.animation='fall-down '+(8+Math.random()*10)+'s linear infinite, sway '+(3+Math.random()*3)+'s ease-in-out infinite alternate';
+            leaf.style.animationDelay=(-Math.random()*10)+'s';
+            layer.appendChild(leaf);
+        }
+    }
+}
+
 function init(){
     applyTheme(currentTheme);
     document.getElementById('shareBtn').addEventListener('click',shareSchichtzeit);
@@ -1239,7 +1344,7 @@ function init(){
     document.getElementById('helpModal').addEventListener('click',function(e){if(e.target.id==='helpModal')closeHelp();});
     document.getElementById('shiftSystemSelect').addEventListener('change',function(e){document.getElementById('managePlansBtn').style.display=(e.target.value==='custom')?'block':'none';});
     document.getElementById('managePlansBtn').addEventListener('click',function(){closeSettings();openPlanEditor();});
-    var tb=document.querySelectorAll('.theme-choice');for(var t=0;t<tb.length;t++){(function(btn){btn.addEventListener('click',function(){applyTheme(btn.getAttribute('data-theme'));});})(tb[t]);}
+    var tb=document.querySelectorAll('.theme-choice');for(var t=0;t<tb.length;t++){(function(btn){btn.addEventListener('click',function(){applyTheme(btn.getAttribute('data-theme'));applyEffects();});})(tb[t]);}
     document.getElementById('resetBtn').addEventListener('click',resetData);
     document.getElementById('yearOverviewBtn').addEventListener('click',toggleYearOverview);
     document.getElementById('yearOverviewCloseBtn').addEventListener('click',toggleYearOverview);
@@ -1309,52 +1414,17 @@ function init(){
     document.addEventListener('visibilitychange',function(){if(!document.hidden){syncClock();checkReminders();scheduleMinuteTick();}});
     window.addEventListener('focus',function(){syncClock();checkReminders();});
     document.getElementById('shiftSystemSelect').value=shiftSystem;
+    document.getElementById('effectSelect').value=currentEffect;
     rebuildGroupOptions(false);rebuildLegend();
     document.getElementById('sonstigeColor').value=selectedColor;
     updateColorPresetsActive();
     syncClock();updateNotifButton();scheduleMinuteTick();
+    applyEffects();
     setTimeout(checkReminders,3000);
     setInterval(checkReminders,30*1000);
     setInterval(updateRemindersList,60*1000);
     try{handlePlanImport();}catch(e){console.error('Plan-Import:',e);}
     window.addEventListener('hashchange',function(){try{handlePlanImport();}catch(e){}});
-
-    /* === Halloween Fledermäuse === */
-    try{
-        var now=new Date();
-        var mo=now.getMonth();
-        var da=now.getDate();
-        var isHalloween=(mo===9&&da>=25)||(mo===10&&da<=3);
-        var forceBats=location.search.indexOf('bats=1')!==-1;
-        var disableBats=location.search.indexOf('nobats=1')!==-1;
-        if(!disableBats&&(isHalloween||forceBats)){
-            if(!window.matchMedia||!window.matchMedia('(prefers-reduced-motion: reduce)').matches){
-                var batsWrap=document.createElement('div');
-                batsWrap.className='halloween-bats';
-                batsWrap.setAttribute('aria-hidden','true');
-                document.body.appendChild(batsWrap);
-                var BAT_SVG='<svg viewBox="0 0 64 32" xmlns="http://www.w3.org/2000/svg"><path d="M32 12 C30 6 26 2 20 4 C22 8 18 10 14 8 C10 6 4 8 2 12 C6 12 8 14 6 16 C4 18 2 18 2 22 C6 20 10 20 12 22 C16 20 20 20 24 22 C26 20 28 16 30 14 L32 12 C34 14 36 20 38 22 C42 20 46 20 50 22 C52 20 56 20 60 22 C60 18 58 18 56 16 C54 14 56 12 60 12 C58 8 52 6 48 8 C44 10 40 8 42 4 C36 2 34 6 32 12 Z" fill="currentColor"/></svg>';
-                var numBats=window.innerWidth<600?5:9;
-                for(var bi=0;bi<numBats;bi++){
-                    var bat=document.createElement('div');
-                    bat.className='bat';
-                    bat.innerHTML=BAT_SVG;
-                    var size=22+Math.random()*26;
-                    var dur=12+Math.random()*10;
-                    var del=-Math.random()*dur;
-                    var yPos=6+Math.random()*42;
-                    var rot=(Math.random()-0.5)*8;
-                    bat.style.width=size+'px';
-                    bat.style.height=size+'px';
-                    bat.style.animationDuration=dur+'s';
-                    bat.style.animationDelay=del+'s';
-                    bat.style.setProperty('--y',yPos+'vh');
-                    bat.style.setProperty('--r',rot+'deg');
-                    batsWrap.appendChild(bat);
-                }
-            }
-        }
-    }catch(e){console.warn('Bats:',e);}
 }
 if(document.readyState==='loading'){document.addEventListener('DOMContentLoaded',init);}else{init();}
 }catch(err){var box=document.getElementById('errBox');if(box){box.style.display='block';box.textContent='FEHLER: '+err.message;}}
