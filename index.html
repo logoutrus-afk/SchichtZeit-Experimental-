@@ -16,24 +16,18 @@
 body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial,sans-serif;background:#f4f4f9;color:#333;text-align:center;padding:8px;padding-top:env(safe-area-inset-top,8px);padding-bottom:env(safe-area-inset-bottom,8px);margin:0;-webkit-tap-highlight-color:transparent;font-size:17px}
 .container{position:relative;max-width:1400px;margin:0 auto;background:#fff;padding:14px;border-radius:14px;box-shadow:0 4px 18px rgba(0,0,0,0.1)}
 h2{margin:0 0 8px 0;color:#0056b3;font-size:32px;letter-spacing:.3px;position:relative;z-index:20}
-
-/* === Кнопки share/settings — теперь в одном ряду с числом (nav-row) === */
 .top-btn{background:#f1f3f5;color:#333;border:1px solid #ccc;border-radius:10px;width:40px;height:40px;font-size:20px;font-weight:bold;cursor:pointer;line-height:1;padding:0;font-family:inherit;display:inline-flex;align-items:center;justify-content:center;flex-shrink:0;box-sizing:border-box;z-index:20;vertical-align:middle}
 .top-btn:active{background:#e2e6ea}
 .top-btn svg{width:22px;height:22px;display:block}
-
 .online-status{font-size:14px;padding:5px 11px;border-radius:16px;display:inline-block;margin-bottom:0;font-weight:bold;white-space:nowrap;position:relative;z-index:20}
 .online-status.online{background:#d4edda;color:#155724}
 .online-status.loading{background:#fff3cd;color:#856404}
 .top-row{display:flex;justify-content:center;align-items:center;margin-bottom:10px;font-size:16px;gap:10px;flex-wrap:wrap;position:relative;z-index:20}
 .top-row label{display:inline-flex;align-items:center;gap:5px;font-size:16px;font-weight:normal}
 .top-row select{padding:7px 12px;font-size:15px}
-
-/* Nav-row: все элементы (share, стрелки, месяц, настройки) в ОДНОЙ линии одинаковой высоты */
 .nav-row{display:flex;justify-content:center;align-items:center;gap:8px;margin-bottom:10px;flex-wrap:nowrap;position:relative;z-index:20}
 .nav-row button#prevBtn,.nav-row button#nextBtn{min-width:40px;height:40px;padding:0;font-size:20px;line-height:1;border-radius:10px;font-weight:bold;box-sizing:border-box;display:inline-flex;align-items:center;justify-content:center;flex-shrink:0}
 #monthDisplay{font-size:24px;font-weight:bold;min-width:220px;height:40px;line-height:40px;display:inline-flex;align-items:center;justify-content:center;text-align:center;box-sizing:border-box;padding:0 8px}
-
 select,button{padding:13px 20px;font-size:17px;border-radius:9px;border:1px solid #ccc;background:#fff;cursor:pointer;font-family:inherit}
 button{background:#007bff;color:#fff;border:none;font-weight:bold}
 button:active{background:#0056b3}
@@ -70,6 +64,10 @@ button:active,.top-btn:active,.symbol-btn:active{transform:scale(0.94);filter:br
 @keyframes rain-splash{0%,100%{transform:scale(.3);opacity:0}50%{transform:scale(1.3);opacity:.8}}
 @keyframes lightning-flash{0%,80%,100%{opacity:0;transform:scale(.8)}85%,90%{opacity:1;transform:scale(1)}87%,93%{opacity:.4;transform:scale(.95)}}
 @keyframes bat-fly{0%{left:-80px;opacity:0;transform:translateY(0) rotate(-4deg)}8%{opacity:.85}30%{transform:translateY(-16px) rotate(4deg)}60%{transform:translateY(12px) rotate(-3deg)}92%{opacity:.85}100%{left:calc(100% + 80px);opacity:0;transform:translateY(0) rotate(0)}}
+@keyframes today-glow{
+  0%,100%{box-shadow:inset 0 0 0 1.5px rgba(255,255,255,0.9),0 0 0 2px rgba(13,71,161,0.4),0 0 18px 5px rgba(13,71,161,0.55)}
+  50%{box-shadow:inset 0 0 0 1.5px rgba(255,255,255,0.9),0 0 0 2px rgba(13,71,161,0.55),0 0 26px 8px rgba(13,71,161,0.75)}
+}
 
 .calendar{display:grid;grid-template-columns:repeat(7,1fr);gap:8px;touch-action:pan-y;max-width:none;margin:0 auto;position:relative;z-index:10}
 .calendar.anim-left{animation:cal-slide-left .28s ease}
@@ -77,7 +75,7 @@ button:active,.top-btn:active,.symbol-btn:active{transform:scale(0.94);filter:br
 @keyframes cal-slide-left{from{opacity:.35;transform:translateX(24px)}to{opacity:1;transform:translateX(0)}}
 @keyframes cal-slide-right{from{opacity:.35;transform:translateX(-24px)}to{opacity:1;transform:translateX(0)}}
 .day-header{font-weight:bold;font-size:19px;padding:8px 0;color:#555}
-.day{aspect-ratio:1/1.2;display:flex;flex-direction:column;align-items:center;justify-content:center;border-radius:12px;font-size:clamp(16px,1.8vw,26px);font-weight:900;border:1px solid #eee;position:relative;cursor:pointer;line-height:1;-webkit-font-smoothing:antialiased;overflow:hidden;transition:transform .1s ease;user-select:none;-webkit-user-select:none;-moz-user-select:none;-ms-user-select:none;-webkit-touch-callout:none}
+.day{aspect-ratio:1/1.2;display:flex;flex-direction:column;align-items:center;justify-content:center;border-radius:12px;font-size:clamp(16px,1.8vw,26px);font-weight:900;border:1px solid #eee;position:relative;cursor:pointer;line-height:1;-webkit-font-smoothing:antialiased;overflow:hidden;transition:transform .1s ease;user-select:none;-webkit-user-select:none;-moz-user-select:none;-ms-user-select:none;-webkit-touch-callout:none;box-sizing:border-box}
 @media (min-width:900px){ .day{aspect-ratio:auto;height:216px} }
 .day:active{transform:scale(0.96)}
 .day.F,.day.T{background-color:#FFD700;color:#000}
@@ -90,7 +88,7 @@ button:active,.top-btn:active,.symbol-btn:active{transform:scale(0.94);filter:br
 .day.sonstige{border:2px solid rgba(0,0,0,0.35);color:#fff;text-shadow:-1px -1px 0 #000,1px -1px 0 #000,-1px 1px 0 #000,1px 1px 0 #000,0 0 3px rgba(0,0,0,0.7)}
 .day.sonstige .date-num{color:#fff;text-shadow:-1px -1px 0 #000,1px -1px 0 #000,-1px 1px 0 #000,1px 1px 0 #000,0 0 2px rgba(0,0,0,0.7)}
 .day.empty{background:transparent;border:none;cursor:default}
-.day.today{border:5px solid #0d47a1;box-shadow:0 4px 14px rgba(13,71,161,0.45);z-index:6;font-weight:900}
+.day.today{border:5px solid #0d47a1;box-shadow:inset 0 0 0 1.5px rgba(255,255,255,0.9),0 0 0 2px rgba(13,71,161,0.4),0 0 18px 5px rgba(13,71,161,0.55);z-index:6;font-weight:900;animation:today-glow 3s ease-in-out infinite}
 .day.today .date-num{background:#0d47a1;color:#fff;padding:2px 8px;border-radius:8px;text-decoration:none;font-weight:900;box-shadow:0 2px 6px rgba(13,71,161,0.45);z-index:9;line-height:1;min-width:22px;display:inline-block;text-align:center}
 .day.feiertag{border:5px solid #CD7F32;z-index:3}
 .day.today.feiertag{border-color:#0d47a1}
@@ -99,7 +97,7 @@ button:active,.top-btn:active,.symbol-btn:active{transform:scale(0.94);filter:br
 .ferien-marker{position:absolute;bottom:5px;left:8px;font-size:clamp(12px,1.6vw,17px);color:#17a2b8;font-weight:bold;background:#fff;border-radius:4px;padding:1px 6px;line-height:1.1;z-index:3}
 .day .date-num{font-size:clamp(13px,1.4vw,19px);position:absolute;top:8px;left:10px;color:#555;font-weight:bold;line-height:1;z-index:3}
 .day.sonstige .date-num{font-weight:bold}
-.day .split-layer{position:absolute;top:0;left:0;right:0;bottom:0;z-index:0;pointer-events:none;border-radius:inherit;overflow:hidden}
+.day .split-layer{position:absolute;top:0;left:0;right:0;bottom:0;z-index:0;pointer-events:none;overflow:hidden}
 .day .split-layer span{position:absolute;top:0;left:0;right:0;bottom:0;display:block;pointer-events:none}
 .day .term-icon{position:absolute;transform:translate(-50%,-50%);font-size:clamp(22px,2.6vw,34px);line-height:1;z-index:2;pointer-events:none;filter:drop-shadow(0 2px 3px rgba(0,0,0,0.75))}
 .day .term-text{position:absolute;font-size:clamp(10px,1.1vw,14px);font-weight:bold;color:#fff;text-shadow:0 0 3px rgba(0,0,0,0.95),0 1px 3px rgba(0,0,0,0.95);pointer-events:none;z-index:3;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;-webkit-font-smoothing:antialiased}
@@ -241,7 +239,7 @@ body.dark .day-header{color:#a0a5ab}
 body.dark .day._{background:#232629;color:#5a5f66;border-color:#2f3338}
 body.dark .day.empty{background:transparent}
 body.dark .day .date-num{color:#c0c5cb}
-body.dark .day.today{border-color:#5c9dff;box-shadow:0 4px 14px rgba(92,157,255,0.55)}
+body.dark .day.today{border-color:#5c9dff;box-shadow:inset 0 0 0 1.5px rgba(255,255,255,0.7),0 0 0 2px rgba(92,157,255,0.45),0 0 20px 6px rgba(92,157,255,0.65)}
 body.dark .day.today .date-num{background:#5c9dff;color:#0b1220}
 body.dark .day.today.feiertag{border-color:#5c9dff}
 body.dark .holiday-icon{filter:drop-shadow(0 1px 2px rgba(0,0,0,0.85))}
@@ -328,9 +326,9 @@ body.dark .lp-empty{color:#a0a5ab}
   .day-header{font-size:13px;padding:6px 0}
   .day{border-radius:7px;font-size:clamp(16px,5vw,24px);border-width:1px;aspect-ratio:1/1.18}
   .day .date-num{font-size:clamp(10px,2.6vw,13px);top:3px;left:4px}
-  .day.today{border-width:4px;box-shadow:0 3px 10px rgba(13,71,161,0.4)}
+  .day.today{border-width:4px;box-shadow:inset 0 0 0 1px rgba(255,255,255,0.9),0 0 0 1.5px rgba(13,71,161,0.4),0 0 10px 2px rgba(13,71,161,0.55);animation:today-glow-mobile 3s ease-in-out infinite}
   .day.today .date-num{padding:1px 5px;font-size:clamp(10px,2.6vw,13px);top:2px;left:2px;border-radius:5px;min-width:14px}
-  body.dark .day.today{box-shadow:0 3px 10px rgba(92,157,255,0.5)}
+  body.dark .day.today{box-shadow:inset 0 0 0 1px rgba(255,255,255,0.7),0 0 0 1.5px rgba(92,157,255,0.45),0 0 12px 3px rgba(92,157,255,0.65);animation:today-glow-mobile-dark 3s ease-in-out infinite}
   .day.feiertag{border-width:4px}
   .holiday-icon{font-size:13px;top:2px;right:3px}
   .day .term-icon{font-size:clamp(16px,5vw,22px)}
@@ -378,6 +376,15 @@ body.dark .lp-empty{color:#a0a5ab}
   .daytype-btn{font-size:11px;padding:8px 2px}
   .privacy-footer-link{font-size:12px;padding:8px 12px;margin:14px auto 4px}
 }
+@keyframes today-glow-mobile{
+  0%,100%{box-shadow:inset 0 0 0 1px rgba(255,255,255,0.9),0 0 0 1.5px rgba(13,71,161,0.4),0 0 10px 2px rgba(13,71,161,0.55)}
+  50%{box-shadow:inset 0 0 0 1px rgba(255,255,255,0.9),0 0 0 1.5px rgba(13,71,161,0.55),0 0 16px 4px rgba(13,71,161,0.75)}
+}
+@keyframes today-glow-mobile-dark{
+  0%,100%{box-shadow:inset 0 0 0 1px rgba(255,255,255,0.7),0 0 0 1.5px rgba(92,157,255,0.45),0 0 12px 3px rgba(92,157,255,0.65)}
+  50%{box-shadow:inset 0 0 0 1px rgba(255,255,255,0.7),0 0 0 1.5px rgba(92,157,255,0.6),0 0 18px 5px rgba(92,157,255,0.85)}
+}
+@media (prefers-reduced-motion: reduce){.day.today{animation:none!important}}
 @media (max-width:380px){
   .nav-row{gap:2px}
   .top-btn{width:28px;height:28px}
@@ -630,7 +637,7 @@ body.dark .plan-share-box textarea{background:#2a2e33;color:#e4e6ea;border-color
 <li><b>Krank</b> / <b>Urlaub</b> &ndash; Klick markiert Tag sofort.</li>
 </ul>
 <h4>3. Heute erkennen</h4>
-<p>Der heutige Tag ist <b>dunkelblau umrandet</b> und die Tageszahl hat einen <b>dunkelblauen Hintergrund</b>. Feiertage haben einen <b>bronzenen Rand und ein Emoji-Symbol</b> in der Ecke.</p>
+<p>Der heutige Tag ist <b>dunkelblau umrandet</b> und pulsiert sanft mit einem weichen Glow. Die Tageszahl hat einen <b>dunkelblauen Hintergrund</b>. Feiertage haben einen <b>bronzenen Rand und ein Emoji-Symbol</b> in der Ecke.</p>
 <h4>4. Eigene Termine</h4>
 <p>Bis zu 4 Termine pro Tag, farblich getrennt. Symbol sitzt in der Fl&auml;che, Beschreibung an der Kante.</p>
 <h4>5. Lange dr&uuml;cken</h4>
