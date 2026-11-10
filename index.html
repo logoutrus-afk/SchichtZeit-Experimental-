@@ -1,3 +1,4 @@
+```html
 <!DOCTYPE html>
 <html lang="de">
 <head>
@@ -372,7 +373,7 @@ body.dark .lp-empty{color:#a0a5ab}
   .lp-option{font-size:15px;padding:14px 14px;gap:10px}
   .lp-option .lp-ic{font-size:22px;width:28px}
   .lp-cancel{font-size:15px;padding:13px}
-  .daytype-label{font-size:7px;padding:1px 0;letter-spacing:0;line-height:1}
+  .daytype-label{font-size:7px;padding:1px 0;letter-spacing:0;line-height:1;bottom:4px;left:4px;right:4px;border-radius:0 0 5px 5px;}
   .daytype-btn{font-size:11px;padding:8px 2px}
   .privacy-footer-link{font-size:12px;padding:8px 12px;margin:14px auto 4px}
 }
@@ -424,8 +425,37 @@ body.easter-disco .day{animation:egg-disco .6s ease-in-out infinite alternate}
 .lp-empty{text-align:center;color:#999;font-style:italic;padding:16px 8px;font-size:15px}
 .lp-cancel{width:100%;padding:14px;background:#6c757d;color:#fff;border:none;border-radius:11px;font-size:16px;font-weight:bold;cursor:pointer;font-family:inherit;margin-top:4px}
 .lp-cancel:active{background:#565e64}
-.daytype-label{position:absolute;bottom:0;left:0;right:0;background:rgba(0,0,0,0.72);color:#fff;font-size:clamp(8px,0.85vw,11px);padding:2px 1px;text-align:center;font-weight:bold;line-height:1.1;z-index:8;pointer-events:none;letter-spacing:.2px;text-transform:uppercase;border-bottom-left-radius:inherit;border-bottom-right-radius:inherit;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-body.dark .daytype-label{background:rgba(0,0,0,0.85)}
+
+/* === Плашка Tages-Typ с 3D-эффектом и без дыр === */
+.daytype-label{
+  position:absolute;
+  bottom: 5px; 
+  left: 5px; 
+  right: 5px; 
+  background: linear-gradient(to bottom, #4a4a4a 0%, #1e1e1e 100%);
+  color:#fff;
+  font-size:clamp(8px,0.85vw,11px);
+  padding:3px 1px;
+  text-align:center;
+  font-weight:bold;
+  line-height:1.1;
+  z-index:8;
+  pointer-events:none;
+  letter-spacing:.2px;
+  text-transform:uppercase;
+  white-space:nowrap;
+  overflow:hidden;
+  text-overflow:ellipsis;
+  border-radius: 0 0 7px 7px; 
+  box-shadow: inset 0 2px 3px rgba(255,255,255,0.2), inset 0 -2px 4px rgba(0,0,0,0.6), 0 1px 2px rgba(0,0,0,0.4);
+  border-top: 1px solid rgba(0,0,0,0.5);
+}
+body.dark .daytype-label{
+  background: linear-gradient(to bottom, #333 0%, #111 100%);
+  box-shadow: inset 0 2px 3px rgba(255,255,255,0.1), inset 0 -2px 4px rgba(0,0,0,0.8), 0 1px 2px rgba(0,0,0,0.6);
+  border-top: 1px solid rgba(0,0,0,0.8);
+}
+
 .daytype-row{display:grid;grid-template-columns:repeat(4,1fr);gap:6px;margin-bottom:6px}
 .daytype-btn{padding:10px 4px;font-size:13px;border-radius:8px;border:2px solid #ccc;background:#fff;color:#333;font-weight:bold;cursor:pointer;font-family:inherit;transition:transform .1s ease, box-shadow .15s ease}
 .daytype-btn[data-dtype="urlaub"]{background:#90EE90;border-color:#228B22;color:#000}
@@ -1564,3 +1594,4 @@ if(document.readyState==='loading'){document.addEventListener('DOMContentLoaded'
 </script>
 </body>
 </html>
+```
