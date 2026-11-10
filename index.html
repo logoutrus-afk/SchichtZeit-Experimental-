@@ -1,4 +1,3 @@
-```html
 <!DOCTYPE html>
 <html lang="de">
 <head>
@@ -373,7 +372,19 @@ body.dark .lp-empty{color:#a0a5ab}
   .lp-option{font-size:15px;padding:14px 14px;gap:10px}
   .lp-option .lp-ic{font-size:22px;width:28px}
   .lp-cancel{font-size:15px;padding:13px}
-  .daytype-label{font-size:7px;padding:1px 0;letter-spacing:0;line-height:1;bottom:4px;left:4px;right:4px;border-radius:0 0 5px 5px;}
+  
+  /* ИСПРАВЛЕНИЕ ДЛЯ МОБИЛЬНЫХ: делаем плашку широкой и солидной */
+  .daytype-label{
+    font-size:8px;
+    padding:2px 1px;
+    letter-spacing:0;
+    line-height:1.1;
+    bottom: 3px;
+    left: 3px;
+    right: 3px;
+    border-radius:0 0 4px 4px;
+  }
+
   .daytype-btn{font-size:11px;padding:8px 2px}
   .privacy-footer-link{font-size:12px;padding:8px 12px;margin:14px auto 4px}
 }
@@ -432,7 +443,9 @@ body.easter-disco .day{animation:egg-disco .6s ease-in-out infinite alternate}
   bottom: 5px; 
   left: 5px; 
   right: 5px; 
-  background: linear-gradient(to bottom, #4a4a4a 0%, #1e1e1e 100%);
+  display: block; /* КРИТИЧНО: делает элемент блочным для растягивания */
+  width: auto;    /* КРИТИЧНО: ширина по заданным отступам left/right */
+  background: linear-gradient(180deg, #5a5a5a 0%, #303030 40%, #111 100%);
   color:#fff;
   font-size:clamp(8px,0.85vw,11px);
   padding:3px 1px;
@@ -447,13 +460,15 @@ body.easter-disco .day{animation:egg-disco .6s ease-in-out infinite alternate}
   overflow:hidden;
   text-overflow:ellipsis;
   border-radius: 0 0 7px 7px; 
-  box-shadow: inset 0 2px 3px rgba(255,255,255,0.2), inset 0 -2px 4px rgba(0,0,0,0.6), 0 1px 2px rgba(0,0,0,0.4);
-  border-top: 1px solid rgba(0,0,0,0.5);
+  /* Усиленный 3D-эффект: внутренняя светлая грань сверху, глубокая тень снизу и снаружи */
+  box-shadow: inset 0 1px 0 rgba(255,255,255,0.3), inset 0 -3px 6px rgba(0,0,0,0.7), 0 2px 4px rgba(0,0,0,0.5);
+  border-top: 1px solid rgba(0,0,0,0.8);
+  border-bottom: 1px solid rgba(0,0,0,1);
 }
 body.dark .daytype-label{
-  background: linear-gradient(to bottom, #333 0%, #111 100%);
-  box-shadow: inset 0 2px 3px rgba(255,255,255,0.1), inset 0 -2px 4px rgba(0,0,0,0.8), 0 1px 2px rgba(0,0,0,0.6);
-  border-top: 1px solid rgba(0,0,0,0.8);
+  background: linear-gradient(180deg, #444 0%, #222 40%, #050505 100%);
+  box-shadow: inset 0 1px 0 rgba(255,255,255,0.15), inset 0 -3px 6px rgba(0,0,0,0.9), 0 2px 4px rgba(0,0,0,0.6);
+  border-top: 1px solid rgba(0,0,0,0.9);
 }
 
 .daytype-row{display:grid;grid-template-columns:repeat(4,1fr);gap:6px;margin-bottom:6px}
@@ -1594,4 +1609,3 @@ if(document.readyState==='loading'){document.addEventListener('DOMContentLoaded'
 </script>
 </body>
 </html>
-```
