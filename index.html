@@ -553,7 +553,6 @@ body.dark .plan-share-box textarea{background:#2a2e33;color:#e4e6ea;border-color
         <label>Farbe<input type="color" id="entryColor" value="#FFD700"></label>
         <label class="checkbox-row" for="entryNotify"><input type="checkbox" id="entryNotify"><span>Erinnerung senden &mdash; <b>1 Tag</b>, <b>2 Stunden</b> und <b>30 Minuten</b> vorher</span></label>
         <div class="notif-hint" id="notifHint">System-Benachrichtigungen werden von diesem Browser nicht unterst&uuml;tzt. Banner und Ton funktionieren trotzdem.</div>
-        <!-- === NEW BUTTON: Google Calendar === -->
         <button id="modalGoogleCalendarBtn" style="background:#4285F4; width:100%; margin-top:10px; display:flex; align-items:center; justify-content:center; gap:8px;">
             <svg width="20" height="20" viewBox="0 0 24 24" fill="white"><path d="M19 3h-1V1h-2v2H8V1H6v2H5c-1.11 0-1.99.9-1.99 2L3 19c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 16H5V8h14v11zM7 10h5v5H7z"/></svg>
             In Google Calendar speichern
@@ -628,16 +627,18 @@ body.dark .plan-share-box textarea{background:#2a2e33;color:#e4e6ea;border-color
 <h4>4. Eigene Termine</h4>
 <p>Bis zu 4 Termine pro Tag, farblich getrennt. Symbol sitzt in der Fl&auml;che, Beschreibung an der Kante.</p>
 <h4>5. Google Calendar Export</h4>
-<p>Im Termin-Fenster gibt es unten den blauen Button <b>&bdquo;In Google Calendar speichern&ldquo;</b>. Er &ouml;ffnet einen neuen Tab mit bereits ausgef&uuml;lltem Termin &ndash; du musst nur noch auf <b>Speichern</b> klicken. Funktioniert ohne Server und ohne API-Key.</p>
-<h4>6. Lange dr&uuml;cken</h4>
+<p>Im Termin-Fenster gibt es unten den blauen Button <b>&bdquo;In Google Calendar speichern&ldquo;</b>. Er &ouml;ffnet einen neuen Tab mit bereits ausgef&uuml;lltem Termin &ndash; du musst nur noch auf <b>Speichern</b> klicken.</p>
+<h4>6. Backup</h4>
+<p>Im Men&uuml; <b>Backup</b> kannst du deine Daten als .json sichern oder als .ics f&uuml;r den gesamten Google Calendar exportieren.</p>
+<h4>7. Lange dr&uuml;cken</h4>
 <p>Halte einen Tag <b>etwa eine halbe Sekunde lang gedr&uuml;ckt</b>, um L&ouml;schoptionen zu &ouml;ffnen.</p>
-<h4>7. Jahres&uuml;bersicht</h4>
+<h4>8. Jahres&uuml;bersicht</h4>
 <p>Klappt weich auf und zeigt Urlaub / Krank / Sonstige / Einbringer.</p>
-<h4>8. Eigene Pl&auml;ne teilen</h4>
+<h4>9. Eigene Pl&auml;ne teilen</h4>
 <p>Im Plan-Editor auf <b>&#x1F517; Teilen</b> tippen &ndash; der Link enth&auml;lt deinen kompletten Plan und kann weitergegeben werden. Beim &Ouml;ffnen des Links fragt die App, ob der Plan importiert werden soll.</p>
-<h4>9. Datenschutz</h4>
+<h4>10. Datenschutz</h4>
 <p>Alle Daten bleiben <b>lokal auf deinem Ger&auml;t</b>. Keine Server, kein Tracking, keine Werbung, keine Registrierung. Details &uuml;ber den Button <b>&#x1F512; Datenschutz</b>.</p>
-<h4>10. Fehler melden</h4>
+<h4>11. Fehler melden</h4>
 <p>Der Knopf <b>Fehler melden</b> &ouml;ffnet dein E-Mail-Programm mit einer vorausgef&uuml;llten Nachricht.</p>
 <div class="help-footer">SchichtZeit &ndash; der digitale Schichtplan.</div>
 </div>
@@ -649,6 +650,7 @@ body.dark .plan-share-box textarea{background:#2a2e33;color:#e4e6ea;border-color
 <div class="section-title">Sichern</div>
 <button class="backup-option" id="backupSaveDeviceBtn"><span class="icon">&#x1F4BE;</span><span><span class="title">Auf Ger&auml;t speichern</span><span class="desc">Datei wird in den Download-Ordner gespeichert.</span></span></button>
 <button class="backup-option" id="backupShareBtn"><span class="icon">&#x1F4E4;</span><span><span class="title">Teilen / E-Mail / Cloud</span><span class="desc">System-Fenster &ouml;ffnet sich.</span></span></button>
+<button class="backup-option" id="backupGoogleIcsBtn" style="border-color:#4285F4; background:#f4f8ff;"><span class="icon" style="color:#4285F4;">&#x1F4C5;</span><span><span class="title" style="color:#4285F4;">F&uuml;r Google Calendar exportieren</span><span class="desc">L&auml;dt eine .ics Datei herunter. Einfach in Google Calendar unter "Importieren" w&auml;hlen.</span></span></button>
 <div class="section-title">Wiederherstellen</div>
 <button class="backup-option" id="backupRestoreBtn"><span class="icon">&#x1F4C2;</span><span><span class="title">Aus Datei wiederherstellen</span><span class="desc">Aktuelle Daten werden &uuml;berschrieben.</span></span></button>
 <div class="modal-buttons"><button id="backupCancelBtn" style="background:#6c757d;">Schlie&szlig;en</button></div>
@@ -701,12 +703,10 @@ Schichtzeit speichert alle Daten ausschlie&szlig;lich <b>lokal auf deinem Ger&au
 </div>
 <h4>Eigene Pl&auml;ne teilen</h4>
 <p>Wenn du einen eigenen Plan teilst, werden die Plandaten (Name, Startdatum, Block-Definitionen) <b>direkt in den Link kodiert</b> (Base64). Der Link enth&auml;lt <b>keine pers&ouml;nlichen Daten</b>, nur das, was du explizit teilst. Du entscheidest, an wen du ihn weitergibst.</p>
-<h4>Backup</h4>
-<p>Backups werden als <code>.json</code>-Datei auf deinem Ger&auml;t gespeichert &ndash; dort, wo du sie ablegst (Download-Ordner, Cloud, E-Mail-Anhang). Schichtzeit l&auml;dt sie nirgends hoch.</p>
+<h4>Backup & Google Calendar</h4>
+<p>Backups werden als <code>.json</code> Datei lokal gespeichert. Beim Klick auf <b>&bdquo;F&uuml;r Google Calendar exportieren&ldquo;</b> wird eine <code>.ics</code> Datei auf deinem Ger&auml;t generiert. Diese Datei wird <b>nicht</b> automatisch hochgeladen. Du selbst entscheidest, ob du sie in Google Calendar importierst.</p>
 <h4>Erinnerungen</h4>
 <p>Wenn aktiviert, nutzt die App die <b>Browser-Benachrichtigungen</b> deines Ger&auml;ts. Diese laufen komplett lokal &ndash; es werden keine Daten an einen Server gesendet. Die Seite muss daf&uuml;r ge&ouml;ffnet sein.</p>
-<h4>Google Calendar</h4>
-<p>Wenn du auf <b>&bdquo;In Google Calendar speichern&ldquo;</b> klickst, &ouml;ffnet sich Google Calendar in einem neuen Tab. Die Daten deines Termins (Titel, Datum, Uhrzeit) werden dabei an Google &uuml;bertragen &ndash; nur f&uuml;r diese eine Aktion. Schichtzeit selbst sendet nichts und speichert nichts auf Google-Servern.</p>
 <h4>PayPal-Spenden</h4>
 <p>Der Spenden-Link f&uuml;hrt zu <b>paypal.com</b>. Dort gelten die Datenschutzbestimmungen von PayPal. Schichtzeit erh&auml;lt <b>keine</b> Zahlungsdaten von PayPal und kann Spender nicht identifizieren.</p>
 <h4>Statischer Hoster (optional)</h4>
@@ -848,6 +848,72 @@ function generateGoogleCalendarUrl(entry, dateKey) {
            '&text=' + encodeURIComponent(title) +
            '&dates=' + encodeURIComponent(dates) +
            '&details=' + encodeURIComponent(details);
+}
+
+/* === ICS EXPORT FOR ENTIRE CALENDAR === */
+function exportToICS() {
+    var ics = "BEGIN:VCALENDAR\nVERSION:2.0\nPRODID:-//Schichtzeit//Export//DE\nCALSCALE:GREGORIAN\n";
+    var now = new Date();
+    var stamp = now.toISOString().replace(/[-:]/g, '').split('.')[0] + "Z";
+
+    function addEvent(dateStr, title, time) {
+        var d = dateStr.replace(/-/g, '');
+        ics += "BEGIN:VEVENT\n";
+        ics += "UID:" + d + "-" + Math.random().toString(36).substr(2, 9) + "@schichtzeit\n";
+        ics += "DTSTAMP:" + stamp + "\n";
+        if (time) {
+            var t = time.replace(/:/g, '') + "00";
+            var endH = parseInt(time.split(':')[0], 10) + 1;
+            var endT = String(endH).padStart(2, '0') + time.split(':')[1] + "00";
+            ics += "DTSTART:" + d + "T" + t + "\n";
+            ics += "DTEND:" + d + "T" + endT + "\n";
+        } else {
+            ics += "DTSTART;VALUE=DATE:" + d + "\n";
+            ics += "DTEND;VALUE=DATE:" + d + "\n";
+        }
+        ics += "SUMMARY:" + title.replace(/\n/g, '\\n') + "\n";
+        ics += "END:VEVENT\n";
+    }
+
+    // 1. Krank
+    sickDays.forEach(function(d) { addEvent(d, "Krank", ""); });
+    // 2. Urlaub
+    vacationDays.forEach(function(d) { addEvent(d, "Urlaub", ""); });
+    // 3. Einbringer
+    einbringerDays.forEach(function(d) { addEvent(d, "Einbringer", ""); });
+    // 4. Sonstige Termine
+    Object.keys(sonstigeDays).forEach(function(d) {
+        getEntries(d).forEach(function(en) {
+            addEvent(d, en.text || "Termin", en.time);
+        });
+    });
+    
+    // 5. Schichten (aktuelles Jahr, aktuelle Gruppe)
+    var year = currentDate.getFullYear();
+    var group = document.getElementById('groupSelect').value;
+    var start = new Date(year, 0, 1);
+    var end = new Date(year, 11, 31);
+    for (var d = start; d <= end; d.setDate(d.getDate() + 1)) {
+        var shift = getShift(d, group);
+        if (shift !== '_') {
+            var dk = formatDateKey(d);
+            var shiftName = shift === 'F' ? 'Frühschicht' : (shift === 'S' ? 'Spätschicht' : (shift === 'N' ? 'Nachtschicht' : shift));
+            addEvent(dk, shiftName, "");
+        }
+    }
+
+    ics += "END:VCALENDAR";
+
+    var blob = new Blob([ics], { type: 'text/calendar;charset=utf-8' });
+    var link = document.createElement('a');
+    link.href = URL.createObjectURL(blob);
+    link.download = 'Schichtzeit_Kalender_' + year + '.ics';
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+    URL.revokeObjectURL(link.href);
+    showToast('ICS-Datei erstellt!');
+    closeBackupMenu();
 }
 
 function reportError(){
@@ -1432,6 +1498,7 @@ function init(){
     document.getElementById('backupBtn').addEventListener('click',openBackupMenu);
     document.getElementById('backupSaveDeviceBtn').addEventListener('click',backupToDevice);
     document.getElementById('backupShareBtn').addEventListener('click',backupShare);
+    document.getElementById('backupGoogleIcsBtn').addEventListener('click',exportToICS);
     document.getElementById('backupRestoreBtn').addEventListener('click',restoreFromFile);
     document.getElementById('backupCancelBtn').addEventListener('click',closeBackupMenu);
     document.getElementById('backupMenuModal').addEventListener('click',function(e){if(e.target.id==='backupMenuModal')closeBackupMenu();});
@@ -1442,7 +1509,6 @@ function init(){
     document.getElementById('modalSaveBtn').addEventListener('click',saveEntry);
     document.getElementById('modalDeleteBtn').addEventListener('click',deleteCurrentEntry);
     document.getElementById('modalBackBtn').addEventListener('click',backFromEdit);
-    /* === NEW BUTTON: Google Calendar Click Handler === */
     document.getElementById('modalGoogleCalendarBtn').addEventListener('click', function() {
         if(!editingDateKey) return;
         var tx = document.getElementById('entryText').value.trim() || 'Termin';
