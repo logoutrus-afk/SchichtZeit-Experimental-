@@ -760,29 +760,119 @@ Schichtzeit speichert alle Daten ausschlie&szlig;lich <b>lokal auf deinem Ger&au
     <button class="lp-cancel" id="lpCancelBtn">Abbrechen</button>
 </div></div>
 <script>
- // \uFEFF в начале — это BOM-маркер, который заставляет Google читать файл в UTF-8 без ошибок
-    // \r\n вместо \n — это стандарт формата ICS, чтобы Google не выдавал ошибку при импорте
-    var ics = "\uFEFFBEGIN:VCALENDAR\r\nVERSION:2.0\r\nPRODID:-//Schichtzeit//Export//DE\r\nCALSCALE:GREGORIAN\r\n";
+(function(){
+try {
+var REPORT_EMAIL = 'Logout@kabelmail.de';
+var SHARE_URL="https://logoutrus-afk.github.io/SchichtZeit-Experimental-/";
+var SHARE_TITLE="Schichtzeit";
+var SHARE_TEXT="Schichtplan f\u00FCr unsere Schicht - Schichtzeit";
+var BASE_DATE_UTC_5=Date.UTC(2026,9,1);
+var CYCLE_35=['F','F','N','N','N','_','_','_','S','S','S','_','F','F','N','N','_','_','_','S','S','S','_','F','F','F','N','N','_','_','_','_','_','_','_'];
+var START_INDEX_BY_GROUP_5={'1':29,'2':1,'3':8,'4':15,'5':22};
+var BASE_DATE_UTC_4VK=Date.UTC(2027,0,4);
+var CYCLE_4VK=['F','F','S','S','N','N','_','_'];
+var OFFSET_4VK={'A':0,'B':2,'C':4,'D':6};
+var BASE_DATE_UTC_4X12=Date.UTC(2027,0,4);
+var CYCLE_4X12_BASE=['T','N','_','_'];
+var SHIFT_4X12={'A':0,'B':1,'C':3,'D':2};
+var BASE_DATE_UTC_3X12=Date.UTC(2027,0,4);
+var CYCLE_3X12=['_','T','N'];
+var START_INDEX_3X12={'I':0,'II':1,'III':2};
+var SHIFT_COLORS={'F':'#FFD700','T':'#FFD700','S':'#FF4500','N':'#1E90FF','_':'#f9f9f9'};
+var monthNames=["Januar","Februar","M\u00E4rz","April","Mai","Juni","Juli","August","September","Oktober","November","Dezember"];
+var dayNames=["Mo","Di","Mi","Do","Fr","Sa","So"];
+var SYMBOLS=['\uD83D\uDD14','\u23F0','\uD83D\uDCCC','\u2B50','\u2764\uFE0F','\u26A0\uFE0F','\uD83D\uDCDE','\uD83D\uDC8A','\uD83C\uDFE5','\uD83D\uDCC5','\u2708\uFE0F','\uD83C\uDF82','\uD83C\uDF89','\uD83D\uDE97','\uD83D\uDCBC','\uD83D\uDCDD'];
+var _now=new Date();
+var currentDate=new Date(_now.getFullYear(),_now.getMonth(),1);
+var currentMode='normal';
+var showFerien=false;
+var actualToday=new Date();actualToday.setHours(0,0,0,0);
+var selectedColor='#FFD700';
+var selectedSymbol='\uD83D\uDD14';
+var shiftSystem='5';
+var currentTheme='light';
+var currentEffect='auto';
+function safeParse(s,f){try{var v=JSON.parse(s);return(v==null)?f:v;}catch(e){return f;}}
+function safeGetArray(k){var v=safeParse(localStorage.getItem(k),[]);return Array.isArray(v)?v:[];}
+function safeGetObject(k){var v=safeParse(localStorage.getItem(k),{});return(v&&typeof v==='object'&&!Array.isArray(v))?v:{};}
+try{selectedColor=localStorage.getItem('schichtzeitColor')||'#FFD700';}catch(e){}
+try{selectedSymbol=localStorage.getItem('schichtzeitSymbol')||'\uD83D\uDD14';}catch(e){}
+try{shiftSystem=localStorage.getItem('schichtzeitShiftSystem')||'5';}catch(e){}
+try{currentTheme=localStorage.getItem('schichtzeitTheme')||'light';}catch(e){}
+try{currentEffect=localStorage.getItem('schichtzeitEffect')||'auto';}catch(e){}
+if(shiftSystem!=='5'&&shiftSystem!=='4x12'&&shiftSystem!=='3x12'&&shiftSystem!=='4vk'&&shiftSystem!=='custom'&&shiftSystem!=='blank')shiftSystem='5';
+var sickDays=safeGetArray('schichtzeitSickDays');
+var vacationDays=safeGetArray('schichtzeitVacationDays');
+var einbringerDays=safeGetArray('schichtzeitEinbringerDays');
+var sonstigeDays=safeGetObject('schichtzeitSonstigeDays');
+var vacationQuota=safeGetObject('schichtzeitVacationQuota');
+var customPlans=safeGetObject('schichtzeitCustomPlans');
+if(Object.keys(vacationQuota).length===0){vacationQuota['2026']=30;try{localStorage.setItem('schichtzeitVacationQuota',JSON.stringify(vacationQuota));}catch(e){}}
+function getVacationQuota(y){return vacationQuota[String(y)]!=null?vacationQuota[String(y)]:30;}
+function setVacationQuota(y,v){vacationQuota[String(y)]=v;try{localStorage.setItem('schichtzeitVacationQuota',JSON.stringify(vacationQuota));}catch(e){}}
+function saveCustomPlans(){try{localStorage.setItem('schichtzeitCustomPlans',JSON.stringify(customPlans));}catch(e){}}
+function genEntryId(){return 'e'+Date.now().toString(36)+Math.random().toString(36).slice(2,7);}
+function genPlanId(){return 'p_'+Date.now().toString(36)+Math.random().toString(36).slice(2,6);}
+(function migrate(){var ch=false;Object.keys(sonstigeDays).forEach(function(k){var v=sonstigeDays[k];if(typeof v==='string'){sonstigeDays[k]=[{id:genEntryId(),color:v,text:'',time:'',notify:false,icon:'\uD83D\uDD14'}];ch=true;}else if(v&&typeof v==='object'&&!Array.isArray(v)){if(!v.id)v.id=genEntryId();if(!v.icon)v.icon='\uD83D\uDD14';sonstigeDays[k]=[v];ch=true;}else if(Array.isArray(v)){for(var i=0;i<v.length;i++){if(v[i]&&typeof v[i]==='object'){if(!v[i].id){v[i].id=genEntryId();ch=true;}if(!v[i].icon){v[i].icon='\uD83D\uDD14';ch=true;}}}}});if(ch){try{localStorage.setItem('schichtzeitSonstigeDays',JSON.stringify(sonstigeDays));}catch(e){}}})();
+function getEntries(k){var a=sonstigeDays[k];if(!a)return[];if(!Array.isArray(a))return[a];return a;}
+function setEntries(k,e){if(!e||e.length===0)delete sonstigeDays[k];else sonstigeDays[k]=e;try{localStorage.setItem('schichtzeitSonstigeDays',JSON.stringify(sonstigeDays));}catch(e){}}
+function hasAnyEntry(k){return getEntries(k).length>0;}
+var notifiedFlags=safeGetObject('schichtzeitNotified');
+var savedGroup='';
+try{savedGroup=localStorage.getItem('schichtzeitGroup')||'';}catch(e){}
+function applyTheme(t){currentTheme=t;try{localStorage.setItem('schichtzeitTheme',t);}catch(e){}if(t==='dark')document.body.classList.add('dark');else document.body.classList.remove('dark');var c=document.querySelectorAll('.theme-choice');for(var i=0;i<c.length;i++){if(c[i].getAttribute('data-theme')===t)c[i].classList.add('active');else c[i].classList.remove('active');}}
+function showToast(t){var o=document.getElementById('shareToast');if(o)o.parentNode.removeChild(o);var el=document.createElement('div');el.id='shareToast';el.className='share-toast';el.textContent=t;document.body.appendChild(el);setTimeout(function(){if(el.parentNode)el.parentNode.removeChild(el);},2800);}
+function shareSchichtzeit(){var url=SHARE_URL;var d={title:SHARE_TITLE,text:SHARE_TEXT,url:url};if(navigator.share){try{navigator.share(d).then(function(){}).catch(function(err){if(err&&err.name==='AbortError')return;copyShareLink(url);});return;}catch(e){}}copyShareLink(url);}
+function copyShareLink(url){if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(url).then(function(){showToast('Link kopiert');}).catch(function(){legacyCopy(url);});return;}legacyCopy(url);}
+function legacyCopy(url){try{var i=document.createElement('input');i.type='text';i.value=url;i.style.position='fixed';i.style.left='-9999px';document.body.appendChild(i);i.focus();i.select();var ok=document.execCommand('copy');document.body.removeChild(i);if(ok)showToast('Link kopiert');else showToast(url);}catch(e){showToast(url);}}
+
+/* === GOOGLE CALENDAR URL GENERATOR === */
+function generateGoogleCalendarUrl(entry, dateKey) {
+    var parts = dateKey.split('-');
+    var year = parts[0], month = parts[1], day = parts[2];
+    var title = (entry.text || 'Schichtzeit Termin').trim();
+    var details = 'Erstellt mit Schichtzeit';
+    var dates;
+    if (entry.time) {
+        var timeParts = entry.time.split(':');
+        var hh = String(parseInt(timeParts[0], 10)).padStart(2, '0');
+        var mm = String(parseInt(timeParts[1], 10)).padStart(2, '0');
+        var start = year + month + day + 'T' + hh + mm + '00';
+        var endHour = String(parseInt(hh, 10) + 1).padStart(2, '0');
+        var end = year + month + day + 'T' + endHour + mm + '00';
+        dates = start + '/' + end;
+    } else {
+        dates = year + month + day + '/' + year + month + day;
+    }
+    return 'https://calendar.google.com/calendar/render?action=TEMPLATE' +
+           '&text=' + encodeURIComponent(title) +
+           '&dates=' + encodeURIComponent(dates) +
+           '&details=' + encodeURIComponent(details);
+}
+
+/* === ICS EXPORT FOR ENTIRE CALENDAR === */
+function exportToICS() {
+    var ics = "BEGIN:VCALENDAR\nVERSION:2.0\nPRODID:-//Schichtzeit//Export//DE\nCALSCALE:GREGORIAN\n";
     var now = new Date();
     var stamp = now.toISOString().replace(/[-:]/g, '').split('.')[0] + "Z";
 
     function addEvent(dateStr, title, time) {
         var d = dateStr.replace(/-/g, '');
-        ics += "BEGIN:VEVENT\r\n";
-        ics += "UID:" + d + "-" + Math.random().toString(36).substr(2, 9) + "@schichtzeit\r\n";
-        ics += "DTSTAMP:" + stamp + "\r\n";
+        ics += "BEGIN:VEVENT\n";
+        ics += "UID:" + d + "-" + Math.random().toString(36).substr(2, 9) + "@schichtzeit\n";
+        ics += "DTSTAMP:" + stamp + "\n";
         if (time) {
             var t = time.replace(/:/g, '') + "00";
             var endH = parseInt(time.split(':')[0], 10) + 1;
             var endT = String(endH).padStart(2, '0') + time.split(':')[1] + "00";
-            ics += "DTSTART:" + d + "T" + t + "\r\n";
-            ics += "DTEND:" + d + "T" + endT + "\r\n";
+            ics += "DTSTART:" + d + "T" + t + "\n";
+            ics += "DTEND:" + d + "T" + endT + "\n";
         } else {
-            ics += "DTSTART;VALUE=DATE:" + d + "\r\n";
-            ics += "DTEND;VALUE=DATE:" + d + "\r\n";
+            ics += "DTSTART;VALUE=DATE:" + d + "\n";
+            ics += "DTEND;VALUE=DATE:" + d + "\n";
         }
-        ics += "SUMMARY:" + title.replace(/\n/g, '\\n') + "\r\n";
-        ics += "END:VEVENT\r\n";
+        ics += "SUMMARY:" + title.replace(/\n/g, '\\n') + "\n";
+        ics += "END:VEVENT\n";
     }
 
     // 1. Krank
@@ -807,8 +897,8 @@ Schichtzeit speichert alle Daten ausschlie&szlig;lich <b>lokal auf deinem Ger&au
         var shift = getShift(d, group);
         if (shift !== '_') {
             var dk = formatDateKey(d);
-            // ИСПРАВЛЕНИЕ: Теперь экспортируются просто F, S, N без перевода в полные слова
-            addEvent(dk, shift, ""); 
+            var shiftName = shift === 'F' ? 'Frühschicht' : (shift === 'S' ? 'Spätschicht' : (shift === 'N' ? 'Nachtschicht' : shift));
+            addEvent(dk, shiftName, "");
         }
     }
 
@@ -824,7 +914,6 @@ Schichtzeit speichert alle Daten ausschlie&szlig;lich <b>lokal auf deinem Ger&au
     URL.revokeObjectURL(link.href);
     showToast('ICS-Datei erstellt!');
     closeBackupMenu();
-}
 }
 
 function reportError(){
