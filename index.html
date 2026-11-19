@@ -8,165 +8,150 @@
 <meta name="theme-color" content="#0056b3">
 <link rel="apple-touch-icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 180 180'%3E%3Crect width='180' height='180' rx='40' fill='%230056b3'/%3E%3Ctext x='90' y='120' font-size='90' text-anchor='middle' fill='white' font-family='Arial' font-weight='bold'%3ESZ%3C/text%3E%3C/svg%3E">
 <style>
-/* --- ОСНОВНЫЕ СТИЛИ --- */
-body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial,sans-serif;background:#f4f4f9;color:#333;text-align:center;padding:8px;padding-top:env(safe-area-inset-top,8px);margin:0;-webkit-tap-highlight-color:transparent;font-size:16px}
+/* --- ОРИГИНАЛЬНЫЕ СТИЛИ --- */
+body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial,sans-serif;background:#f4f4f9;color:#333;text-align:center;padding:8px;padding-top:env(safe-area-inset-top,8px);margin:0;-webkit-tap-highlight-color:transparent;font-size:17px}
 .container{position:relative;max-width:1400px;margin:0 auto;background:#fff;padding:14px;border-radius:14px;box-shadow:0 4px 18px rgba(0,0,0,0.1)}
 h2{margin:0 0 8px 0;color:#0056b3;font-size:32px}
-.top-btn{background:#f1f3f5;color:#333;border:1px solid #ccc;border-radius:10px;width:40px;height:40px;font-size:20px;font-weight:bold;cursor:pointer;display:inline-flex;align-items:center;justify-content:center}
+.top-btn{background:#f1f3f5;color:#333;border:1px solid #ccc;border-radius:10px;width:40px;height:40px;font-size:20px;font-weight:bold;cursor:pointer;display:inline-flex;align-items:center;justify-content:center;}
 .online-status{font-size:14px;padding:5px 11px;border-radius:16px;display:inline-block;font-weight:bold}
 .online-status.online{background:#d4edda;color:#155724}
 .top-row{display:flex;justify-content:center;align-items:center;margin-bottom:10px;font-size:16px;gap:10px;flex-wrap:wrap}
 select,button{padding:10px 15px;font-size:16px;border-radius:9px;border:1px solid #ccc;background:#fff;cursor:pointer;font-family:inherit}
 button{background:#007bff;color:#fff;border:none;font-weight:bold}
+button:active{background:#0056b3}
 .nav-row{display:flex;justify-content:center;align-items:center;gap:8px;margin-bottom:10px;flex-wrap:wrap}
 #monthDisplay{font-size:22px;font-weight:bold;min-width:180px;text-align:center}
 .mode-controls{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-bottom:10px;background:#e9ecef;padding:8px;border-radius:12px}
 .mode-btn{background:#fff;color:#333;border:1px solid #ccc;font-size:15px;padding:10px 4px;font-weight:600;border-radius:9px}
-.mode-btn.active{background:#0056b3;color:#fff;border-color:#0056b3}
+.mode-btn.active{background:#0056b3;color:#fff;border-color:#0056b3;font-weight:bold}
 
-/* --- СЕТКА КАЛЕНДАРЯ И ВИДЫ --- */
+/* --- КАЛЕНДАРЬ (ОРИГИНАЛЬНЫЙ СТИЛЬ) --- */
 .calendar-wrap{position:relative;z-index:1;overflow-x:auto;}
-.calendar{display:grid;gap:4px;position:relative;z-index:10;margin:0 auto;transition:all 0.3s ease;}
-.day-header{font-weight:bold;font-size:14px;padding:5px 0;color:#555;text-transform:uppercase;}
+.calendar{display:grid;gap:8px;margin:0 auto;position:relative;z-index:10;}
+.calendar.view-month { grid-template-columns:repeat(7,1fr); }
+.calendar.view-6days { grid-template-columns:repeat(6,1fr); }
+.calendar.view-4days { grid-template-columns:repeat(4,1fr); }
+.calendar.view-1day { grid-template-columns:1fr; }
 
-/* Месяц (7 колонок) */
-.calendar.view-month { grid-template-columns: repeat(7, 1fr); }
-.calendar.view-month .day { aspect-ratio: 1/1.2; padding:2px; }
-.calendar.view-month .day .date-num { font-size:14px; top:4px; left:6px; }
+.day-header{font-weight:bold;font-size:19px;padding:8px 0;color:#555}
+.day{display:flex;flex-direction:column;align-items:center;justify-content:center;border-radius:12px;font-size:clamp(16px,1.8vw,26px);font-weight:900;border:1px solid #eee;position:relative;cursor:pointer;line-height:1;overflow:hidden;user-select:none;box-sizing:border-box;background:#fff;}
 
-/* Неделя (7 колонок, высокие ячейки) */
-.calendar.view-week { grid-template-columns: repeat(7, 1fr); }
-.calendar.view-week .day { min-height: 60vh; padding: 5px; }
+/* Настройка высоты для больших видов */
+.calendar.view-month .day { aspect-ratio:1/1.2; }
+@media (min-width:900px){ .calendar.view-month .day{aspect-ratio:auto;height:216px} }
+.calendar.view-6days .day, .calendar.view-4days .day, .calendar.view-1day .day { min-height: 65vh; aspect-ratio: auto; }
 
-/* 4 дня */
-.calendar.view-4days { grid-template-columns: repeat(4, 1fr); }
-.calendar.view-4days .day { min-height: 60vh; padding: 5px; }
-
-/* 1 день */
-.calendar.view-1day { grid-template-columns: 1fr; }
-.calendar.view-1day .day { min-height: 65vh; padding: 10px; }
-
-.day{display:flex;flex-direction:column;border-radius:8px;border:1px solid #eee;position:relative;cursor:pointer;overflow:hidden;user-select:none;background:#fff;box-sizing:border-box;}
+/* Оригинальные цвета */
 .day.F,.day.T{background-color:#FFD700;color:#000}
 .day.S{background-color:#FF4500;color:#fff}
 .day.N{background-color:#1E90FF;color:#fff}
 .day._{background-color:#f9f9f9;color:#999}
-.day.krank{background-color:#DDA0DD!important;color:#000!important}
-.day.urlaub{background-color:#90EE90!important;color:#000!important}
-.day.einbringer{background-color:#FF69B4!important;color:#fff!important}
-.day.sonstige{border:2px solid rgba(0,0,0,0.35);color:#fff;}
+.day.krank{background-color:#DDA0DD!important;color:#000!important;border:2px solid #8A2BE2}
+.day.urlaub{background-color:#90EE90!important;color:#000!important;border:2px solid #228B22}
+.day.sonstige{border:2px solid rgba(0,0,0,0.35);color:#fff;text-shadow:-1px -1px 0 #000,1px -1px 0 #000,-1px 1px 0 #000,1px 1px 0 #000,0 0 3px rgba(0,0,0,0.7)}
 .day.empty{background:transparent;border:none;cursor:default}
-.day.today{border:3px solid #0d47a1;box-shadow:0 0 10px rgba(13,71,161,0.4);z-index:6;}
-.day.feiertag{border:3px solid #CD7F32;z-index:3;}
-.day.ferien{border:2px dashed #17a2b8;}
+.day.today{border:5px solid #0d47a1;box-shadow:inset 0 0 0 1.5px rgba(255,255,255,0.9),0 0 0 2px rgba(13,71,161,0.4),0 0 18px 5px rgba(13,71,161,0.55);z-index:6;}
+.day.feiertag{border:5px solid #CD7F32;z-index:3}
+.day.ferien{border:3px dashed #17a2b8;z-index:1}
 
-.day .date-num{position:absolute;top:4px;left:6px;font-weight:bold;z-index:3;background:rgba(255,255,255,0.6);padding:2px 6px;border-radius:6px;color:#333;font-size:14px;}
-body.dark .day .date-num{background:rgba(0,0,0,0.5);color:#fff}
+/* Номер дня */
+.day .date-num{font-size:clamp(13px,1.4vw,19px);position:absolute;top:8px;left:10px;color:#555;font-weight:bold;line-height:1;z-index:3;background:rgba(255,255,255,0.7);padding:2px 6px;border-radius:6px;}
 
-/* Контейнер для терминов внутри дня */
-.terms-container { margin-top: 25px; display: flex; flex-direction: column; gap: 3px; width: 100%; z-index: 2; overflow-y: auto; }
-.term-block { font-size: 11px; padding: 3px 5px; border-radius: 4px; color: #fff; text-align: left; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; font-weight: 600; box-shadow: 0 1px 2px rgba(0,0,0,0.2); }
-.term-block.shift-block { background: rgba(0,0,0,0.3); border-left: 3px solid rgba(255,255,255,0.8); }
+/* ОРИГИНАЛЬНЫЕ ТЕРМИНЫ */
+.day .term-icon{position:absolute;transform:translate(-50%,-50%);font-size:clamp(22px,2.6vw,34px);line-height:1;z-index:2;pointer-events:none;filter:drop-shadow(0 2px 3px rgba(0,0,0,0.75))}
+.day .term-text{position:absolute;font-size:clamp(10px,1.1vw,14px);font-weight:bold;color:#fff;text-shadow:0 0 3px rgba(0,0,0,0.95),0 1px 3px rgba(0,0,0,0.95);pointer-events:none;z-index:3;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.day .term-text.t-top{top:4px;left:50%;transform:translateX(-50%);max-width:calc(100% - 10px)}
+.day .term-text.t-bottom{bottom:4px;left:50%;transform:translateX(-50%);max-width:calc(100% - 10px)}
+.day .term-text.t-right{right:4px;top:50%;writing-mode:vertical-rl;transform:translateY(-50%);max-height:calc(100% - 10px)}
+.day .term-text.t-left{left:4px;top:50%;writing-mode:vertical-rl;transform:translateY(-50%) rotate(180deg);max-height:calc(100% - 10px)}
+.sonstige-preview{position:absolute;bottom:6px;left:6px;right:6px;font-size:clamp(11px,1.3vw,15px);text-align:center;overflow:hidden;white-space:nowrap;text-overflow:ellipsis;pointer-events:none;font-weight:bold;color:#fff;z-index:3}
 
-.calendar.view-week .terms-container, .calendar.view-4days .terms-container, .calendar.view-1day .terms-container { gap: 5px; margin-top: 30px; }
-.calendar.view-week .term-block, .calendar.view-4days .term-block, .calendar.view-1day .term-block { font-size: 13px; padding: 6px 8px; white-space: normal; }
+/* --- УВЕЛИЧЕНИЕ ТЕРМИНОВ ДЛЯ ШИРОКИХ ВИДОВ (1, 4, 6 дней) --- */
+.calendar.view-6days .day .date-num, .calendar.view-4days .day .date-num, .calendar.view-1day .day .date-num { font-size: 24px; top: 15px; left: 15px; background: transparent; padding: 0; }
+.calendar.view-6days .day .term-icon, .calendar.view-4days .day .term-icon, .calendar.view-1day .day .term-icon { font-size: 64px; top: 50%; left: 50%; }
+.calendar.view-6days .day .term-text, .calendar.view-4days .day .term-text, .calendar.view-1day .day .term-text { font-size: 20px; padding: 10px; }
+.calendar.view-6days .sonstige-preview, .calendar.view-4days .sonstige-preview, .calendar.view-1day .sonstige-preview { font-size: 18px; bottom: 15px; }
 
 /* --- МОДАЛЬНЫЕ ОКНА --- */
-.modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,0.6);display:none;align-items:center;justify-content:center;z-index:1000;padding:15px;}
+.modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,0.55);display:none;align-items:center;justify-content:center;z-index:1000;padding:15px;}
 .modal-overlay.active{display:flex}
-.modal{background:#fff;border-radius:16px;padding:20px;max-width:500px;width:100%;text-align:left;box-shadow:0 10px 30px rgba(0,0,0,0.3);max-height:90vh;overflow-y:auto;}
-.modal h3{margin:0 0 10px;color:#0056b3;font-size:20px}
-.modal label{display:block;font-size:15px;font-weight:bold;margin-bottom:12px;color:#333}
-.modal input[type="text"],.modal input[type="time"],.modal input[type="number"],.modal input[type="date"],.modal select{width:100%;padding:10px;font-size:16px;border:1px solid #ccc;border-radius:8px;margin-top:4px;box-sizing:border-box;}
-.modal .checkbox-row{display:flex;flex-direction:column;gap:8px;font-weight:normal;background:#f8f9fa;padding:12px;border-radius:8px;border:1px solid #eee;margin-bottom:12px;}
+.modal{background:#fff;border-radius:16px;padding:26px;max-width:500px;width:100%;text-align:left;box-shadow:0 12px 44px rgba(0,0,0,0.3);max-height:95vh;overflow-y:auto;font-size:17px;}
+.modal h3{margin:0 0 8px;color:#0056b3;font-size:22px}
+.modal label{display:block;font-size:16px;font-weight:bold;margin-bottom:14px;color:#333}
+.modal input[type="text"],.modal input[type="time"],.modal input[type="date"],.modal select{width:100%;padding:14px;font-size:18px;border:1px solid #ccc;border-radius:9px;box-sizing:border-box;margin-top:6px;font-family:inherit}
+.modal .checkbox-row{display:flex;flex-direction:column;gap:8px;font-weight:normal;font-size:15.5px;color:#444;background:#f1f3f5;padding:14px;border-radius:10px;line-height:1.5;cursor:pointer}
 .notif-row { display: flex; align-items: center; gap: 8px; margin-top: 5px; }
-.notif-row select { width: auto; flex: 1; padding: 6px; font-size: 14px; }
-
-.modal-buttons{display:flex;gap:10px;margin-top:20px}
-.modal-buttons button{flex:1;padding:12px}
-.symbol-grid{display:grid;grid-template-columns:repeat(8,1fr);gap:6px;margin-bottom:15px}
-.symbol-btn{font-size:22px;padding:6px 0;border:1px solid #ccc;border-radius:8px;background:#fff;cursor:pointer;}
-.symbol-btn.active{background:#0056b3;border-color:#0056b3;color:#fff;}
+.notif-row select { width: auto; flex: 1; padding: 8px; font-size: 14px; }
+.modal-buttons{display:flex;gap:12px;margin-top:20px;flex-wrap:wrap}
+.modal-buttons button{flex:1;min-width:100px;padding:15px 12px;font-size:17px}
 
 /* --- ТЕМНАЯ ТЕМА --- */
-body.dark{background:#121212;color:#e0e0e0}
-body.dark .container{background:#1e1e1e;}
+body.dark{background:#14171a;color:#e4e6ea}
+body.dark .container{background:#1e2124;box-shadow:0 4px 18px rgba(0,0,0,0.5)}
 body.dark h2{color:#6ab0ff}
-body.dark .calendar .day._{background:#2a2a2a;border-color:#333;color:#666}
-body.dark .calendar .day.empty{background:transparent}
-body.dark .term-block{box-shadow:none;}
-body.dark select,body.dark button:not(.mode-btn):not(.top-btn){background:#333;color:#fff;border-color:#555}
-body.dark .mode-controls{background:#2a2a2a}
-body.dark .mode-btn{background:#1e1e1e;color:#ccc;border-color:#444}
-body.dark .mode-btn.active{background:#0056b3;color:#fff}
-body.dark .modal{background:#1e1e1e;color:#fff}
+body.dark .top-btn{background:#2a2e33;color:#e4e6ea;border-color:#3a3f44}
+body.dark select{background:#2a2e33;color:#e4e6ea;border-color:#3a3f44}
+body.dark button{background:#0056b3;color:#fff}
+body.dark .mode-controls{background:#2a2e33}
+body.dark .mode-btn{background:#1e2124;color:#e4e6ea;border-color:#3a3f44}
+body.dark .mode-btn.active{background:#0056b3;color:#fff;border-color:#0056b3}
+body.dark .day._{background:#232629;color:#5a5f66;border-color:#2f3338}
+body.dark .day .date-num{color:#c0c5cb;background:rgba(0,0,0,0.5);}
+body.dark .day-header{color:#a0a5ab}
+body.dark .modal{background:#1e2124;color:#e4e6ea}
 body.dark .modal h3{color:#6ab0ff}
-body.dark .modal label{color:#ddd}
-body.dark .modal input,body.dark .modal select{background:#333;color:#fff;border-color:#555}
-body.dark .modal .checkbox-row{background:#2a2a2a;border-color:#444}
-body.dark .symbol-btn{background:#333;color:#fff;border-color:#555}
-
-@media (max-width:600px){
-  .calendar.view-month .day{border-radius:4px;}
-  .calendar.view-month .date-num{font-size:11px;top:2px;left:2px;padding:1px 4px;}
-  .terms-container{margin-top:18px;}
-  .term-block{font-size:9px;padding:1px 3px;}
-  #monthDisplay{font-size:18px;min-width:120px;}
-}
+body.dark .modal label{color:#e4e6ea}
+body.dark .modal input, body.dark .modal select{background:#2a2e33;color:#e4e6ea;border-color:#3a3f44}
+body.dark .modal .checkbox-row{background:#2a2e33;color:#c0c5cb}
 </style>
 </head>
 <body>
 <div class="container" id="mainContainer">
 <h2>Schichtzeit</h2>
+<div class="err-box" id="errBox" style="display:none; background:#f8d7da; color:#721c24; padding:10px; margin-bottom:10px;"></div>
 <div class="top-row">
-  <span id="onlineStatus" class="online-status online">Bereit</span>
+  <span id="onlineStatus" class="online-status loading">Uhr wird geladen...</span>
   <label>Schicht:<select id="groupSelect"></select></label>
 </div>
-
 <div class="nav-row">
-  <button class="top-btn" id="prevBtn">&larr;</button>
+  <button class="top-btn" id="shareBtn" title="Teilen">🔗</button>
+  <button id="prevBtn" title="Zurück">&larr;</button>
   <span id="monthDisplay"></span>
-  <button class="top-btn" id="nextBtn">&rarr;</button>
+  <button id="nextBtn" title="Weiter">&rarr;</button>
   <select id="viewSelect" style="padding:8px; font-size:14px;">
     <option value="month">Monat</option>
-    <option value="week">Woche</option>
+    <option value="6days">6 Tage</option>
     <option value="4days">4 Tage</option>
     <option value="1day">Tag</option>
   </select>
+  <button class="top-btn" id="settingsBtn" title="Einstellungen">⚙️</button>
 </div>
-
 <div class="mode-controls">
-  <button class="mode-btn active" data-mode="normal">Normal</button>
-  <button class="mode-btn" data-mode="krank">Krank</button>
-  <button class="mode-btn" data-mode="urlaub">Urlaub</button>
-  <button class="mode-btn" data-mode="sonstige">Termin</button>
+<button class="mode-btn active" data-mode="normal">Normal</button>
+<button class="mode-btn" data-mode="krank">Krank</button>
+<button class="mode-btn" data-mode="urlaub">Urlaub</button>
+<button class="mode-btn" data-mode="sonstige">Sonstige</button>
 </div>
-
 <div class="calendar-wrap">
-  <div class="calendar view-month" id="calendar"></div>
+<div class="calendar view-month" id="calendar"></div>
+</div>
+<div class="footer" style="margin-top:20px; display:flex; justify-content:center; gap:10px; flex-wrap:wrap;">
+<button id="resetBtn" style="background:#dc3545;">Alle Markierungen löschen</button>
+<button id="backupBtn" style="background:#6f42c1;">Backup / Export</button>
+</div>
 </div>
 
-<div style="margin-top:20px; display:flex; gap:10px; justify-content:center; flex-wrap:wrap;">
-  <button id="settingsBtn" style="background:#6c757d;">⚙️ Einstellungen</button>
-  <button id="backupBtn" style="background:#6f42c1;">💾 Backup / ICS</button>
-</div>
-
-</div>
-
-<!-- МОДАЛЬНОЕ ОКНО ДОБАВЛЕНИЯ/РЕДАКТИРОВАНИЯ ТЕРМИНА -->
+<!-- МОДАЛЬНОЕ ОКНО ТЕРМИНА -->
 <div class="modal-overlay" id="entryModal"><div class="modal">
     <h3 id="modalTitle">Eintrag</h3>
-    <div id="modalDate" style="font-size:14px; color:#666; margin-bottom:15px;"></div>
-    
-    <label>Beschreibung<input type="text" id="entryText" maxlength="40" placeholder="z.B. Arzttermin"></label>
-    <label>Uhrzeit (Optional)<input type="time" id="entryTime"></label>
-    
-    <label>Farbe<input type="color" id="entryColor" value="#4285F4" style="width:50px; height:30px; padding:0; vertical-align:middle;"></label>
+    <div class="modal-date" id="modalDate"></div>
+    <label>Beschreibung<input type="text" id="entryText" maxlength="80" placeholder="z.B. Arzttermin..." autocomplete="off"></label>
+    <label>Uhrzeit<input type="time" id="entryTime"></label>
     
     <label class="checkbox-row" for="entryNotify">
         <div style="display:flex; align-items:center; gap:8px;">
-            <input type="checkbox" id="entryNotify" style="transform:scale(1.2);">
-            <span>Erinnerung senden</span>
+            <input type="checkbox" id="entryNotify" style="transform:scale(1.3);">
+            <span style="font-weight:bold;">Erinnerung senden</span>
         </div>
         <div class="notif-row">
             <select id="notify1">
@@ -184,13 +169,14 @@ body.dark .symbol-btn{background:#333;color:#fff;border-color:#555}
                 <option value="10">10 Min</option>
                 <option value="30">30 Min</option>
                 <option value="60">1 Std</option>
+                <option value="120">2 Std</option>
             </select>
             <span>vorher</span>
         </div>
     </label>
 
     <div class="modal-buttons">
-        <button id="modalDeleteBtn" style="background:#dc3545; display:none;">Löschen</button>
+        <button id="modalDeleteBtn" style="background:#dc3545;display:none;">Löschen</button>
         <button id="modalCancelBtn" style="background:#6c757d;">Abbrechen</button>
         <button id="modalSaveBtn" style="background:#007bff;">Speichern</button>
     </div>
@@ -199,88 +185,82 @@ body.dark .symbol-btn{background:#333;color:#fff;border-color:#555}
 <!-- МОДАЛЬНОЕ ОКНО НАСТРОЕК -->
 <div class="modal-overlay" id="settingsModal"><div class="modal">
     <h3>Einstellungen</h3>
-    
     <label>Schichtsystem
         <select id="shiftSystemSelect">
             <option value="5">5-Schicht (F/S/N)</option>
-            <option value="4vk">4-Schicht Vollkonti (F/S/N)</option>
+            <option value="4vk">4-Schicht Vollkonti (F/S/N, 8h)</option>
             <option value="4x12">4×12-Schicht (T/N)</option>
             <option value="3x12">3×12-Schicht (T/N)</option>
             <option value="blank">Leer (ohne Schicht)</option>
         </select>
     </label>
 
-    <label style="display:flex; align-items:center; gap:10px; margin-top:15px; background:#f8f9fa; padding:10px; border-radius:8px; border:1px solid #eee;">
+    <label class="checkbox-row" style="flex-direction:row; align-items:center; margin-top:15px;">
         <input type="checkbox" id="alwaysShowFerien" style="transform:scale(1.3);">
         <span>Ferien immer anzeigen</span>
     </label>
-    <div style="font-size:12px; color:#777; margin-top:5px; margin-bottom:15px;">Zeigt Schulferien (Bayern) auch außerhalb der aktuellen Saison an.</div>
+    <div style="font-size:13px; color:#777; margin-top:-5px; margin-bottom:15px;">Zeigt Schulferien auch außerhalb der aktuellen Saison an.</div>
 
-    <label style="display:flex; align-items:center; gap:10px; margin-top:15px; background:#f8f9fa; padding:10px; border-radius:8px; border:1px solid #eee;">
+    <label class="checkbox-row" style="flex-direction:row; align-items:center;">
         <input type="checkbox" id="darkModeToggle" style="transform:scale(1.3);">
         <span>Dark Mode (Dunkles Design)</span>
     </label>
 
-    <div class="modal-buttons" style="margin-top:25px;">
-        <button id="settingsCloseBtn" style="background:#007bff;">Speichern & Schließen</button>
+    <div class="modal-buttons" style="margin-top:20px;">
+        <button id="settingsCancelBtn" style="background:#6c757d;">Abbrechen</button>
+        <button id="settingsSaveBtn" style="background:#007bff;">Speichern</button>
     </div>
 </div></div>
 
 <!-- МОДАЛЬНОЕ ОКНО BACKUP -->
-<div class="modal-overlay" id="backupModal"><div class="modal">
+<div class="modal-overlay" id="backupMenuModal"><div class="modal">
     <h3>Backup & Export</h3>
-    <p style="font-size:14px; color:#666; margin-bottom:20px;">Sichere deine Daten oder exportiere sie für Google Calendar.</p>
-    <button id="backupGoogleIcsBtn" style="background:#4285F4; width:100%; margin-bottom:10px; padding:15px;">📅 Für Google Calendar exportieren (.ics)</button>
-    <button id="backupCloseBtn" style="background:#6c757d; width:100%;">Schließen</button>
+    <button id="backupGoogleIcsBtn" style="border:1px solid #4285F4; background:#f4f8ff; width:100%; text-align:left; padding:15px; border-radius:10px; cursor:pointer; margin-bottom:15px;">
+        <span style="font-size:24px; margin-right:10px;">📅</span>
+        <span><span style="font-weight:bold; color:#4285F4;">Für Google Calendar exportieren (.ics)</span><br><span style="font-size:13px; color:#666;">Lädt eine .ics Datei herunter.</span></span>
+    </button>
+    <div class="modal-buttons"><button id="backupCancelBtn" style="background:#6c757d;">Schließen</button></div>
 </div></div>
 
 <script>
 (function(){
 try {
-    // --- БАЗОВЫЕ ПЕРЕМЕННЫЕ ---
-    var currentDate = new Date();
-    currentDate.setDate(1); // Начинаем с 1-го числа текущего месяца
-    var actualToday = new Date();
-    actualToday.setHours(0,0,0,0);
+    var monthNames=["Januar","Februar","März","April","Mai","Juni","Juli","August","September","Oktober","November","Dezember"];
+    var dayNames=["Mo","Di","Mi","Do","Fr","Sa","So"];
+    var SYMBOLS=['🔔','⏰','📌','⭐','❤️','⚠️','📞','💊','🏥','📅','✈️','🎂','🎉','🚗','💼','📝'];
     
-    var currentView = localStorage.getItem('sz_view') || 'month'; // month, week, 4days, 1day
+    var currentDate = new Date();
+    var currentView = localStorage.getItem('sz_view') || 'month';
     var currentMode = 'normal';
     var shiftSystem = localStorage.getItem('sz_shiftSystem') || '5';
     var alwaysShowFerien = localStorage.getItem('sz_alwaysFerien') === 'true';
     var isDarkMode = localStorage.getItem('sz_darkMode') === 'true';
+    
+    var userData = JSON.parse(localStorage.getItem('sz_data')) || { shifts: {}, entries: {} };
+    function saveData() { localStorage.setItem('sz_data', JSON.stringify(userData)); }
 
-    // Данные пользователя (симуляция базы данных)
-    var userData = JSON.parse(localStorage.getItem('sz_data')) || {
-        shifts: {}, // формат: 'YYYY-MM-DD': 'F' | 'S' | 'N' | 'Krank' | 'Urlaub'
-        entries: {} // формат: 'YYYY-MM-DD': [ {id, text, time, color, notify, n1, n2} ]
-    };
-
-    function saveData() {
-        localStorage.setItem('sz_data', JSON.stringify(userData));
-    }
-
-    // --- ЛОГИКА СМЕН ---
-    // Упрощенный цикл для примера (5-сменный)
     function getShift(date, group) {
         if(shiftSystem === 'blank') return '_';
-        // Базовая дата для расчета (1 окт 2026)
         var base = new Date(2026, 9, 1).getTime();
-        var current = date.getTime();
-        var diffDays = Math.floor((current - base) / (1000 * 60 * 60 * 24));
-        
-        // Пример 5-сменного цикла (35 дней)
+        var diffDays = Math.floor((date.getTime() - base) / (1000 * 60 * 60 * 24));
         var cycle = ['F','F','N','N','N','_','_','_','S','S','S','_','F','F','N','N','_','_','_','S','S','S','_','F','F','F','N','N','_','_','_','_','_','_','_'];
-        // Сдвиг для групп (1-5)
-        var offsets = { '1': 29, '2': 1, '3': 8, '4': 15, '5': 22 };
+        var offsets = { '1': 29, '2': 1, '3': 8, '4': 15, '5': 22, 'A':0, 'B':2, 'C':4, 'D':6, 'I':0, 'II':1, 'III':2 };
         var offset = offsets[group] || 0;
         
-        var idx = (diffDays + offset) % 35;
-        if(idx < 0) idx += 35;
-        
-        return cycle[idx];
+        if (shiftSystem === '5') { var idx = (diffDays + offset) % 35; if(idx<0) idx+=35; return cycle[idx]; } 
+        else if (shiftSystem === '4vk') { var c4 = ['F','F','S','S','N','N','_','_']; var idx = (diffDays + offset) % 8; if(idx<0) idx+=8; return c4[idx]; } 
+        else if (shiftSystem === '4x12') { var c12 = ['T','N','_','_']; var idx = (diffDays + offset) % 4; if(idx<0) idx+=4; return c12[idx]; } 
+        else if (shiftSystem === '3x12') { var c312 = ['_','T','N']; var idx = (diffDays + offset) % 3; if(idx<0) idx+=3; return c312[idx]; }
+        return '_';
     }
 
-    // --- ОТРИСОВКА КАЛЕНДАРЯ ---
+    var FERIEN = [{start:"2026-03-30", end:"2026-04-10"}, {start:"2026-08-01", end:"2026-09-14"}, {start:"2026-11-02", end:"2026-11-06"}, {start:"2027-03-22", end:"2027-04-02"}, {start:"2027-08-02", end:"2027-09-13"}];
+    function isFerien(date) {
+        var dStr = date.toISOString().split('T')[0];
+        for(var i=0; i<FERIEN.length; i++) { if(dStr >= FERIEN[i].start && dStr <= FERIEN[i].end) return true; }
+        return false;
+    }
+
     function renderCalendar() {
         var cal = document.getElementById('calendar');
         cal.className = 'calendar view-' + currentView;
@@ -288,189 +268,122 @@ try {
         
         var year = currentDate.getFullYear();
         var month = currentDate.getMonth();
-        
-        var firstDayOfMonth = new Date(year, month, 1);
-        var lastDayOfMonth = new Date(year, month + 1, 0);
-        
-        var startDayOffset = firstDayOfMonth.getDay() === 0 ? 6 : firstDayOfMonth.getDay() - 1;
-        
         var daysToDraw = [];
         
         if (currentView === 'month') {
-            document.getElementById('monthDisplay').textContent = firstDayOfMonth.toLocaleString('de-DE', { month: 'long', year: 'numeric' });
-            for (var i = 0; i < startDayOffset; i++) daysToDraw.push(null);
-            for (var i = 1; i <= lastDayOfMonth.getDate(); i++) {
-                daysToDraw.push(new Date(year, month, i));
-            }
-            // Добиваем до полной сетки
+            document.getElementById('monthDisplay').textContent = monthNames[month] + ' ' + year;
+            var firstDay = new Date(year, month, 1);
+            var lastDay = new Date(year, month + 1, 0);
+            var startOffset = firstDay.getDay() === 0 ? 6 : firstDay.getDay() - 1;
+            for(var i=0; i<startOffset; i++) daysToDraw.push(null);
+            for(var i=1; i<=lastDay.getDate(); i++) daysToDraw.push(new Date(year, month, i));
             while(daysToDraw.length % 7 !== 0) daysToDraw.push(null);
-        } 
-        else if (currentView === 'week') {
-            var startOfWeek = new Date(currentDate);
-            var day = startOfWeek.getDay() || 7; 
-            if (day !== 1) startOfWeek.setHours(-24 * (day - 1));
-            document.getElementById('monthDisplay').textContent = "Woche ab " + startOfWeek.toLocaleDateString('de-DE');
-            for (var i = 0; i < 7; i++) {
-                var d = new Date(startOfWeek);
-                d.setDate(startOfWeek.getDate() + i);
-                daysToDraw.push(d);
-            }
-        }
-        else if (currentView === '4days') {
+            dayNames.forEach(function(n){ var h=document.createElement('div'); h.className='day-header'; h.textContent=n; cal.appendChild(h); });
+        } else if (currentView === '6days') {
+            document.getElementById('monthDisplay').textContent = "6 Tage ab " + currentDate.toLocaleDateString('de-DE');
+            for(var i=0; i<6; i++) { var d = new Date(currentDate); d.setDate(currentDate.getDate()+i); daysToDraw.push(d); }
+        } else if (currentView === '4days') {
             document.getElementById('monthDisplay').textContent = "4 Tage ab " + currentDate.toLocaleDateString('de-DE');
-            for (var i = 0; i < 4; i++) {
-                var d = new Date(currentDate);
-                d.setDate(currentDate.getDate() + i);
-                daysToDraw.push(d);
-            }
-        }
-        else if (currentView === '1day') {
-            document.getElementById('monthDisplay').textContent = currentDate.toLocaleDateString('de-DE', { weekday: 'long', day: 'numeric', month: 'long' });
+            for(var i=0; i<4; i++) { var d = new Date(currentDate); d.setDate(currentDate.getDate()+i); daysToDraw.push(d); }
+        } else if (currentView === '1day') {
+            document.getElementById('monthDisplay').textContent = currentDate.toLocaleDateString('de-DE', { weekday:'long', day:'numeric', month:'long', year:'numeric' });
             daysToDraw.push(new Date(currentDate));
         }
 
-        // Заголовки дней недели
-        if (currentView === 'month' || currentView === 'week') {
-            var dayNames = ['Mo', 'Di', 'Mi', 'Do', 'Fr', 'Sa', 'So'];
-            dayNames.forEach(function(n) {
-                var h = document.createElement('div');
-                h.className = 'day-header';
-                h.textContent = n;
-                cal.appendChild(h);
-            });
-        } else if (currentView === '4days') {
-            // Для 4 дней заголовки не обязательны, дата будет внутри
-        }
-
-        // Рисуем ячейки
         var group = document.getElementById('groupSelect').value;
-        
+        var todayStr = new Date().toISOString().split('T')[0];
+
         daysToDraw.forEach(function(dateObj) {
             var el = document.createElement('div');
-            
-            if (!dateObj) {
-                el.className = 'day empty';
-                cal.appendChild(el);
-                return;
-            }
+            if (!dateObj) { el.className = 'day empty'; cal.appendChild(el); return; }
 
             var dateKey = dateObj.toISOString().split('T')[0];
             el.className = 'day';
             
-            if (dateObj.getTime() === actualToday.getTime()) el.classList.add('today');
+            if (dateKey === todayStr) el.classList.add('today');
+            if (isFerien(dateObj) && (alwaysShowFerien || currentView !== 'month')) el.classList.add('ferien');
             
-            // Смена
             var shift = getShift(dateObj, group);
             if (shift !== '_') el.classList.add(shift);
             else el.classList.add('_');
 
-            // Пользовательские статусы
             var status = userData.shifts[dateKey];
             if (status === 'Krank') el.classList.add('krank');
             if (status === 'Urlaub') el.classList.add('urlaub');
 
-            // Номер дня
+            // Дата (Оригинальный вид)
             var num = document.createElement('div');
             num.className = 'date-num';
-            if (currentView === '1day' || currentView === '4days') {
-                num.textContent = dateObj.toLocaleDateString('de-DE', { weekday: 'short', day: 'numeric', month: 'numeric' });
-            } else {
-                num.textContent = dateObj.getDate();
-            }
+            num.textContent = dateObj.getDate();
             el.appendChild(num);
 
-            // Контейнер для терминов
-            var termsBox = document.createElement('div');
-            termsBox.className = 'terms-container';
-            
-            // Добавляем смену как термин (чтобы было видно)
-            if (shift !== '_' && shiftSystem !== 'blank') {
-                var shiftTerm = document.createElement('div');
-                shiftTerm.className = 'term-block shift-block';
-                var shiftName = shift === 'F' ? 'Frühschicht' : (shift === 'S' ? 'Spätschicht' : (shift === 'N' ? 'Nachtschicht' : shift));
-                shiftTerm.textContent = shiftName + ' (' + shift + ')';
-                if(shift === 'F') shiftTerm.style.backgroundColor = '#b8860b';
-                if(shift === 'S') shiftTerm.style.backgroundColor = '#cd3700';
-                if(shift === 'N') shiftTerm.style.backgroundColor = '#104e8b';
-                termsBox.appendChild(shiftTerm);
+            // ОРИГИНАЛЬНЫЕ ТЕРМИНЫ
+            var events = userData.entries[dateKey] || [];
+            if (events.length > 0) {
+                el.classList.add('sonstige');
+                
+                // Берем иконку из первого события (или дефолтную)
+                var icon = events[0].icon || '🔔';
+                var iconEl = document.createElement('div');
+                iconEl.className = 'term-icon';
+                iconEl.textContent = icon;
+                iconEl.style.top = '50%';
+                iconEl.style.left = '50%';
+                el.appendChild(iconEl);
+
+                // Берем текст из первого события и выводим его сверху/снизу
+                if (events[0].text) {
+                    var txt = document.createElement('div');
+                    txt.className = 'term-text t-bottom';
+                    txt.textContent = events[0].text;
+                    el.appendChild(txt);
+                }
+
+                // Если событий больше одного, показываем превью внизу
+                if (events.length > 1) {
+                    var prev = document.createElement('div');
+                    prev.className = 'sonstige-preview';
+                    prev.textContent = '+' + (events.length - 1) + ' Termine';
+                    el.appendChild(prev);
+                }
             }
 
-            // Добавляем пользовательские события
-            var events = userData.entries[dateKey] || [];
-            events.forEach(function(ev) {
-                var term = document.createElement('div');
-                term.className = 'term-block';
-                term.style.backgroundColor = ev.color || '#4285F4';
-                var timeStr = ev.time ? ev.time + ' ' : '';
-                term.textContent = timeStr + (ev.text || 'Termin');
-                termsBox.appendChild(term);
-            });
-
-            el.appendChild(termsBox);
-
-            // Обработчик клика
             el.addEventListener('click', function() {
-                if (currentMode === 'normal') {
-                    openEntryModal(dateObj, dateKey);
-                } else if (currentMode === 'krank') {
-                    userData.shifts[dateKey] = (userData.shifts[dateKey] === 'Krank') ? null : 'Krank';
-                    saveData(); renderCalendar();
-                } else if (currentMode === 'urlaub') {
-                    userData.shifts[dateKey] = (userData.shifts[dateKey] === 'Urlaub') ? null : 'Urlaub';
-                    saveData(); renderCalendar();
-                }
+                if (currentMode === 'normal' || currentMode === 'sonstige') openEntryModal(dateObj, dateKey);
+                else if (currentMode === 'krank') { userData.shifts[dateKey] = (userData.shifts[dateKey]==='Krank')?null:'Krank'; saveData(); renderCalendar(); }
+                else if (currentMode === 'urlaub') { userData.shifts[dateKey] = (userData.shifts[dateKey]==='Urlaub')?null:'Urlaub'; saveData(); renderCalendar(); }
             });
 
             cal.appendChild(el);
         });
     }
 
-    // --- МОДАЛЬНОЕ ОКНО ТЕРМИНА ---
+    // --- МОДАЛЬНОЕ ОКНО ---
     var activeDateKey = null;
-    var activeEntryId = null;
-
     function openEntryModal(dateObj, dateKey) {
         activeDateKey = dateKey;
-        activeEntryId = null;
-        
         document.getElementById('modalDate').textContent = dateObj.toLocaleDateString('de-DE', { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' });
         document.getElementById('entryText').value = '';
         document.getElementById('entryTime').value = '';
-        document.getElementById('entryColor').value = '#4285F4';
         document.getElementById('entryNotify').checked = false;
         document.getElementById('notify1').value = '1440';
         document.getElementById('notify2').value = '0';
-        
-        // Скрываем кнопку удаления для нового события
-        document.getElementById('modalDeleteBtn').style.display = 'none';
-        
         document.getElementById('entryModal').classList.add('active');
     }
 
-    document.getElementById('modalCancelBtn').addEventListener('click', function() {
-        document.getElementById('entryModal').classList.remove('active');
-    });
+    document.getElementById('modalCancelBtn').addEventListener('click', function() { document.getElementById('entryModal').classList.remove('active'); });
 
     document.getElementById('modalSaveBtn').addEventListener('click', function() {
-        var text = document.getElementById('entryText').value.trim();
-        var time = document.getElementById('entryTime').value;
-        var color = document.getElementById('entryColor').value;
-        var notify = document.getElementById('entryNotify').checked;
-        var n1 = document.getElementById('notify1').value;
-        var n2 = document.getElementById('notify2').value;
-
-        if (!userData.entries[activeDateKey]) userData.entries[activeDateKey] = [];
-
+        if(!userData.entries[activeDateKey]) userData.entries[activeDateKey] = [];
         userData.entries[activeDateKey].push({
             id: Date.now().toString(),
-            text: text,
-            time: time,
-            color: color,
-            notify: notify,
-            n1: n1,
-            n2: n2
+            text: document.getElementById('entryText').value.trim(),
+            time: document.getElementById('entryTime').value,
+            notify: document.getElementById('entryNotify').checked,
+            n1: document.getElementById('notify1').value,
+            n2: document.getElementById('notify2').value,
+            icon: '📌' // Дефолтная иконка, так как в этой версии мы убрали выбор символов для компактности
         });
-
         saveData();
         document.getElementById('entryModal').classList.remove('active');
         renderCalendar();
@@ -479,7 +392,7 @@ try {
     // --- НАВИГАЦИЯ ---
     document.getElementById('prevBtn').addEventListener('click', function() {
         if (currentView === 'month') currentDate.setMonth(currentDate.getMonth() - 1);
-        else if (currentView === 'week') currentDate.setDate(currentDate.getDate() - 7);
+        else if (currentView === '6days') currentDate.setDate(currentDate.getDate() - 6);
         else if (currentView === '4days') currentDate.setDate(currentDate.getDate() - 4);
         else if (currentView === '1day') currentDate.setDate(currentDate.getDate() - 1);
         renderCalendar();
@@ -487,7 +400,7 @@ try {
 
     document.getElementById('nextBtn').addEventListener('click', function() {
         if (currentView === 'month') currentDate.setMonth(currentDate.getMonth() + 1);
-        else if (currentView === 'week') currentDate.setDate(currentDate.getDate() + 7);
+        else if (currentView === '6days') currentDate.setDate(currentDate.getDate() + 6);
         else if (currentView === '4days') currentDate.setDate(currentDate.getDate() + 4);
         else if (currentView === '1day') currentDate.setDate(currentDate.getDate() + 1);
         renderCalendar();
@@ -496,12 +409,11 @@ try {
     document.getElementById('viewSelect').addEventListener('change', function(e) {
         currentView = e.target.value;
         localStorage.setItem('sz_view', currentView);
-        // Сбрасываем дату на начало, чтобы не улететь в пустоту
         currentDate = new Date(); 
         renderCalendar();
     });
 
-    // --- РЕЖИМЫ (Normal, Krank, Urlaub) ---
+    // --- РЕЖИМЫ ---
     document.querySelectorAll('.mode-btn').forEach(function(btn) {
         btn.addEventListener('click', function() {
             document.querySelectorAll('.mode-btn').forEach(b => b.classList.remove('active'));
@@ -518,7 +430,7 @@ try {
         document.getElementById('settingsModal').classList.add('active');
     });
 
-    document.getElementById('settingsCloseBtn').addEventListener('click', function() {
+    document.getElementById('settingsSaveBtn').addEventListener('click', function() {
         shiftSystem = document.getElementById('shiftSystemSelect').value;
         alwaysShowFerien = document.getElementById('alwaysShowFerien').checked;
         isDarkMode = document.getElementById('darkModeToggle').checked;
@@ -531,31 +443,69 @@ try {
         else document.body.classList.remove('dark');
 
         document.getElementById('settingsModal').classList.remove('active');
-        renderCalendar();
-    });
-
-    // --- ИНИЦИАЛИЗАЦИЯ ---
-    function init() {
-        // Восстановление темной темы
-        if(isDarkMode) document.body.classList.add('dark');
         
-        // Заполнение групп смен
         var groupSel = document.getElementById('groupSelect');
         if (shiftSystem === '5') groupSel.innerHTML = '<option>1</option><option>2</option><option>3</option><option>4</option><option>5</option>';
         else if (shiftSystem === '4vk' || shiftSystem === '4x12') groupSel.innerHTML = '<option>A</option><option>B</option><option>C</option><option>D</option>';
         else if (shiftSystem === '3x12') groupSel.innerHTML = '<option>I</option><option>II</option><option>III</option>';
         else groupSel.innerHTML = '<option>-</option>';
+        
+        renderCalendar();
+    });
+    document.getElementById('settingsCancelBtn').addEventListener('click', function() { document.getElementById('settingsModal').classList.remove('active'); });
 
+    // --- BACKUP (Правильный экспорт) ---
+    document.getElementById('backupBtn').addEventListener('click', function() { document.getElementById('backupMenuModal').classList.add('active'); });
+    document.getElementById('backupCancelBtn').addEventListener('click', function() { document.getElementById('backupMenuModal').classList.remove('active'); });
+
+    document.getElementById('backupGoogleIcsBtn').addEventListener('click', function() {
+        var ics = "\uFEFFBEGIN:VCALENDAR\r\nVERSION:2.0\r\nPRODID:-//Schichtzeit//Export//DE\r\nCALSCALE:GREGORIAN\r\n";
+        var stamp = new Date().toISOString().replace(/[-:]/g, '').split('.')[0] + "Z";
+        var group = document.getElementById('groupSelect').value;
+        var start = new Date(currentDate.getFullYear(), 0, 1);
+        var end = new Date(currentDate.getFullYear(), 11, 31);
+        
+        function addEvent(dStr, title) {
+            var d = dStr.replace(/-/g, '');
+            ics += "BEGIN:VEVENT\r\nUID:" + d + Math.random().toString(36).substr(2,5) + "@sz\r\nDTSTAMP:" + stamp + "\r\n";
+            ics += "DTSTART;VALUE=DATE:" + d + "\r\nDTEND;VALUE=DATE:" + d + "\r\n";
+            ics += "SUMMARY:" + title + "\r\nEND:VEVENT\r\n";
+        }
+
+        for (var d = new Date(start); d <= end; d.setDate(d.getDate() + 1)) {
+            var shift = getShift(d, group);
+            if (shift !== '_') addEvent(d.toISOString().split('T')[0], shift);
+        }
+        
+        Object.keys(userData.entries).forEach(function(k) {
+            userData.entries[k].forEach(function(ev) { addEvent(k, ev.text || 'Termin'); });
+        });
+
+        ics += "END:VCALENDAR";
+        var blob = new Blob([ics], { type: 'text/calendar;charset=utf-8' });
+        var link = document.createElement('a');
+        link.href = URL.createObjectURL(blob);
+        link.download = 'Schichtzeit_Kalender.ics';
+        link.click();
+        document.getElementById('backupMenuModal').classList.remove('active');
+    });
+
+    // --- ИНИЦИАЛИЗАЦИЯ ---
+    function init() {
+        if(isDarkMode) document.body.classList.add('dark');
+        var groupSel = document.getElementById('groupSelect');
+        if (shiftSystem === '5') groupSel.innerHTML = '<option>1</option><option>2</option><option>3</option><option>4</option><option>5</option>';
+        else if (shiftSystem === '4vk' || shiftSystem === '4x12') groupSel.innerHTML = '<option>A</option><option>B</option><option>C</option><option>D</option>';
+        else if (shiftSystem === '3x12') groupSel.innerHTML = '<option>I</option><option>II</option><option>III</option>';
+        else groupSel.innerHTML = '<option>-</option>';
+        
+        groupSel.addEventListener('change', renderCalendar);
         document.getElementById('viewSelect').value = currentView;
         renderCalendar();
     }
-
     init();
 
-} catch(e) {
-    alert("Ошибка инициализации: " + e.message);
-    console.error(e);
-}
+} catch(e) { console.error(e); }
 })();
 </script>
 </body>
