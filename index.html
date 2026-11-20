@@ -2,14 +2,14 @@
 <html lang="de">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
 <meta http-equiv="Pragma" content="no-cache">
 <meta http-equiv="Expires" content="0">
-<title>Schichtzeit</title>
+<title>SchichtZeit</title>
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-<meta name="apple-mobile-web-app-title" content="Schichtzeit">
+<meta name="apple-mobile-web-app-title" content="SchichtZeit">
 <meta name="theme-color" content="#0056b3">
 <link rel="apple-touch-icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 180 180'%3E%3Crect width='180' height='180' rx='40' fill='%230056b3'/%3E%3Ctext x='90' y='120' font-size='90' text-anchor='middle' fill='white' font-family='Arial' font-weight='bold'%3ESZ%3C/text%3E%3C/svg%3E">
 <style>
@@ -458,11 +458,35 @@ body.dark .plan-share-box{background:#1a2330;color:#c0c5cb}
 .plan-share-box textarea{width:100%;min-height:80px;padding:8px;font-size:12px;border:1px solid #ccc;border-radius:6px;font-family:monospace;box-sizing:border-box;resize:vertical;margin-top:6px}
 body.dark .plan-share-box textarea{background:#2a2e33;color:#e4e6ea;border-color:#3a3f44}
 @media (prefers-reduced-motion: reduce){.effects-layer{display:none!important}}
+
+.notif-hint{display:none;font-size:13px;color:#666;margin:8px 0}
+.calendar-wrap{container-type:inline-size}
+.calendar{gap:clamp(2px,.9cqw,10px)}
+.calendar .day{height:auto;aspect-ratio:1/1.15;border-radius:clamp(6px,1.6cqw,14px);font-size:clamp(15px,4.2cqw,32px)}
+.calendar .day .date-num{font-size:clamp(10px,2.3cqw,18px);top:clamp(2px,.9cqw,8px);left:clamp(3px,1.1cqw,10px)}
+.calendar .day.today{border-width:clamp(2px,.7cqw,5px)}
+.calendar .day.today .date-num{padding:1px clamp(3px,.9cqw,8px);border-radius:clamp(4px,.9cqw,8px);top:clamp(2px,.6cqw,6px);left:clamp(2px,.6cqw,6px)}
+.calendar .holiday-icon{font-size:clamp(11px,2.4cqw,22px)}
+.calendar .daytype-label{font-size:clamp(7px,1.5cqw,12px)}
+.shift-txt{font-size:clamp(18px,5.4cqw,44px);font-weight:900;line-height:1}
+.hol-name{position:absolute;top:clamp(18px,4cqw,34px);left:4px;right:4px;font-size:clamp(9px,1.7cqw,14px);font-weight:bold;line-height:1.1;opacity:.85}
+.chips{position:absolute;left:3px;right:3px;bottom:clamp(14px,3.4cqw,26px);display:flex;flex-wrap:wrap;gap:2px;justify-content:center;z-index:4}
+.chip{color:#fff;text-shadow:0 0 2px #000,0 0 3px #000;border-radius:5px;padding:0 4px;font-size:clamp(10px,2cqw,16px);font-weight:bold;line-height:1.35;max-width:100%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.calendar.v-week .day{aspect-ratio:1/2.3}
+.calendar.v-week .shift-txt{font-size:clamp(10px,2.6cqw,22px)}
+.calendar.v-week .date-num{font-size:clamp(9px,1.8cqw,16px)}
+.calendar.v-d4{grid-template-columns:repeat(4,1fr)}
+.calendar.v-d4 .day{aspect-ratio:1/1.8}
+.calendar.v-d1{grid-template-columns:1fr}
+.calendar.v-d1 .day{aspect-ratio:auto;min-height:clamp(240px,55vh,480px)}
+.calendar.v-d4 .shift-txt,.calendar.v-d1 .shift-txt{font-size:clamp(20px,6.5cqw,48px)}
+.calendar.v-d1 .date-num,.calendar.v-d4 .date-num{font-size:clamp(13px,2.6cqw,22px)}
+#monthDisplay{white-space:nowrap}
 </style>
 </head>
 <body>
 <div class="container" id="mainContainer">
-<h2>Schichtzeit</h2>
+<h2>SchichtZeit</h2>
 <div class="err-box" id="errBox"></div>
 <div class="top-row">
   <span id="onlineStatus" class="online-status loading">Uhr wird geladen...</span>
@@ -475,6 +499,7 @@ body.dark .plan-share-box textarea{background:#2a2e33;color:#e4e6ea;border-color
   <button id="nextBtn" title="Weiter">&rarr;</button>
   <button class="top-btn settings-btn" id="settingsBtn" title="Einstellungen" aria-label="Einstellungen"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M19.14 12.94c.04-.3.06-.61.06-.94 0-.32-.02-.64-.07-.94l2.03-1.58c.18-.14.23-.41.12-.61l-1.92-3.32c-.12-.22-.37-.29-.59-.22l-2.39.96c-.5-.38-1.03-.7-1.62-.94l-.36-2.54c-.04-.24-.24-.41-.48-.41h-3.84c-.24 0-.43.17-.47.41l-.36 2.54c-.59.24-1.13.57-1.62.94l-2.39-.96c-.22-.08-.47 0-.59.22L2.74 8.87c-.12.21-.08.47.12.61l2.03 1.58c-.05.3-.09.63-.09.94s.02.64.07.94l-2.03 1.58c-.18.14-.23.41-.12.61l1.92 3.32c.12.22.37.29.59.22l2.39-.96c.5.38 1.03.7 1.62.94l.36 2.54c.05.24.24.41.48.41h3.84c.24 0 .44-.17.47-.41l.36-2.54c.59-.24 1.13-.56 1.62-.94l2.39.96c.22.08.47 0 .59-.22l1.92-3.32c.12-.22.07-.47-.12-.61l-2.01-1.58zM12 15.6c-1.98 0-3.6-1.62-3.6-3.6s1.62-3.6 3.6-3.6 3.6 1.62 3.6 3.6-1.62 3.6-3.6 3.6z"/></svg></button>
 </div>
+<div class="mode-controls" id="viewRow"><button class="mode-btn" data-view="month">Monat</button><button class="mode-btn" data-view="week">Woche</button><button class="mode-btn" data-view="d4">4 Tage</button><button class="mode-btn" data-view="d1">1 Tag</button></div>
 <div class="mode-controls">
 <button class="mode-btn active" data-mode="normal">Normal</button>
 <button class="mode-btn" data-mode="krank">Krank</button>
@@ -525,7 +550,7 @@ body.dark .plan-share-box textarea{background:#2a2e33;color:#e4e6ea;border-color
 <div class="overview-list"><strong>Einbringer-Tage:</strong><ul id="listEinbringer"></ul></div>
 <button class="close-btn" id="yearOverviewCloseBtn">Schlie&szlig;en</button>
 </div>
-<div class="paypal-note"><p><strong>Gef&auml;llt dir Schichtzeit?</strong><br>Du kannst mich mit einer kleinen Spende unterst&uuml;tzen:</p><a href="https://www.paypal.com/biz/profile/schichtzeit" target="_blank" rel="noopener" class="paypal-btn">Mit PayPal unterst&uuml;tzen</a></div>
+<div class="paypal-note"><p><strong>Gef&auml;llt dir SchichtZeit?</strong><br>Du kannst mich mit einer kleinen Spende unterst&uuml;tzen:</p><a href="https://www.paypal.com/biz/profile/schichtzeit" target="_blank" rel="noopener" class="paypal-btn">Mit PayPal unterst&uuml;tzen</a></div>
 <a href="#" id="privacyFooterLink" class="privacy-footer-link">&#x1F512; Datenschutz / Privatsph&auml;re</a>
 </div>
 <div class="modal-overlay" id="entryModal"><div class="modal">
@@ -616,8 +641,9 @@ body.dark .plan-share-box textarea{background:#2a2e33;color:#e4e6ea;border-color
 <li><b>Eigene Schicht</b> &ndash; Du definierst einen eigenen Block (Startdatum + Bl&ouml;cke wie F&nbsp;2&nbsp;Tage, S&nbsp;2&nbsp;Tage &hellip;), der automatisch in alle folgenden Monate wiederholt wird. Du kannst mehrere Pl&auml;ne anlegen und per Link teilen.</li>
 <li><b>Leer</b> &ndash; komplett leerer Kalender ohne Schichtmuster &ndash; ideal zum freien Planen.</li>
 </ul>
-<p>Startdatum aller Standard-Zyklen: <b>04.01.2027</b>. Das Schichtsystem wird in den <b>Einstellungen</b> gew&auml;hlt (Zahnrad oben rechts).</p>
-<h4>2. Modi-Leiste</h4>
+<p>Startdatum: <b>01.10.2026</b> (5-Schicht) bzw. <b>04.01.2027</b> (4-Schicht Vollkonti, 4&times;12, 3&times;12). Das Schichtsystem wird in den <b>Einstellungen</b> gew&auml;hlt (Zahnrad oben rechts).</p>
+<h4>2. Ansichten &amp; Modi</h4>
+<p>Oben wechselst du zwischen <b>Monat</b>, <b>Woche</b>, <b>4 Tage</b> und <b>1 Tag</b>. Pfeile oder Wischen bl&auml;ttern weiter.</p>
 <ul>
 <li><b>Normal</b> / <b>Sonstige</b> &ndash; Klick auf Tag &ouml;ffnet Termin-Fenster mit Tages-Typ-Auswahl (Normal / Urlaub / Krank / Einbringer).</li>
 <li><b>Krank</b> / <b>Urlaub</b> &ndash; Klick markiert Tag sofort.</li>
@@ -633,7 +659,7 @@ body.dark .plan-share-box textarea{background:#2a2e33;color:#e4e6ea;border-color
 <h4>7. Lange dr&uuml;cken</h4>
 <p>Halte einen Tag <b>etwa eine halbe Sekunde lang gedr&uuml;ckt</b>, um L&ouml;schoptionen zu &ouml;ffnen.</p>
 <h4>8. Jahres&uuml;bersicht</h4>
-<p>Klappt weich auf und zeigt Urlaub / Krank / Sonstige / Einbringer.</p>
+<p>Zeigt alle Urlaubs-, Kranken-, Sonstige- und Einbringer-Tage des Jahres.</p>
 <h4>9. Eigene Pl&auml;ne teilen</h4>
 <p>Im Plan-Editor auf <b>&#x1F517; Teilen</b> tippen &ndash; der Link enth&auml;lt deinen kompletten Plan und kann weitergegeben werden. Beim &Ouml;ffnen des Links fragt die App, ob der Plan importiert werden soll.</p>
 <h4>10. Datenschutz</h4>
@@ -679,7 +705,7 @@ body.dark .plan-share-box textarea{background:#2a2e33;color:#e4e6ea;border-color
 <h4>Was passiert mit deinen Daten?</h4>
 <div class="box ok">
 <b>Alles bleibt bei dir.</b><br>
-Schichtzeit speichert alle Daten ausschlie&szlig;lich <b>lokal auf deinem Ger&auml;t</b> (im Browser-Speicher, <code>localStorage</code>). Es gibt <b>keinen Server</b>, der deine Markierungen, Termine oder Pl&auml;ne empf&auml;ngt.
+SchichtZeit speichert alle Daten ausschlie&szlig;lich <b>lokal auf deinem Ger&auml;t</b> (im Browser-Speicher, <code>localStorage</code>). Es gibt <b>keinen Server</b>, der deine Markierungen, Termine oder Pl&auml;ne empf&auml;ngt.
 </div>
 <h4>Konkret gespeichert werden lokal:</h4>
 <ul>
@@ -708,18 +734,18 @@ Schichtzeit speichert alle Daten ausschlie&szlig;lich <b>lokal auf deinem Ger&au
 <h4>Erinnerungen</h4>
 <p>Wenn aktiviert, nutzt die App die <b>Browser-Benachrichtigungen</b> deines Ger&auml;ts. Diese laufen komplett lokal &ndash; es werden keine Daten an einen Server gesendet. Die Seite muss daf&uuml;r ge&ouml;ffnet sein.</p>
 <h4>PayPal-Spenden</h4>
-<p>Der Spenden-Link f&uuml;hrt zu <b>paypal.com</b>. Dort gelten die Datenschutzbestimmungen von PayPal. Schichtzeit erh&auml;lt <b>keine</b> Zahlungsdaten von PayPal und kann Spender nicht identifizieren.</p>
+<p>Der Spenden-Link f&uuml;hrt zu <b>paypal.com</b>. Dort gelten die Datenschutzbestimmungen von PayPal. SchichtZeit erh&auml;lt <b>keine</b> Zahlungsdaten von PayPal und kann Spender nicht identifizieren.</p>
 <h4>Statischer Hoster (optional)</h4>
-<p>Wenn die App &uuml;ber GitHub Pages oder einen anderen Webhoster ge&ouml;ffnet wird, kann der Hoster anonyme Zugriffsdaten (IP-Adresse, Uhrzeit, Browser-Typ) protokollieren &ndash; das ist bei <b>jeder</b> Webseite so und enth&auml;lt <b>keine Inhalte</b> deiner Markierungen. Schichtzeit selbst hat keinen Zugriff auf diese Logs.</p>
+<p>Wenn die App &uuml;ber GitHub Pages oder einen anderen Webhoster ge&ouml;ffnet wird, kann der Hoster anonyme Zugriffsdaten (IP-Adresse, Uhrzeit, Browser-Typ) protokollieren &ndash; das ist bei <b>jeder</b> Webseite so und enth&auml;lt <b>keine Inhalte</b> deiner Markierungen. SchichtZeit selbst hat keinen Zugriff auf diese Logs.</p>
 <h4>Recht auf L&ouml;schung</h4>
 <p>Du kannst jederzeit:</p>
 <ul>
 <li><b>&bdquo;Alle Markierungen l&ouml;schen&ldquo;</b> (im Footer) &ndash; entfernt alle Krank-, Urlaub-, Einbringer- und Termin-Eintr&auml;ge</li>
-<li><b>Browser-Speicher leeren</b> (in den Einstellungen deines Browsers unter &bdquo;Website-Daten&ldquo;) &ndash; entfernt <i>alle</i> Schichtzeit-Daten vollst&auml;ndig und unwiderruflich</li>
+<li><b>Browser-Speicher leeren</b> (in den Einstellungen deines Browsers unter &bdquo;Website-Daten&ldquo;) &ndash; entfernt <i>alle</i> SchichtZeit-Daten vollst&auml;ndig und unwiderruflich</li>
 <li>Einzelne Eintr&auml;ge &uuml;ber langes Dr&uuml;cken oder im Eintrag-Fenster l&ouml;schen</li>
 </ul>
 <div class="box">
-<b>Kurz gesagt:</b> Deine Daten geh&ouml;ren dir. Schichtzeit sammelt nichts, sendet nichts, verkauft nichts. Alles bleibt auf deinem Ger&auml;t, bis du es selbst l&ouml;schst.
+<b>Kurz gesagt:</b> Deine Daten geh&ouml;ren dir. SchichtZeit sammelt nichts, sendet nichts, verkauft nichts. Alles bleibt auf deinem Ger&auml;t, bis du es selbst l&ouml;schst.
 </div>
 <p style="font-size:13px;color:#777;margin-top:18px;">Fragen? Schreib an <b>Logout@kabelmail.de</b></p>
 </div>
@@ -764,8 +790,8 @@ Schichtzeit speichert alle Daten ausschlie&szlig;lich <b>lokal auf deinem Ger&au
 try {
 var REPORT_EMAIL = 'Logout@kabelmail.de';
 var SHARE_URL="https://logoutrus-afk.github.io/SchichtZeit-Experimental-/";
-var SHARE_TITLE="Schichtzeit";
-var SHARE_TEXT="Schichtplan f\u00FCr unsere Schicht - Schichtzeit";
+var SHARE_TITLE="SchichtZeit";
+var SHARE_TEXT="Schichtplan f\u00FCr unsere Schicht - SchichtZeit";
 var BASE_DATE_UTC_5=Date.UTC(2026,9,1);
 var CYCLE_35=['F','F','N','N','N','_','_','_','S','S','S','_','F','F','N','N','_','_','_','S','S','S','_','F','F','F','N','N','_','_','_','_','_','_','_'];
 var START_INDEX_BY_GROUP_5={'1':29,'2':1,'3':8,'4':15,'5':22};
@@ -822,13 +848,13 @@ var savedGroup='';
 try{savedGroup=localStorage.getItem('schichtzeitGroup')||'';}catch(e){}
 function applyTheme(t){currentTheme=t;try{localStorage.setItem('schichtzeitTheme',t);}catch(e){}if(t==='dark')document.body.classList.add('dark');else document.body.classList.remove('dark');var c=document.querySelectorAll('.theme-choice');for(var i=0;i<c.length;i++){if(c[i].getAttribute('data-theme')===t)c[i].classList.add('active');else c[i].classList.remove('active');}}
 function showToast(t){var o=document.getElementById('shareToast');if(o)o.parentNode.removeChild(o);var el=document.createElement('div');el.id='shareToast';el.className='share-toast';el.textContent=t;document.body.appendChild(el);setTimeout(function(){if(el.parentNode)el.parentNode.removeChild(el);},2800);}
-function shareSchichtzeit(){var url=SHARE_URL;var d={title:SHARE_TITLE,text:SHARE_TEXT,url:url};if(navigator.share){try{navigator.share(d).then(function(){}).catch(function(err){if(err&&err.name==='AbortError')return;copyShareLink(url);});return;}catch(e){}}copyShareLink(url);}
+function shareSchichtZeit(){var url=SHARE_URL;var d={title:SHARE_TITLE,text:SHARE_TEXT,url:url};if(navigator.share){try{navigator.share(d).then(function(){}).catch(function(err){if(err&&err.name==='AbortError')return;copyShareLink(url);});return;}catch(e){}}copyShareLink(url);}
 function copyShareLink(url){if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(url).then(function(){showToast('Link kopiert');}).catch(function(){legacyCopy(url);});return;}legacyCopy(url);}
 function legacyCopy(url){try{var i=document.createElement('input');i.type='text';i.value=url;i.style.position='fixed';i.style.left='-9999px';document.body.appendChild(i);i.focus();i.select();var ok=document.execCommand('copy');document.body.removeChild(i);if(ok)showToast('Link kopiert');else showToast(url);}catch(e){showToast(url);}}
 
 /* === ИСПРАВЛЕННЫЙ ЭКСПОРТ В GOOGLE CALENDAR === */
 function exportToICS() {
-    var ics = "\uFEFFBEGIN:VCALENDAR\r\nVERSION:2.0\r\nPRODID:-//Schichtzeit//Export//DE\r\nCALSCALE:GREGORIAN\r\n";
+    var ics = "BEGIN:VCALENDAR\r\nVERSION:2.0\r\nPRODID:-//SchichtZeit//Export//DE\r\nCALSCALE:GREGORIAN\r\n";
     var now = new Date();
     var stamp = now.toISOString().replace(/[-:]/g, '').split('.')[0] + "Z";
 
@@ -839,15 +865,15 @@ function exportToICS() {
         ics += "DTSTAMP:" + stamp + "\r\n";
         if (time) {
             var t = time.replace(/:/g, '') + "00";
-            var endH = parseInt(time.split(':')[0], 10) + 1;
-            var endT = String(endH).padStart(2, '0') + time.split(':')[1] + "00";
+            var h0 = parseInt(time.split(':')[0], 10); var endH = Math.min(23, h0 + 1);
+            var endT = (h0 >= 23 ? "235900" : String(endH).padStart(2, '0') + time.split(':')[1] + "00");
             ics += "DTSTART:" + d + "T" + t + "\r\n";
             ics += "DTEND:" + d + "T" + endT + "\r\n";
         } else {
             ics += "DTSTART;VALUE=DATE:" + d + "\r\n";
-            ics += "DTEND;VALUE=DATE:" + d + "\r\n";
+            ics += "DTEND;VALUE=DATE:" + nextDay(dateStr) + "\r\n";
         }
-        ics += "SUMMARY:" + title.replace(/\n/g, '\\n') + "\r\n";
+        ics += "SUMMARY:" + title.replace(/[\\;,]/g, '\\$&').replace(/\n/g, '\\n') + "\r\n";
         ics += "END:VEVENT\r\n";
     }
 
@@ -877,7 +903,7 @@ function exportToICS() {
     var blob = new Blob([ics], { type: 'text/calendar;charset=utf-8' });
     var link = document.createElement('a');
     link.href = URL.createObjectURL(blob);
-    link.download = 'Schichtzeit_Kalender_' + year + '.ics';
+    link.download = 'SchichtZeit_Kalender_' + year + '.ics';
     document.body.appendChild(link);
     link.click();
     document.body.removeChild(link);
@@ -902,7 +928,7 @@ function reportError(){
         var hh=String(heute.getHours()).padStart(2,'0');
         var mm=String(heute.getMinutes()).padStart(2,'0');
         var heuteStr=String(heute.getDate()).padStart(2,'0')+'.'+String(heute.getMonth()+1).padStart(2,'0')+'.'+heute.getFullYear()+' '+hh+':'+mm;
-        var subject='Schichtzeit Fehler: '+sysName+' / Gruppe '+group;
+        var subject='SchichtZeit Fehler: '+sysName+' / Gruppe '+group;
         var body='Hallo,\n\nich habe einen Fehler im Schichtkalender gefunden.\n\n--- Automatische Angaben ---\nSchichtsystem: '+sysName+'\nGruppe: '+group+'\nMonat im Kalender: '+monat+'\nGesendet am: '+heuteStr+'\n\n--- Bitte ausf\u00FCllen ---\nDatum des Fehlers: \nAngezeigt im Kalender: \nSollte sein: \n\nBemerkung:\n\n\nDanke!';
         window.location.href='mailto:'+REPORT_EMAIL+'?subject='+encodeURIComponent(subject)+'&body='+encodeURIComponent(body);
     }catch(e){showToast('Fehler: '+e.message);}
@@ -950,9 +976,9 @@ function getBackupJSON(){
     var b={version:10,date:new Date().toISOString(),shiftSystem:shiftSystem,group:document.getElementById('groupSelect').value,color:selectedColor,sickDays:sickDays,vacationDays:vacationDays,einbringerDays:einbringerDays,sonstigeDays:sonstigeDays,notifiedFlags:notifiedFlags,vacationQuota:vacationQuota,theme:currentTheme,customPlans:customPlans,effect:currentEffect};
     return JSON.stringify(b,null,2);
 }
-function getBackupFilename(){var n=new Date();return 'Schichtzeit_Backup_'+n.getFullYear()+'-'+String(n.getMonth()+1).padStart(2,'0')+'-'+String(n.getDate()).padStart(2,'0')+'_'+String(n.getHours()).padStart(2,'0')+'-'+String(n.getMinutes()).padStart(2,'0')+'.json';}
+function getBackupFilename(){var n=new Date();return 'SchichtZeit_Backup_'+n.getFullYear()+'-'+String(n.getMonth()+1).padStart(2,'0')+'-'+String(n.getDate()).padStart(2,'0')+'_'+String(n.getHours()).padStart(2,'0')+'-'+String(n.getMinutes()).padStart(2,'0')+'.json';}
 function backupToDevice(){try{var j=getBackupJSON();var b=new Blob([j],{type:'application/json'});var u=URL.createObjectURL(b);var l=document.createElement('a');l.href=u;l.download=getBackupFilename();document.body.appendChild(l);l.click();document.body.removeChild(l);setTimeout(function(){URL.revokeObjectURL(u);},3000);showToast('Datei gespeichert');}catch(e){showToast('Fehler: '+e.message);}}
-function backupShare(){try{var j=getBackupJSON();var fn=getBackupFilename();var b=new Blob([j],{type:'application/json'});var f=new File([b],fn,{type:'application/json'});if(navigator.canShare&&navigator.canShare({files:[f]})&&navigator.share){navigator.share({files:[f],title:'Schichtzeit Backup',text:'Backup meiner Schichtzeit-Daten'}).then(function(){}).catch(function(err){if(err&&err.name==='AbortError')return;backupToDevice();});}else{showToast('Direktes Teilen nicht verf\u00FCgbar - Datei wird gespeichert');setTimeout(backupToDevice,800);}}catch(e){showToast('Fehler: '+e.message);}}
+function backupShare(){try{var j=getBackupJSON();var fn=getBackupFilename();var b=new Blob([j],{type:'application/json'});var f=new File([b],fn,{type:'application/json'});if(navigator.canShare&&navigator.canShare({files:[f]})&&navigator.share){navigator.share({files:[f],title:'SchichtZeit Backup',text:'Backup meiner SchichtZeit-Daten'}).then(function(){}).catch(function(err){if(err&&err.name==='AbortError')return;backupToDevice();});}else{showToast('Direktes Teilen nicht verf\u00FCgbar - Datei wird gespeichert');setTimeout(backupToDevice,800);}}catch(e){showToast('Fehler: '+e.message);}}
 function restoreFromFile(){closeBackupMenu();var i=document.getElementById('restoreFileInput');i.value='';i.click();}
 function updateOnlineStatus(t,s){var el=document.getElementById('onlineStatus');if(!el)return;el.textContent=t;el.className='online-status '+s;}
 function updateClockStatus(){var d=new Date();actualToday=new Date(d.getFullYear(),d.getMonth(),d.getDate());var hh=String(d.getHours()).padStart(2,'0');var mm=String(d.getMinutes()).padStart(2,'0');var wi=actualToday.getDay()===0?6:actualToday.getDay()-1;var wd=dayNames[wi];var dd=String(d.getDate()).padStart(2,'0');var mo=String(d.getMonth()+1).padStart(2,'0');updateOnlineStatus(hh+':'+mm+' Uhr \u00B7 '+wd+' '+dd+'.'+mo+'.'+d.getFullYear(),'online');}
@@ -1039,80 +1065,179 @@ function rebuildLegend() {
                    '<div class="legend-item"><div class="legend-box" style="background:#f9f9f9"></div>Frei</div>';
 }
 
-function renderCalendar() {
-    var cal = document.getElementById('calendar');
-    if (!cal) return;
-    cal.innerHTML = '';
-    
-    dayNames.forEach(function(d) {
-        var h = document.createElement('div');
-        h.className = 'day-header';
-        h.textContent = d;
-        cal.appendChild(h);
-    });
-    
-    var y = currentDate.getFullYear();
-    var m = currentDate.getMonth();
-    var firstDay = new Date(y, m, 1);
-    var lastDay = new Date(y, m + 1, 0);
-    
-    var startDay = firstDay.getDay() === 0 ? 6 : firstDay.getDay() - 1;
-    
-    for (var i = 0; i < startDay; i++) {
-        var e = document.createElement('div');
-        e.className = 'day empty';
-        cal.appendChild(e);
-    }
-    
-    var holidays = getHolidaySet(y);
-    var icons = getHolidayIconMap(y);
-    var group = document.getElementById('groupSelect') ? document.getElementById('groupSelect').value : '1';
-    
-    for (var d = 1; d <= lastDay.getDate(); d++) {
-        var dateObj = new Date(y, m, d);
-        var key = formatDateKey(dateObj);
-        
-        var el = document.createElement('div');
-        el.className = 'day';
-        
-        if (dateObj.getTime() === actualToday.getTime()) el.classList.add('today');
-        if (holidays.has(key)) el.classList.add('feiertag');
-        
-        var dateNum = document.createElement('div');
-        dateNum.className = 'date-num';
-        dateNum.textContent = d;
-        el.appendChild(dateNum);
-        
-        if (holidays.has(key)) {
-            var hi = document.createElement('div');
-            hi.className = 'holiday-icon';
-            hi.textContent = icons[key];
-            el.appendChild(hi);
-        }
-        
-        var shift = getShift(dateObj, group);
-        el.classList.add(shift);
-        
-        var shiftText = document.createElement('div');
-        shiftText.style.fontSize = 'clamp(20px, 3vw, 32px)';
-        shiftText.style.fontWeight = '900';
-        shiftText.textContent = shift === '_' ? '' : shift;
-        el.appendChild(shiftText);
-        
-        cal.appendChild(el);
-    }
-    
-    var totalCells = startDay + lastDay.getDate();
-    var remaining = 42 - totalCells;
-    if (remaining < 7) remaining += 7;
-    
-    for (var i = 0; i < remaining; i++) {
-        var e = document.createElement('div');
-        e.className = 'day empty';
-        cal.appendChild(e);
-    }
-    
-    document.getElementById('monthDisplay').textContent = monthNames[m] + ' ' + y;
+
+function $(i){return document.getElementById(i);}
+function esc(s){return String(s).replace(/[&<>"]/g,function(c){return{'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c];});}
+function fmtDE(k){return k.slice(8)+'.'+k.slice(5,7)+'.'+k.slice(0,4);}
+function nextDay(s){s=s.replace(/-/g,'');var d=new Date(+s.slice(0,4),+s.slice(4,6)-1,+s.slice(6,8)+1);return d.getFullYear()+String(d.getMonth()+1).padStart(2,'0')+String(d.getDate()).padStart(2,'0');}
+var SN={F:'Fr\u00FCh',S:'Sp\u00E4t',N:'Nacht',T:'Tag','_':'Frei'};
+var TN={krank:'Krank',urlaub:'Urlaub',einbringer:'Einbringer'};
+var viewMode='month',cursor=new Date(actualToday.getTime()),editKey=null,editId=null,wired=false;
+try{viewMode=localStorage.getItem('schichtzeitView')||'month';}catch(e){}
+if(['month','week','d4','d1'].indexOf(viewMode)<0)viewMode='month';
+function saveArr(){try{localStorage.setItem('schichtzeitSickDays',JSON.stringify(sickDays));localStorage.setItem('schichtzeitVacationDays',JSON.stringify(vacationDays));localStorage.setItem('schichtzeitEinbringerDays',JSON.stringify(einbringerDays));}catch(e){}}
+function typeOf(k){return sickDays.indexOf(k)>=0?'krank':vacationDays.indexOf(k)>=0?'urlaub':einbringerDays.indexOf(k)>=0?'einbringer':'normal';}
+function setType(k,t){[sickDays,vacationDays,einbringerDays].forEach(function(a){var i=a.indexOf(k);if(i>=0)a.splice(i,1);});if(t==='krank')sickDays.push(k);else if(t==='urlaub')vacationDays.push(k);else if(t==='einbringer')einbringerDays.push(k);saveArr();}
+function inFerien(k){return Object.keys(FERIEN).some(function(y){return FERIEN[y].some(function(f){return k>=f.start&&k<=f.end;});});}
+function setCursor(d){cursor=new Date(d.getFullYear(),d.getMonth(),d.getDate());currentDate=new Date(cursor.getFullYear(),cursor.getMonth(),1);}
+function step(dir){
+ if(viewMode==='month')setCursor(new Date(cursor.getFullYear(),cursor.getMonth()+dir,1));
+ else setCursor(new Date(cursor.getFullYear(),cursor.getMonth(),cursor.getDate()+dir*({week:7,d4:4,d1:1}[viewMode])));
+ renderCalendar(dir>0?'anim-left':'anim-right');updateYearOverview();
+}
+function refresh(){renderCalendar();updateYearOverview();}
+function cell(dt,group){
+ var k=formatDateKey(dt),y=dt.getFullYear(),big=viewMode!=='month',txt=viewMode==='d4'||viewMode==='d1',sh=getShift(dt,group),t=typeOf(k),es=getEntries(k);
+ var hl=getHolidayList(y).filter(function(h){return h.key===k;})[0];
+ var el=document.createElement('div');
+ el.className='day '+sh+(t!=='normal'?' '+t:'')+(hl?' feiertag':'')+(dt.getTime()===actualToday.getTime()?' today':'')+(showFerien&&inFerien(k)?' ferien':'');
+ var h='<div class="date-num">'+(big?dayNames[(dt.getDay()+6)%7]+' ':'')+dt.getDate()+(big?'.'+(dt.getMonth()+1)+'.':'')+'</div>';
+ if(hl)h+='<div class="holiday-icon">'+getHolidayIcon(hl.name)+'</div>';
+ h+='<div class="shift-txt">'+(sh==='_'?'':(big?SN[sh]:sh))+'</div>';
+ if(txt&&hl)h+='<div class="hol-name">'+esc(hl.name)+'</div>';
+ if(es.length)h+='<div class="chips">'+es.map(function(e){return '<span class="chip" style="background:'+esc(e.color)+'">'+e.icon+(txt?' '+(e.time?e.time+' ':'')+esc(e.text):'')+'</span>';}).join('')+'</div>';
+ if(t!=='normal')h+='<div class="daytype-label">'+TN[t]+'</div>';
+ el.innerHTML=h;
+ var lp=null,fired=false;
+ el.addEventListener('touchstart',function(){fired=false;lp=setTimeout(function(){fired=true;clearDay(k);},550);},{passive:true});
+ ['touchend','touchmove','touchcancel'].forEach(function(n){el.addEventListener(n,function(){clearTimeout(lp);},{passive:true});});
+ el.addEventListener('click',function(){if(fired){fired=false;return;}dayClick(k);});
+ el.addEventListener('contextmenu',function(ev){ev.preventDefault();});
+ return el;
+}
+function clearDay(k){if(!confirm('Alle Markierungen am '+fmtDE(k)+' l\u00F6schen?'))return;setType(k,'normal');setEntries(k,[]);refresh();}
+function dayClick(k){
+ if(currentMode==='krank'||currentMode==='urlaub'){setType(k,typeOf(k)===currentMode?'normal':currentMode);refresh();}
+ else openDay(k);
+}
+function renderCalendar(anim){
+ var cal=$('calendar');if(!cal)return;
+ cal.className='calendar v-'+viewMode;cal.innerHTML='';
+ var group=$('groupSelect')?$('groupSelect').value:'1',days=[];
+ if(viewMode==='month'){
+  dayNames.forEach(function(d){var h=document.createElement('div');h.className='day-header';h.textContent=d;cal.appendChild(h);});
+  var fy=currentDate.getFullYear(),fm=currentDate.getMonth(),lead=(new Date(fy,fm,1).getDay()+6)%7,n=new Date(fy,fm+1,0).getDate();
+  for(var i=0;i<lead;i++)days.push(null);
+  for(var d=1;d<=n;d++)days.push(new Date(fy,fm,d));
+ }else{
+  var s=new Date(cursor),cnt={week:7,d4:4,d1:1}[viewMode];
+  if(viewMode==='week')s.setDate(s.getDate()-((s.getDay()+6)%7));
+  for(var j=0;j<cnt;j++)days.push(new Date(s.getFullYear(),s.getMonth(),s.getDate()+j));
+ }
+ days.forEach(function(dt){if(dt)cal.appendChild(cell(dt,group));else{var e=document.createElement('div');e.className='day empty';cal.appendChild(e);}});
+ var a=days.filter(Boolean),f=a[0],l=a[a.length-1];
+ $('monthDisplay').textContent=viewMode==='month'?monthNames[f.getMonth()]+' '+f.getFullYear():f.getDate()+'.'+(f.getMonth()+1)+'.'+(viewMode==='d1'?f.getFullYear():' \u2013 '+l.getDate()+'.'+(l.getMonth()+1)+'.');
+ if(anim)cal.classList.add(anim);
+ updateAux();
+}
+function updateAux(){
+ var y=currentDate.getFullYear(),m=currentDate.getMonth();
+ $('holidayList').innerHTML=getHolidayList(y).filter(function(h){return h.date.getMonth()===m;}).map(function(h){return '<span class="holiday-item">'+getHolidayIcon(h.name)+' '+h.date.getDate()+'.'+(m+1)+'. '+esc(h.name)+'</span>';}).join('')||'<span class="holiday-item">\u2013</span>';
+ $('ferienNote').style.display=showFerien?'block':'none';
+ if(showFerien)$('ferienList').innerHTML=(FERIEN[y]||[]).map(function(f){return esc(f.name)+': '+fmtDE(f.start).slice(0,6)+' \u2013 '+fmtDE(f.end).slice(0,6);}).join('<br>');
+}
+function updateYearOverview(){
+ var y=currentDate.getFullYear(),p=y+'-';
+ function L(a){return a.filter(function(k){return k.indexOf(p)===0;}).sort();}
+ function fill(id,a,fn){$(id).innerHTML=a.length?a.map(function(k){return '<li>'+(fn?fn(k):fmtDE(k).slice(0,6))+'</li>';}).join(''):'<li>\u2013</li>';}
+ var u=L(vacationDays),kr=L(sickDays),e=L(einbringerDays),so=L(Object.keys(sonstigeDays)),q=getVacationQuota(y),left=q-u.length;
+ $('overviewYear').textContent=y;$('countUrlaub').textContent=u.length;$('countUrlaubQuota').textContent=q;$('countUrlaubLeft').textContent=left;
+ $('urlaubStat').className='urlaub-stat'+(left<0?' danger':left<=3?' warn':'');
+ $('countKrank').textContent=kr.length;$('countEinbringer').textContent=e.length;$('countSonstige').textContent=so.length;
+ fill('listUrlaub',u);fill('listKrank',kr);fill('listEinbringer',e);
+ fill('listSonstige',so,function(k){return fmtDE(k).slice(0,6)+' '+getEntries(k).map(function(x){return esc(x.text||'Termin');}).join(', ');});
+}
+function screen(w){$('entryListScreen').style.display=w==='list'?'block':'none';$('entryEditScreen').style.display=w==='edit'?'block':'none';}
+function closeEntry(){$('entryModal').classList.remove('active');}
+function markSym(){[].forEach.call($('symbolGrid').children,function(b){b.classList.toggle('active',b.textContent===selectedSymbol);});}
+function markType(){var t=typeOf(editKey);[].forEach.call(document.querySelectorAll('.daytype-btn'),function(b){b.classList.toggle('active',b.getAttribute('data-dtype')===t);});}
+function openDay(k){editKey=k;$('dayTypeBar').style.display='block';markType();showList();$('entryModal').classList.add('active');}
+function showList(){
+ var es=getEntries(editKey);if(!es.length){showEdit(null);return;}
+ screen('list');$('listDate').textContent=fmtDE(editKey);var b=$('entryListBody');b.innerHTML='';
+ es.forEach(function(en){var d=document.createElement('div');d.className='entry-item';
+  d.innerHTML='<span class="e-icon">'+en.icon+'</span><div class="e-info"><div class="e-text">'+esc(en.text||'Termin')+'</div><div class="e-meta">'+(en.time||'ganzt\u00E4gig')+'</div></div><button class="e-del">\uD83D\uDDD1</button>';
+  d.addEventListener('click',function(){showEdit(en.id);});
+  d.querySelector('.e-del').addEventListener('click',function(ev){ev.stopPropagation();setEntries(editKey,getEntries(editKey).filter(function(x){return x.id!==en.id;}));refresh();showList();});
+  b.appendChild(d);});
+}
+function showEdit(id){
+ editId=id;var en=id?getEntries(editKey).filter(function(x){return x.id===id;})[0]:null;screen('edit');
+ $('modalTitle').textContent=en?'Eintrag bearbeiten':'Neuer Eintrag';$('modalDate').textContent=fmtDE(editKey);
+ $('entryText').value=en?en.text:'';$('entryTime').value=en?en.time:'';$('entryColor').value=en?en.color:selectedColor;$('entryNotify').checked=!!(en&&en.notify);
+ if(en)selectedSymbol=en.icon;markSym();$('modalDeleteBtn').style.display=en?'block':'none';$('notifHint').style.display=('Notification' in window)?'none':'block';
+}
+function banner(en,when){
+ var b=document.createElement('div');b.className='notif-banner';
+ b.innerHTML='<strong>'+en.icon+' '+esc(en.text||'Termin')+'</strong>'+esc(en.time)+' Uhr \u2013 in '+when+'<button class="notif-banner-close">\u00D7</button>';
+ b.querySelector('button').addEventListener('click',function(){b.remove();});document.body.appendChild(b);
+ try{if('Notification' in window&&Notification.permission==='granted')new Notification(en.text||'Termin',{body:en.time+' Uhr'});}catch(e){}
+}
+function checkReminders(){
+ var now=Date.now(),offs=[[30,'30 Minuten'],[120,'2 Stunden'],[1440,'1 Tag']],ch=false;
+ Object.keys(sonstigeDays).forEach(function(k){getEntries(k).forEach(function(en){
+  if(!en.notify||!en.time)return;
+  var p=k.split('-'),tm=en.time.split(':'),ev=new Date(+p[0],p[1]-1,+p[2],+tm[0],+tm[1]).getTime(),fire=null;
+  offs.forEach(function(o){var f=en.id+o[0];if(now>=ev-o[0]*60000&&now<ev&&!notifiedFlags[f]){if(!fire)fire=o;notifiedFlags[f]=1;ch=true;}});
+  if(fire)banner(en,fire[1]);
+ });});
+ if(ch){try{localStorage.setItem('schichtzeitNotified',JSON.stringify(notifiedFlags));}catch(e){}}
+}
+function wireExtra(){
+ if(wired)return;wired=true;
+ ['prevBtn','nextBtn'].forEach(function(id,i){var b=$(id),c=b.cloneNode(true);b.parentNode.replaceChild(c,b);c.addEventListener('click',function(){step(i?1:-1);});});
+ var vb=document.querySelectorAll('#viewRow .mode-btn'),mb=document.querySelectorAll('.mode-btn[data-mode]');
+ [].forEach.call(vb,function(b){b.classList.toggle('active',b.getAttribute('data-view')===viewMode);b.addEventListener('click',function(){viewMode=b.getAttribute('data-view');try{localStorage.setItem('schichtzeitView',viewMode);}catch(e){}[].forEach.call(vb,function(x){x.classList.toggle('active',x===b);});renderCalendar();});});
+ [].forEach.call(mb,function(b){b.addEventListener('click',function(){currentMode=b.getAttribute('data-mode');[].forEach.call(mb,function(x){x.classList.toggle('active',x===b);});$('colorPickerRow').classList.toggle('active',currentMode==='sonstige');});});
+ function setCol(c){selectedColor=c;$('sonstigeColor').value=c;try{localStorage.setItem('schichtzeitColor',c);}catch(e){}}
+ $('sonstigeColor').value=selectedColor;
+ $('sonstigeColor').addEventListener('input',function(){setCol(this.value);});
+ [].forEach.call(document.querySelectorAll('.color-preset'),function(b){b.addEventListener('click',function(){setCol(b.getAttribute('data-color'));});});
+ var g=$('symbolGrid');SYMBOLS.forEach(function(s){var b=document.createElement('button');b.type='button';b.className='symbol-btn';b.textContent=s;b.addEventListener('click',function(){selectedSymbol=s;markSym();});g.appendChild(b);});
+ [].forEach.call(document.querySelectorAll('.daytype-btn'),function(b){b.addEventListener('click',function(){setType(editKey,b.getAttribute('data-dtype'));markType();refresh();});});
+ $('listAddBtn').addEventListener('click',function(){showEdit(null);});
+ $('listCloseBtn').addEventListener('click',closeEntry);
+ $('modalBackBtn').addEventListener('click',function(){if(getEntries(editKey).length)showList();else closeEntry();});
+ $('modalDeleteBtn').addEventListener('click',function(){setEntries(editKey,getEntries(editKey).filter(function(x){return x.id!==editId;}));refresh();showList();});
+ $('modalSaveBtn').addEventListener('click',function(){
+  var es=getEntries(editKey).slice(),en={id:editId||genEntryId(),text:$('entryText').value.trim(),time:$('entryTime').value,color:$('entryColor').value,icon:selectedSymbol,notify:$('entryNotify').checked},i=-1;
+  es.forEach(function(x,j){if(x.id===editId)i=j;});
+  if(i>=0)es[i]=en;else{if(es.length>=4){showToast('Maximal 4 Termine pro Tag');return;}es.push(en);}
+  setEntries(editKey,es);try{localStorage.setItem('schichtzeitSymbol',selectedSymbol);}catch(e){}
+  closeEntry();refresh();
+ });
+ $('modalGoogleCalendarBtn').addEventListener('click',function(){
+  var d=editKey.replace(/-/g,''),tm=$('entryTime').value.replace(':','');
+  window.open('https://calendar.google.com/calendar/render?action=TEMPLATE&text='+encodeURIComponent($('entryText').value||'Termin')+'&dates='+(tm?d+'T'+tm+'00/'+d+'T'+tm+'00':d+'/'+nextDay(editKey)),'_blank');
+ });
+ $('resetBtn').addEventListener('click',function(){if(!confirm('Alle Markierungen und Termine l\u00F6schen?'))return;sickDays.length=0;vacationDays.length=0;einbringerDays.length=0;saveArr();Object.keys(sonstigeDays).forEach(function(k){delete sonstigeDays[k];});setEntries('x',[]);refresh();});
+ $('yearOverviewBtn').addEventListener('click',function(){var o=$('yearOverview');updateYearOverview();o.classList.toggle('active');if(o.classList.contains('active'))setTimeout(function(){o.scrollIntoView({behavior:'smooth',block:'start'});},100);});
+ $('yearOverviewCloseBtn').addEventListener('click',function(){$('yearOverview').classList.remove('active');});
+ $('ferienBtn').addEventListener('click',function(){showFerien=!showFerien;refresh();});
+ $('backupShareBtn').addEventListener('click',backupShare);
+ $('backupRestoreBtn').addEventListener('click',restoreFromFile);
+ $('restoreFileInput').addEventListener('change',function(){
+  var f=this.files[0];if(!f)return;var r=new FileReader();
+  r.onload=function(){try{
+   var b=JSON.parse(r.result);if(!b||typeof b!=='object')throw new Error('Ung\u00FCltige Datei');
+   if(!confirm('Aktuelle Daten werden \u00FCberschrieben. Fortfahren?'))return;
+   var M={sickDays:'schichtzeitSickDays',vacationDays:'schichtzeitVacationDays',einbringerDays:'schichtzeitEinbringerDays',sonstigeDays:'schichtzeitSonstigeDays',vacationQuota:'schichtzeitVacationQuota',customPlans:'schichtzeitCustomPlans',notifiedFlags:'schichtzeitNotified'},S={shiftSystem:'schichtzeitShiftSystem',group:'schichtzeitGroup',theme:'schichtzeitTheme',effect:'schichtzeitEffect',color:'schichtzeitColor'};
+   Object.keys(M).forEach(function(k){if(b[k]!=null)localStorage.setItem(M[k],JSON.stringify(b[k]));});
+   Object.keys(S).forEach(function(k){if(typeof b[k]==='string')localStorage.setItem(S[k],b[k]);});
+   location.reload();
+  }catch(e){showToast('Fehler: '+e.message);}};
+  r.readAsText(f);
+ });
+ $('notifBtn').addEventListener('click',function(){if('Notification' in window&&Notification.permission==='default')Notification.requestPermission();showToast('Erinnerungen aktiv \u2013 Seite ge\u00F6ffnet lassen');});
+ $('weckerBtn').addEventListener('click',function(){$('weckerModal').classList.add('active');});
+ $('weckerCancelBtn').addEventListener('click',function(){$('weckerModal').classList.remove('active');});
+ $('managePlansBtn').addEventListener('click',openPlanEditor);
+ $('shiftSystemSelect').addEventListener('change',function(){$('managePlansBtn').style.display=this.value==='custom'?'block':'none';});
+ [].forEach.call(document.querySelectorAll('.theme-choice'),function(b){b.addEventListener('click',function(){applyTheme(b.getAttribute('data-theme'));});});
+ var sx=0,sy=0,cal=$('calendar');
+ cal.addEventListener('touchstart',function(e){sx=e.touches[0].clientX;sy=e.touches[0].clientY;},{passive:true});
+ cal.addEventListener('touchend',function(e){var t=e.changedTouches[0],dx=t.clientX-sx;if(Math.abs(dx)>70&&Math.abs(t.clientY-sy)<45)step(dx<0?1:-1);},{passive:true});
+ setInterval(checkReminders,30000);checkReminders();refresh();
 }
 
 function applyEffects() {
@@ -1120,9 +1245,6 @@ function applyEffects() {
     if (layer) layer.innerHTML = '';
 }
 
-function updateYearOverview() {
-    // Заглушка для работоспособности
-}
 
 function openPlanEditor() {
     showToast('Plan-Editor geladen');
@@ -1169,7 +1291,8 @@ function init() {
     document.getElementById('openHelpBtn').addEventListener('click', openHelp);
     document.getElementById('helpCloseBtn').addEventListener('click', closeHelp);
     document.getElementById('reportBtn').addEventListener('click', reportError);
-    document.getElementById('shareBtn').addEventListener('click', shareSchichtzeit);
+    document.getElementById('shareBtn').addEventListener('click', shareSchichtZeit);
+    wireExtra();
 }
 
 // Запуск после загрузки страницы
