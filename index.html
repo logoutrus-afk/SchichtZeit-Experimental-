@@ -490,6 +490,19 @@ body.dark .plan-share-box textarea{background:#2a2e33;color:#e4e6ea;border-color
 .gta-glow{position:absolute;inset:0;background:linear-gradient(180deg,rgba(255,45,149,0) 0%,rgba(255,94,98,.10) 50%,rgba(255,154,60,.20) 80%,rgba(130,60,255,.26) 100%);animation:gta-pulse 6s ease-in-out infinite alternate}
 @keyframes gta-pulse{from{opacity:.65}to{opacity:1}}
 .gta-tag{position:absolute;right:10px;bottom:6px;font:900 clamp(14px,4cqw,30px)/1 Impact,'Arial Black',sans-serif;letter-spacing:2px;background:linear-gradient(90deg,#ff2d95,#ff9a3c,#b66bff);-webkit-background-clip:text;background-clip:text;color:transparent;-webkit-text-fill-color:transparent;filter:drop-shadow(0 0 6px rgba(255,45,149,.8))}
+#settingsModal select{display:block;margin:4px 0 6px;padding:11px 12px;font-size:16px}
+#settingsModal .field-label{margin:14px 0 4px;font-size:15px}
+#settingsModal label{margin-bottom:6px}
+#settingsModal .hint-row{margin:0 0 4px;font-size:12.5px;line-height:1.35}
+#settingsModal .theme-row{margin-bottom:6px}
+#settingsModal .theme-choice{padding:12px 8px}
+#settingsModal .help-btn{margin-top:8px;padding:13px}
+#settingsModal .modal-buttons{margin-top:14px}
+.holiday-note{font-size:16px}
+.holiday-note strong.title{font-size:17px}
+.holiday-note .holiday-item{font-size:16px;font-weight:bold;padding:9px 14px;color:#555}
+body.dark .holiday-note .holiday-item{color:#e4e6ea}
+body.dark .holiday-note .holiday-item.current{color:#ffdb70}
 </style>
 </head>
 <body>
@@ -1214,17 +1227,18 @@ function playIcq(){
 function banner(en,when){
  playIcq();
  var b=document.createElement('div');b.className='notif-banner';
- b.innerHTML='<strong>'+en.icon+' '+esc(en.text||'Termin')+'</strong>'+esc(en.time)+' Uhr \u2013 in '+when+'<button class="notif-banner-close">\u00D7</button>';
+ b.innerHTML='<strong>'+en.icon+' '+esc(en.text||'Termin')+'</strong>'+esc(en.time)+' Uhr \u2013 '+when+'<button class="notif-banner-close">\u00D7</button>';
  b.querySelector('button').addEventListener('click',function(){b.remove();});document.body.appendChild(b);
  try{if('Notification' in window&&Notification.permission==='granted')new Notification(en.text||'Termin',{body:en.time+' Uhr'});}catch(e){}
 }
+function rel(ms){var m=Math.round(ms/60000);if(m<=0)return 'jetzt';if(m<60)return 'in '+m+' Min.';if(m<1440)return 'in '+Math.round(m/60)+' Std.';return 'in '+Math.round(m/1440)+' Tag(en)';}
 function checkReminders(){
  var now=Date.now(),offs=[[30,'30 Minuten'],[120,'2 Stunden'],[1440,'1 Tag']],ch=false;
  Object.keys(sonstigeDays).forEach(function(k){getEntries(k).forEach(function(en){
   if(!en.notify||!en.time)return;
   var p=k.split('-'),tm=en.time.split(':'),ev=new Date(+p[0],p[1]-1,+p[2],+tm[0],+tm[1]).getTime(),fire=null;
-  offs.forEach(function(o){var f=en.id+o[0];if(now>=ev-o[0]*60000&&now<ev&&!notifiedFlags[f]){if(!fire)fire=o;notifiedFlags[f]=1;ch=true;}});
-  if(fire)banner(en,fire[1]);
+  offs.forEach(function(o){var f=en.id+o[0];if(now>=ev-o[0]*60000&&now<ev+600000&&!notifiedFlags[f]){if(!fire)fire=o;notifiedFlags[f]=1;ch=true;}});
+  if(fire)banner(en,rel(ev-now));
  });});
  if(ch){try{localStorage.setItem('schichtzeitNotified',JSON.stringify(notifiedFlags));}catch(e){}}
 }
@@ -1249,7 +1263,7 @@ function wireExtra(){
   es.forEach(function(x,j){if(x.id===editId)i=j;});
   if(i>=0)es[i]=en;else{if(es.length>=4){showToast('Maximal 4 Termine pro Tag');return;}es.push(en);}
   setEntries(editKey,es);try{localStorage.setItem('schichtzeitSymbol',selectedSymbol);}catch(e){}
-  closeEntry();refresh();
+  closeEntry();refresh();checkReminders();
  });
  $('modalGoogleCalendarBtn').addEventListener('click',function(){
   var d=editKey.replace(/-/g,''),tm=$('entryTime').value.replace(':','');
@@ -1273,7 +1287,7 @@ function wireExtra(){
   }catch(e){showToast('Fehler: '+e.message);}};
   r.readAsText(f);
  });
- $('notifBtn').addEventListener('click',function(){if('Notification' in window&&Notification.permission==='default')Notification.requestPermission();playIcq();showToast('Erinnerungen aktiv \u2013 Seite ge\u00F6ffnet lassen');});
+ $('notifBtn').addEventListener('click',function(){if('Notification' in window&&Notification.permission==='default')Notification.requestPermission();var nw=new Date();banner({icon:'🔔',text:'Test-Erinnerung',time:('0'+nw.getHours()).slice(-2)+':'+('0'+nw.getMinutes()).slice(-2)},'jetzt');showToast('Erinnerungen aktiv \u2013 Seite ge\u00F6ffnet lassen');});
  $('weckerBtn').addEventListener('click',function(){$('weckerModal').classList.add('active');});
  $('weckerCancelBtn').addEventListener('click',function(){$('weckerModal').classList.remove('active');});
  $('managePlansBtn').addEventListener('click',openPlanEditor);
@@ -1282,7 +1296,7 @@ function wireExtra(){
  var sx=0,sy=0,cal=$('calendar');
  cal.addEventListener('touchstart',function(e){sx=e.touches[0].clientX;sy=e.touches[0].clientY;},{passive:true});
  cal.addEventListener('touchend',function(e){var t=e.changedTouches[0],dx=t.clientX-sx;if(Math.abs(dx)>70&&Math.abs(t.clientY-sy)<45)step(dx<0?1:-1);},{passive:true});
- ['click','touchstart'].forEach(function(n){document.addEventListener(n,unlockAudio,{once:true,passive:true});});wirePlans();setInterval(checkReminders,30000);checkReminders();refresh();applyEffects();importPlanFromHash();
+ ['click','touchstart'].forEach(function(n){document.addEventListener(n,unlockAudio,{once:true,passive:true});});document.addEventListener('visibilitychange',function(){if(!document.hidden)checkReminders();});wirePlans();setInterval(checkReminders,30000);checkReminders();refresh();applyEffects();importPlanFromHash();
 }
 
 function rnd(a){return a[0]+Math.random()*(a[1]-a[0]);}
