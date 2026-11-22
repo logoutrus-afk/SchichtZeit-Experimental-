@@ -526,20 +526,12 @@ body.dark #viewRow .mode-btn.active{background:#0056b3;color:#fff;border-color:#
 #dayZoom.active{display:flex}
 @keyframes dzFade{from{opacity:0}to{opacity:1}}
 #dzHost{display:flex;flex-direction:column;align-items:center;gap:12px;max-height:100%}
-.dz-wrap{width:min(92vw,420px);container-type:inline-size;will-change:transform}
-#dzHost .calendar{max-width:none;gap:0;display:block;animation:none}
-#dzHost .day{aspect-ratio:1/1.2;height:auto;border-radius:18px;cursor:pointer}
-#dzHost .shift-txt{font-size:clamp(34px,16cqw,72px)}
-#dzHost .date-num{font-size:clamp(14px,4.6cqw,22px)}
-#dzHost .term-icon{font-size:clamp(30px,13cqw,56px)}
-#dzHost .term-text{font-size:clamp(12px,4.2cqw,20px)}
-#dzHost .hol-name{font-size:clamp(11px,3.6cqw,17px);top:clamp(26px,8cqw,40px)}
-#dzHost .holiday-icon{font-size:clamp(18px,6cqw,30px)}
-#dzHost .daytype-label{font-size:clamp(10px,3.2cqw,15px);padding:5px 2px}
-.dz-info{background:#fff;color:#333;border-radius:14px;padding:12px 16px;width:min(92vw,420px);box-sizing:border-box;text-align:left;font-size:15px;line-height:1.5}
 body.dark .dz-info{background:#1e2124;color:#e4e6ea}
 .dz-info b{display:block;font-size:17px;margin-bottom:4px}
 .dz-close{position:absolute;top:calc(10px + env(safe-area-inset-top,0px));right:12px;width:42px;height:42px;padding:0;border-radius:50%;background:rgba(255,255,255,.22);color:#fff;font-size:20px;z-index:2}
+.dz-wrap{max-width:100%;container-type:inline-size}
+.dz-info{background:#fff;color:#333;border-radius:14px;padding:12px 16px;max-width:340px;margin:12px auto 0;box-sizing:border-box;text-align:left;font-size:15px;line-height:1.5}
+#dzHost .calendar{animation:none}
 </style>
 </head>
 <body>
@@ -1316,7 +1308,7 @@ var SNL={F:'Fr\u00FChschicht',S:'Sp\u00E4tschicht',N:'Nachtschicht',T:'Tagschich
 function renderDz(){
  var q=dz.k.split('-'),dt=new Date(+q[0],q[1]-1,+q[2]),g=$('groupSelect')?$('groupSelect').value:'1',host=$('dzHost');
  host.innerHTML='';
- var wrap=document.createElement('div');wrap.className='dz-wrap';
+ var wrap=document.createElement('div');wrap.className='dz-wrap';wrap.style.width=Math.round($('calendar').parentNode.getBoundingClientRect().width)+'px';
  var cal=document.createElement('div');cal.className='calendar v-d1';cal.appendChild(cell(dt,g,true));wrap.appendChild(cal);host.appendChild(wrap);
  var sh=getShift(dt,g),hl=getHolidayList(dt.getFullYear()).filter(function(h){return h.key===dz.k;})[0],es=getEntries(dz.k),t2=typeOf(dz.k),lab;
  if(shiftSystem==='custom'){var b=planBlockAt(dt,g);lab=b?(b.code||'Frei'):'Frei';}else lab=SNL[sh]||sh;
@@ -1324,7 +1316,7 @@ function renderDz(){
  if(hl)h+='<br>'+getHolidayIcon(hl.name)+' '+esc(hl.name);
  if(t2!=='normal')h+='<br>Markiert: '+TN[t2];
  h+=es.length?es.map(function(e){return '<br>'+e.icon+' '+(e.time?e.time+' ':'')+esc(e.text||'Termin');}).join(''):'<br><i>Keine Termine \u2013 auf den Tag tippen, um einen anzulegen.</i>';
- var info=document.createElement('div');info.className='dz-info';info.innerHTML=h;host.appendChild(info);
+ var info=document.createElement('div');info.className='dz-info';info.innerHTML=h;wrap.appendChild(info);
 }
 function dzXf(card,src){
  var a=src.getBoundingClientRect(),b=card.getBoundingClientRect();
@@ -1333,12 +1325,12 @@ function dzXf(card,src){
 function openDayZoom(k,src){
  dz.k=k;dz.open=true;renderDz();
  var ov=$('dayZoom');ov.style.transition='';ov.style.opacity='';ov.classList.add('active');
- var card=$('dzHost').firstChild;
+ var card=$('dzHost').firstChild.firstChild;
  if(src&&card){card.style.transition='none';card.style.transform=dzXf(card,src);card.getBoundingClientRect();card.style.transition='transform .3s cubic-bezier(.2,.8,.3,1)';card.style.transform='';}
 }
 function closeDayZoom(){
  if(!dz.open)return;dz.open=false;
- var ov=$('dayZoom'),card=$('dzHost').firstChild,src=$('calendar').querySelector('[data-k="'+dz.k+'"]');
+ var ov=$('dayZoom'),card=$('dzHost').firstChild.firstChild,src=$('calendar').querySelector('[data-k="'+dz.k+'"]');
  if(card&&src){card.style.transition='none';card.style.transform='';var x=dzXf(card,src);card.getBoundingClientRect();card.style.transition='transform .28s cubic-bezier(.4,0,.6,1)';card.style.transform=x;}
  ov.style.transition='opacity .28s ease';ov.style.opacity='0';
  setTimeout(function(){if(dz.open)return;ov.classList.remove('active');ov.style.opacity='';ov.style.transition='';$('dzHost').innerHTML='';},300);
@@ -1358,7 +1350,7 @@ function wireZoom(){
  cal.addEventListener('touchmove',function(e){
   if(!pz||!pz.c||e.touches.length!==2)return;
   pz.r=pd(e.touches)/pz.d;
-  pz.c.style.transform='scale('+Math.max(1,Math.min(2.4,pz.r))+')';
+  pz.c.style.transform='scale('+Math.max(1,Math.min(6,pz.r))+')';
  },{passive:true});
  function endCal(e){
   if(!pz||e.touches.length>=2)return;
@@ -1371,7 +1363,7 @@ function wireZoom(){
  cal.addEventListener('touchcancel',endCal,{passive:true});
  ov.addEventListener('touchstart',function(e){
   if(e.touches.length!==2)return;
-  pinchBusy=true;card=$('dzHost').firstChild;oz={d:pd(e.touches),r:1};
+  pinchBusy=true;card=$('dzHost').firstChild.firstChild;oz={d:pd(e.touches),r:1};
   if(card)card.style.transition='none';
  },{passive:true});
  ov.addEventListener('touchmove',function(e){
