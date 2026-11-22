@@ -41,11 +41,6 @@ button:active,.top-btn:active,.symbol-btn:active{transform:scale(0.94);filter:br
 .mode-controls{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-bottom:10px;background:#e9ecef;padding:8px;border-radius:12px;position:relative;z-index:20}
 .mode-btn{background:#fff;color:#333;border:1px solid #ccc;font-size:16px;padding:11px 6px;font-weight:600;border-radius:9px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .mode-btn.active{background:#0056b3;color:#fff;border-color:#0056b3;font-weight:bold}
-#viewRow{display:inline-flex;align-items:center;gap:2px;background:#e9ecef;padding:3px;border-radius:999px;margin:0 auto 10px;position:relative;z-index:20;max-width:100%;box-shadow:inset 0 1px 2px rgba(0,0,0,.07)}
-#viewRow .mode-btn{width:40px;height:32px;padding:0;display:inline-flex;align-items:center;justify-content:center;background:transparent;border:1px solid transparent;border-radius:999px;color:#5a626b;font-size:0;line-height:0;flex:0 0 auto}
-#viewRow .mode-btn svg{width:19px;height:19px;display:block;pointer-events:none}
-#viewRow .mode-btn.active{background:#0056b3;color:#fff;border-color:#0056b3;box-shadow:0 1px 3px rgba(0,0,0,.22)}
-#viewRow .mode-btn:active{transform:scale(.94)}
 .color-picker-row{display:none;justify-content:center;align-items:center;gap:14px;margin-bottom:12px;padding:12px;background:#f1f3f5;border-radius:12px;border:1px dashed #999;flex-wrap:wrap;position:relative;z-index:20}
 .color-picker-row.active{display:flex}
 .color-picker-row label{font-size:17px;font-weight:bold}
@@ -230,9 +225,6 @@ body.dark button:active{background:#003d80}
 body.dark .mode-controls{background:#2a2e33}
 body.dark .mode-btn{background:#1e2124;color:#e4e6ea;border-color:#3a3f44}
 body.dark .mode-btn.active{background:#0056b3;color:#fff;border-color:#0056b3}
-body.dark #viewRow{background:#2a2e33;box-shadow:inset 0 1px 2px rgba(0,0,0,.45)}
-body.dark #viewRow .mode-btn{color:#c9ced4;background:transparent;border-color:transparent}
-body.dark #viewRow .mode-btn.active{background:#0056b3;color:#fff;border-color:#0056b3}
 body.dark .color-picker-row{background:#2a2e33;border-color:#555;color:#e4e6ea}
 body.dark .color-preset{border-color:#1e2124}
 body.dark .color-preset.active{box-shadow:0 0 0 3px #6ab0ff}
@@ -324,9 +316,6 @@ body.dark .lp-empty{color:#a0a5ab}
   select,button{padding:8px 10px;font-size:14px}
   .mode-controls{gap:3px;padding:4px;margin-bottom:6px;border-radius:8px}
   .mode-btn{font-size:12px;padding:8px 2px;border-radius:6px}
-  #viewRow{gap:1px;padding:2px;margin-bottom:7px}
-  #viewRow .mode-btn{width:36px;height:32px}
-  #viewRow .mode-btn svg{width:17px;height:17px}
   .calendar{gap:3px}
   .day-header{font-size:13px;padding:6px 0}
   .day{border-radius:7px;font-size:clamp(16px,5vw,24px);border-width:1px;aspect-ratio:1/1.18}
@@ -514,6 +503,25 @@ body.dark .plan-share-box textarea{background:#2a2e33;color:#e4e6ea;border-color
 .holiday-note .holiday-item{font-size:16px;font-weight:bold;padding:9px 14px;color:#555}
 body.dark .holiday-note .holiday-item{color:#e4e6ea}
 body.dark .holiday-note .holiday-item.current{color:#ffdb70}
+#viewRow{display:inline-flex;align-items:center;gap:2px;background:#e9ecef;padding:3px;border-radius:999px;margin:0 auto 10px;position:relative;z-index:20;max-width:100%;box-shadow:inset 0 1px 2px rgba(0,0,0,.07)}
+#viewRow .mode-btn{width:40px;height:32px;padding:0;display:inline-flex;align-items:center;justify-content:center;background:transparent;border:1px solid transparent;border-radius:999px;color:#5a626b;font-size:0;line-height:0;flex:0 0 auto}
+#viewRow .mode-btn svg{width:19px;height:19px;display:block;pointer-events:none}
+#viewRow .mode-btn.active{background:#0056b3;color:#fff;border-color:#0056b3;box-shadow:0 1px 3px rgba(0,0,0,.22)}
+#viewRow .mode-btn:active{transform:scale(.94)}
+body.dark #viewRow{background:#2a2e33;box-shadow:inset 0 1px 2px rgba(0,0,0,.45)}
+body.dark #viewRow .mode-btn{color:#c9ced4;background:transparent;border-color:transparent}
+body.dark #viewRow .mode-btn.active{background:#0056b3;color:#fff;border-color:#0056b3}
+@media (max-width:600px){#viewRow{gap:1px;padding:2px;margin-bottom:7px}#viewRow .mode-btn{width:36px;height:32px}#viewRow .mode-btn svg{width:17px;height:17px}}
+/* Termine: Zelle in Segmente geteilt */
+.day.sonstige .shift-txt{display:none}
+.calendar .day .term-icon{font-size:clamp(16px,5.2cqw,34px)}
+.calendar .day .term-text{font-size:clamp(8px,2.2cqw,14px)}
+.calendar.v-week .day .term-icon,.calendar.v-d4 .day .term-icon{font-size:clamp(22px,7cqw,46px)}
+.calendar.v-week .day .term-text,.calendar.v-d4 .day .term-text{font-size:clamp(10px,2.8cqw,17px)}
+.calendar.v-d1 .day .term-icon{font-size:clamp(24px,8cqw,40px)}
+.calendar.v-d1 .day .term-text{font-size:clamp(11px,3cqw,15px)}
+.day .term-text.t-top{top:3px;bottom:auto}
+.day .term-text.t-bottom{bottom:3px;top:auto}
 </style>
 </head>
 <body>
@@ -1139,6 +1147,23 @@ function step(dir){
  renderCalendar(dir>0?'anim-left':'anim-right');updateYearOverview();
 }
 function refresh(){renderCalendar();updateYearOverview();}
+var REG={
+ 1:[['0 0,100 0,100 100,0 100',50,46,'b']],
+ 2:[['0 0,100 0,0 100',32,32,'t'],['100 0,100 100,0 100',68,68,'b']],
+ 3:[['0 0,100 0,50 50',50,30,'t'],['100 0,100 100,50 50',70,50,'r'],['0 0,50 50,100 100,0 100',32,68,'b']],
+ 4:[['0 0,100 0,50 50',50,32,'t'],['100 0,100 100,50 50',68,50,'r'],['0 100,100 100,50 50',50,68,'b'],['0 0,0 100,50 50',32,50,'l']]
+};
+var TCL={t:'t-top',b:'t-bottom',r:'t-right',l:'t-left'};
+function splitHtml(es){
+ var R=REG[Math.min(es.length,4)],lay='',ic='',tx='';
+ es.slice(0,4).forEach(function(e,i){
+  var r=R[i],pts=r[0].split(',').map(function(q){var a=q.split(' ');return a[0]+'% '+a[1]+'%';}).join(',');
+  lay+='<span style="background:'+esc(e.color)+';-webkit-clip-path:polygon('+pts+');clip-path:polygon('+pts+')"></span>';
+  ic+='<span class="term-icon" style="left:'+r[1]+'%;top:'+r[2]+'%">'+e.icon+'</span>';
+  var s=e.text||e.time||'';if(s)tx+='<span class="term-text '+TCL[r[3]]+'">'+esc(s)+'</span>';
+ });
+ return '<div class="split-layer">'+lay+'</div>'+ic+tx;
+}
 function cell(dt,group){
  var k=formatDateKey(dt),y=dt.getFullYear(),big=viewMode!=='month',txt=viewMode!=='month',sh=getShift(dt,group),t=typeOf(k),es=getEntries(k);
  var hl=getHolidayList(y).filter(function(h){return h.key===k;})[0];
@@ -1148,7 +1173,7 @@ function cell(dt,group){
  if(hl)h+='<div class="holiday-icon">'+getHolidayIcon(hl.name)+'</div>';
  h+='<div class="shift-txt">'+(sh==='_'?'':(big&&shiftSystem!=='custom'?SN[sh]:sh))+'</div>';
  if(txt&&hl)h+='<div class="hol-name">'+esc(hl.name)+'</div>';
- if(es.length)h+='<div class="chips">'+es.map(function(e){return '<span class="chip" style="background:'+esc(e.color)+'">'+e.icon+(txt?' '+(e.time?e.time+' ':'')+esc(e.text):'')+'</span>';}).join('')+'</div>';
+ if(es.length){el.classList.add('sonstige');h+=splitHtml(es);}
  if(t!=='normal')h+='<div class="daytype-label">'+TN[t]+'</div>';
  el.innerHTML=h;
  if(shiftSystem==='custom'){var cb=planBlockAt(dt,group),cc=cb?cb.color:'#f9f9f9';el.style.backgroundColor=cc;el.style.color=contrast(cc);if(!el.classList.contains('today'))el.firstChild.style.color=contrast(cc);}
