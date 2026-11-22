@@ -522,6 +522,24 @@ body.dark #viewRow .mode-btn.active{background:#0056b3;color:#fff;border-color:#
 .calendar.v-d1 .day .term-text{font-size:clamp(11px,3cqw,15px)}
 .day .term-text.t-top{top:3px;bottom:auto}
 .day .term-text.t-bottom{bottom:3px;top:auto}
+#dayZoom{position:fixed;inset:0;z-index:900;display:none;align-items:center;justify-content:center;background:rgba(0,0,0,.6);backdrop-filter:blur(4px);-webkit-backdrop-filter:blur(4px);padding:14px;box-sizing:border-box;touch-action:none;animation:dzFade .25s ease}
+#dayZoom.active{display:flex}
+@keyframes dzFade{from{opacity:0}to{opacity:1}}
+#dzHost{display:flex;flex-direction:column;align-items:center;gap:12px;max-height:100%}
+.dz-wrap{width:min(92vw,420px);container-type:inline-size;will-change:transform}
+#dzHost .calendar{max-width:none;gap:0;display:block;animation:none}
+#dzHost .day{aspect-ratio:1/1.2;height:auto;border-radius:18px;cursor:pointer}
+#dzHost .shift-txt{font-size:clamp(34px,16cqw,72px)}
+#dzHost .date-num{font-size:clamp(14px,4.6cqw,22px)}
+#dzHost .term-icon{font-size:clamp(30px,13cqw,56px)}
+#dzHost .term-text{font-size:clamp(12px,4.2cqw,20px)}
+#dzHost .hol-name{font-size:clamp(11px,3.6cqw,17px);top:clamp(26px,8cqw,40px)}
+#dzHost .holiday-icon{font-size:clamp(18px,6cqw,30px)}
+#dzHost .daytype-label{font-size:clamp(10px,3.2cqw,15px);padding:5px 2px}
+.dz-info{background:#fff;color:#333;border-radius:14px;padding:12px 16px;width:min(92vw,420px);box-sizing:border-box;text-align:left;font-size:15px;line-height:1.5}
+body.dark .dz-info{background:#1e2124;color:#e4e6ea}
+.dz-info b{display:block;font-size:17px;margin-bottom:4px}
+.dz-close{position:absolute;top:calc(10px + env(safe-area-inset-top,0px));right:12px;width:42px;height:42px;padding:0;border-radius:50%;background:rgba(255,255,255,.22);color:#fff;font-size:20px;z-index:2}
 </style>
 </head>
 <body>
@@ -664,6 +682,8 @@ body.dark #viewRow .mode-btn.active{background:#0056b3;color:#fff;border-color:#
 <option value="none">Keine Effekte</option>
 </select>
 <div class="hint-row">W&auml;hle ein Effekt-Design oder schalte es komplett aus.</div>
+<div class="field-label">Zoom mit zwei Fingern</div>
+<select id="zoomSelect"><option value="on">Ein &ndash; Tag auseinanderziehen = hineinzoomen</option><option value="off">Aus</option></select>
 <div class="field-label">Ton bei Erinnerungen</div>
 <select id="soundSelect"><option value="on">Ein &ndash; &bdquo;Uh-oh&ldquo;-Ton</option><option value="off">Aus</option></select>
 <div class="field-label">Ferien (Bayern)</div>
@@ -689,7 +709,7 @@ body.dark #viewRow .mode-btn.active{background:#0056b3;color:#fff;border-color:#
 </ul>
 <p>Startdatum: <b>01.10.2026</b> (5-Schicht) bzw. <b>04.01.2027</b> (4-Schicht Vollkonti, 4&times;12, 3&times;12). Das Schichtsystem wird in den <b>Einstellungen</b> gew&auml;hlt (Zahnrad oben rechts).</p>
 <h4>2. Ansichten &amp; Modi</h4>
-<p>Oben wechselst du zwischen <b>Monat</b>, <b>Woche</b>, <b>4 Tage</b> und <b>1 Tag</b>. Pfeile oder Wischen bl&auml;ttern weiter.</p>
+<p>Oben wechselst du zwischen <b>Monat</b>, <b>Woche</b>, <b>4 Tage</b> und <b>1 Tag</b>. Pfeile oder Wischen bl&auml;ttern weiter. Mit <b>zwei Fingern</b> auf einem Tag auseinanderziehen vergr&ouml;&szlig;ert diesen Tag. Zusammenziehen (oder neben den Tag tippen) bringt dich zur&uuml;ck. Am PC: Strg + Mausrad.</p>
 <ul>
 <li><b>Normal</b> / <b>Sonstige</b> &ndash; Klick auf Tag &ouml;ffnet Termin-Fenster mit Tages-Typ-Auswahl (Normal / Urlaub / Krank / Einbringer).</li>
 <li><b>Krank</b> / <b>Urlaub</b> &ndash; Klick markiert Tag sofort.</li>
@@ -825,6 +845,7 @@ SchichtZeit speichert alle Daten ausschlie&szlig;lich <b>lokal auf deinem Ger&au
         <div class="plan-share-box" id="planShareBox" style="display:none;"></div>
     </div>
 </div></div>
+<div id="dayZoom"><button class="dz-close" aria-label="Schlie&szlig;en">&#x2715;</button><div id="dzHost"></div></div>
 <div class="lp-overlay" id="lpOverlay"><div class="lp-modal" id="lpModal">
     <div class="lp-title">Aktionen f&uuml;r den Tag</div>
     <div class="lp-date" id="lpDate"></div>
@@ -989,6 +1010,7 @@ function openSettings(){
     document.getElementById('effectSelect').value=currentEffect;
     document.getElementById('ferienSelect').value=showFerien?'on':'off';
     document.getElementById('soundSelect').value=soundOn?'on':'off';
+    document.getElementById('zoomSelect').value=zoomOn?'on':'off';
     document.getElementById('managePlansBtn').style.display=(shiftSystem==='custom')?'block':'none';
     applyTheme(currentTheme);
     document.getElementById('settingsModal').classList.add('active');
@@ -1007,6 +1029,7 @@ function saveSettings(){
         try{localStorage.setItem('schichtzeitEffect',currentEffect);}catch(e){}
         applyEffects();
     }
+    zoomOn=document.getElementById('zoomSelect').value==='on';try{localStorage.setItem('schichtzeitZoom',zoomOn?'on':'off');}catch(e){}
     soundOn=document.getElementById('soundSelect').value==='on';try{localStorage.setItem('schichtzeitSound',soundOn?'on':'off');}catch(e){}
     showFerien=document.getElementById('ferienSelect').value==='on';try{localStorage.setItem('schichtzeitFerien',showFerien?'1':'0');}catch(e){}
     closeSettings();updateYearOverview();renderCalendar();
@@ -1146,7 +1169,7 @@ function step(dir){
  else setCursor(new Date(cursor.getFullYear(),cursor.getMonth(),cursor.getDate()+dir*({week:7,d4:4,d1:1}[viewMode])));
  renderCalendar(dir>0?'anim-left':'anim-right');updateYearOverview();
 }
-function refresh(){renderCalendar();updateYearOverview();}
+function refresh(){renderCalendar();updateYearOverview();if(dz.open)renderDz();}
 var REG={
  1:[['0 0,100 0,100 100,0 100',50,46,'b']],
  2:[['0 0,100 0,0 100',32,32,'t'],['100 0,100 100,0 100',68,68,'b']],
@@ -1164,8 +1187,8 @@ function splitHtml(es){
  });
  return '<div class="split-layer">'+lay+'</div>'+ic+tx;
 }
-function cell(dt,group){
- var k=formatDateKey(dt),y=dt.getFullYear(),big=viewMode!=='month',txt=viewMode!=='month',sh=getShift(dt,group),t=typeOf(k),es=getEntries(k);
+function cell(dt,group,forceBig){
+ var k=formatDateKey(dt),y=dt.getFullYear(),big=forceBig||viewMode!=='month',txt=forceBig||viewMode!=='month',sh=getShift(dt,group),t=typeOf(k),es=getEntries(k);
  var hl=getHolidayList(y).filter(function(h){return h.key===k;})[0];
  var el=document.createElement('div');
  el.className='day '+(shiftSystem==='custom'?'cust':sh)+(t!=='normal'?' '+t:'')+(hl?' feiertag':'')+(dt.getTime()===actualToday.getTime()?' today':'')+(showFerien&&inFerien(k)?' ferien':'');
@@ -1175,10 +1198,10 @@ function cell(dt,group){
  if(txt&&hl)h+='<div class="hol-name">'+esc(hl.name)+'</div>';
  if(es.length){el.classList.add('sonstige');h+=splitHtml(es);}
  if(t!=='normal')h+='<div class="daytype-label">'+TN[t]+'</div>';
- el.innerHTML=h;
+ el.innerHTML=h;el.setAttribute('data-k',k);
  if(shiftSystem==='custom'){var cb=planBlockAt(dt,group),cc=cb?cb.color:'#f9f9f9';el.style.backgroundColor=cc;el.style.color=contrast(cc);if(!el.classList.contains('today'))el.firstChild.style.color=contrast(cc);}
  var lp=null,fired=false;
- el.addEventListener('touchstart',function(){fired=false;lp=setTimeout(function(){fired=true;clearDay(k);},550);},{passive:true});
+ el.addEventListener('touchstart',function(){fired=false;lp=setTimeout(function(){if(pinchBusy)return;fired=true;clearDay(k);},550);},{passive:true});
  ['touchend','touchmove','touchcancel'].forEach(function(n){el.addEventListener(n,function(){clearTimeout(lp);},{passive:true});});
  el.addEventListener('click',function(){if(fired){fired=false;return;}dayClick(k);});
  el.addEventListener('contextmenu',function(ev){ev.preventDefault();});
@@ -1186,6 +1209,7 @@ function cell(dt,group){
 }
 function clearDay(k){if(!confirm('Alle Markierungen am '+fmtDE(k)+' l\u00F6schen?'))return;setType(k,'normal');setEntries(k,[]);refresh();}
 function dayClick(k){
+ if(Date.now()-lastPinch<450)return;
  if(currentMode==='krank'||currentMode==='urlaub'){setType(k,typeOf(k)===currentMode?'normal':currentMode);refresh();}
  else openDay(k);
 }
@@ -1278,6 +1302,108 @@ function checkReminders(){
  });});
  if(ch){try{localStorage.setItem('schichtzeitNotified',JSON.stringify(notifiedFlags));}catch(e){}}
 }
+var pinchBusy=false,lastPinch=0,wz=0,zoomOn=true;
+try{zoomOn=localStorage.getItem('schichtzeitZoom')!=='off';}catch(e){}
+function setView(v){viewMode=v;try{localStorage.setItem('schichtzeitView',v);}catch(e){}[].forEach.call(document.querySelectorAll('#viewRow .mode-btn'),function(b){b.classList.toggle('active',b.getAttribute('data-view')===v);});refresh();}
+function zoomBy(n,k){
+ var L=['month','week','d4','d1'],i=Math.max(0,Math.min(3,L.indexOf(viewMode)+n));
+ if(k){var q=k.split('-');setCursor(new Date(+q[0],q[1]-1,+q[2]));}
+ setView(L[i]);
+}
+var dz={open:false,k:null};
+var DAYFULL=['Montag','Dienstag','Mittwoch','Donnerstag','Freitag','Samstag','Sonntag'];
+var SNL={F:'Fr\u00FChschicht',S:'Sp\u00E4tschicht',N:'Nachtschicht',T:'Tagschicht','_':'Frei'};
+function renderDz(){
+ var q=dz.k.split('-'),dt=new Date(+q[0],q[1]-1,+q[2]),g=$('groupSelect')?$('groupSelect').value:'1',host=$('dzHost');
+ host.innerHTML='';
+ var wrap=document.createElement('div');wrap.className='dz-wrap';
+ var cal=document.createElement('div');cal.className='calendar v-d1';cal.appendChild(cell(dt,g,true));wrap.appendChild(cal);host.appendChild(wrap);
+ var sh=getShift(dt,g),hl=getHolidayList(dt.getFullYear()).filter(function(h){return h.key===dz.k;})[0],es=getEntries(dz.k),t2=typeOf(dz.k),lab;
+ if(shiftSystem==='custom'){var b=planBlockAt(dt,g);lab=b?(b.code||'Frei'):'Frei';}else lab=SNL[sh]||sh;
+ var h='<b>'+DAYFULL[(dt.getDay()+6)%7]+', '+fmtDE(dz.k)+'</b>Schicht: '+esc(lab);
+ if(hl)h+='<br>'+getHolidayIcon(hl.name)+' '+esc(hl.name);
+ if(t2!=='normal')h+='<br>Markiert: '+TN[t2];
+ h+=es.length?es.map(function(e){return '<br>'+e.icon+' '+(e.time?e.time+' ':'')+esc(e.text||'Termin');}).join(''):'<br><i>Keine Termine \u2013 auf den Tag tippen, um einen anzulegen.</i>';
+ var info=document.createElement('div');info.className='dz-info';info.innerHTML=h;host.appendChild(info);
+}
+function dzXf(card,src){
+ var a=src.getBoundingClientRect(),b=card.getBoundingClientRect();
+ return 'translate('+(a.left+a.width/2-b.left-b.width/2)+'px,'+(a.top+a.height/2-b.top-b.height/2)+'px) scale('+(a.width/b.width)+','+(a.height/b.height)+')';
+}
+function openDayZoom(k,src){
+ dz.k=k;dz.open=true;renderDz();
+ var ov=$('dayZoom');ov.style.transition='';ov.style.opacity='';ov.classList.add('active');
+ var card=$('dzHost').firstChild;
+ if(src&&card){card.style.transition='none';card.style.transform=dzXf(card,src);card.getBoundingClientRect();card.style.transition='transform .3s cubic-bezier(.2,.8,.3,1)';card.style.transform='';}
+}
+function closeDayZoom(){
+ if(!dz.open)return;dz.open=false;
+ var ov=$('dayZoom'),card=$('dzHost').firstChild,src=$('calendar').querySelector('[data-k="'+dz.k+'"]');
+ if(card&&src){card.style.transition='none';card.style.transform='';var x=dzXf(card,src);card.getBoundingClientRect();card.style.transition='transform .28s cubic-bezier(.4,0,.6,1)';card.style.transform=x;}
+ ov.style.transition='opacity .28s ease';ov.style.opacity='0';
+ setTimeout(function(){if(dz.open)return;ov.classList.remove('active');ov.style.opacity='';ov.style.transition='';$('dzHost').innerHTML='';},300);
+}
+function wireZoom(){
+ var cal=$('calendar'),ov=$('dayZoom'),pz=null,oz=null,card=null;
+ function pd(t){return Math.hypot(t[0].clientX-t[1].clientX,t[0].clientY-t[1].clientY);}
+ function cellAt(x,y){var el=document.elementFromPoint(x,y);return el&&el.closest?el.closest('.day[data-k]'):null;}
+ cal.addEventListener('touchstart',function(e){
+  if(e.touches.length===1){pinchBusy=false;return;}
+  if(!zoomOn||e.touches.length!==2||dz.open)return;
+  pinchBusy=true;
+  var c=cellAt((e.touches[0].clientX+e.touches[1].clientX)/2,(e.touches[0].clientY+e.touches[1].clientY)/2);
+  pz={d:pd(e.touches),r:1,c:c};
+  if(c){c.style.transition='none';c.style.zIndex=30;}
+ },{passive:true});
+ cal.addEventListener('touchmove',function(e){
+  if(!pz||!pz.c||e.touches.length!==2)return;
+  pz.r=pd(e.touches)/pz.d;
+  pz.c.style.transform='scale('+Math.max(1,Math.min(2.4,pz.r))+')';
+ },{passive:true});
+ function endCal(e){
+  if(!pz||e.touches.length>=2)return;
+  var p=pz,c=p.c;pz=null;lastPinch=Date.now();
+  if(!c)return;
+  if(p.r>1.3){c.style.transition='';c.style.transform='';c.style.zIndex='';openDayZoom(c.getAttribute('data-k'),c);}
+  else{c.style.transition='transform .2s ease';c.style.transform='';setTimeout(function(){c.style.transition='';c.style.zIndex='';},220);}
+ }
+ cal.addEventListener('touchend',endCal,{passive:true});
+ cal.addEventListener('touchcancel',endCal,{passive:true});
+ ov.addEventListener('touchstart',function(e){
+  if(e.touches.length!==2)return;
+  pinchBusy=true;card=$('dzHost').firstChild;oz={d:pd(e.touches),r:1};
+  if(card)card.style.transition='none';
+ },{passive:true});
+ ov.addEventListener('touchmove',function(e){
+  if(!oz||!card||e.touches.length!==2)return;
+  oz.r=pd(e.touches)/oz.d;
+  card.style.transform='scale('+Math.max(.55,Math.min(1.25,oz.r))+')';
+ },{passive:true});
+ function endOv(e){
+  if(!oz||e.touches.length>=2)return;
+  var r=oz.r;oz=null;lastPinch=Date.now();
+  if(card){card.style.transition='transform .2s ease';card.style.transform='';}
+  if(r<.78)closeDayZoom();
+ }
+ ov.addEventListener('touchend',endOv,{passive:true});
+ ov.addEventListener('touchcancel',endOv,{passive:true});
+ ov.addEventListener('click',function(e){
+  if(Date.now()-lastPinch<450)return;
+  if(e.target===ov||e.target.id==='dzHost'||(e.target.classList&&e.target.classList.contains('dz-close')))closeDayZoom();
+ });
+ document.addEventListener('keydown',function(e){if(e.key==='Escape')closeDayZoom();});
+ cal.addEventListener('wheel',function(e){
+  if(!zoomOn||!e.ctrlKey)return;e.preventDefault();
+  var now=Date.now();if(now-wz<350)return;wz=now;
+  var c=e.target.closest?e.target.closest('.day[data-k]'):null;
+  if(e.deltaY<0&&c&&!dz.open)openDayZoom(c.getAttribute('data-k'),c);
+ },{passive:false});
+ ov.addEventListener('wheel',function(e){
+  if(!e.ctrlKey)return;e.preventDefault();
+  var now=Date.now();if(now-wz<350)return;wz=now;
+  if(e.deltaY>0)closeDayZoom();
+ },{passive:false});
+}
 function wireExtra(){
  if(wired)return;wired=true;
  ['prevBtn','nextBtn'].forEach(function(id,i){var b=$(id),c=b.cloneNode(true);b.parentNode.replaceChild(c,b);c.addEventListener('click',function(){step(i?1:-1);});});
@@ -1331,8 +1457,8 @@ function wireExtra(){
  [].forEach.call(document.querySelectorAll('.theme-choice'),function(b){b.addEventListener('click',function(){applyTheme(b.getAttribute('data-theme'));});});
  var sx=0,sy=0,cal=$('calendar');
  cal.addEventListener('touchstart',function(e){sx=e.touches[0].clientX;sy=e.touches[0].clientY;},{passive:true});
- cal.addEventListener('touchend',function(e){var t=e.changedTouches[0],dx=t.clientX-sx;if(Math.abs(dx)>70&&Math.abs(t.clientY-sy)<45)step(dx<0?1:-1);},{passive:true});
- ['click','touchstart'].forEach(function(n){document.addEventListener(n,unlockAudio,{once:true,passive:true});});document.addEventListener('visibilitychange',function(){if(!document.hidden)checkReminders();});wirePlans();setInterval(checkReminders,30000);checkReminders();refresh();applyEffects();importPlanFromHash();
+ cal.addEventListener('touchend',function(e){if(pinchBusy){if(!e.touches.length)pinchBusy=false;return;}var t=e.changedTouches[0],dx=t.clientX-sx;if(Math.abs(dx)>70&&Math.abs(t.clientY-sy)<45)step(dx<0?1:-1);},{passive:true});
+ ['click','touchstart'].forEach(function(n){document.addEventListener(n,unlockAudio,{once:true,passive:true});});document.addEventListener('visibilitychange',function(){if(!document.hidden)checkReminders();});wireZoom();wirePlans();setInterval(checkReminders,30000);checkReminders();refresh();applyEffects();importPlanFromHash();
 }
 
 function rnd(a){return a[0]+Math.random()*(a[1]-a[0]);}
