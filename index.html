@@ -27,7 +27,7 @@
     min-height: 100vh;
     padding-bottom: env(safe-area-inset-bottom);
   }
-  .app { max-width: 900px; margin: 0 auto; padding: 12px; }
+  .app { max-width: 100%; margin: 0 auto; padding: 12px; }
 
   /* Header */
   .header {
@@ -263,14 +263,13 @@
     background: white;
     padding: 16px;
     border-radius: 12px;
-    display: inline-block;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
     margin: 16px 0;
     border: 1px solid var(--border);
     min-width: 200px;
     min-height: 200px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
   }
   .share-url {
     background: var(--bg);
@@ -333,6 +332,18 @@
     pointer-events: none;
   }
   .toast.show { transform: translateX(-50%) translateY(0); }
+
+  /* 💻 Красивое отображение на компьютере (как мобильное приложение) */
+  @media (min-width: 700px) {
+    .app {
+      max-width: 680px; /* Ограничиваем ширину, чтобы не растягивалось */
+      margin-top: 20px;
+    }
+    .day {
+      aspect-ratio: 1.4; /* Ячейки чуть шире, чем выше */
+      max-height: 55px;  /* Не даем им становиться гигантскими */
+    }
+  }
 
   @media (max-width: 400px) {
     .day { font-size: 13px; }
@@ -415,7 +426,7 @@
 
 <script type="module">
 // ============================================================
-//  1) FIREBASE CONFIG — HIER EINTRAGEN
+//  1) FIREBASE CONFIG — HIER DEINE ECHTEN SCHLÜSSEL EINTRAGEN!
 // ============================================================
 const firebaseConfig = {
   apiKey: "ВАШ_API_KEY",
@@ -439,7 +450,7 @@ let currentMonth = new Date();
 currentMonth.setDate(1);
 let selectedDate = null;
 let allTasks = [];
-let fb = null;          // API-объект: addTask / updateTask / deleteTask
+let fb = null;
 let snapshotUnsub = null;
 
 const $ = (id) => document.getElementById(id);
