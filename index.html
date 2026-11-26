@@ -458,7 +458,6 @@ body.dark .plan-share-box{background:#1a2330;color:#c0c5cb}
 .plan-share-box textarea{width:100%;min-height:80px;padding:8px;font-size:12px;border:1px solid #ccc;border-radius:6px;font-family:monospace;box-sizing:border-box;resize:vertical;margin-top:6px}
 body.dark .plan-share-box textarea{background:#2a2e33;color:#e4e6ea;border-color:#3a3f44}
 @media (prefers-reduced-motion: reduce){.effects-layer{display:none!important}}
-
 .notif-hint{display:none;font-size:13px;color:#666;margin:8px 0}
 .calendar-wrap{container-type:inline-size}
 .calendar{gap:clamp(2px,.9cqw,10px)}
@@ -512,7 +511,6 @@ body.dark #viewRow{background:#2a2e33;box-shadow:inset 0 1px 2px rgba(0,0,0,.45)
 body.dark #viewRow .mode-btn{color:#c9ced4;background:transparent;border-color:transparent}
 body.dark #viewRow .mode-btn.active{background:#0056b3;color:#fff;border-color:#0056b3}
 @media (max-width:600px){#viewRow{gap:1px;padding:2px;margin-bottom:7px}#viewRow .mode-btn{width:36px;height:32px}#viewRow .mode-btn svg{width:17px;height:17px}}
-/* Termine: Zelle in Segmente geteilt */
 .day.sonstige .shift-txt{display:none}
 .calendar .day .term-icon{font-size:clamp(16px,5.2cqw,34px)}
 .calendar .day .term-text{font-size:clamp(8px,2.2cqw,14px)}
@@ -534,7 +532,6 @@ body.dark .dz-info{background:#1e2124;color:#e4e6ea}
 .dz-info{background:#fff;color:#333;border-radius:14px;padding:12px 16px;max-width:340px;margin:12px auto 0;box-sizing:border-box;text-align:left;font-size:15px;line-height:1.5}
 #dzHost .calendar{animation:none}
 .dz-info{position:absolute;top:100%;left:50%;transform:translateX(-50%);width:min(100%,520px);margin:12px 0 0;animation:dzInfo .3s .2s both}
-/* 1-Tag-Ansicht = vergroesserte Monats-Zelle (alles proportional zur Zellbreite) */
 .calendar.v-d1{container-type:inline-size;max-width:min(100%,520px);gap:0}
 .calendar.v-d1 .day{aspect-ratio:1/1.15;min-height:0;border-radius:clamp(14px,9cqw,30px)}
 .calendar.v-d1 .day .date-num{font-size:clamp(12px,17cqw,72px);top:7cqw;left:8cqw}
@@ -637,7 +634,7 @@ body.dark .mp-grid button.now{border-color:#5c9dff}
   <label>Schicht:<select id="groupSelect"></select></label>
 </div>
 <div class="nav-row">
-  <button class="top-btn share-btn" id="shareBtn" title="Teilen" aria-label="Teilen"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7s-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81 1.66 0 3-1.34 3-3s-1.34-3-3-3-3 1.34-3 3c0 .24.04.47.09.7L8.04 9.81C7.5 9.31 6.79 9 6 9c-1.66 0-3 1.34-3 3s1.34 3 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.16c-.05.21-.08.43-.08.65 0 1.61 1.31 2.92 2.92 2.92s2.92-1.31 2.92-2.92-1.31-2.92-2.92-2.92z"/></svg></button>
+  <button class="top-btn share-btn" id="shareBtn" title="Termine teilen" aria-label="Termine teilen"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7s-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81 1.66 0 3-1.34 3-3s-1.34-3-3-3-3 1.34-3 3c0 .24.04.47.09.7L8.04 9.81C7.5 9.31 6.79 9 6 9c-1.66 0-3 1.34-3 3s1.34 3 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.16c-.05.21-.08.43-.08.65 0 1.61 1.31 2.92 2.92 2.92s2.92-1.31 2.92-2.92-1.31-2.92-2.92-2.92z"/></svg></button>
   <button id="prevBtn" title="Zur&uuml;ck">&larr;</button>
   <span id="monthDisplay"></span>
   <button id="nextBtn" title="Weiter">&rarr;</button>
@@ -736,7 +733,6 @@ body.dark .mp-grid button.now{border-color:#5c9dff}
 <div class="modal-overlay" id="settingsModal"><div class="modal">
 <div class="set-head"><h3>&#x2699;&#xFE0F; Einstellungen</h3><span class="set-year" id="settingsYearDisplay"></span></div>
 <div class="set-body">
-
 <div class="set-sec">
 <div class="set-sec-title">&#x1F4C5; Schicht &amp; Urlaub</div>
 <div class="set-card">
@@ -759,7 +755,6 @@ body.dark .mp-grid button.now{border-color:#5c9dff}
 </div>
 </div>
 </div>
-
 <div class="set-sec">
 <div class="set-sec-title">&#x1F3A8; Darstellung</div>
 <div class="set-card">
@@ -791,7 +786,6 @@ body.dark .mp-grid button.now{border-color:#5c9dff}
 </div>
 </div>
 </div>
-
 <div class="set-sec">
 <div class="set-sec-title">&#x1F514; Bedienung &amp; T&ouml;ne</div>
 <div class="set-card">
@@ -807,7 +801,6 @@ body.dark .mp-grid button.now{border-color:#5c9dff}
 </div>
 </div>
 </div>
-
 <div class="set-sec">
 <div class="set-sec-title">&#x2139;&#xFE0F; Hilfe &amp; Info</div>
 <div class="set-card">
@@ -815,7 +808,6 @@ body.dark .mp-grid button.now{border-color:#5c9dff}
 <button type="button" class="set-link" id="settingsPrivacyBtn"><div class="set-ic" style="background:#e9ecef;">&#x1F512;</div>Datenschutz / Privatsph&auml;re<span class="chev">&rsaquo;</span></button>
 </div>
 </div>
-
 </div>
 <div class="set-foot"><button id="settingsCancelBtn" style="background:#6c757d;">Abbrechen</button><button id="settingsSaveBtn" style="background:#007bff;">&#x2714;&#xFE0F; Speichern</button></div>
 </div></div>
@@ -849,14 +841,16 @@ body.dark .mp-grid button.now{border-color:#5c9dff}
 <h4>6. Backup</h4>
 <p>Im Men&uuml; <b>Backup</b> kannst du deine Daten als .json sichern oder als .ics f&uuml;r den gesamten Google Calendar exportieren.</p>
 <h4>7. Lange dr&uuml;cken</h4>
-<p>Halte einen Tag <b>etwa eine halbe Sekunde lang gedr&uuml;ckt</b>, um L&ouml;schoptionen zu &ouml;ffnen.</p>
+<p>Halte einen Tag <b>etwa eine halbe Sekunde lang gedr&uuml;ckt</b>, um Optionen zu &ouml;ffnen (Tag teilen / Eintr&auml;ge l&ouml;schen).</p>
 <h4>8. Jahres&uuml;bersicht</h4>
 <p>Zeigt alle Urlaubs-, Kranken-, Sonstige- und Einbringer-Tage des Jahres.</p>
 <h4>9. Eigene Pl&auml;ne teilen</h4>
 <p>Im Plan-Editor auf <b>&#x1F517; Teilen</b> tippen &ndash; der Link enth&auml;lt deinen kompletten Plan und kann weitergegeben werden. Beim &Ouml;ffnen des Links fragt die App, ob der Plan importiert werden soll.</p>
-<h4>10. Datenschutz</h4>
+<h4>10. Termine teilen (Sync)</h4>
+<p>Oben auf das <b>&#x1F4E4; Teilen-Symbol</b> tippen oder einen Tag lange dr&uuml;cken &rarr; <b>&bdquo;Diesen Tag teilen&ldquo;</b>. Der Link enth&auml;lt deine Termine und kann per WhatsApp/E-Mail geschickt werden. Der Empf&auml;nger &ouml;ffnet den Link und kann die Eintr&auml;ge <b>zusammenf&uuml;hren</b> oder <b>ersetzen</b>.</p>
+<h4>11. Datenschutz</h4>
 <p>Alle Daten bleiben <b>lokal auf deinem Ger&auml;t</b>. Keine Server, kein Tracking, keine Werbung, keine Registrierung. Details &uuml;ber den Button <b>&#x1F512; Datenschutz</b>.</p>
-<h4>11. Fehler melden</h4>
+<h4>12. Fehler melden</h4>
 <p>Der Knopf <b>Fehler melden</b> &ouml;ffnet dein E-Mail-Programm mit einer vorausgef&uuml;llten Nachricht.</p>
 <div class="help-footer">SchichtZeit &ndash; der digitale Schichtplan.</div>
 </div>
@@ -919,6 +913,8 @@ SchichtZeit speichert alle Daten ausschlie&szlig;lich <b>lokal auf deinem Ger&au
 <li>Keine Werbung, kein Verkauf von Daten</li>
 </ul>
 </div>
+<h4>Termine teilen (Sync)</h4>
+<p>Wenn du Termine teilst, werden die Daten <b>direkt in den Link kodiert</b> (Base64). Der Link enth&auml;lt deine Termine und Tages-Typen. Er wird nicht an einen Server gesendet &ndash; nur du entscheidest per WhatsApp/E-Mail, wem du ihn schickst.</p>
 <h4>Eigene Pl&auml;ne teilen</h4>
 <p>Wenn du einen eigenen Plan teilst, werden die Plandaten (Name, Startdatum, Block-Definitionen) <b>direkt in den Link kodiert</b> (Base64). Der Link enth&auml;lt <b>keine pers&ouml;nlichen Daten</b>, nur das, was du explizit teilst. Du entscheidest, an wen du ihn weitergibst.</p>
 <h4>Backup & Google Calendar</h4>
@@ -983,6 +979,49 @@ SchichtZeit speichert alle Daten ausschlie&szlig;lich <b>lokal auf deinem Ger&au
     <div id="lpOptions"></div>
     <button class="lp-cancel" id="lpCancelBtn">Abbrechen</button>
 </div></div>
+
+<!-- NEU: Termine teilen Modal -->
+<div class="modal-overlay" id="shareEntriesModal"><div class="modal">
+    <h3>&#x1F4E4; Termine teilen</h3>
+    <div class="modal-date">W&auml;hle den Umfang. Der Empf&auml;nger bekommt einen Link mit den Terminen.</div>
+    <div class="section-title">Umfang</div>
+    <button class="backup-option" id="shareMonthBtn">
+        <span class="icon">&#x1F4C5;</span>
+        <span><span class="title">Aktueller Monat</span>
+        <span class="desc" id="shareMonthDesc">Eintr&auml;ge aus dem angezeigten Monat</span></span>
+    </button>
+    <button class="backup-option" id="shareAllBtn">
+        <span class="icon">&#x1F5C2;&#xFE0F;</span>
+        <span><span class="title">Alle Termine</span>
+        <span class="desc">Komplette Liste &ndash; kann bei vielen Eintr&auml;gen l&auml;nger werden</span></span>
+    </button>
+    <div class="section-title">App</div>
+    <button class="backup-option" id="shareAppBtn">
+        <span class="icon">&#x1F517;</span>
+        <span><span class="title">App-Link teilen</span>
+        <span class="desc">Nur die Adresse der App &ndash; ohne Termine</span></span>
+    </button>
+    <div class="notif-info" style="margin-top:14px;text-align:left;">
+        <b>So funktioniert's:</b><br>
+        Du teilst einen Link (WhatsApp, E-Mail &hellip;). &Ouml;ffnet der Empf&auml;nger den Link, fragt SchichtZeit, ob die Eintr&auml;ge &uuml;bernommen werden sollen. <b>Das ist keine Live-Synchronisation</b> &ndash; der Link enth&auml;lt eine Momentaufnahme.
+    </div>
+    <div class="modal-buttons">
+        <button id="shareEntriesCancel" style="background:#6c757d;">Schlie&szlig;en</button>
+    </div>
+</div></div>
+
+<!-- NEU: Sync Import Modal -->
+<div class="modal-overlay" id="syncImportModal"><div class="modal">
+    <h3>&#x1F4E5; Termine importieren</h3>
+    <div class="modal-date" id="syncImportInfo"></div>
+    <div class="help-body" id="syncImportBody"></div>
+    <div class="modal-buttons">
+        <button id="syncImportCancel" style="background:#6c757d;">Abbrechen</button>
+        <button id="syncImportReplace" style="background:#dc3545;">Ersetzen</button>
+        <button id="syncImportMerge" style="background:#28a745;">Zusammenf&uuml;hren</button>
+    </div>
+</div></div>
+
 <script>
 (function(){
 try {
@@ -1051,12 +1090,11 @@ function shareSchichtZeit(){var url=SHARE_URL;var d={title:SHARE_TITLE,text:SHAR
 function copyShareLink(url){if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(url).then(function(){showToast('Link kopiert');}).catch(function(){legacyCopy(url);});return;}legacyCopy(url);}
 function legacyCopy(url){try{var i=document.createElement('input');i.type='text';i.value=url;i.style.position='fixed';i.style.left='-9999px';document.body.appendChild(i);i.focus();i.select();var ok=document.execCommand('copy');document.body.removeChild(i);if(ok)showToast('Link kopiert');else showToast(url);}catch(e){showToast(url);}}
 
-/* === ИСПРАВЛЕННЫЙ ЭКСПОРТ В GOOGLE CALENDAR === */
+/* === ICS EXPORT === */
 function exportToICS() {
     var ics = "BEGIN:VCALENDAR\r\nVERSION:2.0\r\nPRODID:-//SchichtZeit//Export//DE\r\nCALSCALE:GREGORIAN\r\n";
     var now = new Date();
     var stamp = now.toISOString().replace(/[-:]/g, '').split('.')[0] + "Z";
-
     function addEvent(dateStr, title, time) {
         var d = dateStr.replace(/-/g, '');
         ics += "BEGIN:VEVENT\r\n";
@@ -1075,30 +1113,21 @@ function exportToICS() {
         ics += "SUMMARY:" + title.replace(/[\\;,]/g, '\\$&').replace(/\n/g, '\\n') + "\r\n";
         ics += "END:VEVENT\r\n";
     }
-
     sickDays.forEach(function(d) { addEvent(d, "Krank", ""); });
     vacationDays.forEach(function(d) { addEvent(d, "Urlaub", ""); });
     einbringerDays.forEach(function(d) { addEvent(d, "Einbringer", ""); });
     Object.keys(sonstigeDays).forEach(function(d) {
-        getEntries(d).forEach(function(en) {
-            addEvent(d, en.text || "Termin", en.time);
-        });
+        getEntries(d).forEach(function(en) { addEvent(d, en.text || "Termin", en.time); });
     });
-    
     var year = currentDate.getFullYear();
     var group = document.getElementById('groupSelect').value;
     var start = new Date(year, 0, 1);
     var end = new Date(year, 11, 31);
     for (var d = start; d <= end; d.setDate(d.getDate() + 1)) {
         var shift = getShift(d, group);
-        if (shift !== '_') {
-            var dk = formatDateKey(d);
-            addEvent(dk, shift, ""); 
-        }
+        if (shift !== '_') { var dk = formatDateKey(d); addEvent(dk, shift, ""); }
     }
-
     ics += "END:VCALENDAR";
-
     var blob = new Blob([ics], { type: 'text/calendar;charset=utf-8' });
     var link = document.createElement('a');
     link.href = URL.createObjectURL(blob);
@@ -1156,19 +1185,12 @@ function saveSettings(){
     if(newSys!==shiftSystem){shiftSystem=newSys;rebuildGroupOptions(true);rebuildLegend();}
     try{localStorage.setItem('schichtzeitShiftSystem',shiftSystem);}catch(e){}
     var newEffect=document.getElementById('effectSelect').value;
-    if(newEffect!==currentEffect){
-        currentEffect=newEffect;
-        try{localStorage.setItem('schichtzeitEffect',currentEffect);}catch(e){}
-        applyEffects();
-    }
+    if(newEffect!==currentEffect){currentEffect=newEffect;try{localStorage.setItem('schichtzeitEffect',currentEffect);}catch(e){}applyEffects();}
     zoomOn=document.getElementById('zoomSelect').value==='on';try{localStorage.setItem('schichtzeitZoom',zoomOn?'on':'off');}catch(e){}
     soundOn=document.getElementById('soundSelect').value==='on';try{localStorage.setItem('schichtzeitSound',soundOn?'on':'off');}catch(e){}
     showFerien=document.getElementById('ferienSelect').value==='on';try{localStorage.setItem('schichtzeitFerien',showFerien?'1':'0');}catch(e){}
     closeSettings();updateYearOverview();renderCalendar();
-    if(shiftSystem==='custom'&&Object.keys(customPlans).length===0){
-        showToast('Noch kein eigener Plan \u2013 lege jetzt einen an!');
-        setTimeout(openPlanEditor,300);
-    }
+    if(shiftSystem==='custom'&&Object.keys(customPlans).length===0){showToast('Noch kein eigener Plan \u2013 lege jetzt einen an!');setTimeout(openPlanEditor,300);}
 }
 function openHelp(){closeSettings();document.getElementById('helpModal').classList.add('active');}
 function closeHelp(){document.getElementById('helpModal').classList.remove('active');}
@@ -1197,48 +1219,36 @@ function getHolidayIcon(name){var icons={'Neujahr':'\uD83C\uDF89','Heilige Drei 
 function getHolidayIconMap(y){var map={};getHolidayList(y).forEach(function(h){map[h.key]=getHolidayIcon(h.name);});return map;}
 var FERIEN={2026:[{name:"Winterferien",start:"2026-02-16",end:"2026-02-20"},{name:"Osterferien",start:"2026-03-30",end:"2026-04-10"},{name:"Pfingstferien",start:"2026-05-26",end:"2026-06-05"},{name:"Sommerferien",start:"2026-08-01",end:"2026-09-14"},{name:"Herbstferien",start:"2026-11-02",end:"2026-11-06"},{name:"Weihnachtsferien",start:"2026-12-21",end:"2026-12-31"}],2027:[{name:"Winterferien",start:"2027-02-15",end:"2027-02-19"},{name:"Osterferien",start:"2027-03-22",end:"2027-04-02"},{name:"Pfingstferien",start:"2027-05-18",end:"2027-05-28"},{name:"Sommerferien",start:"2027-08-02",end:"2027-09-13"},{name:"Herbstferien",start:"2027-10-11",end:"2027-10-22"},{name:"Weihnachtsferien",start:"2027-12-24",end:"2028-01-05"}]};
 
-// Дописываем функции, которые обрезались
-function formatDateKey(d) {
-    return d.getFullYear() + '-' + String(d.getMonth() + 1).padStart(2, '0') + '-' + String(d.getDate()).padStart(2, '0');
-}
+function formatDateKey(d) { return d.getFullYear() + '-' + String(d.getMonth() + 1).padStart(2, '0') + '-' + String(d.getDate()).padStart(2, '0'); }
 
 function getShift(d, group) {
     if (shiftSystem === 'blank') return '_';
-    
-    // Простая логика для демонстрации работоспособности (в вашем оригинале она сложнее)
     if (shiftSystem === '5') {
         var dayIndex = Math.floor((Date.UTC(d.getFullYear(), d.getMonth(), d.getDate()) - BASE_DATE_UTC_5) / 86400000);
         var startIdx = START_INDEX_BY_GROUP_5[group] || 0;
-        var idx = (dayIndex + startIdx) % 35;
-        if (idx < 0) idx += 35;
+        var idx = (dayIndex + startIdx) % 35; if (idx < 0) idx += 35;
         return CYCLE_35[idx];
     } else if (shiftSystem === '4vk') {
         var dayIndex = Math.floor((Date.UTC(d.getFullYear(), d.getMonth(), d.getDate()) - BASE_DATE_UTC_4VK) / 86400000);
         var offset = OFFSET_4VK[group] || 0;
-        var idx = (dayIndex + offset) % 8;
-        if (idx < 0) idx += 8;
+        var idx = (dayIndex + offset) % 8; if (idx < 0) idx += 8;
         return CYCLE_4VK[idx];
     } else if (shiftSystem === '4x12') {
         var dayIndex = Math.floor((Date.UTC(d.getFullYear(), d.getMonth(), d.getDate()) - BASE_DATE_UTC_4X12) / 86400000);
         var offset = SHIFT_4X12[group] || 0;
-        var idx = (dayIndex + offset) % 4;
-        if (idx < 0) idx += 4;
+        var idx = (dayIndex + offset) % 4; if (idx < 0) idx += 4;
         return CYCLE_4X12_BASE[idx];
     } else if (shiftSystem === '3x12') {
         var dayIndex = Math.floor((Date.UTC(d.getFullYear(), d.getMonth(), d.getDate()) - BASE_DATE_UTC_3X12) / 86400000);
         var startIdx = START_INDEX_3X12[group] || 0;
-        var idx = (dayIndex + startIdx) % 3;
-        if (idx < 0) idx += 3;
+        var idx = (dayIndex + startIdx) % 3; if (idx < 0) idx += 3;
         return CYCLE_3X12[idx];
-    } else if (shiftSystem === 'custom') {
-        return customShift(d, group);
-    }
+    } else if (shiftSystem === 'custom') { return customShift(d, group); }
     return '_';
 }
 
 function rebuildGroupOptions(keepCurrent) {
-    var sel = document.getElementById('groupSelect');
-    if (!sel) return;
+    var sel = document.getElementById('groupSelect'); if (!sel) return;
     var prevVal = keepCurrent ? sel.value : (savedGroup || '');
     sel.innerHTML = '';
     var groups = [];
@@ -1247,23 +1257,18 @@ function rebuildGroupOptions(keepCurrent) {
     else if (shiftSystem === '3x12') groups = ['I', 'II', 'III'];
     else if (shiftSystem === 'custom') groups = Object.keys(customPlans).length ? Object.keys(customPlans) : ['-'];
     else groups = ['-'];
-    
     groups.forEach(function(g) {
-        var opt = document.createElement('option');
-        opt.value = g;
+        var opt = document.createElement('option'); opt.value = g;
         opt.textContent = (shiftSystem === 'custom' && customPlans[g]) ? customPlans[g].name : g;
         sel.appendChild(opt);
     });
-    
     if (groups.indexOf(prevVal) !== -1) sel.value = prevVal;
     else if (groups.length > 0) sel.value = groups[0];
-    
     try { localStorage.setItem('schichtzeitGroup', sel.value); } catch(e) {}
 }
 
 function rebuildLegend() {
-    var lb = document.getElementById('legendBox');
-    if (!lb) return;
+    var lb = document.getElementById('legendBox'); if (!lb) return;
     if (shiftSystem === 'custom') {
         var g = document.getElementById('groupSelect'), p = g ? customPlans[g.value] : null, seen = {}, h = '';
         if (p) p.blocks.forEach(function(b) {
@@ -1272,15 +1277,13 @@ function rebuildLegend() {
             seen[n + b.color] = 1;
             h += '<div class="legend-item"><div class="legend-box" style="background:' + b.color + '"></div>' + esc(n) + '</div>';
         });
-        lb.innerHTML = h;
-        return;
+        lb.innerHTML = h; return;
     }
     lb.innerHTML = '<div class="legend-item"><div class="legend-box" style="background:#FFD700"></div>Früh (F/T)</div>' +
                    '<div class="legend-item"><div class="legend-box" style="background:#FF4500"></div>Spät (S)</div>' +
                    '<div class="legend-item"><div class="legend-box" style="background:#1E90FF"></div>Nacht (N)</div>' +
                    '<div class="legend-item"><div class="legend-box" style="background:#f9f9f9"></div>Frei</div>';
 }
-
 
 function $(i){return document.getElementById(i);}
 function esc(s){return String(s).replace(/[&<>"]/g,function(c){return{'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c];});}
@@ -1342,10 +1345,23 @@ function cell(dt,group,forceBig){
 }
 var lpT=0;
 function closeLp(){$('lpOverlay').classList.remove('active');}
+/* NEU: long-press menü mit "Diesen Tag teilen" */
 function clearDay(k){
  if(typeOf(k)==='normal'&&!getEntries(k).length)return;
  var ov=$('lpOverlay');lpT=Date.now();
- $('lpOptions').innerHTML='<button type="button" class="lp-option danger" id="lpDelBtn"><span class="lp-ic">\uD83D\uDDD1\uFE0F</span><span class="lp-label">Termine l\u00F6schen</span></button>';
+ $('lpOptions').innerHTML=
+   '<button type="button" class="lp-option" id="lpShareBtn"><span class="lp-ic">\uD83D\uDCE4</span><span class="lp-label">Diesen Tag teilen</span></button>'+
+   '<button type="button" class="lp-option danger" id="lpDelBtn"><span class="lp-ic">\uD83D\uDDD1\uFE0F</span><span class="lp-label">Termine l\u00F6schen</span></button>';
+ $('lpShareBtn').onclick=function(){
+   if(Date.now()-lpT<450)return;
+   var dd={v:1,sickDays:typeOf(k)==='krank'?[k]:[],vacationDays:typeOf(k)==='urlaub'?[k]:[],einbringerDays:typeOf(k)==='einbringer'?[k]:[],sonstigeDays:{}};
+   var es=getEntries(k);if(es.length)dd.sonstigeDays[k]=es;
+   var enc=btoa(unescape(encodeURIComponent(JSON.stringify(dd))));
+   var url=SHARE_URL+'?sync='+encodeURIComponent(enc);
+   closeLp();
+   if(navigator.share){navigator.share({title:'SchichtZeit \u2013 '+fmtDE(k),url:url}).catch(function(){copyShareLink(url);});}
+   else copyShareLink(url);
+ };
  $('lpDelBtn').onclick=function(){if(Date.now()-lpT<450)return;setType(k,'normal');setEntries(k,[]);closeLp();refresh();};
  $('lpCancelBtn').onclick=closeLp;
  ov.onclick=function(e){if(e.target===ov&&Date.now()-lpT>450)closeLp();};
@@ -1696,6 +1712,133 @@ function wireExtra(){
  ['click','touchstart'].forEach(function(n){document.addEventListener(n,unlockAudio,{once:true,passive:true});});document.addEventListener('visibilitychange',function(){if(!document.hidden)checkReminders();});wireSettings();wireMP();wireZoom();wirePlans();setInterval(checkReminders,30000);checkReminders();refresh();applyEffects();importPlanFromHash();
 }
 
+/* ==== NEU: TEILEN / SYNC ==== */
+var pendingSyncData = null;
+
+function getShareableEntries(monthOnly) {
+    var result = { v: 1, sickDays: [], vacationDays: [], einbringerDays: [], sonstigeDays: {} };
+    var prefix = null;
+    if (monthOnly) {
+        prefix = currentDate.getFullYear() + '-' + String(currentDate.getMonth() + 1).padStart(2, '0') + '-';
+    }
+    function keep(k) { return !prefix || k.indexOf(prefix) === 0; }
+    result.sickDays = sickDays.filter(keep);
+    result.vacationDays = vacationDays.filter(keep);
+    result.einbringerDays = einbringerDays.filter(keep);
+    Object.keys(sonstigeDays).forEach(function(k) {
+        if (keep(k)) result.sonstigeDays[k] = getEntries(k);
+    });
+    return result;
+}
+
+function countShareEntries(d) {
+    return (d.sickDays||[]).length + (d.vacationDays||[]).length +
+           (d.einbringerDays||[]).length + Object.keys(d.sonstigeDays||{}).length;
+}
+
+function buildSyncUrl(monthOnly) {
+    var data = getShareableEntries(monthOnly);
+    var enc = btoa(unescape(encodeURIComponent(JSON.stringify(data))));
+    return SHARE_URL + '?sync=' + encodeURIComponent(enc);
+}
+
+function openShareEntries() {
+    var cur = getShareableEntries(true);
+    var n = countShareEntries(cur);
+    document.getElementById('shareMonthDesc').textContent =
+        n + ' Eintrag/Eintr\u00E4ge \u00B7 ' + monthNames[currentDate.getMonth()] + ' ' + currentDate.getFullYear();
+    document.getElementById('shareEntriesModal').classList.add('active');
+}
+function closeShareEntries() {
+    document.getElementById('shareEntriesModal').classList.remove('active');
+}
+
+function shareSyncUrl(monthOnly) {
+    var data = getShareableEntries(monthOnly);
+    var n = countShareEntries(data);
+    if (n === 0) { showToast('Keine Eintr\u00E4ge zum Teilen'); return; }
+    var url = buildSyncUrl(monthOnly);
+    var title = 'SchichtZeit \u2013 Termine (' + n + ')';
+    if (navigator.share) {
+        navigator.share({ title: title, text: 'Meine SchichtZeit-Termine', url: url })
+            .then(function(){ closeShareEntries(); })
+            .catch(function(err){ if (err && err.name==='AbortError') return; copyShareLink(url); closeShareEntries(); });
+    } else {
+        copyShareLink(url); closeShareEntries();
+    }
+}
+
+function handleSyncFromUrl() {
+    var m = location.search.match(/[?&]sync=([^&]+)/);
+    if (!m) return;
+    var data;
+    try {
+        var enc = decodeURIComponent(m[1]);
+        data = JSON.parse(decodeURIComponent(escape(atob(enc))));
+    } catch (e) {
+        showToast('Sync-Link ung\u00FCltig');
+        try { history.replaceState(null, '', location.pathname + location.hash); } catch(e){}
+        return;
+    }
+    if (!data || typeof data !== 'object') { showToast('Sync-Link ung\u00FCltig'); return; }
+    var total = countShareEntries(data);
+    if (!total) { showToast('Der Link enth\u00E4lt keine Eintr\u00E4ge'); return; }
+    document.getElementById('syncImportInfo').textContent =
+        'Der Link enth\u00E4lt ' + total + ' Eintrag/Eintr\u00E4ge. Wie m\u00F6chtest du sie importieren?';
+    document.getElementById('syncImportBody').innerHTML =
+        '<div class="box"><b>Zusammenf\u00FChren:</b> Bestehende Eintr\u00E4ge bleiben, neue werden hinzugef\u00FCgt.<br><br>' +
+        '<b>Ersetzen:</b> Alle aktuellen Eintr\u00E4ge werden durch die geteilten ersetzt.</div>' +
+        '<ul>' +
+        '<li>\uD83C\uDFD6\uFE0F Urlaub: ' + (data.vacationDays||[]).length + '</li>' +
+        '<li>\uD83E\uDD12 Krank: ' + (data.sickDays||[]).length + '</li>' +
+        '<li>\uD83D\uDC97 Einbringer: ' + (data.einbringerDays||[]).length + '</li>' +
+        '<li>\uD83D\uDCC5 Termine: ' + Object.keys(data.sonstigeDays||{}).length + ' Tage</li>' +
+        '</ul>';
+    pendingSyncData = data;
+    document.getElementById('syncImportModal').classList.add('active');
+    try { history.replaceState(null, '', location.pathname + location.hash); } catch(e){}
+}
+
+function cancelSyncImport() {
+    pendingSyncData = null;
+    document.getElementById('syncImportModal').classList.remove('active');
+}
+
+function doImportSync(mode) {
+    if (!pendingSyncData) return;
+    var data = pendingSyncData;
+    function uniq(arr, add) {
+        if (mode === 'replace') return add.slice();
+        var s = {};
+        arr.forEach(function(x){ s[x]=1; });
+        add.forEach(function(x){ s[x]=1; });
+        return Object.keys(s);
+    }
+    sickDays = uniq(sickDays, data.sickDays||[]);
+    vacationDays = uniq(vacationDays, data.vacationDays||[]);
+    einbringerDays = uniq(einbringerDays, data.einbringerDays||[]);
+    if (mode === 'replace') sonstigeDays = {};
+    var addSD = data.sonstigeDays || {};
+    Object.keys(addSD).forEach(function(k){
+        var addE = Array.isArray(addSD[k]) ? addSD[k] : [addSD[k]];
+        var existing = getEntries(k);
+        var ids = {}; existing.forEach(function(e){ if(e.id) ids[e.id]=1; });
+        addE.forEach(function(e){
+            if (!e || typeof e !== 'object') return;
+            if (!e.id) e.id = genEntryId();
+            if (!ids[e.id]) { existing.push(e); ids[e.id]=1; }
+        });
+        setEntries(k, existing);
+    });
+    saveArr();
+    try { localStorage.setItem('schichtzeitSonstigeDays', JSON.stringify(sonstigeDays)); } catch(e){}
+    pendingSyncData = null;
+    document.getElementById('syncImportModal').classList.remove('active');
+    refresh();
+    showToast(mode === 'replace' ? 'Eintr\u00E4ge ersetzt' : 'Eintr\u00E4ge zusammengef\u00FChrt');
+}
+/* ==== ENDE TEILEN / SYNC ==== */
+
 function rnd(a){return a[0]+Math.random()*(a[1]-a[0]);}
 var FX={
  snowflakes:{c:['❄️','❅','❆'],n:28,a:'particle-fall',s:[12,26],d:[7,14]},
@@ -1735,7 +1878,6 @@ function applyEffects(){
  }
  if(fx.flash){var f=document.createElement('span');f.className='effect-particle';f.textContent='⚡';f.style.cssText+=';top:6%;left:'+rnd([10,80])+'%;font-size:48px;opacity:0;animation:lightning-flash 9s linear infinite';L.appendChild(f);}
 }
-
 
 var editPlanId=null,editBlocks=[];
 function cleanBlock(b){return{code:String(b.code||'').trim().toUpperCase().slice(0,3),color:/^#[0-9a-f]{6}$/i.test(b.color)?b.color:'#cccccc',days:Math.max(1,Math.min(365,parseInt(b.days,10)||1))};}
@@ -1838,7 +1980,6 @@ function importPlanFromHash(){
  try{history.replaceState(null,'',location.pathname+location.search);}catch(e){}
 }
 
-// === ИНИЦИАЛИЗАЦИЯ (ПРИВЯЗКА КНОПОК) ===
 function init() {
     applyTheme(currentTheme);
     rebuildGroupOptions(false);
@@ -1846,44 +1987,38 @@ function init() {
     renderCalendar();
     updateClockStatus();
     scheduleMinuteTick();
-    
-    // Навигация
-    document.getElementById('prevBtn').addEventListener('click', function() {
-        currentDate.setMonth(currentDate.getMonth() - 1);
-        renderCalendar();
-    });
-    document.getElementById('nextBtn').addEventListener('click', function() {
-        currentDate.setMonth(currentDate.getMonth() + 1);
-        renderCalendar();
-    });
-    document.getElementById('groupSelect').addEventListener('change', function() {
-        try { localStorage.setItem('schichtzeitGroup', this.value); } catch(e) {}
-        renderCalendar();
-    });
-    
-    // Модальные окна и кнопки
+    document.getElementById('prevBtn').addEventListener('click', function() { currentDate.setMonth(currentDate.getMonth() - 1); renderCalendar(); });
+    document.getElementById('nextBtn').addEventListener('click', function() { currentDate.setMonth(currentDate.getMonth() + 1); renderCalendar(); });
+    document.getElementById('groupSelect').addEventListener('change', function() { try { localStorage.setItem('schichtzeitGroup', this.value); } catch(e) {} renderCalendar(); });
     document.getElementById('settingsBtn').addEventListener('click', openSettings);
     document.getElementById('settingsCancelBtn').addEventListener('click', closeSettings);
     document.getElementById('settingsSaveBtn').addEventListener('click', saveSettings);
-    
     document.getElementById('backupBtn').addEventListener('click', openBackupMenu);
     document.getElementById('backupCancelBtn').addEventListener('click', closeBackupMenu);
     document.getElementById('backupSaveDeviceBtn').addEventListener('click', backupToDevice);
     document.getElementById('backupGoogleIcsBtn').addEventListener('click', exportToICS);
-    
     document.getElementById('privacyBtn').addEventListener('click', openPrivacy);
     document.getElementById('privacyFooterLink').addEventListener('click', function(e) { e.preventDefault(); openPrivacy(); });
     document.getElementById('privacyCloseBtn').addEventListener('click', closePrivacy);
     document.getElementById('settingsPrivacyBtn').addEventListener('click', function() { closeSettings(); openPrivacy(); });
-    
     document.getElementById('openHelpBtn').addEventListener('click', openHelp);
     document.getElementById('helpCloseBtn').addEventListener('click', closeHelp);
     document.getElementById('reportBtn').addEventListener('click', reportError);
-    document.getElementById('shareBtn').addEventListener('click', shareSchichtZeit);
+    /* NEU: Teilen-Knopf öffnet Modal */
+    document.getElementById('shareBtn').addEventListener('click', openShareEntries);
+    /* NEU: Teilen-Modal Buttons */
+    document.getElementById('shareMonthBtn').addEventListener('click', function(){ shareSyncUrl(true); });
+    document.getElementById('shareAllBtn').addEventListener('click', function(){ shareSyncUrl(false); });
+    document.getElementById('shareAppBtn').addEventListener('click', function(){ closeShareEntries(); shareSchichtZeit(); });
+    document.getElementById('shareEntriesCancel').addEventListener('click', closeShareEntries);
+    document.getElementById('syncImportCancel').addEventListener('click', cancelSyncImport);
+    document.getElementById('syncImportReplace').addEventListener('click', function(){ doImportSync('replace'); });
+    document.getElementById('syncImportMerge').addEventListener('click', function(){ doImportSync('merge'); });
     wireExtra();
+    /* NEU: nach wireExtra - Sync aus URL prüfen */
+    handleSyncFromUrl();
 }
 
-// Запуск после загрузки страницы
 if (document.readyState === 'loading') {
     document.addEventListener('DOMContentLoaded', init);
 } else {
@@ -1902,4 +2037,3 @@ if (document.readyState === 'loading') {
 </script>
 </body>
 </html>
-
