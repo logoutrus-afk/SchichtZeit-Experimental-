@@ -2,7 +2,7 @@
 <html lang="de">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 <meta name="theme-color" content="#4F46E5">
 <title>Familien-Kalender</title>
 <style>
@@ -17,7 +17,9 @@
     --border: #e2e8f0;
     --danger: #ef4444;
     --success: #10b981;
+    --warn: #f59e0b;
   }
+  html, body { height: 100%; }
   body {
     font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
     background: var(--bg);
@@ -35,21 +37,19 @@
     margin-bottom: 12px;
     box-shadow: 0 1px 3px rgba(0,0,0,0.05);
   }
-  .header-row {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-  }
+  .header-row { display: flex; align-items: center; gap: 8px; }
   .nav-btn {
     width: 40px; height: 40px;
     border-radius: 10px;
     border: 1px solid var(--border);
     background: var(--card);
-    font-size: 18px;
+    font-size: 20px;
     cursor: pointer;
     display: flex; align-items: center; justify-content: center;
     color: var(--text);
     flex-shrink: 0;
+    font-weight: 600;
+    line-height: 1;
   }
   .nav-btn:active { background: var(--primary-light); }
   .month-title {
@@ -58,6 +58,9 @@
     font-size: 17px;
     font-weight: 600;
     text-transform: capitalize;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
   }
   .share-btn {
     padding: 10px 14px;
@@ -89,7 +92,7 @@
     vertical-align: middle;
   }
   .status-dot.offline { background: var(--danger); }
-  .status-dot.setup { background: #f59e0b; }
+  .status-dot.setup { background: var(--warn); }
 
   /* Calendar */
   .calendar {
@@ -111,6 +114,7 @@
     color: var(--muted);
     padding: 6px 0;
     text-transform: uppercase;
+    letter-spacing: 0.3px;
   }
   .days {
     display: grid;
@@ -129,11 +133,12 @@
     font-size: 14px;
     font-weight: 500;
     user-select: none;
+    transition: background 0.15s;
   }
   .day:active { background: var(--primary-light); }
   .day.other-month { color: #cbd5e1; }
   .day.today { border-color: var(--primary); color: var(--primary); font-weight: 700; }
-  .day.selected { background: var(--primary); color: white; }
+  .day.selected { background: var(--primary); color: white; border-color: var(--primary); }
   .task-indicator {
     position: absolute;
     bottom: 4px;
@@ -154,9 +159,8 @@
     display: none;
     align-items: flex-end;
     justify-content: center;
-    animation: fadeIn 0.2s;
   }
-  .overlay.show { display: flex; }
+  .overlay.show { display: flex; animation: fadeIn 0.2s; }
   @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
   .sheet {
     background: var(--card);
@@ -166,7 +170,7 @@
     padding: 20px;
     max-height: 85vh;
     overflow-y: auto;
-    animation: slideUp 0.25s;
+    animation: slideUp 0.25s cubic-bezier(0.16, 1, 0.3, 1);
     padding-bottom: calc(20px + env(safe-area-inset-bottom));
   }
   @keyframes slideUp { from { transform: translateY(100%); } to { transform: translateY(0); } }
@@ -262,6 +266,11 @@
     display: inline-block;
     margin: 16px 0;
     border: 1px solid var(--border);
+    min-width: 200px;
+    min-height: 200px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
   }
   .share-url {
     background: var(--bg);
@@ -321,6 +330,7 @@
     transition: transform 0.3s;
     max-width: 90%;
     text-align: center;
+    pointer-events: none;
   }
   .toast.show { transform: translateX(-50%) translateY(0); }
 
@@ -328,6 +338,7 @@
     .day { font-size: 13px; }
     .weekday { font-size: 10px; }
     .share-btn { padding: 9px 12px; font-size: 13px; }
+    .month-title { font-size: 15px; }
   }
 </style>
 </head>
@@ -335,9 +346,9 @@
 <div class="app">
   <div class="header">
     <div class="header-row">
-      <button class="nav-btn" id="prevBtn">‹</button>
+      <button class="nav-btn" id="prevBtn" aria-label="Vorheriger Monat">‹</button>
       <div class="month-title" id="monthTitle">—</div>
-      <button class="nav-btn" id="nextBtn">›</button>
+      <button class="nav-btn" id="nextBtn" aria-label="Nächster Monat">›</button>
       <button class="share-btn" id="shareBtn">Teilen</button>
     </div>
     <div class="status-bar">
@@ -362,11 +373,11 @@
   <div class="sheet">
     <div class="sheet-header">
       <div class="sheet-title" id="dayTitle">—</div>
-      <button class="close-btn" id="closeDay">✕</button>
+      <button class="close-btn" id="closeDay" aria-label="Schließen">✕</button>
     </div>
     <form class="add-form" id="addForm">
       <input type="text" id="taskInput" placeholder="Neuer Termin…" maxlength="200" autocomplete="off">
-      <button type="submit" id="addBtn">+</button>
+      <button type="submit" id="addBtn" aria-label="Hinzufügen">+</button>
     </form>
     <div class="task-list" id="taskList"></div>
   </div>
@@ -377,7 +388,7 @@
   <div class="sheet">
     <div class="sheet-header">
       <div class="sheet-title">Teilen</div>
-      <button class="close-btn" id="closeShare">✕</button>
+      <button class="close-btn" id="closeShare" aria-label="Schließen">✕</button>
     </div>
     <div class="share-content">
       <p style="color: var(--muted); font-size: 14px;">
@@ -400,11 +411,11 @@
 
 <div class="toast" id="toast"></div>
 
-<script src="https://cdn.jsdelivr.net/npm/qrcodejs@1.0.0/qrcode.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
 
 <script type="module">
 // ============================================================
-// 1. FIREBASE CONFIG — HIER EINTRAGEN!
+//  1) FIREBASE CONFIG — HIER EINTRAGEN
 // ============================================================
 const firebaseConfig = {
   apiKey: "ВАШ_API_KEY",
@@ -415,32 +426,71 @@ const firebaseConfig = {
   appId: "ВАШ_APP_ID"
 };
 
-const isConfigured = !firebaseConfig.apiKey.includes("ВАШ");
+const isConfigured =
+  firebaseConfig.apiKey &&
+  !String(firebaseConfig.apiKey).includes("ВАШ") &&
+  firebaseConfig.projectId &&
+  !String(firebaseConfig.projectId).includes("ВАШ");
 
 // ============================================================
-// 2. STATE
+//  2) STATE
 // ============================================================
 let currentMonth = new Date();
 currentMonth.setDate(1);
 let selectedDate = null;
 let allTasks = [];
-let fb = null;
+let fb = null;          // API-объект: addTask / updateTask / deleteTask
+let snapshotUnsub = null;
 
-// DOM refs
-const statusDot = document.getElementById('statusDot');
-const statusText = document.getElementById('statusText');
-const daysEl = document.getElementById('days');
-const monthTitle = document.getElementById('monthTitle');
-const dayOverlay = document.getElementById('dayOverlay');
-const dayTitle = document.getElementById('dayTitle');
-const taskList = document.getElementById('taskList');
-const taskInput = document.getElementById('taskInput');
-const shareOverlay = document.getElementById('shareOverlay');
-const qrWrap = document.getElementById('qrWrap');
-const shareUrl = document.getElementById('shareUrl');
+const $ = (id) => document.getElementById(id);
+const statusDot   = $('statusDot');
+const statusText  = $('statusText');
+const daysEl      = $('days');
+const monthTitle  = $('monthTitle');
+const dayOverlay  = $('dayOverlay');
+const dayTitle    = $('dayTitle');
+const taskList    = $('taskList');
+const taskInput   = $('taskInput');
+const addBtn      = $('addBtn');
+const addForm     = $('addForm');
+const shareOverlay= $('shareOverlay');
+const qrWrap      = $('qrWrap');
+const shareUrl    = $('shareUrl');
+const copyBtn     = $('copyBtn');
+const setupWarning= $('setupWarning');
+const taskCount   = $('taskCount');
+const toastEl     = $('toast');
 
 // ============================================================
-// 3. INIT
+//  3) UTILITIES
+// ============================================================
+function fmtDate(d) {
+  const y = d.getFullYear();
+  const m = String(d.getMonth() + 1).padStart(2, '0');
+  const day = String(d.getDate()).padStart(2, '0');
+  return `${y}-${m}-${day}`;
+}
+
+function parseDate(s) {
+  const [y, m, d] = s.split('-').map(Number);
+  return new Date(y, m - 1, d);
+}
+
+function setStatus(kind, text) {
+  statusDot.className = 'status-dot' + (kind === 'ok' ? '' : ' ' + kind);
+  statusText.textContent = text;
+}
+
+let toastTimer;
+function showToast(msg) {
+  toastEl.textContent = msg;
+  toastEl.classList.add('show');
+  clearTimeout(toastTimer);
+  toastTimer = setTimeout(() => toastEl.classList.remove('show'), 2500);
+}
+
+// ============================================================
+//  4) INIT — выбирает Firebase или локальный режим
 // ============================================================
 async function init() {
   if (isConfigured) {
@@ -449,43 +499,48 @@ async function init() {
     } catch (e) {
       console.error('Firebase init error:', e);
       setStatus('offline', 'Nur lokal — Firebase-Fehler');
+      setupWarning.style.display = 'block';
       initLocal();
-      document.getElementById('setupWarning').style.display = 'block';
     }
   } else {
     setStatus('setup', 'Nur lokal — Firebase nicht eingerichtet');
+    setupWarning.style.display = 'block';
     initLocal();
-    document.getElementById('setupWarning').style.display = 'block';
   }
   renderCalendar();
   updateCount();
 }
 
-function setStatus(kind, text) {
-  statusDot.className = 'status-dot ' + (kind === 'ok' ? '' : kind);
-  statusText.textContent = text;
-}
-
 async function initFirebase() {
-  const { initializeApp } = await import("https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js");
+  const appMod = await import("https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js");
   const fs = await import("https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js");
 
-  const app = initializeApp(firebaseConfig);
+  const app = appMod.initializeApp(firebaseConfig);
 
+  // Кэш в IndexedDB → работа офлайн + сохранение между перезагрузками
   let db;
   try {
-    db = fs.initializeFirestore(app, { localCache: fs.persistentLocalCache() });
+    db = fs.initializeFirestore(app, {
+      localCache: fs.persistentLocalCache({
+        tabManager: fs.persistentMultipleTabManager()
+      })
+    });
   } catch (e) {
+    console.warn('Persistent cache unavailable, using default:', e);
     db = fs.getFirestore(app);
   }
 
   const tasksCollection = fs.collection(db, 'tasks');
   const q = fs.query(tasksCollection, fs.orderBy('date', 'asc'));
 
-  fs.onSnapshot(q,
+  if (snapshotUnsub) snapshotUnsub();
+
+  snapshotUnsub = fs.onSnapshot(q,
     (snapshot) => {
       allTasks = [];
-      snapshot.forEach(d => allTasks.push({ id: d.id, ...d.data() }));
+      snapshot.forEach(docSnap => {
+        allTasks.push({ id: docSnap.id, ...docSnap.data() });
+      });
       setStatus('ok', 'Synchronisiert');
       renderCalendar();
       updateCount();
@@ -513,9 +568,26 @@ async function initFirebase() {
 }
 
 function initLocal() {
-  const saved = localStorage.getItem('calendar_tasks');
-  allTasks = saved ? JSON.parse(saved) : [];
-  const save = () => localStorage.setItem('calendar_tasks', JSON.stringify(allTasks));
+  try {
+    const saved = localStorage.getItem('calendar_tasks');
+    allTasks = saved ? JSON.parse(saved) : [];
+  } catch (e) {
+    allTasks = [];
+  }
+
+  const save = () => {
+    try {
+      localStorage.setItem('calendar_tasks', JSON.stringify(allTasks));
+    } catch (e) {
+      console.error('LocalStorage save failed:', e);
+    }
+  };
+
+  const refresh = () => {
+    renderCalendar();
+    updateCount();
+    if (selectedDate) renderDayTasks();
+  };
 
   fb = {
     addTask: async (data) => {
@@ -526,66 +598,70 @@ function initLocal() {
         createdAt: Date.now(),
         updatedAt: Date.now()
       });
-      save();
-      renderCalendar();
-      updateCount();
-      if (selectedDate) renderDayTasks();
+      save(); refresh();
     },
     updateTask: async (id, data) => {
       const t = allTasks.find(x => x.id === id);
       if (t) {
         Object.assign(t, data, { updatedAt: Date.now() });
-        save();
-        renderCalendar();
-        if (selectedDate) renderDayTasks();
+        save(); refresh();
       }
     },
     deleteTask: async (id) => {
       allTasks = allTasks.filter(x => x.id !== id);
-      save();
-      renderCalendar();
-      updateCount();
-      if (selectedDate) renderDayTasks();
+      save(); refresh();
     }
   };
-
-  renderCalendar();
-  updateCount();
 }
 
 // ============================================================
-// 4. CALENDAR
+//  5) CALENDAR RENDER
 // ============================================================
-function fmtDate(d) {
-  return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`;
-}
-
 function renderCalendar() {
   const year = currentMonth.getFullYear();
   const month = currentMonth.getMonth();
-  monthTitle.textContent = currentMonth.toLocaleDateString('de-DE', { month: 'long', year: 'numeric' });
+
+  monthTitle.textContent = currentMonth.toLocaleDateString('de-DE', {
+    month: 'long', year: 'numeric'
+  });
 
   const firstDay = new Date(year, month, 1);
-  const startOffset = (firstDay.getDay() + 6) % 7;
+  const startOffset = (firstDay.getDay() + 6) % 7; // Mo=0 … So=6
   const daysInMonth = new Date(year, month + 1, 0).getDate();
   const todayStr = fmtDate(new Date());
 
   const countByDate = {};
-  allTasks.forEach(t => { countByDate[t.date] = (countByDate[t.date] || 0) + 1; });
+  allTasks.forEach(t => {
+    if (t && t.date) countByDate[t.date] = (countByDate[t.date] || 0) + 1;
+  });
 
   daysEl.innerHTML = '';
 
+  // дни прошлого месяца
   const prevMonthDays = new Date(year, month, 0).getDate();
   for (let i = startOffset - 1; i >= 0; i--) {
-    daysEl.appendChild(buildDay(new Date(year, month - 1, prevMonthDays - i), true, countByDate, todayStr));
+    daysEl.appendChild(buildDay(
+      new Date(year, month - 1, prevMonthDays - i),
+      true, countByDate, todayStr
+    ));
   }
+
+  // дни текущего месяца
   for (let d = 1; d <= daysInMonth; d++) {
-    daysEl.appendChild(buildDay(new Date(year, month, d), false, countByDate, todayStr));
+    daysEl.appendChild(buildDay(
+      new Date(year, month, d),
+      false, countByDate, todayStr
+    ));
   }
+
+  // хвост следующего месяца
   const total = startOffset + daysInMonth;
   const trailing = (7 - (total % 7)) % 7;
   for (let i = 1; i <= trailing; i++) {
-    daysEl.appendChild(buildDay(new Date(year, month + 1, i), true, countByDate, todayStr));
+    daysEl.appendChild(buildDay(
+      new Date(year, month + 1, i),
+      true, countByDate, todayStr
+    ));
   }
 }
 
@@ -615,17 +691,15 @@ function buildDay(date, otherMonth, countByDate, todayStr) {
 }
 
 function updateCount() {
-  document.getElementById('taskCount').textContent =
-    `${allTasks.length} ${allTasks.length === 1 ? 'Termin' : 'Termine'}`;
+  taskCount.textContent = `${allTasks.length} ${allTasks.length === 1 ? 'Termin' : 'Termine'}`;
 }
 
 // ============================================================
-// 5. DAY SHEET
+//  6) DAY SHEET
 // ============================================================
 function openDay(dateStr) {
   selectedDate = dateStr;
-  const [y, m, d] = dateStr.split('-').map(Number);
-  const dateObj = new Date(y, m - 1, d);
+  const dateObj = parseDate(dateStr);
   dayTitle.textContent = dateObj.toLocaleDateString('de-DE', {
     weekday: 'long', day: 'numeric', month: 'long'
   });
@@ -643,10 +717,14 @@ function closeDay() {
 }
 
 function renderDayTasks() {
-  if (!selectedDate) return;
+  if (!selectedDate || !taskList) return;
+
   const dayTasks = allTasks
     .filter(t => t.date === selectedDate)
-    .sort((a, b) => (a.done === b.done ? 0 : a.done ? 1 : -1));
+    .sort((a, b) => {
+      if (a.done === b.done) return 0;
+      return a.done ? 1 : -1;
+    });
 
   taskList.innerHTML = '';
 
@@ -663,12 +741,13 @@ function renderDayTasks() {
     cb.type = 'checkbox';
     cb.checked = !!t.done;
     cb.addEventListener('change', async () => {
+      const newState = cb.checked;
       try {
-        await fb.updateTask(t.id, { done: cb.checked });
+        await fb.updateTask(t.id, { done: newState });
       } catch (e) {
         console.error(e);
         showToast('Fehler beim Speichern');
-        cb.checked = !cb.checked;
+        cb.checked = !newState;
       }
     });
 
@@ -678,6 +757,7 @@ function renderDayTasks() {
 
     const del = document.createElement('button');
     del.className = 'delete-btn';
+    del.type = 'button';
     del.innerHTML = '✕';
     del.addEventListener('click', async () => {
       if (!confirm('Termin löschen?')) return;
@@ -694,16 +774,17 @@ function renderDayTasks() {
   });
 }
 
-document.getElementById('closeDay').addEventListener('click', closeDay);
-dayOverlay.addEventListener('click', (e) => { if (e.target === dayOverlay) closeDay(); });
+$('closeDay').addEventListener('click', closeDay);
+dayOverlay.addEventListener('click', (e) => {
+  if (e.target === dayOverlay) closeDay();
+});
 
-document.getElementById('addForm').addEventListener('submit', async (e) => {
+addForm.addEventListener('submit', async (e) => {
   e.preventDefault();
   const title = taskInput.value.trim();
   if (!title || !selectedDate) return;
 
-  const btn = document.getElementById('addBtn');
-  btn.disabled = true;
+  addBtn.disabled = true;
   try {
     await fb.addTask({ title, date: selectedDate });
     taskInput.value = '';
@@ -712,85 +793,85 @@ document.getElementById('addForm').addEventListener('submit', async (e) => {
     console.error(err);
     showToast('Fehler beim Hinzufügen');
   } finally {
-    btn.disabled = false;
+    addBtn.disabled = false;
   }
 });
 
 // ============================================================
-// 6. MONTH NAV
+//  7) MONTH NAVIGATION
 // ============================================================
-document.getElementById('prevBtn').addEventListener('click', () => {
+$('prevBtn').addEventListener('click', () => {
   currentMonth.setMonth(currentMonth.getMonth() - 1);
   renderCalendar();
 });
-document.getElementById('nextBtn').addEventListener('click', () => {
+$('nextBtn').addEventListener('click', () => {
   currentMonth.setMonth(currentMonth.getMonth() + 1);
   renderCalendar();
 });
 
 // ============================================================
-// 7. SHARE
+//  8) SHARE
 // ============================================================
-document.getElementById('shareBtn').addEventListener('click', () => {
+$('shareBtn').addEventListener('click', () => {
   const url = window.location.href;
   shareUrl.textContent = url;
+
   qrWrap.innerHTML = '';
-  try {
-    new QRCode(qrWrap, {
-      text: url,
-      width: 220,
-      height: 220,
-      colorDark: '#0f172a',
-      colorLight: '#ffffff',
-      correctLevel: QRCode.CorrectLevel.M
-    });
-  } catch (e) {
-    qrWrap.textContent = '(QR-Code Fehler)';
+  if (typeof QRCode !== 'undefined') {
+    try {
+      new QRCode(qrWrap, {
+        text: url,
+        width: 220,
+        height: 220,
+        colorDark: '#0f172a',
+        colorLight: '#ffffff',
+        correctLevel: QRCode.CorrectLevel.M
+      });
+    } catch (e) {
+      console.error('QR error:', e);
+      qrWrap.textContent = '(QR-Code Fehler)';
+    }
+  } else {
+    qrWrap.textContent = '(QR-Code Bibliothek nicht geladen)';
   }
+
   shareOverlay.classList.add('show');
 });
 
-document.getElementById('closeShare').addEventListener('click', () => {
+$('closeShare').addEventListener('click', () => {
   shareOverlay.classList.remove('show');
 });
 shareOverlay.addEventListener('click', (e) => {
   if (e.target === shareOverlay) shareOverlay.classList.remove('show');
 });
 
-document.getElementById('copyBtn').addEventListener('click', async () => {
+copyBtn.addEventListener('click', async () => {
   try {
     await navigator.clipboard.writeText(window.location.href);
-    const btn = document.getElementById('copyBtn');
-    btn.textContent = '✓ Kopiert!';
-    btn.classList.add('copied');
+    copyBtn.textContent = '✓ Kopiert!';
+    copyBtn.classList.add('copied');
     setTimeout(() => {
-      btn.textContent = 'Link kopieren';
-      btn.classList.remove('copied');
+      copyBtn.textContent = 'Link kopieren';
+      copyBtn.classList.remove('copied');
     }, 2000);
   } catch (e) {
-    showToast('Kopieren fehlgeschlagen');
+    showToast('Kopieren fehlgeschlagen — bitte manuell markieren');
   }
 });
 
 // ============================================================
-// 8. TOAST
+//  9) ONLINE / OFFLINE
 // ============================================================
-let toastTimer;
-function showToast(msg) {
-  const el = document.getElementById('toast');
-  el.textContent = msg;
-  el.classList.add('show');
-  clearTimeout(toastTimer);
-  toastTimer = setTimeout(() => el.classList.remove('show'), 2500);
-}
+window.addEventListener('online', () => {
+  if (isConfigured) setStatus('ok', 'Wieder online');
+});
+window.addEventListener('offline', () => {
+  setStatus('offline', 'Offline — Änderungen werden zwischengespeichert');
+});
 
 // ============================================================
-// 9. ONLINE / OFFLINE
+//  10) START
 // ============================================================
-window.addEventListener('online', () => { if (isConfigured) setStatus('ok', 'Wieder online'); });
-window.addEventListener('offline', () => { setStatus('offline', 'Offline — Änderungen werden zwischengespeichert'); });
-
-// START
 init();
 </script>
 </body>
